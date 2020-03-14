@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
-const Home = ({ navigation }) => {
+const Welcome = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.title}>
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Home;
+export default Welcome;

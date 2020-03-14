@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, TextInput, ScrollView, CheckBox, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, FlatList, ScrollView} from 'react-native';
 import RegisterGridTiles from '../../utils/RegisterGridTiles';
+import TextFieldGroup from '../../Reusable_Component/TextFieldGroup';
+import FieldButton from '../../Reusable_Component/FieldButton';
+import InputCheckbox from '../../Reusable_Component/InputCheckbox';
+import Heading from '../../Reusable_Component/Heading';
+import TextLink from '../../Reusable_Component/TextLink';
 
 const registerType = [
     { key:1,  name: 'Cook/Catering Service' },
@@ -41,12 +46,21 @@ const Register = ({ navigation }) => {
         setRegType(false)
         navigation.navigate('Login')
     }
+
+    const submit = () => {
+        console.log(formData)
+    }
+
     return (
         <View style={styles.container}>
             {
                 !regType ?
                     <View>
-                        <Text style={styles.heading}>What you want to register as ?</Text>
+                        <Heading 
+                            name="What you want to register as ?" 
+                            style={styles.regSelection} 
+                        />
+                        {/* <Text style={styles.heading}>What you want to register as ?</Text> */}
                         <FlatList 
                             keyExtractor={(item, index) => item.key}
                             data={registerType}
@@ -56,86 +70,77 @@ const Register = ({ navigation }) => {
                 :
                     <View>
                         <ScrollView>
-                            <Text style={{...styles.heading, ...styles.regHeading}}>Register</Text>
-                            <TextInput
-                                style={styles.inputBox}
+                            <Heading name="Register" />
+                            <TextFieldGroup 
                                 placeholder="First Name"
-                                onChangeText={text => setFormData({firstName: text})}
+                                onChange={text => setFormData({firstName: text})}
                                 value={formData.firstName}
                             />
-                            <TextInput 
-                                style={styles.inputBox}
+                            <TextFieldGroup 
                                 placeholder="Last Name"
-                                onChangeText={text => setFormData({lastName: text})}
+                                onChange={text => setFormData({lastName: text})}
                                 value={formData.lastName}
                             />
-                            <TextInput 
-                                style={styles.inputBox}
-                                keyboardType="numeric"
+                            <TextFieldGroup 
+                                type="numeric"
                                 placeholder="Mobile Number"
-                                onChangeText={text => setFormData({phone: text})}
+                                onChange={text => setFormData({phone: text})}
                                 value={formData.phone}
                             />
-                            {regData === 'Customer' &&<TextInput 
-                                style={styles.inputBox}
-                                keyboardType="email-address"
-                                placeholder="Email"
-                                onChangeText={text => setFormData({email: text})}
+                            {regData === 'Customer' &&
+                            <TextFieldGroup 
+                                type="email-address"
+                                placeholder="Email-Address"
+                                onChange={text => setFormData({email: text})}
                                 value={formData.email}
                             />}
                             {regData === 'Cook/Catering Service' &&
                             <>
-                                <TextInput 
-                                    style={styles.inputBox}
-                                    keyboardType="numeric"
+                                <TextFieldGroup 
+                                    type="numeric"
                                     placeholder="Aadhar Number"
-                                    onChangeText={text => setFormData({aadharNo: text})}
+                                    onChange={text => setFormData({aadharNo: text})}
                                     value={formData.aadharNo}
                                 />
-                                <TextInput 
-                                    style={styles.inputBox}
-                                    keyboardType="numeric"
+                                <TextFieldGroup 
+                                    type="numeric"
                                     placeholder="Account Number"
-                                    onChangeText={text => setFormData({accountNo: text})}
+                                    onChange={text => setFormData({accountNo: text})}
                                     value={formData.accountNo}
                                 />
-                                <TextInput 
-                                    style={styles.inputBox}
+                                <TextFieldGroup 
                                     placeholder="Location"
-                                    onChangeText={text => setFormData({location: text})}
+                                    onChange={text => setFormData({location: text})}
                                     value={formData.location}
                                 />
                             </>}
-                            <TextInput 
-                                style={styles.inputBox}
+                            <TextFieldGroup 
                                 secureTextEntry={true}
                                 placeholder="Password"
-                                onChangeText={text => setFormData({password: text})}
+                                onChange={text => setFormData({password: text})}
                                 value={formData.password}
                             />
-                            <TextInput 
-                                style={styles.inputBox}
+                            <TextFieldGroup 
                                 secureTextEntry={true}
                                 placeholder="Confirm Password"
-                                onChangeText={text => setFormData({confirmPassword: text})}
+                                onChange={text => setFormData({confirmPassword: text})}
                                 value={formData.confirmPassword}
                             />
-                            <View style={styles.inputCheck}>
-                                <CheckBox 
-                                    onValueChange={() => setTc(!tc)}
-                                    value={tc}
+                            <InputCheckbox 
+                                checkText="I have read and agreed to the T&c"
+                                checkValue={tc}
+                                onchange={() => setTc(!tc)}
+                            />
+                            <FieldButton 
+                                name="Register"
+                                onPress={submit}
+                            >
+                                <TextLink 
+                                    text="Already have an account?"
+                                    linkText=" Log In"
+                                    onPress={() => navigation.navigate('Login')}
                                 />
-                                <Text style={styles.checkText}>I have read and agreed to the T&c</Text>
-                            </View>
-                            <View style={styles.submit}>
-                                <TouchableOpacity style={styles.button}>
-                                    <Text style={styles.buttonText}>Register</Text>
-                                </TouchableOpacity>
-                                <View style={styles.logInTextCont}>
-                                    <Text style={styles.logInText}>Already have an account?</Text>
-                                    <Text style={styles.LogInButton} onPress={resetNav} > Log In</Text>
-                                </View>
-                            </View>
+                            </FieldButton>
                         </ScrollView>
                     </View>
             }
@@ -149,61 +154,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#f0e3ff'
     },
-    heading: {
-        fontSize: 20,
-        alignSelf: 'center',
-        paddingBottom: 30
-    },
-    regHeading: {
-        paddingBottom: 10,
-        fontSize: 30,
-        color: '#3e206d'
-    },
-    inputBox: {
-        width: "100%",
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-        borderRadius: 25,
-        paddingHorizontal: 16,
-        fontSize: 16,
-        marginVertical: 3
-    },
-    inputCheck: {
-        flexDirection: 'row',
-        paddingHorizontal: 10,
-        paddingVertical: 5
-    },
-    checkText: {
-        marginTop: 5
-    },
-    submit: {
-        paddingBottom: 20
-    },
-    button: {
-        width: "100%",
-        backgroundColor: '#3e206d',
-        borderRadius: 25,
-        paddingVertical: 13
-    },
-    buttonText: {
-        fontSize: 16,
-        fontWeight: '500',
-        color: '#f0e3ff',
-        textAlign: 'center'
-    },
-    logInTextCont: {
-        flexGrow: 1,
-        alignItems: 'flex-end',
-        justifyContent: 'center',
-        paddingVertical: 5,
-        flexDirection: 'row',
-    },
-    logInText: {
-        fontSize: 16
-    },
-    LogInButton: {
-        color: '#d89cf6',
-        fontSize: 16,
-        fontWeight: '500'
+    regSelection: {
+        fontSize: 22,
+        color: '#444'
     }
 })
 
