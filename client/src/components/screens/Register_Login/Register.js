@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#f0e3ff'
+        backgroundColor: '#C8C8C8'
     },
     regSelection: {
         fontSize: 22,

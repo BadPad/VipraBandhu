@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import Heading from '../../Reusable_Component/Heading';
 import TextFieldGroup from '../../Reusable_Component/TextFieldGroup';
 import FieldButton from '../../Reusable_Component/FieldButton';
@@ -17,6 +17,10 @@ const Login = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+              <Image resizeMode='contain'
+                    style={styles.images}
+                    source={require('client/src/components/images/Logo.png')}
+                />
             <Heading name="Login" />
             <TextFieldGroup 
                 type="email-address"
@@ -48,8 +52,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#f0e3ff'
-    }
+        backgroundColor: '#C8C8C8'
+    },
+    images: {
+        width: '40%',
+        height:120,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginBottom: 10,
+        shadowRadius:10,
+        shadowColor:'blue',
+        marginTop:10,
+        
+    },
 })
 
 export default Login
