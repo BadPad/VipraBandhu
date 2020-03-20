@@ -42,7 +42,7 @@ TextFieldGroup.propTypes = {
 
 TextFieldGroup.defaultProps = {
     type: 'default',
-    secureTextEntry: true
+    secureTextEntry: false
 }
 
 export default TextFieldGroup;

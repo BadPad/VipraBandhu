@@ -5,11 +5,18 @@ import TextFieldGroup from '../../Reusable_Component/TextFieldGroup';
 import FieldButton from '../../Reusable_Component/FieldButton';
 import TextLink from '../../Reusable_Component/TextLink';
 
+const initialState = {
+    emailOrPhone: '',
+    password: ''
+}
+
 const Login = ({ navigation }) => {
-    const [formData, setFormData] = useState({
-        emailOrPhone: '',
-        password: ''
-    })
+    const [formData, setFormData] = useState({...initialState})
+
+    const resetNav = () => {
+        setFormData(initialState)
+        navigation.navigate('Register')
+    }
 
     const submit = () => {
         console.log(formData)
@@ -25,13 +32,13 @@ const Login = ({ navigation }) => {
             <TextFieldGroup 
                 type="email-address"
                 placeholder="Email-Address / Phone"
-                onChange={text => setFormData({emailOrPhone: text})}
+                onChange={text => setFormData({...formData, emailOrPhone: text})}
                 value={formData.emailOrPhone}
             />
             <TextFieldGroup 
                 secureTextEntry={true}
                 placeholder="Password"
-                onChange={text => setFormData({password: text})}
+                onChange={text => setFormData({...formData, password: text})}
                 value={formData.password}
             />
             <FieldButton 
@@ -41,7 +48,7 @@ const Login = ({ navigation }) => {
                 <TextLink 
                     text="Don't have an account yet?"
                     linkText=" Sign Up"
-                    onPress={() => navigation.navigate('Register')}
+                    onPress={resetNav}
                 />
             </FieldButton>
         </View>
