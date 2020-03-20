@@ -17,12 +17,15 @@ import Welcome from '../screens/Welcome';
 
 const Stack = createStackNavigator();
 const HomeStack = createStackNavigator();
-const LoginStack = createStackNavigator();
-const RegisterStack = createStackNavigator();
+/* const LoginStack = createStackNavigator();
+const RegisterStack = createStackNavigator(); */
 const AboutStack = createStackNavigator();
-const FAQStack = createStackNavigator();
-const HelpStack = createStackNavigator();
+const OfferStack = createStackNavigator();
+const MyProfileStack = createStackNavigator();
 const MyBookingsStack = createStackNavigator();
+const MyWalletStack = createStackNavigator();
+const CustomerServiceStack = createStackNavigator();
+const NotificationStack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
 
@@ -56,7 +59,7 @@ const HomeStackScreen = ({navigation}) => (
       </HomeStack.Navigator>     
 );
 
-const LoginStackScreen = ({navigation}) => (
+/* const LoginStackScreen = ({navigation}) => (
   
       <LoginStack.Navigator        
         screenOptions={{
@@ -110,7 +113,7 @@ const RegisterStackScreen = ({navigation}) => (
       }}          
     />
   </RegisterStack.Navigator>      
-);
+); */
 
 const AboutStackScreen = ({navigation}) => (
   
@@ -140,9 +143,9 @@ const AboutStackScreen = ({navigation}) => (
   </AboutStack.Navigator>      
 );
 
-const FAQStackScreen = ({navigation}) => (
+const OfferStackScreen = ({navigation}) => (
   
-  <FAQStack.Navigator        
+  <OfferStack.Navigator        
     screenOptions={{
       headerStyle:{
         backgroundColor: '#232f3e',
@@ -153,9 +156,9 @@ const FAQStackScreen = ({navigation}) => (
       },
     }}
   >
-    <FAQStack.Screen name="FAQs"  component={About} 
+    <OfferStack.Screen name="Offers"  component={About} 
       options={{
-        title: 'FAQs',
+        title: 'Offers',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25} 
           backgroundColor="#232f3e" color="#fff" 
@@ -165,12 +168,12 @@ const FAQStackScreen = ({navigation}) => (
         )
       }}          
     />
-  </FAQStack.Navigator>      
+  </OfferStack.Navigator>      
 );
 
-const HelpStackScreen = ({navigation}) => (
+const MyProfileStackScreen = ({navigation}) => (
   
-  <HelpStack.Navigator        
+  <MyProfileStack.Navigator        
     screenOptions={{
       headerStyle:{
         backgroundColor: '#232f3e',
@@ -181,9 +184,9 @@ const HelpStackScreen = ({navigation}) => (
       },
     }}
   >
-    <HelpStack.Screen name="Help"  component={About} 
+    <MyProfileStack.Screen name="My Profile"  component={About} 
       options={{
-        title: 'Help',
+        title: 'My Profile',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25} 
           backgroundColor="#232f3e" color="#fff" 
@@ -193,7 +196,7 @@ const HelpStackScreen = ({navigation}) => (
         )
       }}          
     />
-  </HelpStack.Navigator>      
+  </MyProfileStack.Navigator>      
 );
 
 const MyBookingsStackScreen = ({navigation}) => (
@@ -223,6 +226,94 @@ const MyBookingsStackScreen = ({navigation}) => (
     />
   </MyBookingsStack.Navigator>      
 );
+
+
+const MyWalletStackScreen = ({navigation}) => (
+  
+  <MyWalletStack.Navigator        
+    screenOptions={{
+      headerStyle:{
+        backgroundColor: '#232f3e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold'
+      },
+    }}
+  >
+    <MyWalletStack.Screen name="My Wallet"  component={About} 
+      options={{
+        title: 'My Bookings',
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25} 
+          backgroundColor="#232f3e" color="#fff" 
+          onPress={() => navigation.openDrawer()
+          }>
+          </Icon.Button >
+        )
+      }}          
+    />
+  </MyWalletStack.Navigator>      
+);
+
+
+const CustomerServiceStackScreen = ({navigation}) => (
+  
+  <CustomerServiceStack.Navigator        
+    screenOptions={{
+      headerStyle:{
+        backgroundColor: '#232f3e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold'
+      },
+    }}
+  >
+    <CustomerServiceStack.Screen name="My Wallet"  component={About} 
+      options={{
+        title: 'My Bookings',
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25} 
+          backgroundColor="#232f3e" color="#fff" 
+          onPress={() => navigation.openDrawer()
+          }>
+          </Icon.Button >
+        )
+      }}          
+    />
+  </CustomerServiceStack.Navigator>      
+);
+
+
+const NotificationStackScreen = ({navigation}) => (
+  
+  <NotificationStack.Navigator        
+    screenOptions={{
+      headerStyle:{
+        backgroundColor: '#232f3e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold'
+      },
+    }}
+  >
+    <NotificationStack.Screen name="My Wallet"  component={About} 
+      options={{
+        title: 'My Bookings',
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25} 
+          backgroundColor="#232f3e" color="#fff" 
+          onPress={() => navigation.openDrawer()
+          }>
+          </Icon.Button >
+        )
+      }}          
+    />
+  </NotificationStack.Navigator>      
+);
+
 
 showHeaders = (route) => {
   console.log(route)
@@ -256,12 +347,17 @@ function Navigation() {
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={HomeStackScreen}  />
-        <Drawer.Screen name="Login" component={LoginStackScreen} />
-        <Drawer.Screen name="Register" component={RegisterStackScreen} />
-        <Drawer.Screen name="My Bookings" component={MyBookingsStackScreen} />
-        <Drawer.Screen name="FAQ" component={FAQStackScreen} />
-        <Drawer.Screen name="Help" component={HelpStackScreen} />
-        <Drawer.Screen name="About" component={AboutStackScreen} />
+        <Drawer.Screen name="About Us" component={AboutStackScreen} />
+        <Drawer.Screen name="Offers" component={OfferStackScreen} />
+        <Drawer.Screen name="My Profile" component={MyProfileStackScreen} />
+        <Drawer.Screen name="My Orders/Bookings" component={MyBookingsStackScreen} />
+        <Drawer.Screen name="My Wallet" component={MyWalletStackScreen} />
+        <Drawer.Screen name="Customer Service" component={CustomerServiceStackScreen} />
+        <Drawer.Screen name="Notifications" component={NotificationStackScreen} />
+        {/* <Drawer.Screen name="Login" component={LoginStackScreen} />
+        <Drawer.Screen name="Register" component={RegisterStackScreen} /> */}
+        {/* <Drawer.Screen name="FAQ" component={FAQStackScreen} />
+        <Drawer.Screen name="Help" component={HelpStackScreen} /> */}
       </Drawer.Navigator>
       {/* <Stack.Navigator
         initialRouteName="Home"
