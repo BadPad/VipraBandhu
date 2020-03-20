@@ -7,7 +7,7 @@ const CustService = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text>Coming Soon ...</Text>
+            <Text>Customer Service</Text>
         </View>
     )
 }

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 
-const FAQ = ({ navigation }) => {
+const Offers = ({ navigation }) => {
     
 
     return (
         <View style={styles.container}>
-            <Text>Coming Soon ...</Text>
+            <Text>Offers</Text>
         </View>
     )
 }
@@ -20,5 +20,5 @@ const styles = StyleSheet.create({
     }
 })
 
-export default FAQ
+export default Offers
 

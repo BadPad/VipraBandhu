@@ -7,7 +7,7 @@ const Wallets = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text>Coming Soon ...</Text>
+            <Text>My Wallet</Text>
         </View>
     )
 }

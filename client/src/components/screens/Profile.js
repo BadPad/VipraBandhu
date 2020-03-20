@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 
-const Help = ({ navigation }) => {
+const Profile = ({ navigation }) => {
     
 
     return (
         <View style={styles.container}>
-            <Text>Coming Soon ...</Text>
+            <Text>My Profile</Text>
         </View>
     )
 }
@@ -20,5 +20,5 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Help
+export default Profile
 

@@ -7,7 +7,7 @@ const Notifications = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text>Coming Soon ...</Text>
+            <Text>Notifications</Text>
         </View>
     )
 }

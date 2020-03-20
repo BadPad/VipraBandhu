@@ -7,7 +7,7 @@ const MyBookings = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text>Coming Soon ...</Text>
+            <Text>My Orders / Bookings</Text>
         </View>
     )
 }

@@ -7,7 +7,7 @@ const About = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text>Coming Soon ...</Text>
+            <Text>About Sukalpa Seva</Text>
         </View>
     )
 }

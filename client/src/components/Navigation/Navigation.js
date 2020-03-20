@@ -10,9 +10,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import About from '../screens/About';
 import Offers from '../screens/Offers';
 import Profile from '../screens/Profile';
-import Bookings from '../screens/MyBookings';
+import MyBookings from '../screens/MyBookings';
 import Wallet from '../screens/MyWallet';
-import CustService from '../screens/CustomerService';
+import CustomerService from '../screens/CustomerService';
 import Notifications from '../screens/Notifications';
 
 import Welcome from '../screens/Welcome';
@@ -48,7 +48,7 @@ const HomeStackScreen = ({navigation}) => (
       >
         <HomeStack.Screen name="Welcome"  component={Welcome} 
           options={{
-            title: 'Vipra Bandhu',
+            title: 'Sukalpa Seva',
             headerLeft: () => (
               <Icon.Button name="ios-menu" size={25} 
               backgroundColor="#232f3e" color="#fff" 
@@ -158,7 +158,7 @@ const OfferStackScreen = ({navigation}) => (
       },
     }}
   >
-    <OfferStack.Screen name="Offers"  component={About} 
+    <OfferStack.Screen name="Offers"  component={Offers} 
       options={{
         title: 'Offers',
         headerLeft: () => (
@@ -186,7 +186,7 @@ const MyProfileStackScreen = ({navigation}) => (
       },
     }}
   >
-    <MyProfileStack.Screen name="My Profile"  component={About} 
+    <MyProfileStack.Screen name="My Profile"  component={Profile} 
       options={{
         title: 'My Profile',
         headerLeft: () => (
@@ -214,7 +214,7 @@ const MyBookingsStackScreen = ({navigation}) => (
       },
     }}
   >
-    <MyBookingsStack.Screen name="My Bookings"  component={About} 
+    <MyBookingsStack.Screen name="My Bookings"  component={MyBookings} 
       options={{
         title: 'My Bookings',
         headerLeft: () => (
@@ -243,7 +243,7 @@ const MyWalletStackScreen = ({navigation}) => (
       },
     }}
   >
-    <MyWalletStack.Screen name="My Wallet"  component={About} 
+    <MyWalletStack.Screen name="My Wallet"  component={Wallet} 
       options={{
         title: 'My Bookings',
         headerLeft: () => (
@@ -272,7 +272,7 @@ const CustomerServiceStackScreen = ({navigation}) => (
       },
     }}
   >
-    <CustomerServiceStack.Screen name="My Wallet"  component={About} 
+    <CustomerServiceStack.Screen name="My Wallet"  component={CustomerService} 
       options={{
         title: 'My Bookings',
         headerLeft: () => (
@@ -301,7 +301,7 @@ const NotificationStackScreen = ({navigation}) => (
       },
     }}
   >
-    <NotificationStack.Screen name="My Wallet"  component={About} 
+    <NotificationStack.Screen name="My Wallet"  component={Notifications} 
       options={{
         title: 'My Bookings',
         headerLeft: () => (
