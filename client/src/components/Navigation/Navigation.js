@@ -7,11 +7,13 @@ import {Icons} from 'react-native-vector-icons';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Register from '../screens/Register_Login/Register';
-import Login from '../screens/Register_Login/Login';
 import About from '../screens/About';
-import FAQ from '../screens/FAQ';
-import Help from '../screens/Help';
+import Offers from '../screens/Offers';
+import Profile from '../screens/Profile';
+import Bookings from '../screens/MyBookings';
+import Wallet from '../screens/MyWallet';
+import CustService from '../screens/CustomerService';
+import Notifications from '../screens/Notifications';
 
 import Welcome from '../screens/Welcome';
 
