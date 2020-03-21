@@ -4,6 +4,7 @@ import Heading from '../../Reusable_Component/Heading';
 import TextFieldGroup from '../../Reusable_Component/TextFieldGroup';
 import FieldButton from '../../Reusable_Component/FieldButton';
 import TextLink from '../../Reusable_Component/TextLink';
+import { validateLoginInput } from '../../Reusable_Component/Validation/Login';
 
 const initialState = {
     emailOrPhone: '',
@@ -11,7 +12,8 @@ const initialState = {
 }
 
 const Login = ({ navigation }) => {
-    const [formData, setFormData] = useState({...initialState})
+    const [formData, setFormData] = useState({...initialState});
+    const [errors, setErrors] = useState({});
 
     const resetNav = () => {
         setFormData(initialState)
@@ -19,7 +21,14 @@ const Login = ({ navigation }) => {
     }
 
     const submit = () => {
-        console.log(formData)
+        const { errors, isValid } = validateLoginInput(formData)
+        
+        if(isValid) {
+            setErrors(errors)
+            console.log(formData)
+        } else {
+            setErrors(errors)
+        }
     }
 
     return (
@@ -34,12 +43,14 @@ const Login = ({ navigation }) => {
                 placeholder="Email-Address / Phone"
                 onChange={text => setFormData({...formData, emailOrPhone: text})}
                 value={formData.emailOrPhone}
+                errors={errors.emailOrPhone}
             />
             <TextFieldGroup 
                 secureTextEntry={true}
                 placeholder="Password"
                 onChange={text => setFormData({...formData, password: text})}
                 value={formData.password}
+                errors={errors.password}
             />
             <FieldButton 
                 name='Login'

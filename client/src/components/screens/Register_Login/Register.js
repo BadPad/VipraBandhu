@@ -6,7 +6,7 @@ import FieldButton from '../../Reusable_Component/FieldButton';
 import InputCheckbox from '../../Reusable_Component/InputCheckbox';
 import Heading from '../../Reusable_Component/Heading';
 import TextLink from '../../Reusable_Component/TextLink';
-import validateRegisterInput from '../../Reusable_Component/Validation/Register';
+import { validateRegisterInput } from '../../Reusable_Component/Validation/Register';
 
 const registerType = [
     { key:1,  name: 'Cook/Catering Service' },
@@ -26,10 +26,11 @@ const initialState = {
 };
 
 const Register = ({ navigation }) => {
+    const [formData, setFormData] = useState({...initialState});
     const [regType, setRegType] = useState(false);
     const [regData, setRegData] = useState('');
-    const [formData, setFormData] = useState({...initialState})
-    const [tc, setTc] = useState(false)
+    const [tc, setTc] = useState(false);
+    const [errors, setErrors] = useState({})
 
     const onSelected = data => {
         setRegType(true);
@@ -53,7 +54,15 @@ const Register = ({ navigation }) => {
     }
 
     const submit = () => {
-        console.log(formData)
+
+        const { errors, isValid } = validateRegisterInput(formData, regData, tc)
+        
+        if(isValid) {
+            setErrors(errors)
+            console.log(formData)
+        } else {
+            setErrors(errors)
+        }
     }
 
     return (
@@ -67,7 +76,7 @@ const Register = ({ navigation }) => {
                         />
                         {/* <Text style={styles.heading}>What you want to register as ?</Text> */}
                         <FlatList 
-                            keyExtractor={(item, index) => item.key}
+                            keyExtractor={(item, index) => item.key.toString()}
                             data={registerType}
                             renderItem={renderRegisterType}
                         />
@@ -80,17 +89,20 @@ const Register = ({ navigation }) => {
                                 placeholder="First Name"
                                 onChange={text => setFormData({...formData, firstName: text})}
                                 value={formData.firstName}
+                                errors={errors.firstName}
                             />
                             <TextFieldGroup 
                                 placeholder="Last Name"
                                 onChange={text => setFormData({...formData, lastName: text})}
                                 value={formData.lastName}
+                                errors={errors.lastName}
                             />
                             <TextFieldGroup 
                                 type="numeric"
                                 placeholder="Mobile Number"
                                 onChange={text => setFormData({...formData, phone: text})}
                                 value={formData.phone}
+                                errors={errors.phone}
                             />
                             {regData === 'Customer' &&
                             <TextFieldGroup 
@@ -98,6 +110,7 @@ const Register = ({ navigation }) => {
                                 placeholder="Email-Address"
                                 onChange={text => setFormData({...formData, email: text})}
                                 value={formData.email}
+                                errors={errors.email}
                             />}
                             {regData === 'Cook/Catering Service' &&
                             <>
@@ -106,17 +119,20 @@ const Register = ({ navigation }) => {
                                     placeholder="Aadhar Number"
                                     onChange={text => setFormData({...formData, aadharNo: text})}
                                     value={formData.aadharNo}
+                                    errors={errors.aadharNo}
                                 />
                                 <TextFieldGroup 
                                     type="numeric"
                                     placeholder="Account Number"
                                     onChange={text => setFormData({...formData, accountNo: text})}
                                     value={formData.accountNo}
+                                    errors={errors.accountNo}
                                 />
                                 <TextFieldGroup 
                                     placeholder="Location"
                                     onChange={text => setFormData({...formData, location: text})}
                                     value={formData.location}
+                                    errors={errors.location}
                                 />
                             </>}
                             <TextFieldGroup 
@@ -124,17 +140,20 @@ const Register = ({ navigation }) => {
                                 placeholder="Password"
                                 onChange={text => setFormData({...formData, password: text})}
                                 value={formData.password}
+                                errors={errors.password}
                             />
                             <TextFieldGroup 
                                 secureTextEntry={true}
                                 placeholder="Confirm Password"
                                 onChange={text => setFormData({...formData, confirmPassword: text})}
                                 value={formData.confirmPassword}
+                                errors={errors.confirmPassword}
                             />
                             <InputCheckbox 
-                                checkText="I have read and agreed to the T&c"
+                                checkText="I have read and agreed to the T&C"
                                 checkValue={tc}
                                 onchange={() => setTc(!tc)}
+                                errors={errors.checked}
                             />
                             <FieldButton 
                                 name="Register"

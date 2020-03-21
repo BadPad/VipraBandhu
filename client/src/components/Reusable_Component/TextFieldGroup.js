@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, Text } from 'react-native';
 import PropTypes from 'prop-types'
 
 const TextFieldGroup = ({
@@ -7,17 +7,21 @@ const TextFieldGroup = ({
     secureTextEntry,
     placeholder,
     onChange,
-    value
+    value,
+    errors
 }) => {
     return (
-        <TextInput 
-            style={styles.inputBox}
-            keyboardType={type}
-            secureTextEntry={secureTextEntry}
-            placeholder={placeholder}
-            onChangeText={onChange}
-            value={value}
-        />
+        <>
+            <TextInput 
+                style={styles.inputBox}
+                keyboardType={type}
+                secureTextEntry={secureTextEntry}
+                placeholder={placeholder}
+                onChangeText={onChange}
+                value={value}
+            />
+            {errors && <Text style={styles.error}>{errors}</Text>}
+        </>
     )
 }
 
@@ -30,6 +34,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginVertical: 3
     },
+    error: {
+        paddingHorizontal: 16,
+        paddingBottom: 5,
+        color: '#c81912'
+    }
 })
 
 TextFieldGroup.propTypes = {
@@ -37,7 +46,8 @@ TextFieldGroup.propTypes = {
     secureTextEntry: PropTypes.bool.isRequired,
     placeholder: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired
+    value: PropTypes.string.isRequired,
+    errors: PropTypes.string
 }
 
 TextFieldGroup.defaultProps = {
