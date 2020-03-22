@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
+import { connect } from 'react-redux';
 import Heading from '../../Reusable_Component/Heading';
 import TextFieldGroup from '../../Reusable_Component/TextFieldGroup';
 import FieldButton from '../../Reusable_Component/FieldButton';
 import TextLink from '../../Reusable_Component/TextLink';
 import { validateLoginInput } from '../../Reusable_Component/Validation/Login';
+import { loginUser } from '../../../redux/actions/authActions';
 
 const initialState = {
     emailOrPhone: '',
     password: ''
 }
 
-const Login = ({ navigation }) => {
+const Login = ({ navigation, loginUser }) => {
     const [formData, setFormData] = useState({...initialState});
     const [errors, setErrors] = useState({});
 
@@ -25,7 +27,7 @@ const Login = ({ navigation }) => {
         
         if(isValid) {
             setErrors(errors)
-            console.log(formData)
+            loginUser(formData)
         } else {
             setErrors(errors)
         }
@@ -85,5 +87,11 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Login
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+
+const mapDispatchToProps = { loginUser }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
 

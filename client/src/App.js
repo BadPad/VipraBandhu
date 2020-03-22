@@ -1,9 +1,14 @@
-import React from 'react'
-import Navigation from './components/Navigation/Navigation'
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import React from 'react';
+import Navigation from './components/Navigation/Navigation';
+import { Provider } from 'react-redux';
+import store from './store';
 
-export default function App() {
+function App() {
   return (
-    <Navigation />
+    <Provider store={ store }>
+      <Navigation />
+    </Provider>
   )
 }
+
+export default App;

@@ -1,26 +1,25 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Easing, headerleft } from 'react-native';
+import { connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import {Icons} from 'react-native-vector-icons';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import About from '../screens/About';
+import Login from '../screens/Register_Login/Login';
+import Register from '../screens/Register_Login/Register';
 import Offers from '../screens/Offers';
 import Profile from '../screens/Profile';
 import MyBookings from '../screens/MyBookings';
 import Wallet from '../screens/MyWallet';
 import CustomerService from '../screens/CustomerService';
 import Notifications from '../screens/Notifications';
-
 import Welcome from '../screens/Welcome';
 
-const Stack = createStackNavigator();
 const HomeStack = createStackNavigator();
-/* const LoginStack = createStackNavigator();
-const RegisterStack = createStackNavigator(); */
+const LoginStack = createStackNavigator();
+const RegisterStack = createStackNavigator();
 const AboutStack = createStackNavigator();
 const OfferStack = createStackNavigator();
 const MyProfileStack = createStackNavigator();
@@ -30,8 +29,6 @@ const CustomerServiceStack = createStackNavigator();
 const NotificationStack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
-
-
 
 const HomeStackScreen = ({navigation}) => (
   
@@ -61,7 +58,7 @@ const HomeStackScreen = ({navigation}) => (
       </HomeStack.Navigator>     
 );
 
-/* const LoginStackScreen = ({navigation}) => (
+const LoginStackScreen = ({navigation}) => (
   
       <LoginStack.Navigator        
         screenOptions={{
@@ -115,7 +112,7 @@ const RegisterStackScreen = ({navigation}) => (
       }}          
     />
   </RegisterStack.Navigator>      
-); */
+);
 
 const AboutStackScreen = ({navigation}) => (
   
@@ -130,7 +127,7 @@ const AboutStackScreen = ({navigation}) => (
       },
     }}
   >
-    <AboutStack.Screen name="About US"  component={About} 
+    <AboutStack.Screen name="AboutUs"  component={About} 
       options={{
         title: 'About Us',
         headerLeft: () => (
@@ -186,7 +183,7 @@ const MyProfileStackScreen = ({navigation}) => (
       },
     }}
   >
-    <MyProfileStack.Screen name="My Profile"  component={Profile} 
+    <MyProfileStack.Screen name="MyProfile"  component={Profile} 
       options={{
         title: 'My Profile',
         headerLeft: () => (
@@ -214,7 +211,7 @@ const MyBookingsStackScreen = ({navigation}) => (
       },
     }}
   >
-    <MyBookingsStack.Screen name="My Bookings"  component={MyBookings} 
+    <MyBookingsStack.Screen name="MyBookings"  component={MyBookings} 
       options={{
         title: 'My Bookings',
         headerLeft: () => (
@@ -243,9 +240,9 @@ const MyWalletStackScreen = ({navigation}) => (
       },
     }}
   >
-    <MyWalletStack.Screen name="My Wallet"  component={Wallet} 
+    <MyWalletStack.Screen name="MyWallet"  component={Wallet} 
       options={{
-        title: 'My Bookings',
+        title: 'My Wallet',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25} 
           backgroundColor="#232f3e" color="#fff" 
@@ -272,9 +269,9 @@ const CustomerServiceStackScreen = ({navigation}) => (
       },
     }}
   >
-    <CustomerServiceStack.Screen name="My Wallet"  component={CustomerService} 
+    <CustomerServiceStack.Screen name="CustomerServicet"  component={CustomerService} 
       options={{
-        title: 'My Bookings',
+        title: 'Customer Service',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25} 
           backgroundColor="#232f3e" color="#fff" 
@@ -301,9 +298,9 @@ const NotificationStackScreen = ({navigation}) => (
       },
     }}
   >
-    <NotificationStack.Screen name="My Wallet"  component={Notifications} 
+    <NotificationStack.Screen name="Notifications"  component={Notifications} 
       options={{
-        title: 'My Bookings',
+        title: 'Notifications',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25} 
           backgroundColor="#232f3e" color="#fff" 
@@ -344,59 +341,35 @@ shouldHeaderBeShowm = (route) => {
 }
 
 
-function Navigation() {
+function Navigation({ auth }) {
+  const { isAuthenticated } = auth;
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={HomeStackScreen}  />
-        <Drawer.Screen name="About Us" component={AboutStackScreen} />
+        <Drawer.Screen name="AboutUs" component={AboutStackScreen} />
         <Drawer.Screen name="Offers" component={OfferStackScreen} />
-        <Drawer.Screen name="My Profile" component={MyProfileStackScreen} />
-        <Drawer.Screen name="My Orders/Bookings" component={MyBookingsStackScreen} />
-        <Drawer.Screen name="My Wallet" component={MyWalletStackScreen} />
-        <Drawer.Screen name="Customer Service" component={CustomerServiceStackScreen} />
+        {!isAuthenticated ? (
+          <>
+            <Drawer.Screen name="Login" component={LoginStackScreen} />
+            <Drawer.Screen name="Register" component={RegisterStackScreen} />
+          </>
+        ): (
+          <>
+            <Drawer.Screen name="MyProfile" component={MyProfileStackScreen} />
+            <Drawer.Screen name="MyOrders/Bookings" component={MyBookingsStackScreen} />
+            <Drawer.Screen name="MyWallet" component={MyWalletStackScreen} />
+          </>
+        )}
         <Drawer.Screen name="Notifications" component={NotificationStackScreen} />
-        {/* <Drawer.Screen name="Login" component={LoginStackScreen} />
-        <Drawer.Screen name="Register" component={RegisterStackScreen} /> */}
-        {/* <Drawer.Screen name="FAQ" component={FAQStackScreen} />
-        <Drawer.Screen name="Help" component={HelpStackScreen} /> */}
+        <Drawer.Screen name="CustomerService" component={CustomerServiceStackScreen} />
       </Drawer.Navigator>
-      {/* <Stack.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          gestureEnabled: true,
-          gestureDirection: 'horizontal',
-        }}
-        headerMode="float"
-        animation="fade"
-      >
-        <Stack.Screen 
-          options={({route}) => ({
-            title: getHeaderTitle(route),
-            headerShown: shouldHeaderBeShowm(route)
-          })}
-          name="Welcome" 
-          component={Welcome} 
-        />
-        <Stack.Screen 
-          options={({route}) => ({
-            title: getHeaderTitle(route),
-            headerShown: shouldHeaderBeShowm(route)
-          })}
-          name="Register" 
-          component={Register} 
-        />
-        <Stack.Screen 
-          options={({route}) => ({
-            title: getHeaderTitle(route),
-            headerShown: shouldHeaderBeShowm(route)
-          })}
-          name="Login" 
-          component={Login} 
-        />
-      </Stack.Navigator> */}
     </NavigationContainer>
   )
 }
 
-export default Navigation;
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps)(Navigation);
