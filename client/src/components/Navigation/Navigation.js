@@ -1,8 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+
+import { logoutUser } from '../../redux/actions/authActions';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -313,7 +316,6 @@ const NotificationStackScreen = ({navigation}) => (
   </NotificationStack.Navigator>      
 );
 
-
 showHeaders = (route) => {
   console.log(route)
 }
@@ -341,8 +343,12 @@ shouldHeaderBeShowm = (route) => {
 }
 
 
-function Navigation({ auth }) {
+function Navigation({ auth, logoutUser }) {
   const { isAuthenticated } = auth;
+
+  const signOut = () => {
+    logoutUser();
+  }
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
@@ -354,11 +360,12 @@ function Navigation({ auth }) {
             <Drawer.Screen name="Login" component={LoginStackScreen} />
             <Drawer.Screen name="Register" component={RegisterStackScreen} />
           </>
-        ): (
+        ) : (
           <>
             <Drawer.Screen name="MyProfile" component={MyProfileStackScreen} />
             <Drawer.Screen name="MyOrders/Bookings" component={MyBookingsStackScreen} />
             <Drawer.Screen name="MyWallet" component={MyWalletStackScreen} />
+            <Drawer.Screen name="SignOut" component={signOut} />
           </>
         )}
         <Drawer.Screen name="Notifications" component={NotificationStackScreen} />
@@ -368,8 +375,14 @@ function Navigation({ auth }) {
   )
 }
 
+Navigation.propTypes = {
+  logoutUser: PropTypes.func.isRequired
+}
+
 const mapStateToProps = state => ({
   auth: state.auth
 })
 
-export default connect(mapStateToProps)(Navigation);
+const mapDispatchToProps = { logoutUser }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
