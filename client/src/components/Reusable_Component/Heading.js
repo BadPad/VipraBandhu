@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function Heading({name, style}) {
+export default function Heading({name, containerStyle, style}) {
     return (
-        <View style={styles.container}>
+        <View style={{...styles.container, ...containerStyle}}>
             <Text style={{...styles.heading, ...style}}>{name}</Text>
         </View>
     )
@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
     heading: {
-        fontSize: 30,
-        color: '#3e206d'
+        fontSize: 30
     }
 })

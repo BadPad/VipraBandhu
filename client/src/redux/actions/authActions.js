@@ -1,7 +1,19 @@
+import axios from 'axios';
 import isEmpty from '../../components/Reusable_Component/is-empty';
 import { usersList } from '../staticData';
 import { SET_CURRENT_USER } from '../actions/types';
 import { AsyncStorage } from 'react-native';
+
+/*--- Register User ---*/
+export const registeruser = userData => dispatch => {
+    axios.post('https://i9swse9hdd.execute-api.ap-south-1.amazonaws.com/prod/customer', userData)
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
 
 // Login - Get User Token
 export const loginUser = userData => dispatch => {

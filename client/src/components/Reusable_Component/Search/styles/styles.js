@@ -1,5 +1,7 @@
-import { Platform } from "react-native";
+import { Platform, Dimensions } from "react-native";
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
+
+const { height } = Dimensions.get('window')
 
 export const centerSubtitleStyle = item => ({
   fontSize: 12,
@@ -14,7 +16,11 @@ export default {
     backgroundColor: "#21283d"
   },
   flatListStyle: {
-    marginTop: 0
+    position: 'absolute',
+    backgroundColor: "#C8C8C8",
+    height: height,
+    marginTop: 55,
+    zIndex: 10
   },
   cardShadowStyle: {
     ...Platform.select({

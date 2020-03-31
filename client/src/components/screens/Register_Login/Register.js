@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, FlatList, ScrollView} from 'react-native';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import Container from '../../Reusable_Component/Container';
 import RegisterGridTiles from '../../utils/RegisterGridTiles';
 import TextFieldGroup from '../../Reusable_Component/TextFieldGroup';
 import FieldButton from '../../Reusable_Component/FieldButton';
 import InputCheckbox from '../../Reusable_Component/InputCheckbox';
 import Heading from '../../Reusable_Component/Heading';
 import TextLink from '../../Reusable_Component/TextLink';
+import { registeruser } from '../../../redux/actions/authActions';
 import { validateRegisterInput } from '../../Reusable_Component/Validation/Register';
 
 const registerType = [
@@ -25,7 +29,7 @@ const initialState = {
     confirmPassword: ''
 };
 
-const Register = ({ navigation }) => {
+const Register = ({ navigation, registeruser }) => {
     const [formData, setFormData] = useState({...initialState});
     const [regType, setRegType] = useState(false);
     const [regData, setRegData] = useState('');
@@ -59,14 +63,23 @@ const Register = ({ navigation }) => {
         
         if(isValid) {
             setErrors(errors)
-            console.log(formData)
+
+            const regCustomer = {
+                FirstName: formData.firstName,
+                LastName: formData.lastName,
+                EmailId: formData.email,
+                MobileNumber: parseInt(formData.phone),
+                Password: formData.confirmPassword
+            }
+
+            registeruser(regCustomer)
         } else {
             setErrors(errors)
         }
     }
 
     return (
-        <View style={styles.container}>
+        <Container style={styles.container}>
             {
                 !regType ?
                     <View>
@@ -168,15 +181,13 @@ const Register = ({ navigation }) => {
                         </ScrollView>
                     </View>
             }
-        </View>
+        </Container>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        backgroundColor: '#C8C8C8'
+        justifyContent: 'center'
     },
     regSelection: {
         fontSize: 22,
@@ -184,5 +195,11 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Register
+Register.propTypes = {
+    registeruser: PropTypes.func.isRequired
+}
+
+const mapDispatchToProps = { registeruser }
+
+export default connect(null, mapDispatchToProps)(Register)
 

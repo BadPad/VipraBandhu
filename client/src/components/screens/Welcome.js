@@ -55,7 +55,7 @@ export default class Welcome extends Component{
                         this.filterList("");
                         this.HideComponent();
                         }}
-                        onPress={() => alert("onPress")}
+                        onPress={() => console.log("onPress")}
                     />
                     </View>
                     <View style={stylesImported.flatListStyle}>
@@ -85,21 +85,21 @@ export default class Welcome extends Component{
                             />
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.buttonContainer}>
-                        <View style={styles.button}>
-                            <Button 
-                                title="Register" 
-                                onPress={() => this.props.navigation.navigate('Register')}
-                                color="#3e206d"
+                    <View style={styles.imageContainer}>
+                        <TouchableOpacity style={styles.imageContainerTouchable} onPress={this.pooja}>
+                            <Image
+                                style={styles.images3}
+                                source={require('../images/pooja.png')}
                             />
-                        </View>
-                        <View style={styles.button}>
-                            <Button 
-                                title="Login" 
-                                onPress={() => this.props.navigation.navigate('Login')}
-                                color="#3e206d"
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.imageContainer}>
+                        <TouchableOpacity style={styles.imageContainerTouchable} onPress={this.catering}>
+                            <Image
+                                style={styles.images3}
+                                source={require('../images/catering.jpg')}
                             />
-                        </View>
+                        </TouchableOpacity>
                     </View>
                 </ScrollView>
             </View>
@@ -147,6 +147,14 @@ export default class Welcome extends Component{
         );
     }
 
+    pooja = () => {
+        this.props.navigation.navigate('ServicesList', { category: 'pooja' })
+    }
+
+    catering = () => {
+        this.props.navigation.navigate('ServicesList', { category: 'catering' })
+    }
+
     onRefresh = () => {
         this.setState({
         dataSource: [],
@@ -178,8 +186,6 @@ export default class Welcome extends Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
         backgroundColor: '#C8C8C8'
     },
     title: {
@@ -227,6 +233,14 @@ const styles = StyleSheet.create({
     images2: {
         width: '95%',
         height:150,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginBottom: 10,
+        marginTop:10,
+    },
+    images3: {
+        width: '95%',
+        height:100,
         marginLeft: 'auto',
         marginRight: 'auto',
         marginBottom: 10,

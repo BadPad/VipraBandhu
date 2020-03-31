@@ -19,6 +19,8 @@ import Wallet from '../screens/MyWallet';
 import CustomerService from '../screens/CustomerService';
 import Notifications from '../screens/Notifications';
 import Welcome from '../screens/Welcome';
+import ServicesList from '../screens/Services/ServicesList';
+import Service from '../screens/Services/Service';
 
 const HomeStack = createStackNavigator();
 const LoginStack = createStackNavigator();
@@ -35,7 +37,7 @@ const Drawer = createDrawerNavigator();
 
 const HomeStackScreen = ({navigation}) => (
   
-     <HomeStack.Navigator        
+     <HomeStack.Navigator 
         screenOptions={{
           headerStyle:{
             backgroundColor: '#232f3e',
@@ -47,6 +49,30 @@ const HomeStackScreen = ({navigation}) => (
         }}
       >
         <HomeStack.Screen name="Welcome"  component={Welcome} 
+          options={{
+            title: 'Sukalpa Seva',
+            headerLeft: () => (
+              <Icon.Button name="ios-menu" size={25} 
+              backgroundColor="#232f3e" color="#fff" 
+              onPress={() => navigation.openDrawer()
+              }>
+              </Icon.Button >
+            )
+          }}
+        />
+        <HomeStack.Screen name="ServicesList"  component={ServicesList} 
+          options={{
+            title: 'Sukalpa Seva',
+            headerLeft: () => (
+              <Icon.Button name="ios-menu" size={25} 
+              backgroundColor="#232f3e" color="#fff" 
+              onPress={() => navigation.openDrawer()
+              }>
+              </Icon.Button >
+            )
+          }}
+        />
+        <HomeStack.Screen name="Service"  component={Service} 
           options={{
             title: 'Sukalpa Seva',
             headerLeft: () => (

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import Container from '../../Reusable_Component/Container';
 import Heading from '../../Reusable_Component/Heading';
 import TextFieldGroup from '../../Reusable_Component/TextFieldGroup';
 import FieldButton from '../../Reusable_Component/FieldButton';
@@ -34,7 +36,7 @@ const Login = ({ navigation, loginUser }) => {
     }
 
     return (
-        <View style={styles.container}>
+        <Container style={styles.container}>
               <Image resizeMode='contain'
                     style={styles.images}
                     source={require('client/src/components/images/Logo.png')}
@@ -64,15 +66,13 @@ const Login = ({ navigation, loginUser }) => {
                     onPress={resetNav}
                 />
             </FieldButton>
-        </View>
+        </Container>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        backgroundColor: '#C8C8C8'
+        justifyContent: 'center'
     },
     images: {
         width: '40%',
@@ -86,6 +86,10 @@ const styles = StyleSheet.create({
         
     },
 })
+
+Login.propTypes = {
+    loginUser: PropTypes.func.isRequired
+}
 
 const mapStateToProps = state => ({
     auth: state.auth
