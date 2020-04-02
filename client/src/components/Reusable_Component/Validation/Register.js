@@ -10,7 +10,6 @@ export const validateRegisterInput = (data, registerType, tc) => {
     data.phone = !dataRequired(data.phone) ? data.phone : '';
     data.aadharNo = !dataRequired(data.aadharNo) ? data.aadharNo : '';
     data.accountNo = !dataRequired(data.accountNo) ? data.accountNo : '';
-    data.location = !dataRequired(data.location) ? data.location : '';
     data.password = !dataRequired(data.password) ? data.password : '';
     data.confirmPassword = !dataRequired(data.confirmPassword) ? data.confirmPassword : '';
 
@@ -52,10 +51,6 @@ export const validateRegisterInput = (data, registerType, tc) => {
 
     if(dataRequired(data.accountNo, { min: 0, max: 10 }) && compare(registerType, 'Cook/Catering Service')) {
         errors.accountNo = 'Account Number is required';
-    }
-
-    if(dataRequired(data.location) && compare(registerType, 'Cook/Catering Service')) {
-        errors.location = 'Location is required';
     }
     
     if(dataRequired(data.password)) {
