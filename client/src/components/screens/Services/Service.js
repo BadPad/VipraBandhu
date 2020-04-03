@@ -1,52 +1,57 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import Container from '../../Reusable_Component/Container';
+import React from 'react';
+import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import Card from '../../Reusable_Component/Card/Card';
 import CardSection from '../../Reusable_Component/Card/CardSection';
 import Heading from '../../Reusable_Component/Heading';
 import Carousel from '../../Reusable_Component/Image_Carousel/Carousel';
+import FieldButton from '../../Reusable_Component/FieldButton';
+
+const { width, height } = Dimensions.get('window');
 
 const Service = ({ navigation, route }) => {
 
     const serviceId = route.params.id;
 
     const displayService = staticData.find(service => service.id === serviceId);
-    console.log(displayService)
 
     return (
-        <Container>
-            <Card style={styles.imageCard}>
-                <CardSection>
-                    <View>
-                        <Heading containerStyle={styles.containerTitle} style={styles.serviceTitleStyle} name={displayService.name} />
-                        <Heading containerStyle={styles.containerPoojaAmount} style={styles.poojaAmount} name={`Rs ${displayService.price}`} />
-                    </View>
-                </CardSection>
+        <View>
+            <ScrollView>
                 <Carousel 
                     images={displayService.data}
-                    paginationBoxStyle={styles.paginationBoxStyle} 
-                    dotStyle={styles.dotStyle}
+                    height={height / 2.5}
                     imageComponentStyle={styles.imageComponentStyle}
                 />
-            </Card>
-            <Card style={styles.aboutDescription}>
-                <CardSection>
-                    <Heading containerStyle={styles.containerTitle} style={styles.serviceTitleStyle} name='Description' />
-                </CardSection>
-            </Card>
-        </Container>
+                <Card style={styles.content}>
+                    <CardSection>
+                        <View>
+                            <Heading containerStyle={styles.containerTitle} style={styles.serviceTitleStyle} name={displayService.name} />
+                            <Heading containerStyle={styles.containerPoojaAmount} style={styles.poojaAmount} name={`Rs ${displayService.price}`} />
+                        </View>
+                    </CardSection>
+                    <CardSection style={styles.contentDescription}>
+                        <Text style={styles.description}>{displayService.description}</Text>
+                        <Text style={styles.description}>{displayService.description}</Text>
+                    </CardSection>
+                </Card>
+            </ScrollView>
+            <FieldButton 
+                butonContainer={styles.butonContainer}
+                buttonTouch={styles.buttonTouch}
+                name='Book' 
+            />
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
-    imageCard: {
-        backgroundColor: '#fff'
-    },
     containerTitle: {
         paddingBottom: 0
     },
     serviceTitleStyle: {
-        fontSize: 17
+        fontSize: 20,
+        fontWeight: 'bold',
+        letterSpacing: 0.2
     },
     containerPoojaAmount: {
         alignSelf: 'flex-start',
@@ -56,30 +61,28 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold'
     },
-    paginationBoxStyle: {
-        position: "relative",
+    imageComponentStyle: { 
+        width: '100%',
+    },
+    contentDescription: {
+        flexDirection: 'column'
+    },
+    description: {
+        fontSize: 15,
+        color: '#837F7F'
+    },
+    content: {
+        borderRadius: 0,
+        padding: 5,
+        marginBottom: 42
+    },
+    butonContainer: {
+        position: 'absolute',
         bottom: 0,
-        padding: 0,
-        alignItems: "center",
-        alignSelf: "center",
-        justifyContent: "center",
-        paddingVertical: 10
+        width: '100%'
     },
-    dotStyle: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        marginHorizontal: 0,
-        padding: 0,
-        margin: 0,
-        backgroundColor: "rgba(128, 128, 128, 0.92)"
-    },
-    imageComponentStyle: {
-        borderRadius: 5, 
-        width: '97%'
-    },
-    aboutDescription: {
-        marginVertical: 3
+    buttonTouch:{
+        borderRadius: 0
     }
 })
 

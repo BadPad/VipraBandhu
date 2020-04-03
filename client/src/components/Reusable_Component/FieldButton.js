@@ -1,11 +1,11 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
-const FieldButton = ({children, name, onPress}) => {
+const FieldButton = ({butonContainer, buttonTouch, buttonTouchText, children, name, onPress}) => {
     return (
-        <View style={styles.container}>
-            <TouchableOpacity style={styles.button} onPress={onPress}>
-                <Text style={styles.buttonText}>{name}</Text>
+        <View style={butonContainer}>
+            <TouchableOpacity style={{...styles.button, ...buttonTouch}} onPress={onPress}>
+                <Text style={{...styles.buttonText, ...buttonTouchText}}>{name}</Text>
             </TouchableOpacity>
             {children}
         </View>
@@ -13,9 +13,6 @@ const FieldButton = ({children, name, onPress}) => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        paddingBottom: 20
-    },
     button: {
         width: "100%",
         backgroundColor: '#3e206d',

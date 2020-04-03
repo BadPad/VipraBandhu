@@ -92,8 +92,8 @@ export default class Welcome extends Component {
                     <View style={{marginTop:10, backgroundColor:'#fff'}}>
                         <Text style={{ textAlign:'center', fontWeight:'bold', fontSize: 15 }}>Our Services</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent:'space-between', backgroundColor:'#fff' }}>
-                        <View style={{ width: 180, height: 150, marginLeft:15 }} >
+                    <View style={{ flexDirection: 'row', justifyContent:'space-around', backgroundColor:'#fff' }}>
+                        <View style={{ width: 170, height: 150 }} >
                             <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.pooja}>
                                 <Image
                                     style={styles.images3}
@@ -102,7 +102,7 @@ export default class Welcome extends Component {
                                 <Text style={{ textAlign:'center', fontWeight:'bold' }}>Purohit</Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={{ width: 180, height: 150, marginRight: 15 }} >
+                        <View style={{ width: 170, height: 150 }} >
                             <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.catering}>
                                 <Image
                                     style={styles.images3}

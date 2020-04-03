@@ -9,6 +9,7 @@ export default (staticData = [
     fillColor: "rgba(163, 224, 97, 0.2)",
     strokeColor: "rgba(163, 224, 97, 1.0)",
     price: 1000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
       'http://www.satyanarayanpuja.org/images/Satyanarayan-puja-inner-banner.jpg',
       'https://prachyakarma.com/wp-content/uploads/2017/05/Satyanarayan.png'
@@ -24,6 +25,7 @@ export default (staticData = [
     fillColor: "rgba(234, 53, 53, 0.2)",
     strokeColor: "rgba(234, 53, 53, 1.0)",
     price: 2000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
       'https://i0.wp.com/poojasamagris.com/wp-content/uploads/2018/09/dhanvantri_5.png?ssl=1',
       'https://pujasanskaram.com/250/dhanvantri-homa-dhan.jpg'
@@ -39,6 +41,7 @@ export default (staticData = [
     fillColor: "rgba(234, 53, 53, 0.2)",
     strokeColor: "rgba(234, 53, 53, 1.0)",
     price: 3000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
       'https://lh3.googleusercontent.com/7brDODvv8gBrQ4nbPdG-i_TysdD4H-j8wWv4xjGDQYn9KTmCyqYpSBBeuFaZFbd9HZ4=s180-rw',
       'https://indiabeckons.co.in/wp-content/uploads/2018/03/Hanuman-featured-696x448.jpg'
@@ -54,6 +57,7 @@ export default (staticData = [
     fillColor: "rgba(163, 224, 97, 0.2)",
     strokeColor: "rgba(163, 224, 97, 1.0)",
     price: 4000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
       'https://www.vedagayathri.com/wp-content/uploads/2019/07/Purohit-for-Upanayanam-in-hyderabad.png',
       'https://1.bp.blogspot.com/-C8LJbsBjMsc/XkJn-eDl8II/AAAAAAAABiU/9Fpf9hiBqxsUYjxbkgFAZEHwLjhgEmzJACNcBGAsYHQ/s320/d4.jpg'
@@ -69,6 +73,7 @@ export default (staticData = [
     fillColor: "rgba(234, 53, 53, 0.2)",
     strokeColor: "rgba(234, 53, 53, 1.0)",
     price: 1000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
       'https://www.newstrend.news/wp-content/uploads/2019/04/product_1477287609_1_housing-2-.jpg',
       'http://www.grihapraveshpuja.org/images/g-p-card-1.jpg'
@@ -84,6 +89,7 @@ export default (staticData = [
     fillColor: "rgba(234, 53, 53, 0.2)",
     strokeColor: "rgba(234, 53, 53, 1.0)",
     price: 2000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
       'https://www.kaalsarpdoshnivaran.com/content/agro/images/navgrah1.jpg',
       'https://templesinindiainfo.com/wp-content/uploads/2017/04/Navagraha-Homam.jpg'
@@ -99,6 +105,7 @@ export default (staticData = [
     fillColor: "rgba(163, 224, 97, 0.2)",
     strokeColor: "rgba(163, 224, 97, 1.0)",
     price: 3000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
       'https://www.kaalsarpdoshnivaran.com/content/agro/images/navgrah1.jpg',
       'https://templesinindiainfo.com/wp-content/uploads/2017/04/Navagraha-Homam.jpg'
@@ -114,6 +121,7 @@ export default (staticData = [
     fillColor: "rgba(234, 53, 53, 0.2)",
     strokeColor: "rgba(234, 53, 53, 1.0)",
     price: 4000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
       'https://templesinindiainfo.com/wp-content/uploads/2017/04/Shashti-Purti-Shastabya-Purti.jpg',
       'http://www.shashtipoorthi.com/logo.png'
@@ -129,6 +137,7 @@ export default (staticData = [
     fillColor: "rgba(234, 53, 53, 0.2)",
     strokeColor: "rgba(234, 53, 53, 1.0)",
     price: 1000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
       'https://lh3.googleusercontent.com/proxy/2ZlTCWyauUeIDhiicUvGePEgs4gId8Ra2QP5BN_LcebOP6LRgbIsix2siSgPSpUIRNCuYnCkP_ZAiRo9ZKt0DhSEituv',
       'https://vakilsearch.com/advice/wp-content/uploads/2019/09/Marriage-Registration_-Procedure-Documents-Timelines.jpg'
@@ -144,6 +153,7 @@ export default (staticData = [
     fillColor: "rgba(234, 53, 53, 0.2)",
     strokeColor: "rgba(234, 53, 53, 1.0)",
     price: 2000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
       'https://lh3.googleusercontent.com/proxy/_Kr_9i0JD2WIcvioqxLtQf3cknp0tt8j1OJnHFUqb44nzP86tY6sTknbKMBdXDRJauFDtfsYkmTLAjLbhGf10FMCMHJIm3JfAg',
       'https://arzfinefoods.com/wp-content/uploads/2018/11/Catering_Promo.jpg'
@@ -159,6 +169,7 @@ export default (staticData = [
     fillColor: "rgba(234, 53, 53, 0.2)",
     strokeColor: "rgba(234, 53, 53, 1.0)",
     price: 3000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
       'https://images.click.in/classifieds/images/151/21685134_29_1_2017_11_51_23_1224105432_8l00xskky5.jpg',
       'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTXfCCnwHwOE_9SBNvLF-7yypRus57DOkzAN0B_s9o9CF5H3MvF&usqp=CAU'
@@ -174,6 +185,7 @@ export default (staticData = [
     fillColor: "rgba(234, 53, 53, 0.2)",
     strokeColor: "rgba(234, 53, 53, 1.0)",
     price: 4000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
       'https://glimageurl.golocall.com/golocal-post/image/423988_thinleefoods1511178935.jpeg',
       'https://lh3.googleusercontent.com/proxy/N9_YhLyIpxUs_7HSLdIjwYzWf8HpbRLPScoLSRq5l5mjVUQu972-T1GCAE-mUO7wzwMFPYbajuL6mm61s-k1ZxPK6BBcg2PCeA'
