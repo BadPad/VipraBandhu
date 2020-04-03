@@ -102,7 +102,7 @@ export default class Welcome extends Component {
                                 <Text style={{ textAlign:'center', fontWeight:'bold' }}>Purohit</Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={{ width: 170, height: 150 }} >
+                        <View style={{ width: 170, height: 150, marginRight: 2 }} >
                             <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.catering}>
                                 <Image
                                     style={styles.images3}
