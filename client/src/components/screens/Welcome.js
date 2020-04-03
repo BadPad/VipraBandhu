@@ -2,8 +2,10 @@ import React, { Component } from "react";
 //import { View, Text, StyleSheet, Button } from 'react-native';
 import { View, ScrollView, Text, Button, StyleSheet, Platform, FlatList, StatusBar, UIManager, SafeAreaView, LayoutAnimation, TouchableOpacity, Image } from 'react-native';
 //import { LineChart } from "react-native-svg-charts";
-import SearchBar from "react-native-dynamic-search-bar";
-import GradientCard from "react-native-gradient-card-view";
+//import SearchBar from "react-native-dynamic-search-bar";
+import SearchBar from "../Reusable_Component/Search/SearchBar";
+//import GradientCard from "react-native-gradient-card-view";
+import GradientCard from "../Reusable_Component/Search/GradientCard";
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
 import { CustomLayoutSpring } from "react-native-animation-layout";
 
@@ -44,7 +46,7 @@ export default class Welcome extends Component{
                         autoFocus={false}
                         fontColor="#000"
                         iconColor="#000"
-                        shadowColor="#282828"
+                        //shadowColor="#282828"
                         cancelIconColor="#000"
                         //backgroundColor="#232f3e"
                         placeholder="Search for a service"
@@ -58,17 +60,19 @@ export default class Welcome extends Component{
                         onPress={() => console.log("onPress")}
                     />
                     </View>
-                    <View style={stylesImported.flatListStyle}>
-                        {this.state.show ? (
-                            <FlatList
-                            onRefresh={this.onRefresh}
-                            data={this.state.dataSource}
-                            onEndReached={this.loadMore}
-                            refreshing={this.state.refreshing}
-                            renderItem={({ item }) => this.renderItem(item)}
-                            />
-                        ): null}
-                    </View>
+                    {this.state.show ? (
+                        <View style={stylesImported.flatListStyle}>
+                            
+                                <FlatList
+                                onRefresh={this.onRefresh}
+                                data={this.state.dataSource}
+                                onEndReached={this.loadMore}
+                                refreshing={this.state.refreshing}
+                                renderItem={({ item }) => this.renderItem(item)}
+                                />
+                            
+                        </View>
+                    ): null}
                     <View style={styles.imageContainer}>
                         <TouchableOpacity style={styles.imageContainerTouchable} onPress={this._onPressButton}>
                             <Image resizeMode='contain'

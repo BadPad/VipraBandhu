@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, StatusBar } from 'react-native';
 import Navigation from './components/Navigation/Navigation';
 
 import { Provider } from 'react-redux';
@@ -17,9 +17,13 @@ AsyncStorage.getItem('SukalpaSeva')
 
 function App() {
   return (
+    <>
+    <StatusBar barStyle = "light-content" backgroundColor="#d63031"/>
     <Provider store={ store }>
       <Navigation />
     </Provider>
+      </>    
+
   )
 }
 

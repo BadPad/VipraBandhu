@@ -17,9 +17,9 @@ export default {
   },
   flatListStyle: {
     position: 'absolute',
-    backgroundColor: "#C8C8C8",
+    backgroundColor: "transparent",
     height: height,
-    marginTop: 55,
+    marginTop: 38,
     zIndex: 10
   },
   cardShadowStyle: {
@@ -39,7 +39,7 @@ export default {
     })
   },
   cardStyle: {
-    marginTop: 2,
+    marginTop: 0,
     width: ScreenWidth,
     alignItems: "center",
     justifyContent: "center"
@@ -53,7 +53,7 @@ export default {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#232f3e"
+    backgroundColor: "#D63031"
   },
   welcome: {
     margin: 10,

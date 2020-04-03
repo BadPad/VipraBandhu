@@ -11,7 +11,7 @@ export function container(props) {
     paddingLeft: 8,
     paddingRight: 8,
     height: height || 35,
-    borderRadius: borderRadius || 10,
+    borderRadius: borderRadius || 5,
     backgroundColor: backgroundColor || "#fff",
     width: width || ScreenWidth * 0.93
   };
@@ -31,7 +31,7 @@ export function textInputStyle(fontSize, fontColor) {
     }),
     marginLeft: 24,
     width: ScreenWidth * 0.7,
-    fontSize: fontSize || 13,
+    fontSize: fontSize || 14,
     color: fontColor || "#b3b6c3"
   };
 }
@@ -51,9 +51,10 @@ export function _shadowStyle(shadowColor) {
 }
 
 export function ifIPhoneXHeader(noExtraMargin) {
-  if (noExtraMargin) return { marginTop: 16 };
+  if (noExtraMargin) return { marginTop: 0, marginBottom: 5 };
   return {
-    marginTop: isIPhoneXFamily() ? 44 : 16
+    marginTop: isIPhoneXFamily() ? 44 : 0,
+    marginBottom: isIPhoneXFamily() ? 44 : 5
   };
 }
 
