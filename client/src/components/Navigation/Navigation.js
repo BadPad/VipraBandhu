@@ -79,7 +79,7 @@ const HomeStackScreen = ({ navigation }) => (
         title: 'Sukalpa Seva',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#232f3e" color="#fff"
+            backgroundColor="#D63031" color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -91,7 +91,7 @@ const HomeStackScreen = ({ navigation }) => (
         title: 'Sukalpa Seva',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#232f3e" color="#fff"
+            backgroundColor="#D63031" color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -106,7 +106,7 @@ const LoginStackScreen = ({ navigation }) => (
   <LoginStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#232f3e',
+        backgroundColor: '#D63031',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -119,7 +119,7 @@ const LoginStackScreen = ({ navigation }) => (
         title: 'Login',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#232f3e" color="#fff"
+            backgroundColor="#D63031" color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -134,7 +134,7 @@ const RegisterStackScreen = ({ navigation }) => (
   <RegisterStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#232f3e',
+        backgroundColor: '#D63031',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -147,7 +147,7 @@ const RegisterStackScreen = ({ navigation }) => (
         title: 'Register',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#232f3e" color="#fff"
+            backgroundColor="#D63031" color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -162,7 +162,7 @@ const AboutStackScreen = ({ navigation }) => (
   <AboutStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#232f3e',
+        backgroundColor: '#D63031',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -175,7 +175,7 @@ const AboutStackScreen = ({ navigation }) => (
         title: 'About Us',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#232f3e" color="#fff"
+            backgroundColor="#D63031" color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -190,7 +190,7 @@ const OfferStackScreen = ({ navigation }) => (
   <OfferStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#232f3e',
+        backgroundColor: '#D63031',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -203,7 +203,7 @@ const OfferStackScreen = ({ navigation }) => (
         title: 'Offers',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#232f3e" color="#fff"
+            backgroundColor="#D63031" color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -218,7 +218,7 @@ const MyProfileStackScreen = ({ navigation }) => (
   <MyProfileStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#232f3e',
+        backgroundColor: '#D63031',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -231,7 +231,7 @@ const MyProfileStackScreen = ({ navigation }) => (
         title: 'My Profile',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#232f3e" color="#fff"
+            backgroundColor="#D63031" color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -246,7 +246,7 @@ const MyBookingsStackScreen = ({ navigation }) => (
   <MyBookingsStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#232f3e',
+        backgroundColor: '#D63031',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -259,7 +259,7 @@ const MyBookingsStackScreen = ({ navigation }) => (
         title: 'My Bookings',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#232f3e" color="#fff"
+            backgroundColor="#D63031" color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -275,7 +275,7 @@ const MyWalletStackScreen = ({ navigation }) => (
   <MyWalletStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#232f3e',
+        backgroundColor: '#D63031',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -288,7 +288,7 @@ const MyWalletStackScreen = ({ navigation }) => (
         title: 'My Wallet',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#232f3e" color="#fff"
+            backgroundColor="#D63031" color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -314,7 +314,7 @@ const CustomerServiceStackScreen = ({ navigation }) => (
   <CustomerServiceStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#232f3e',
+        backgroundColor: '#D63031',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -327,7 +327,7 @@ const CustomerServiceStackScreen = ({ navigation }) => (
         title: 'Customer Service',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#232f3e" color="#fff"
+            backgroundColor="#D63031" color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -343,7 +343,7 @@ const NotificationStackScreen = ({ navigation }) => (
   <NotificationStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#232f3e',
+        backgroundColor: '#D63031',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -356,7 +356,7 @@ const NotificationStackScreen = ({ navigation }) => (
         title: 'Notifications',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#232f3e" color="#fff"
+            backgroundColor="#D63031" color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
