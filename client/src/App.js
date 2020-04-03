@@ -18,7 +18,7 @@ AsyncStorage.getItem('SukalpaSeva')
 function App() {
   return (
     <>
-    <StatusBar barStyle = "light-content" backgroundColor="#d63031"/>
+    <StatusBar barStyle = "light-content" backgroundColor="#d42425"/>
     <Provider store={ store }>
       <Navigation />
     </Provider>

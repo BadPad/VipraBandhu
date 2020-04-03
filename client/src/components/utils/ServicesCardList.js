@@ -22,15 +22,18 @@ const ServicesCardList = ({ data, onSelectService }) => {
 const styles = StyleSheet.create({
     cardContainer: {
         padding: 5,
-        margin: 1
+        margin: 0,
+        borderBottomColor:'red',
+        borderBottomWidth:1
     },
     imageStyle: {
-        height: 100,
-        width: 100
+        height: 30,
+        width: 30
     },
     headerTextStyle: {
         justifyContent: 'center',
-        fontSize: 18
+        fontSize: 16,
+        paddingLeft: 5
     }
 })
 

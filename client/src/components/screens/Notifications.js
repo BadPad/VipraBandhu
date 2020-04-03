@@ -7,7 +7,9 @@ const Notifications = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text>Notifications</Text>
+            <View style={styles.boxes}>
+                <Text>Currently there are notifications to show</Text>
+            </View>
         </View>
     )
 }
@@ -17,6 +19,13 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         backgroundColor: '#fff',
+        
+    },
+    boxes: {
+        margin:10,
+        padding:10,
+        borderWidth:0.6,
+        borderColor:'grey'
     }
 })
 

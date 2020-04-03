@@ -63,10 +63,12 @@ const HomeStackScreen = ({ navigation }) => (
           <View style={styles.headerRightIcons}>
             <Icon style={styles.iconCart} name="ios-cart" size={25}
               backgroundColor="#D63031" color="#fff"
+              onPress={() => navigation.navigate('MyBookings')}
             >
             </Icon >
             <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
               backgroundColor="#D63031" color="#fff"
+              onPress={() => navigation.navigate('Notifications')}
             >
             </Icon >
 
@@ -299,7 +301,7 @@ const MyWalletStackScreen = ({ navigation }) => (
           backgroundColor="#232f3e" color="#fff" >
           </Icon.Button > */}
             <Icon.Button name="ios-notifications" size={25}
-              backgroundColor="#232f3e" color="#fff" >
+              backgroundColor="#D63031" color="#fff" >
             </Icon.Button >
           </>
         )
@@ -440,7 +442,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   iconNotifications:{
-    paddingLeft:15,
+    paddingLeft:20,
     paddingRight:15
   },
   iconCart: {

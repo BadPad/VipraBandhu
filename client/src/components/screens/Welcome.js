@@ -12,7 +12,7 @@ import { CustomLayoutSpring } from "react-native-animation-layout";
 import staticData from "../Reusable_Component/Search/staticData";
 import stylesImported, { centerSubtitleStyle } from "../Reusable_Component/Search/styles/styles";
 
-export default class Welcome extends Component{
+export default class Welcome extends Component {
 
     constructor(props) {
         super(props);
@@ -29,50 +29,50 @@ export default class Welcome extends Component{
 
         if (Platform.OS === "android") {
             UIManager.setLayoutAnimationEnabledExperimental &&
-            UIManager.setLayoutAnimationEnabledExperimental(true);
+                UIManager.setLayoutAnimationEnabledExperimental(true);
         }
-    } 
+    }
 
-   
 
-    render(){
-        
+
+    render() {
+
         return (
             <View style={styles.container}>
                 <ScrollView>
                     <View style={stylesImported.container}>
                         <SearchBar
-                        onPressToFocus
-                        autoFocus={false}
-                        fontColor="#000"
-                        iconColor="#000"
-                        //shadowColor="#282828"
-                        cancelIconColor="#000"
-                        //backgroundColor="#232f3e"
-                        placeholder="Search for a service"
-                        onChangeText={text => {
-                        this.filterList(text);
-                        }}
-                        onPressCancel={() => {
-                        this.filterList("");
-                        this.HideComponent();
-                        }}
-                        onPress={() => console.log("onPress")}
-                    />
+                            onPressToFocus
+                            autoFocus={false}
+                            fontColor="#000"
+                            iconColor="#000"
+                            //shadowColor="#282828"
+                            cancelIconColor="#000"
+                            //backgroundColor="#232f3e"
+                            placeholder="Search for a service"
+                            onChangeText={text => {
+                                this.filterList(text);
+                            }}
+                            onPressCancel={() => {
+                                this.filterList("");
+                                this.HideComponent();
+                            }}
+                            onPress={() => console.log("onPress")}
+                        />
                     </View>
                     {this.state.show ? (
                         <View style={stylesImported.flatListStyle}>
-                            
-                                <FlatList
+
+                            <FlatList
                                 onRefresh={this.onRefresh}
                                 data={this.state.dataSource}
                                 onEndReached={this.loadMore}
                                 refreshing={this.state.refreshing}
                                 renderItem={({ item }) => this.renderItem(item)}
-                                />
-                            
+                            />
+
                         </View>
-                    ): null}
+                    ) : null}
                     <View style={styles.imageContainer}>
                         <TouchableOpacity style={styles.imageContainerTouchable} onPress={this._onPressButton}>
                             <Image resizeMode='contain'
@@ -89,65 +89,71 @@ export default class Welcome extends Component{
                             />
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.imageContainer}>
-                        <TouchableOpacity style={styles.imageContainerTouchable} onPress={this.pooja}>
-                            <Image
-                                style={styles.images3}
-                                source={require('../images/pooja.png')}
-                            />
-                        </TouchableOpacity>
+                    <View style={{marginTop:10, backgroundColor:'#fff'}}>
+                        <Text style={{ textAlign:'center', fontWeight:'bold', fontSize: 15 }}>Our Services</Text>
                     </View>
-                    <View style={styles.imageContainer}>
-                        <TouchableOpacity style={styles.imageContainerTouchable} onPress={this.catering}>
-                            <Image
-                                style={styles.images3}
-                                source={require('../images/catering.jpg')}
-                            />
-                        </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', justifyContent:'space-between', backgroundColor:'#fff' }}>
+                        <View style={{ width: 180, height: 150, marginLeft:15 }} >
+                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.pooja}>
+                                <Image
+                                    style={styles.images3}
+                                    source={require('../images/pooja.png')}
+                                />
+                                <Text style={{ textAlign:'center', fontWeight:'bold' }}>Purohit</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ width: 180, height: 150, marginRight: 15 }} >
+                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.catering}>
+                                <Image
+                                    style={styles.images3}
+                                    source={require('../images/catering.jpg')}
+                                />
+                                <Text style={{ textAlign:'center', fontWeight:'bold' }}>Cook</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
+                    
                 </ScrollView>
             </View>
         )
     }
 
     filterList = text => {
-        if(text === '')
-        {
+        if (text === '') {
             this.HideComponent();
         }
-        else
-        {
+        else {
             this.ShowComponent();
             var newData = this.state.dataBackup;
             newData = this.state.dataBackup.filter(item => {
-            const itemData = item.name.toLowerCase();
-            const textData = text.toLowerCase();
-            return itemData.indexOf(textData) > -1;
+                const itemData = item.name.toLowerCase();
+                const textData = text.toLowerCase();
+                return itemData.indexOf(textData) > -1;
             });
             LayoutAnimation.configureNext(CustomLayoutSpring(null, null, "scaleXY"));
             this.setState({
-            query: text,
-            dataSource: newData
+                query: text,
+                dataSource: newData
             });
         }
     };
 
-    
+
 
     renderItem(item) {
         return (
-          <GradientCard
-            key={item.name}
-            title={item.name}
-            style={stylesImported.cardStyle}
-            imageSource={item.image}
-            centerTitle={item.value}
-            subtitle={item.shortName}
-            width={ScreenWidth * 0.9}
-            centerSubtitle={item.change}
-            shadowStyle={stylesImported.cardShadowStyle}
-            centerSubtitleStyle={centerSubtitleStyle(item)}
-          />
+            <GradientCard
+                key={item.name}
+                title={item.name}
+                style={stylesImported.cardStyle}
+                imageSource={item.image}
+                centerTitle={item.value}
+                subtitle={item.shortName}
+                width={ScreenWidth * 0.9}
+                centerSubtitle={item.change}
+                shadowStyle={stylesImported.cardShadowStyle}
+                centerSubtitleStyle={centerSubtitleStyle(item)}
+            />
         );
     }
 
@@ -161,30 +167,30 @@ export default class Welcome extends Component{
 
     onRefresh = () => {
         this.setState({
-        dataSource: [],
-        isLoading: false,
-        refreshing: true,
-        seed: 1,
-        page: 1
+            dataSource: [],
+            isLoading: false,
+            refreshing: true,
+            seed: 1,
+            page: 1
         });
         // this.fetchData();
     };
 
     loadMore = () => {
         this.setState({
-        // refreshing: true,
-        page: this.state.page + 1
+            // refreshing: true,
+            page: this.state.page + 1
         });
         // this.fetchData();
     };
-    
-    HideComponent = () => {        
+
+    HideComponent = () => {
         this.setState({ show: false });
     };
 
     ShowComponent = (text) => {
         this.setState({ show: true });
-    };   
+    };
 }
 
 const styles = StyleSheet.create({
@@ -213,42 +219,46 @@ const styles = StyleSheet.create({
     ImageContainer: {
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        backgroundColor:'#fff',
-        
+        backgroundColor: '#fff',
+
     },
-    imageContainerTouchable:{
-        backgroundColor:'#fff',
-        marginTop:10, 
+    imageContainerTouchable: {
+        backgroundColor: '#fff',
+        marginTop: 10
+    },
+    imageContainerTouchable2: {
+        backgroundColor: '#fff',
+        
     },
     button: {
         width: 100
     },
     images: {
         width: '95%',
-        height:50,
+        height: 50,
         marginLeft: 'auto',
         marginRight: 'auto',
         marginBottom: 10,
-        shadowRadius:10,
-        shadowColor:'blue',
-        marginTop:10,
-        
+        shadowRadius: 10,
+        shadowColor: 'blue',
+        marginTop: 10,
+
     },
     images2: {
         width: '95%',
-        height:150,
+        height: 150,
         marginLeft: 'auto',
         marginRight: 'auto',
         marginBottom: 10,
-        marginTop:10,
+        marginTop: 10,
     },
     images3: {
         width: '95%',
-        height:100,
+        height: 100,
         marginLeft: 'auto',
         marginRight: 'auto',
         marginBottom: 10,
-        marginTop:10,
+        marginTop: 10,
     }
 })
 
