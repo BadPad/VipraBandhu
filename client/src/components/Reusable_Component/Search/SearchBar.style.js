@@ -13,7 +13,7 @@ export function container(props) {
     height: height || 35,
     borderRadius: borderRadius || 5,
     backgroundColor: backgroundColor || "#fff",
-    width: width || ScreenWidth * 0.93
+    width: width || ScreenWidth * 0.95
   };
 }
 

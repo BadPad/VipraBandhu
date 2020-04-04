@@ -17,7 +17,7 @@ export default (staticData = [
   },
   {
     id: 2,
-    name: "Dhanvantari homa",
+    name: "Dhanvantari Homa",
     category: 'pooja',
     shortName: "ETH",
     value: "$ 141.39",

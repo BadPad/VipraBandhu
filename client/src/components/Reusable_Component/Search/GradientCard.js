@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles, {
   _shadowStyle,
@@ -14,6 +14,8 @@ import FastImage from "react-native-fast-image";
 
 const GradientCard = props => {
   const {
+    id,
+    onSelectService,
     end,
     start,
     title,
@@ -44,7 +46,7 @@ const GradientCard = props => {
   } = props;
 
   return (
-    <View style={[style, shadowStyle || _shadowStyle(shadowColor)]}>
+    <TouchableOpacity style={[style, shadowStyle || _shadowStyle(shadowColor)]} onPress={() => onSelectService(id)}>
       <LinearGradient
         start={start || { x: 0, y: 0 }}
         end={end || { x: 1, y: 0 }}
@@ -65,7 +67,7 @@ const GradientCard = props => {
 
         </View>
       </LinearGradient>
-    </View>
+    </TouchableOpacity>
   );
 };
 

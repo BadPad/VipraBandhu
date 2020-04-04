@@ -407,18 +407,18 @@ function Navigation({ auth, logoutUser }) {
         <Drawer.Screen name="Home" component={HomeStackScreen} />
         <Drawer.Screen name="AboutUs" component={AboutStackScreen} />
         <Drawer.Screen name="Offers" component={OfferStackScreen} />
-        {!isAuthenticated ? (
-          <>
-            <Drawer.Screen name="Login" component={LoginStackScreen} />
-            <Drawer.Screen name="Register" component={RegisterStackScreen} />
-          </>
-        ) : (
+          {!isAuthenticated ? (
             <>
-              <Drawer.Screen name="MyProfile" component={MyProfileStackScreen} />
-              <Drawer.Screen name="MyOrders/Bookings" component={MyBookingsStackScreen} />
-              <Drawer.Screen name="MyWallet" component={MyWalletStackScreen} />
-              <Drawer.Screen name="SignOut" component={signOut} />
+              <Drawer.Screen name="Login" component={LoginStackScreen} />
+              <Drawer.Screen name="Register" component={RegisterStackScreen} />
             </>
+          ) : (
+              <>
+                <Drawer.Screen name="MyProfile" component={MyProfileStackScreen} />
+                <Drawer.Screen name="MyOrders/Bookings" component={MyBookingsStackScreen} />
+                <Drawer.Screen name="MyWallet" component={MyWalletStackScreen} />
+                <Drawer.Screen name="SignOut" component={signOut} />
+              </>
           )}
         <Drawer.Screen name="Notifications" component={NotificationStackScreen} />
         <Drawer.Screen name="CustomerService" component={CustomerServiceStackScreen} />

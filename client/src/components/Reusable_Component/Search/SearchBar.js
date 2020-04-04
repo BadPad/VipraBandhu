@@ -85,6 +85,7 @@ export default class SearchBar extends Component {
                       }}
                       autoFocus={autoFocus}
                       value={textInputValue}
+                      onSubmitEditing={onPress}
                       placeholder={placeholder}
                       placeholderTextColor={fontColor}
                       style={[textInputStyle(fontSize, fontColor)]}

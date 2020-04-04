@@ -36,7 +36,7 @@ export default class Welcome extends Component {
 
 
     render() {
-
+        const { navigation } = this.props;
         return (
             <View style={styles.container}>
                 <ScrollView>
@@ -57,7 +57,7 @@ export default class Welcome extends Component {
                                 this.filterList("");
                                 this.HideComponent();
                             }}
-                            onPress={() => console.log("onPress")}
+                            onPress={e => e.nativeEvent.text !== '' ? navigation.navigate('ServicesList', { name: e.nativeEvent.text }) : console.log('Empty search')}
                         />
                     </View>
                     {this.state.show ? (
@@ -205,11 +205,13 @@ export default class Welcome extends Component {
         return (
             <GradientCard
                 key={item.name}
+                id={item.id}
                 title={item.name}
                 style={stylesImported.cardStyle}
                 imageSource={item.image}
                 centerTitle={item.value}
                 subtitle={item.shortName}
+                onSelectService={selected => this.props.navigation.navigate('Service', { id: selected })}
                 width={ScreenWidth * 0.9}
                 centerSubtitle={item.change}
                 shadowStyle={stylesImported.cardShadowStyle}
