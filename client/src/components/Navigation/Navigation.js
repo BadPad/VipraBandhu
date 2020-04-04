@@ -258,7 +258,7 @@ const MyBookingsStackScreen = ({ navigation }) => (
   >
     <MyBookingsStack.Screen name="MyBookings" component={MyBookings}
       options={{
-        title: 'My Bookings',
+        title: 'MyBookings',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
             backgroundColor="#D63031" color="#fff"

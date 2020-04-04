@@ -89,26 +89,87 @@ export default class Welcome extends Component {
                             />
                         </TouchableOpacity>
                     </View>
-                    <View style={{marginTop:10, backgroundColor:'#fff'}}>
-                        <Text style={{ textAlign:'center', fontWeight:'bold', fontSize: 15 }}>Our Services</Text>
+
+                    <View style={styles.serviceHeader}>
+                        <Text style={styles.serviceHeaderText}>Pooja Services</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent:'space-around', backgroundColor:'#fff' }}>
-                        <View style={{ width: 170, height: 150 }} >
+                    <View style={styles.serviceBody}>
+                        <View style={styles.serviceBodyBox}>
+                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.pooja}>
+                                <Image
+                                    style={styles.images3}
+                                    source={require('../images/Kalasha.png')}
+                                />
+                                <Text style={styles.serviceBodyBoxTitle}>Pooja</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.serviceBodyBox}>
+                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.pooja}>
+                                <Image
+                                    style={styles.images3}
+                                    source={require('../images/Homa.png')}
+                                />
+                                <Text style={styles.serviceBodyBoxTitle}>Homas</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.serviceBodyBox}>
+                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.pooja}>
+                                <Image
+                                    style={styles.images3}
+                                    source={require('../images/Functions.png')}
+                                />
+                                <Text style={styles.serviceBodyBoxTitle}>Functions</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.serviceBodyBox}>
                             <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.pooja}>
                                 <Image
                                     style={styles.images3}
                                     source={require('../images/pooja.png')}
                                 />
-                                <Text style={{ textAlign:'center', fontWeight:'bold' }}>Purohit</Text>
+                                <Text style={styles.serviceBodyBoxTitle}>Shraddha</Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={{ width: 170, height: 150, marginRight: 2 }} >
+                    </View>
+                    
+                    <View style={styles.serviceHeader}>
+                        <Text style={styles.serviceHeaderText}>Cooking Services</Text>
+                    </View>
+                    <View style={styles.serviceBody}>
+                        <View style={styles.serviceBodyBox}>
                             <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.catering}>
                                 <Image
                                     style={styles.images3}
                                     source={require('../images/catering.jpg')}
                                 />
-                                <Text style={{ textAlign:'center', fontWeight:'bold' }}>Cook</Text>
+                                <Text style={styles.serviceBodyBoxTitle}>Cook</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.serviceBodyBox}>
+                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.catering}>
+                                <Image
+                                    style={styles.images3}
+                                    source={require('../images/catering.jpg')}
+                                />
+                                <Text style={styles.serviceBodyBoxTitle}>Cook</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.serviceBodyBox}>
+                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.catering}>
+                                <Image
+                                    style={styles.images3}
+                                    source={require('../images/catering.jpg')}
+                                />
+                                <Text style={styles.serviceBodyBoxTitle}>Cook</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.serviceBodyBox}>
+                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.catering}>
+                                <Image
+                                    style={styles.images3}
+                                    source={require('../images/catering.jpg')}
+                                />
+                                <Text style={styles.serviceBodyBoxTitle}>Cook</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -242,7 +303,6 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
         shadowColor: 'blue',
         marginTop: 10,
-
     },
     images2: {
         width: '95%',
@@ -254,11 +314,36 @@ const styles = StyleSheet.create({
     },
     images3: {
         width: '95%',
-        height: 100,
+        height: 90,
         marginLeft: 'auto',
         marginRight: 'auto',
         marginBottom: 10,
         marginTop: 10,
+    },
+    serviceHeader:{
+        marginTop:10,
+        backgroundColor:'#fff'
+    },
+    serviceHeaderText:{
+        textAlign:'center',
+        fontWeight:'bold',
+        fontSize: 15 
+    },
+    serviceBody:{
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        backgroundColor:'#fff',
+        height:130,
+    },
+    serviceBodyBox:{
+        width: 80,
+        height: 100,
+        marginLeft:5,
+        marginRight:5
+    },
+    serviceBodyBoxTitle:{
+        textAlign:'center',
+        fontWeight:'bold'
     }
 })
 

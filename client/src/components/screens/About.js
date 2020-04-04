@@ -14,10 +14,10 @@ const About = ({ navigation }) => {
 
                 </Text>
                 <Text style={styles.textStyle}>
-                    SukalpaSeva is a one stop solution which provides an efficient platform for hassle free bookings for all your requirements of events at your convenience. Our vision is to use smart technology and processes to structure the highly unorganized services and provide easy ways to book for your essentials. We offer a chain of skilled professionals to cater all your requirements at your doorstep with just a few clicks.
+                    Sukalpa Seva is a one stop solution which provides an efficient platform for hassle free bookings for all your requirements of events at your convenience. Our vision is to use smart technology and processes to structure the highly unorganized services and provide easy ways to book for your essentials. We offer a chain of skilled professionals to cater all your requirements at your doorstep with just a few clicks.
                 </Text>
                 <Text style={styles.textStyle}>
-                    SukalpaSeva provides not only the skilled professionals but also entitled for authenticity, commitment, hygiene and customer satisfaction. We take all the overheads but give the customer the best services in the market at the lowest cost with no hidden charges. Sukalpa stands for skilled / qualified workers and we abide to it. 
+                    Sukalpa Seva provides not only the skilled professionals but also entitled for authenticity, commitment, hygiene and customer satisfaction. We take all the overheads but give the customer the best services in the market at the lowest cost with no hidden charges. Sukalpa stands for skilled / qualified workers and we abide to it. 
                 </Text>
             </View>
             
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         
     },
     headerText:{
-        fontSize: 28,
+        fontSize: 26,
         textAlign: 'center'
     }
 })
