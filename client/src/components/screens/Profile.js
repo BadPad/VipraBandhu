@@ -123,7 +123,7 @@ const Profile = () => {
 
 const styles = StyleSheet.create({
   header:{
-    backgroundColor: "#232f3e",
+    backgroundColor: "#D63031",
     height:100,
   },
   edit: {
