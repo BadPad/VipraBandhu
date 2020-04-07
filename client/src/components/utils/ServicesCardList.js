@@ -2,16 +2,16 @@ import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import Card from '../Reusable_Component/Card/Card'
 import CardSection from '../Reusable_Component/Card/CardSection'
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const ServicesCardList = ({ data, onSelectService }) => {
     return (
         <TouchableOpacity onPress={() => onSelectService(data.id)}>
             <Card style={styles.cardContainer}>
                 <CardSection>
-                    <Image 
-                        source={data.category === 'pooja' ? require('../images/Logo.png') : require('../images/catering.jpg')} 
-                        style={styles.imageStyle}
-                    />
+                    <Icon name="ios-arrow-dropright-circle" size={20} 
+                        backgroundColor="transparent" color="#D63031" 
+                    ></Icon >
                     <Text style={styles.headerTextStyle}>{data.name}</Text>
                 </CardSection>
             </Card>
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     cardContainer: {
         padding: 5,
         margin: 0,
-        borderBottomColor:'red',
-        borderBottomWidth:1
+        
+        borderWidth:0
     },
     imageStyle: {
         height: 30,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     },
     headerTextStyle: {
         justifyContent: 'center',
-        fontSize: 16,
+        fontSize: 15,
         paddingLeft: 5
     }
 })
