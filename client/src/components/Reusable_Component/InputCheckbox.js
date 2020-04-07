@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, CheckBox } from 'react-native'
 
-const InputCheckbox = ({checkText, checkValue, onchange, errors}) => {
+const InputCheckbox = ({children, checkValue, onchange, errors}) => {
     return (
         <>
             <View style={styles.inputCheck}>
@@ -9,7 +9,7 @@ const InputCheckbox = ({checkText, checkValue, onchange, errors}) => {
                     onValueChange={onchange}
                     value={checkValue}
                 />
-                <Text style={styles.checkText}>{checkText}</Text>
+                {children}
             </View>
             {errors && <Text style={styles.error}>{errors}</Text>}
         </>
@@ -21,9 +21,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 10,
         paddingVertical: 5
-    },
-    checkText: {
-        marginTop: 5
     },
     error: {
         paddingHorizontal: 16,

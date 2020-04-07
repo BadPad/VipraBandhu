@@ -208,11 +208,18 @@ const Register = ({ navigation, regCustomer, regPurohit, regCook }) => {
                                 />
                             </> : null}
                             <InputCheckbox 
-                                checkText="I have read and agreed to the T&C"
                                 checkValue={tc}
                                 onchange={() => setTc(!tc)}
                                 errors={errors.checked}
-                            />
+                            >
+                                <TextLink 
+                                    styleLinkContainer={styles.styleLinkContainer}
+                                    link={styles.link}
+                                    text="I have read and agreed to the"
+                                    linkText=" T & C"
+                                    onPress={() => console.log('t&c')}
+                                />
+                            </InputCheckbox>
                             <FieldButton 
                                 name="Register"
                                 onPress={submit}
@@ -237,6 +244,12 @@ const styles = StyleSheet.create({
     regSelection: {
         fontSize: 22,
         color: '#444'
+    },
+    styleLinkContainer: {
+        justifyContent: 'flex-start'
+    },
+    link: {
+        color: '#74B9FF'
     }
 })
 

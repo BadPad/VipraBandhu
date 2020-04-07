@@ -1,11 +1,11 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
-const TextLink = ({text, linkText, onPress}) => {
+const TextLink = ({text, linkText, styleLinkContainer, link, onPress}) => {
     return (
-        <View style={styles.textCont}>
+        <View style={{...styles.textCont, ...styleLinkContainer}}>
             <Text style={styles.text}>{text}</Text>
-            <Text style={styles.linkButton} onPress={onPress} >{linkText}</Text>
+            <Text style={{...styles.linkButton, ...link}} onPress={onPress} >{linkText}</Text>
         </View>
     )
 }
