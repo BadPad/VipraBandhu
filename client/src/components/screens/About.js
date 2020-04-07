@@ -54,8 +54,16 @@ const styles = StyleSheet.create({
         padding: 10
     },
     boxes: {
+<<<<<<< Updated upstream
         marginTop: 0,
         paddingLeft: 0,
+=======
+
+        marginTop: 0,
+        paddingLeft: 0,
+
+
+>>>>>>> Stashed changes
     },
     headerText: {
         fontSize: 22,

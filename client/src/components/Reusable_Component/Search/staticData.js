@@ -289,6 +289,94 @@ export default (staticData = [
     ]
   },
   {
+<<<<<<< Updated upstream
+=======
+    id: 13,
+    name: "Chataka Shraddha",
+    category: 'pooja',
+    subcategory: 'shraddha',
+    shortName: "NEO",
+    value: "$ 141.39",
+    change: "+ 0,59 ↓",
+    fillColor: "rgba(234, 53, 53, 0.2)",
+    strokeColor: "rgba(234, 53, 53, 1.0)",
+    price: 1000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    data: [
+      'https://lh3.googleusercontent.com/proxy/2ZlTCWyauUeIDhiicUvGePEgs4gId8Ra2QP5BN_LcebOP6LRgbIsix2siSgPSpUIRNCuYnCkP_ZAiRo9ZKt0DhSEituv',
+      'https://vakilsearch.com/advice/wp-content/uploads/2019/09/Marriage-Registration_-Procedure-Documents-Timelines.jpg'
+    ]
+  },
+  {
+    id: 14,
+    name: "Anantha Padmanabha Vratha",
+    category: 'pooja',
+    subcategory: 'pooja',
+    shortName: "NEO",
+    value: "$ 141.39",
+    change: "+ 0,59 ↓",
+    fillColor: "rgba(234, 53, 53, 0.2)",
+    strokeColor: "rgba(234, 53, 53, 1.0)",
+    price: 1000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    data: [
+      'https://lh3.googleusercontent.com/proxy/2ZlTCWyauUeIDhiicUvGePEgs4gId8Ra2QP5BN_LcebOP6LRgbIsix2siSgPSpUIRNCuYnCkP_ZAiRo9ZKt0DhSEituv',
+      'https://vakilsearch.com/advice/wp-content/uploads/2019/09/Marriage-Registration_-Procedure-Documents-Timelines.jpg'
+    ]
+  },
+  {
+    id: 15,
+    name: "Mangala Gauri Vratha",
+    category: 'pooja',
+    subcategory: 'pooja',
+    shortName: "NEO",
+    value: "$ 141.39",
+    change: "+ 0,59 ↓",
+    fillColor: "rgba(234, 53, 53, 0.2)",
+    strokeColor: "rgba(234, 53, 53, 1.0)",
+    price: 1000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    data: [
+      'https://lh3.googleusercontent.com/proxy/2ZlTCWyauUeIDhiicUvGePEgs4gId8Ra2QP5BN_LcebOP6LRgbIsix2siSgPSpUIRNCuYnCkP_ZAiRo9ZKt0DhSEituv',
+      'https://vakilsearch.com/advice/wp-content/uploads/2019/09/Marriage-Registration_-Procedure-Documents-Timelines.jpg'
+    ]
+  },
+  {
+    id: 16,
+    name: "Durga Pooje",
+    category: 'pooja',
+    subcategory: 'pooja',
+    shortName: "NEO",
+    value: "$ 141.39",
+    change: "+ 0,59 ↓",
+    fillColor: "rgba(234, 53, 53, 0.2)",
+    strokeColor: "rgba(234, 53, 53, 1.0)",
+    price: 1000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    data: [
+      'https://lh3.googleusercontent.com/proxy/2ZlTCWyauUeIDhiicUvGePEgs4gId8Ra2QP5BN_LcebOP6LRgbIsix2siSgPSpUIRNCuYnCkP_ZAiRo9ZKt0DhSEituv',
+      'https://vakilsearch.com/advice/wp-content/uploads/2019/09/Marriage-Registration_-Procedure-Documents-Timelines.jpg'
+    ]
+  },
+  {
+    id: 17,
+    name: "Vaaskal / Baagilu Pooje",
+    category: 'pooja',
+    subcategory: 'pooja',
+    shortName: "NEO",
+    value: "$ 141.39",
+    change: "+ 0,59 ↓",
+    fillColor: "rgba(234, 53, 53, 0.2)",
+    strokeColor: "rgba(234, 53, 53, 1.0)",
+    price: 1000,
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    data: [
+      'https://lh3.googleusercontent.com/proxy/2ZlTCWyauUeIDhiicUvGePEgs4gId8Ra2QP5BN_LcebOP6LRgbIsix2siSgPSpUIRNCuYnCkP_ZAiRo9ZKt0DhSEituv',
+      'https://vakilsearch.com/advice/wp-content/uploads/2019/09/Marriage-Registration_-Procedure-Documents-Timelines.jpg'
+    ]
+  },
+  {
+>>>>>>> Stashed changes
     id: 18,
     name: "Naandi",
     category: 'pooja',
