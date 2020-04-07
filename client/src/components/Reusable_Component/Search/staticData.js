@@ -148,7 +148,7 @@ export default (staticData = [
     price: 1000,
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
-      'https://lh3.googleusercontent.com/proxy/2ZlTCWyauUeIDhiicUvGePEgs4gId8Ra2QP5BN_LcebOP6LRgbIsix2siSgPSpUIRNCuYnCkP_ZAiRo9ZKt0DhSEituv',
+      'https://www.thebetterindia.com/wp-content/uploads/2020/01/Featured-Image-1-4.png',
       'https://vakilsearch.com/advice/wp-content/uploads/2019/09/Marriage-Registration_-Procedure-Documents-Timelines.jpg'
     ]
   },
@@ -165,7 +165,7 @@ export default (staticData = [
     price: 2000,
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
-      'https://lh3.googleusercontent.com/proxy/_Kr_9i0JD2WIcvioqxLtQf3cknp0tt8j1OJnHFUqb44nzP86tY6sTknbKMBdXDRJauFDtfsYkmTLAjLbhGf10FMCMHJIm3JfAg',
+      'https://glimageurl.golocall.com/golocal-post/image/850817_fusionplus_1492776649.jpeg',
       'https://arzfinefoods.com/wp-content/uploads/2018/11/Catering_Promo.jpg'
     ]
   },
@@ -200,7 +200,7 @@ export default (staticData = [
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     data: [
       'https://glimageurl.golocall.com/golocal-post/image/423988_thinleefoods1511178935.jpeg',
-      'https://lh3.googleusercontent.com/proxy/N9_YhLyIpxUs_7HSLdIjwYzWf8HpbRLPScoLSRq5l5mjVUQu972-T1GCAE-mUO7wzwMFPYbajuL6mm61s-k1ZxPK6BBcg2PCeA'
+      'https://hiibangalore.com/wp-content/uploads/2018/03/nonveg1.jpg'
     ]
   },
   {
