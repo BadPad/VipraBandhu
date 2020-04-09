@@ -13,7 +13,7 @@ const ServicesList = ({ navigation, route }) => {
 
     const renderServicesList = ({ item, subCat }) => {
         return (
-            <ServicesCardList data={item} onSelectService={onSelectService} subCategory={subCat} />
+            <ServicesCardList data={item} onSelectService={onSelectService} />
         )
     }
 
