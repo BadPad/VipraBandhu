@@ -123,7 +123,7 @@ const Profile = ({ auth }) => {
                     <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
                     <View style={styles.body}>
                         <View style={styles.bodyContent}>
-                          <Text style={styles.name}>{formData.firstName}</Text>
+                          <Text style={styles.name}>{formData.firstName} {formData.lastName} </Text>
                           <Text style={styles.info}><Icon style={styles.info} name="phone" color="#000" />{` ${formData.phoneNumber}`}</Text>
                           <Text style={styles.description}><Icons style={styles.mail} name="mail" color="#000" />{` ${formData.email}`}</Text>
                           <Text style={styles.location}><Iconlocation style={styles.address} name="location-pin" color="#000" />{` ${formData.area}, ${formData.landmark}, ${formData.city}`}</Text>
