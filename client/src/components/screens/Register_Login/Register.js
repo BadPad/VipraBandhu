@@ -257,12 +257,12 @@ const Register = ({ navigation, regCustomer, regPurohit, regCook }) => {
                         >
                         <View style={styles.tnc}>
                             <TouchableHighlight
-                                style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                                style={{ ...styles.openButton, backgroundColor: "#FFF" }}
                                 onPress={() => {
                                 setModalVisible(!modalVisible);
                                 }}
                             >
-                                <Text style={styles.textStyle}>Close</Text>
+                                <Text style={styles.textStyle}><Icon style={styles.close} name="closecircleo" color="#D63031" /></Text>
                             </TouchableHighlight>
                         <ScrollView>
                             
@@ -361,6 +361,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         borderRadius: 20,
         padding: 35,
+        paddingTop: 5,
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -375,6 +376,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 15,
         fontWeight: 'bold',
+        marginTop: 10,
         marginBottom: 8
     },
     conditions: {
@@ -399,7 +401,7 @@ const styles = StyleSheet.create({
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
-        padding: 35,
+        padding: 30,
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -413,14 +415,18 @@ const styles = StyleSheet.create({
       openButton: {
         backgroundColor: "#F194FF",
         borderRadius: 20,
-        padding: 10,
-        marginLeft: 190,
-        elevation: 2
+        
+        marginLeft: 230,
+        // elevation: 2
       },
       textStyle: {
-        color: "white",
+        color: "#000",
         fontWeight: "bold",
-        textAlign: "center"
+        textAlign: "center",
+        fontSize: 15
+      },
+      close: {
+          fontSize: 23
       },
       modalText: {
         marginBottom: 15,
