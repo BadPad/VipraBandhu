@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/Feather';
@@ -17,18 +18,32 @@ import TextFieldGroup from '../Reusable_Component/TextFieldGroup';
 import FieldButton from '../Reusable_Component/FieldButton';
 
 const initialState = {
-    firstName: '',
-    lastName: '',
-    phoneNumber: '',
-    email: '',
-    area: '',
-    landmark: '',
-    city: ''
+  firstName: '',
+  lastName: '',
+  phoneNumber: '',
+  email: '',
+  area: '',
+  landmark: '',
+  city: ''
 }
 
-const Profile = () => {
+const Profile = ({ auth }) => {
     const [formData, setFormData] = useState({...initialState});
-    const [editView, setEditView] = useState(false)
+    const [editView, setEditView] = useState(false);
+
+    useEffect(()=> {
+      const { user } = auth;
+      console.log(user)
+      setFormData({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phoneNumber: user.phoneNumber,
+        email: user.email,
+        area: user.area,
+        landmark: user.landmark,
+        city: user.city
+      })
+    }, auth)
 
     const showEdit = () => {
         setEditView(true)
@@ -108,10 +123,10 @@ const Profile = () => {
                     <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
                     <View style={styles.body}>
                         <View style={styles.bodyContent}>
-                            <Text style={styles.name}>Pavan Gautham</Text>
-                            <Text style={styles.info}><Icon style={styles.info} name="phone" color="#000" />  7259691900</Text>
-                            <Text style={styles.description}><Icons style={styles.mail} name="mail" color="#000" /> pavan.gautham17@gmail.com</Text>
-                            <Text style={styles.location}><Iconlocation style={styles.address} name="location-pin" color="#000" />  Shakambari nagar,opp Banashankari Temple, Bangalore-70</Text>
+                          <Text style={styles.name}>{formData.firstName}</Text>
+                          <Text style={styles.info}><Icon style={styles.info} name="phone" color="#000" />{` ${formData.phoneNumber}`}</Text>
+                          <Text style={styles.description}><Icons style={styles.mail} name="mail" color="#000" />{` ${formData.email}`}</Text>
+                          <Text style={styles.location}><Iconlocation style={styles.address} name="location-pin" color="#000" />{` ${formData.area}, ${formData.landmark}, ${formData.city}`}</Text>
                         </View>
                     </View>
                 </>
@@ -205,5 +220,9 @@ const styles = StyleSheet.create({
       color: "#FFF"
   }
 });
+
+const mapStateToProps = state => ({
+  auth: state.auth
+})
  
-export default Profile;
+export default connect(mapStateToProps)(Profile);
