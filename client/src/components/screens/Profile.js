@@ -3,9 +3,10 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableOpacity,
-  ScrollView
+  Image,
+  ScrollView,
+  TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -13,6 +14,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/Feather';
 import Iconlocation from 'react-native-vector-icons/SimpleLineIcons';
 import Iconback from 'react-native-vector-icons/AntDesign';
+
+//import Image from 'react-native-image-progress';
+import ProgressBar from 'react-native-progress/Bar';
+import ImagePicker from 'react-native-image-crop-picker'
 
 import TextFieldGroup from '../Reusable_Component/TextFieldGroup';
 import FieldButton from '../Reusable_Component/FieldButton';
@@ -30,6 +35,7 @@ const initialState = {
 const Profile = ({ auth }) => {
     const [formData, setFormData] = useState({...initialState});
     const [editView, setEditView] = useState(false);
+    const [avatarSrc, setAvatarSrc] = useState({});
 
     useEffect(()=> {
       const { user } = auth;
@@ -57,17 +63,42 @@ const Profile = ({ auth }) => {
         setEditView(false)
     }
 
+    const openGallery = () => {
+      ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: true
+      }).then(image => {
+        console.log(image);
+        /* this.setState({
+          avatarSrc: image
+        }) */
+        setAvatarSrc({...image})
+      });
+    }
+
+    const sourceUri = avatarSrc.path ? { uri: avatarSrc.path }
+        : {uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'};
+
     return (
       <View style={styles.container}>
         <ScrollView>
             {editView ? (
                 <>
-                    <View style={styles.header}>
+                    <View>
                         <TouchableOpacity>
                             <Text style={styles.edit} onPress={goBack} > <Iconback style={styles.edit} name="back" color="#000" /> Back</Text>
                         </TouchableOpacity>
                     </View>
-                    <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
+                    
+                      <TouchableHighlight onPress={openGallery}>
+                        <Image 
+                          source={ sourceUri } 
+                          indicator={ProgressBar} 
+                          style={styles.avatar}/>
+                      </TouchableHighlight>
+                    
+                    {/* <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/> */}
                     <View style={styles.bodyEdit}>
                         <View style={styles.bodyEditContent}>
                             <TextFieldGroup                     
@@ -115,7 +146,7 @@ const Profile = ({ auth }) => {
                 </>
             ) : (
                 <>
-                    <View style={styles.header}>
+                    <View>
                         <TouchableOpacity>
                             <Text style={styles.edit} onPress={showEdit} > <Icon style={styles.edit} name="edit" color="#000" /> Edit</Text>
                         </TouchableOpacity>
@@ -142,31 +173,31 @@ const styles = StyleSheet.create({
     height:100,
   },
   edit: {
-      color: "#FFF",
+      color: "#000",
       marginLeft: 10,
       marginTop: 10,
       fontSize: 20
   },
   avatar: {
-    width: 130,
-    height: 130,
-    borderRadius: 63,
+    width: 160,
+    height: 150,
+    borderRadius: 103,
     borderWidth: 4,
     borderColor: "white",
     marginBottom:10,
     alignSelf:'center',
-    position: 'absolute',
-    marginTop:30
+    //position: 'absolute',
+    //marginTop:30
   },
   bodyEdit:{
-    marginTop:30,
+    marginTop:10,
   },
   bodyEditContent: {
     flex: 1,
-    padding:20,
+   // padding:20,
   },
   body:{
-    marginTop:40,
+    marginTop:10,
   },
   bodyContent: {
     flex: 1,
