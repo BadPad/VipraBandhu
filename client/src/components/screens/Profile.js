@@ -65,8 +65,8 @@ const Profile = ({ auth }) => {
 
     const openGallery = () => {
       ImagePicker.openPicker({
-        width: 300,
-        height: 400,
+        width: 100,
+        height: 100,
         cropping: true
       }).then(image => {
         console.log(image);
@@ -151,7 +151,14 @@ const Profile = ({ auth }) => {
                             <Text style={styles.edit} onPress={showEdit} > <Icon style={styles.edit} name="edit" color="#000" /> Edit</Text>
                         </TouchableOpacity>
                     </View>
-                    <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
+                      <TouchableHighlight onPress={openGallery}>
+                        <Image 
+                          source={ sourceUri } 
+                          indicator={ProgressBar} 
+                          style={styles.avatar}/>
+                      </TouchableHighlight>
+                      
+                    {/* <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/> */}
                     <View style={styles.body}>
                         <View style={styles.bodyContent}>
                           <Text style={styles.name}>{formData.firstName} {formData.lastName} </Text>
