@@ -10,6 +10,9 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 
+//import DropdownPicker from './DropdownPicker';
+import SearchDropdown from './SearchDropdown';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/Feather';
 import Iconlocation from 'react-native-vector-icons/SimpleLineIcons';
@@ -122,6 +125,8 @@ const Profile = ({ auth }) => {
                                 onChange={text => setFormData({...formData, email: text})}
                                 value={formData.email}                    
                             />
+                            {/* <DropdownPicker /> */}
+                            <SearchDropdown />
                             <TextFieldGroup                     
                                 placeholder="Area"
                                 onChange={text => setFormData({...formData, area: text})}
@@ -141,6 +146,7 @@ const Profile = ({ auth }) => {
                                 name='Update Profile'
                                 onPress={submit}
                             ></FieldButton>
+                            
                         </View>
                     </View>
                 </>
