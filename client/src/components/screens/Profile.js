@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 
 //import DropdownPicker from './DropdownPicker';
 import SearchDropdown from './SearchDropdown';
+import SelectingServices from './SelectingServices';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/Feather';
@@ -127,6 +128,7 @@ const Profile = ({ auth }) => {
                             />
                             {/* <DropdownPicker /> */}
                             <SearchDropdown />
+                            <SelectingServices />
                             <TextFieldGroup                     
                                 placeholder="Area"
                                 onChange={text => setFormData({...formData, area: text})}
