@@ -19,7 +19,7 @@ export default {
     position: 'absolute',
     backgroundColor: "transparent",
     height: height,
-    marginTop: 38,
+    marginTop: 45,
     zIndex: 10
   },
   cardShadowStyle: {
@@ -50,10 +50,10 @@ export default {
         top: 0
       }
     }),
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#D63031"
+    backgroundColor: "#D63031",
+    paddingTop: 5
   },
   welcome: {
     margin: 10,

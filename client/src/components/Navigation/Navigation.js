@@ -78,7 +78,7 @@ const HomeStackScreen = ({ navigation }) => (
     />
     <HomeStack.Screen name="ServicesList" component={ServicesList}
       options={{
-        title: 'Sukalpa Seva',
+        title: 'Pooja Service List',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
             backgroundColor="#D63031" color="#fff"

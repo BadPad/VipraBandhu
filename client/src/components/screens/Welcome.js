@@ -1,259 +1,154 @@
-import React, { Component } from "react";
-//import { View, Text, StyleSheet, Button } from 'react-native';
-import { View, ScrollView, Text, Button, StyleSheet, Platform, FlatList, StatusBar, UIManager, SafeAreaView, LayoutAnimation, TouchableOpacity, Image } from 'react-native';
-//import { LineChart } from "react-native-svg-charts";
-//import SearchBar from "react-native-dynamic-search-bar";
-import SearchBar from "../Reusable_Component/Search/SearchBar";
-//import GradientCard from "react-native-gradient-card-view";
-import GradientCard from "../Reusable_Component/Search/GradientCard";
-import { ScreenWidth } from "@freakycoder/react-native-helpers";
-import { CustomLayoutSpring } from "react-native-animation-layout";
+import React, { useEffect } from "react";
+import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import SearchServices from "../Reusable_Component/SearchServices";
 
-import staticData from "../Reusable_Component/Search/staticData";
-import stylesImported, { centerSubtitleStyle } from "../Reusable_Component/Search/styles/styles";
+import { serviceList, poojaServices, homaServices, functionServices, searchServices } from '../../redux/actions/serviceListActions';
 
-export default class Welcome extends Component {
+const Welcome = ({ 
+    navigation, 
+    route, 
+    serviceList, 
+    poojaServices, 
+    homaServices, 
+    functionServices, 
+    services,
+    searchServices
+}) => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            page: 1,
-            seed: 1,
-            query: "",
-            isLoading: true,
-            refreshing: false,
-            dataBackup: staticData,
-            dataSource: staticData,
-            show: false,
-        };
+    useEffect(() => {
+        serviceList()
+    }, [])
 
-        if (Platform.OS === "android") {
-            UIManager.setLayoutAnimationEnabledExperimental &&
-                UIManager.setLayoutAnimationEnabledExperimental(true);
+    const pooja = (type) => {
+        if(type === 'pooja') {
+            poojaServices('searchPooja')
+        } else if(type === 'homa') {
+            homaServices('searchHoma')
+        } else if(type === 'function') {
+            functionServices('searchFunction')
         }
+        navigation.navigate('ServicesList', { category: 'purohit' })
     }
 
-
-
-    render() {
-        const { navigation } = this.props;
-        return (
-            <View style={styles.container}>
-                <ScrollView>
-                    <View style={stylesImported.container}>
-                        <SearchBar
-                            onPressToFocus
-                            autoFocus={false}
-                            fontColor="#000"
-                            iconColor="#000"
-                            //shadowColor="#282828"
-                            cancelIconColor="#000"
-                            //backgroundColor="#232f3e"
-                            placeholder="Search for a service"
-                            onChangeText={text => {
-                                this.filterList(text);
-                            }}
-                            onPressCancel={() => {
-                                this.filterList("");
-                                this.HideComponent();
-                            }}
-                            onPress={e => e.nativeEvent.text !== '' ? navigation.navigate('ServicesList', { name: e.nativeEvent.text }) : console.log('Empty search')}
-                        />
-                    </View>
-                    {this.state.show ? (
-                        <View style={stylesImported.flatListStyle}>
-
-                            <FlatList
-                                onRefresh={this.onRefresh}
-                                data={this.state.dataSource}
-                                onEndReached={this.loadMore}
-                                refreshing={this.state.refreshing}
-                                renderItem={({ item }) => this.renderItem(item)}
-                            />
-
-                        </View>
-                    ) : null}
-                    <View style={styles.imageContainer}>
-                        <TouchableOpacity style={styles.imageContainerTouchable} onPress={this._onPressButton}>
-                            <Image resizeMode='contain'
-                                style={styles.images}
-                                source={require('../images/Fest-Banner.png')}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.imageContainer}>
-                        <TouchableOpacity style={styles.imageContainerTouchable} onPress={this._onPressButton}>
-                            <Image
-                                style={styles.images2}
-                                source={require('../images/Ads.png')}
-                            />
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.serviceHeader}>
-                        <Text style={styles.serviceHeaderText}>Pooja Services</Text>
-                    </View>
-                    <View style={styles.serviceBody}>
-                        <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.pooja}>
-                                <Image
-                                    style={styles.images3}
-                                    source={require('../images/Kalasha.png')}
-                                />
-                                <Text style={styles.serviceBodyBoxTitle}>Pooja</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.pooja}>
-                                <Image
-                                    style={styles.images3}
-                                    source={require('../images/Homa.png')}
-                                />
-                                <Text style={styles.serviceBodyBoxTitle}>Homas</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.pooja}>
-                                <Image
-                                    style={styles.images3}
-                                    source={require('../images/Functions.png')}
-                                />
-                                <Text style={styles.serviceBodyBoxTitle}>Functions</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.pooja}>
-                                <Image
-                                    style={styles.images3}
-                                    source={require('../images/pooja.png')}
-                                />
-                                <Text style={styles.serviceBodyBoxTitle}>Shraddha</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    
-                    <View style={styles.serviceHeader}>
-                        <Text style={styles.serviceHeaderText}>Cooking Services</Text>
-                    </View>
-                    <View style={styles.serviceBody}>
-                        <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.catering}>
-                                <Image
-                                    style={styles.images3}
-                                    source={require('../images/catering.jpg')}
-                                />
-                                <Text style={styles.serviceBodyBoxTitle}>Cook</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.catering}>
-                                <Image
-                                    style={styles.images3}
-                                    source={require('../images/catering.jpg')}
-                                />
-                                <Text style={styles.serviceBodyBoxTitle}>Cook</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.catering}>
-                                <Image
-                                    style={styles.images3}
-                                    source={require('../images/catering.jpg')}
-                                />
-                                <Text style={styles.serviceBodyBoxTitle}>Cook</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={this.catering}>
-                                <Image
-                                    style={styles.images3}
-                                    source={require('../images/catering.jpg')}
-                                />
-                                <Text style={styles.serviceBodyBoxTitle}>Cook</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    
-                </ScrollView>
-            </View>
-        )
+    const catering = () => {
+        navigation.navigate('ServicesList', { category: 'catering' })
     }
 
-    filterList = text => {
-        if (text === '') {
-            this.HideComponent();
-        }
-        else {
-            this.ShowComponent();
-            var newData = this.state.dataBackup;
-            newData = this.state.dataBackup.filter(item => {
-                const itemData = item.name.toLowerCase();
-                const textData = text.toLowerCase();
-                return itemData.indexOf(textData) > -1;
-            });
-            LayoutAnimation.configureNext(CustomLayoutSpring(null, null, "scaleXY"));
-            this.setState({
-                query: text,
-                dataSource: newData
-            });
-        }
-    };
-
-
-
-    renderItem(item) {
-        return (
-            <GradientCard
-                key={item.name}
-                id={item.id}
-                title={item.name}
-                style={stylesImported.cardStyle}
-                imageSource={item.image}
-                centerTitle={item.value}
-                subtitle={item.shortName}
-                onSelectService={selected => this.props.navigation.navigate('Service', { id: selected })}
-                width={ScreenWidth * 0.9}
-                centerSubtitle={item.change}
-                shadowStyle={stylesImported.cardShadowStyle}
-                centerSubtitleStyle={centerSubtitleStyle(item)}
+    return (
+        <View style={styles.container}>
+            <SearchServices 
+                navigation={navigation} 
+                route={route}
+                services={services.fullServiceList} 
+                searchServices={searchServices}
             />
-        );
-    }
+            <ScrollView>
+                <View style={styles.imageContainer}>
+                    <TouchableOpacity style={styles.imageContainerTouchable} onPress={() => _onPressButton}>
+                        <Image resizeMode='contain'
+                            style={styles.images}
+                            source={require('../images/Fest-Banner.png')}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.imageContainer}>
+                    <TouchableOpacity style={styles.imageContainerTouchable} onPress={() => _onPressButton}>
+                        <Image
+                            style={styles.images2}
+                            source={require('../images/Ads.png')}
+                        />
+                    </TouchableOpacity>
+                </View>
 
-    pooja = () => {
-        this.props.navigation.navigate('ServicesList', { category: 'pooja' })
-    }
-
-    catering = () => {
-        this.props.navigation.navigate('ServicesList', { category: 'catering' })
-    }
-
-    onRefresh = () => {
-        this.setState({
-            dataSource: [],
-            isLoading: false,
-            refreshing: true,
-            seed: 1,
-            page: 1
-        });
-        // this.fetchData();
-    };
-
-    loadMore = () => {
-        this.setState({
-            // refreshing: true,
-            page: this.state.page + 1
-        });
-        // this.fetchData();
-    };
-
-    HideComponent = () => {
-        this.setState({ show: false });
-    };
-
-    ShowComponent = (text) => {
-        this.setState({ show: true });
-    };
+                <View style={styles.serviceHeader}>
+                    <Text style={styles.serviceHeaderText}>Pooja Services</Text>
+                </View>
+                <View style={styles.serviceBody}>
+                    <View style={styles.serviceBodyBox}>
+                        <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => pooja('pooja')}>
+                            <Image
+                                style={styles.images3}
+                                source={require('../images/Kalasha.png')}
+                            />
+                            <Text style={styles.serviceBodyBoxTitle}>Pooja</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.serviceBodyBox}>
+                        <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => pooja('homa')}>
+                            <Image
+                                style={styles.images3}
+                                source={require('../images/Homa.png')}
+                            />
+                            <Text style={styles.serviceBodyBoxTitle}>Homas</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.serviceBodyBox}>
+                        <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => pooja('function')}>
+                            <Image
+                                style={styles.images3}
+                                source={require('../images/Functions.png')}
+                            />
+                            <Text style={styles.serviceBodyBoxTitle}>Functions</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.serviceBodyBox}>
+                        <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => pooja('shraddha')}>
+                            <Image
+                                style={styles.images3}
+                                source={require('../images/pooja.png')}
+                            />
+                            <Text style={styles.serviceBodyBoxTitle}>Shraddha</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                
+                <View style={styles.serviceHeader}>
+                    <Text style={styles.serviceHeaderText}>Cooking Services</Text>
+                </View>
+                <View style={styles.serviceBody}>
+                    <View style={styles.serviceBodyBox}>
+                        <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering}>
+                            <Image
+                                style={styles.images3}
+                                source={require('../images/catering.jpg')}
+                            />
+                            <Text style={styles.serviceBodyBoxTitle}>Cook</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.serviceBodyBox}>
+                        <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering}>
+                            <Image
+                                style={styles.images3}
+                                source={require('../images/catering.jpg')}
+                            />
+                            <Text style={styles.serviceBodyBoxTitle}>Cook</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.serviceBodyBox}>
+                        <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering}>
+                            <Image
+                                style={styles.images3}
+                                source={require('../images/catering.jpg')}
+                            />
+                            <Text style={styles.serviceBodyBoxTitle}>Cook</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.serviceBodyBox}>
+                        <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering}>
+                            <Image
+                                style={styles.images3}
+                                source={require('../images/catering.jpg')}
+                            />
+                            <Text style={styles.serviceBodyBoxTitle}>Cook</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                
+            </ScrollView>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -349,4 +244,19 @@ const styles = StyleSheet.create({
     }
 })
 
+Welcome.propTypes = {
+    serviceList: PropTypes.func.isRequired,
+    poojaServices: PropTypes.func.isRequired,
+    homaServices: PropTypes.func.isRequired,
+    functionServices: PropTypes.func.isRequired,
+    searchServices: PropTypes.func.isRequired,
+    services: PropTypes.object.isRequired
+}
 
+const mapStateToProps = state => ({
+    services: state.serviceList
+})
+
+const mapDispatchToProps = { serviceList, poojaServices, homaServices, functionServices, searchServices }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome)

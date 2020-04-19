@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, FlatList, ScrollView, Text, View } from 'react-native'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
 import ServicesCardList from '../../utils/ServicesCardList';
-import staticData from "../../Reusable_Component/Search/staticData";
 import isEmpty from '../../Reusable_Component/is-empty';
 import Heading from '../../Reusable_Component/Heading';
+import SearchServices from '../../Reusable_Component/SearchServices';
+import { searchServices } from '../../../redux/actions/serviceListActions';
 
-const ServicesList = ({ navigation, route }) => {
+const ServicesList = ({ navigation, route, serviceList, searchServices }) => {
 
     const onSelectService = data => {
         navigation.navigate('Service', { id: data })
@@ -25,75 +28,89 @@ const ServicesList = ({ navigation, route }) => {
     let filteredList_Purohit_Homa;
     let filteredList_Purohit_Function;
     let filteredList_Purohit_Shraddha;
+    const services = serviceList.filteredList;
+    const allServices = serviceList.fullServiceList
     if (serviceCategory !== undefined || null) {
-        filteredList = staticData.filter(list => list.category === serviceCategory);
-        filteredList_Purohit_Pooja = filteredList.filter(list => list.subcategory === 'pooja');
-        filteredList_Purohit_Homa = filteredList.filter(list => list.subcategory === 'homa');
-        filteredList_Purohit_Function = filteredList.filter(list => list.subcategory === 'function');
-        filteredList_Purohit_Shraddha = filteredList.filter(list => list.subcategory === 'shraddha');
+        filteredList = services.filter(list => list.serviceCategory === serviceCategory);
+        filteredList_Purohit_Pooja = filteredList.filter(list => list.serviceSubCategory === 'pooja');
+        filteredList_Purohit_Homa = filteredList.filter(list => list.serviceSubCategory === 'homa');
+        filteredList_Purohit_Function = filteredList.filter(list => list.serviceSubCategory === 'function');
+        filteredList_Purohit_Shraddha = filteredList.filter(list => list.serviceSubCategory === 'shraddha');
     } else if (serviceName !== undefined || null) {
-        filteredList = staticData.filter(list => list.name.toLowerCase().includes(serviceName.toLowerCase()));
+        filteredList = allServices.filter(list => list.serviceName.toLowerCase().includes(serviceName.toLowerCase()));
     }
 
     if (isEmpty(filteredList) === false) {
         return (
-            <ScrollView style={styles.container}>
-                {
-                    (serviceCategory === 'pooja') ?
-                        <>
-                        <View style={styles.subCategory}>
-                            <Text style={styles.subCategoryTitle}>
-                                Pooja
-                            </Text>
-                            <FlatList
-                                keyExtractor={item => item.id.toString()}
-                                data={filteredList_Purohit_Pooja}
-                                renderItem={renderServicesList}
-                            />
-                        </View>
+            <>
+                <SearchServices 
+                    navigation={navigation} 
+                    route={route}
+                    services={services}
+                    searchServices={searchServices}
+                />
+                <ScrollView style={styles.container}>
+                    {
+                        (serviceCategory === 'purohit') ?
+                            <>
+                                {isEmpty(filteredList_Purohit_Pooja) === false &&
+                                <View style={styles.subCategory}>
+                                    <Text style={styles.subCategoryTitle}>
+                                        Pooja
+                                    </Text>
+                                    <FlatList
+                                        keyExtractor={item => item.serviceId.toString()}
+                                        data={filteredList_Purohit_Pooja}
+                                        renderItem={renderServicesList}
+                                    />
+                                </View>}
 
-                        <View style={styles.subCategory}>
-                            <Text style={styles.subCategoryTitle}>
-                                Homa
-                            </Text>
-                            <FlatList
-                                keyExtractor={item => item.id.toString()}
-                                data={filteredList_Purohit_Homa}
-                                renderItem={renderServicesList}
-                            />
-                        </View>
+                                {isEmpty(filteredList_Purohit_Homa) === false &&
+                                <View style={styles.subCategory}>
+                                    <Text style={styles.subCategoryTitle}>
+                                        Homa
+                                    </Text>
+                                    <FlatList
+                                        keyExtractor={item => item.serviceId.toString()}
+                                        data={filteredList_Purohit_Homa}
+                                        renderItem={renderServicesList}
+                                    />
+                                </View>}
 
-                        <View style={styles.subCategory}>
-                            <Text style={styles.subCategoryTitle}>
-                                Functions
-                            </Text>
-                            <FlatList
-                                keyExtractor={item => item.id.toString()}
-                                data={filteredList_Purohit_Function}
-                                renderItem={renderServicesList}
-                            />
-                        </View>
+                                {isEmpty(filteredList_Purohit_Function) === false &&
+                                <View style={styles.subCategory}>
+                                    <Text style={styles.subCategoryTitle}>
+                                        Functions
+                                    </Text>
+                                    <FlatList
+                                        keyExtractor={item => item.serviceId.toString()}
+                                        data={filteredList_Purohit_Function}
+                                        renderItem={renderServicesList}
+                                    />
+                                </View>}
 
-                        <View style={styles.subCategory}>
-                            <Text style={styles.subCategoryTitle}>
-                                Shraddha
-                            </Text>
-                            <FlatList
-                                keyExtractor={item => item.id.toString()}
-                                data={filteredList_Purohit_Shraddha}
-                                renderItem={renderServicesList}
-                                
-                            />
-                        </View>
-                        </>
-                        :
-                        <FlatList
-                            keyExtractor={item => item.id.toString()}
-                            data={filteredList}
-                            renderItem={renderServicesList}
-                        />
-                }
-            </ScrollView>
+                                {isEmpty(filteredList_Purohit_Shraddha) === false &&
+                                <View style={styles.subCategory}>
+                                    <Text style={styles.subCategoryTitle}>
+                                        Shraddha
+                                    </Text>
+                                    <FlatList
+                                        keyExtractor={item => item.serviceId.toString()}
+                                        data={filteredList_Purohit_Shraddha}
+                                        renderItem={renderServicesList}
+                                        
+                                    />
+                                </View>}
+                            </>
+                            :
+                                <FlatList
+                                    keyExtractor={item => item.serviceId.toString()}
+                                    data={filteredList}
+                                    renderItem={renderServicesList}
+                                />
+                    }
+                </ScrollView>
+            </>
         )
     } else {
         return (
@@ -143,4 +160,14 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ServicesList
+ServicesList.propTypes = {
+    serviceList: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    serviceList : state.serviceList
+})
+
+const mapDispatchToProps = { searchServices }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ServicesList)

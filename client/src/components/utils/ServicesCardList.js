@@ -6,13 +6,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const ServicesCardList = ({ data, onSelectService }) => {
     return (
-        <TouchableOpacity onPress={() => onSelectService(data.id)}>
+        <TouchableOpacity onPress={() => onSelectService(data)}>
             <Card style={styles.cardContainer}>
                 <CardSection>
                     <Icon name="ios-arrow-dropright-circle" size={20} 
                         backgroundColor="transparent" color="#D63031" 
                     ></Icon >
-                    <Text style={styles.headerTextStyle}>{data.name}</Text>
+                    <Text style={styles.headerTextStyle}>{data.serviceName}</Text>
                 </CardSection>
             </Card>
         </TouchableOpacity>

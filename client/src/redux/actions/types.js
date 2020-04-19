@@ -3,3 +3,13 @@ export const GET_ERRORS = 'GET_ERRORS';
 
 /*--- AUTH ---*/
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+
+/*--- SERVICE LIST ---*/
+export const GET_SERVICE_LIST = 'GET_SERVICE_LIST';
+
+/*--- SEARCH OR FILTER SERVICES ---*/
+export const POOJA_SERVICES = 'POOJA_SERVICES';
+export const HOMA_SERVICES = 'HOMA_SERVICES';
+export const FUNCTION_SERVICES = 'FUNCTION_SERVICES';
+
+export const SEARCH_SERVICES = 'SEARCH_SERVICES';
