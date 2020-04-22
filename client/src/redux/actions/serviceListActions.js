@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_SERVICE_LIST, POOJA_SERVICES, HOMA_SERVICES, FUNCTION_SERVICES, SEARCH_SERVICES } from './types';
+import { GET_SERVICE_LIST, SEARCH_SERVICES, FILTER_CATEGORY, SELECTED_CATEGORY, POOJA_SERVICES, HOMA_SERVICES, FUNCTION_SERVICES} from './types';
 
 /*--- Service List ---*/
 export const serviceList = () => dispatch => {
@@ -13,6 +13,30 @@ export const serviceList = () => dispatch => {
     .catch(err => {
         console.log(err)
     })
+}
+
+/*--- Search by Service ---*/
+export const searchServices = data => {
+    return {
+        type: SEARCH_SERVICES,
+        payload: data
+    }
+}
+
+/*--- Selected Category ---*/
+export const selectedCategory = category => {
+    return {
+        type: SELECTED_CATEGORY,
+        payload: category
+    }
+}
+
+/*--- Filter Category ---*/
+export const filterCategory = category => {
+    return {
+        type: FILTER_CATEGORY,
+        payload: category
+    }
 }
 
 /*--- Filter Pooja Service ---*/
@@ -36,13 +60,5 @@ export const functionServices = type => {
     return {
         type: FUNCTION_SERVICES,
         payload: type
-    }
-}
-
-/*--- Search by Service ---*/
-export const searchServices = data => {
-    return {
-        type: SEARCH_SERVICES,
-        payload: data
     }
 }
