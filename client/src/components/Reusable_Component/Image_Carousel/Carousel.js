@@ -16,6 +16,8 @@ const Carousel = ({ images, height, paginationBoxStyle, dotStyle, imageComponent
             paginationBoxStyle={paginationBoxStyle}
             dotStyle={dotStyle}
             ImageComponentStyle={imageComponentStyle}
+            onCurrentImagePressed={index => console.warn(`image ${index} pressed`)}
+
         />
     )
 }

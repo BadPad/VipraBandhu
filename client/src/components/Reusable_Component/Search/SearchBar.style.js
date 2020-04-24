@@ -32,7 +32,8 @@ export function textInputStyle(fontSize, fontColor) {
     marginLeft: 24,
     width: ScreenWidth * 0.7,
     fontSize: fontSize || 14,
-    color: fontColor || "#b3b6c3"
+    color: fontColor || "#b3b6c3",
+    fontFamily: 'OpenSans-Regular',
   };
 }
 

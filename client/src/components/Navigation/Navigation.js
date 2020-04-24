@@ -22,6 +22,8 @@ import Notifications from '../screens/Notifications';
 import Welcome from '../screens/Welcome';
 import ServicesList from '../screens/Services/ServicesList';
 import Service from '../screens/Services/Service';
+import BookingsList from '../screens/Bookings/BookingsList';
+import Booking from '../screens/Bookings/Booking';
 
 const HomeStack = createStackNavigator();
 const LoginStack = createStackNavigator();
@@ -45,13 +47,17 @@ const HomeStackScreen = ({ navigation }) => (
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontFamily: 'OpenSans-Regular'
       },
     }}
   >
     <HomeStack.Screen name="Welcome" component={Welcome}
       options={{
         title: 'Sukalpa Seva',
+        headerTitleStyle:{
+          fontFamily: 'OpenSans-Regular'
+        },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
             backgroundColor="#D63031" color="#fff"
@@ -256,9 +262,9 @@ const MyBookingsStackScreen = ({ navigation }) => (
       },
     }}
   >
-    <MyBookingsStack.Screen name="MyBookings" component={MyBookings}
+    <MyBookingsStack.Screen name="BookingsList" component={BookingsList}
       options={{
-        title: 'MyBookings',
+        title: 'My Bookings',
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
             backgroundColor="#D63031" color="#fff"
@@ -267,6 +273,12 @@ const MyBookingsStackScreen = ({ navigation }) => (
           </Icon.Button >
         )
       }}
+    />
+    <MyBookingsStack.Screen name="Booking" component={Booking}
+      
+        options={({ route }) => ({ title: route.params.name })}
+        
+      
     />
   </MyBookingsStack.Navigator>
 );

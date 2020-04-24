@@ -15,14 +15,14 @@ const FieldButton = ({butonContainer, buttonTouch, buttonTouchText, children, na
 const styles = StyleSheet.create({
     button: {
         width: "100%",
-        backgroundColor: '#3e206d',
-        borderRadius: 25,
+        backgroundColor: '#D63031',
+        borderRadius: 10,
         paddingVertical: 13
     },
     buttonText: {
         fontSize: 16,
         fontWeight: '500',
-        color: '#f0e3ff',
+        color: '#fff',
         textAlign: 'center'
     }
 })
