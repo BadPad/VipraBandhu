@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Modal, TouchableHighlight, ScrollView } from 'react-native';
 import SelectMultiple from 'react-native-select-multiple';
 
+import Icon from 'react-native-vector-icons/AntDesign';
+
 const pooja = ['Satyanarayana Pooje', 'Punyavarchane', 'Vaaskal / Baagilu Pooje', 'Naandi', 'Devara Pooje – Mane devara Pooje', 'Navagraha Pooje / Japa', 'Durga Pooje / Durga Namaskara', 'Ganapathi Pooje (On Ganesha Chaturthi)', 'Swarna Gouri Pooje', 'Anantha Padmanabha Vratha', 'Mangala gowri Vratha', 'Bheeemana Amavasye Vratha', 'Navagraha Japa / Shanthi']
 
 const homa = ['Pavamana Homa','Ashlesha Bali', 'Dhanvantri Homa']
@@ -113,7 +115,7 @@ class SelectingServices extends React.Component {
                             <Text style={styles.text}>Select your Services</Text>
                             <View>
                               <TouchableHighlight onPress={this.ShowHidePooja}>
-                                <Text style={styles.heading}>Pooja List</Text>
+                                <Text style={styles.heading}>Pooja List <Icon style={styles.dropdownarrow} name="down" /></Text>
                               </TouchableHighlight>
                               {!this.state.showPooja ? (
                               <SelectMultiple
@@ -125,7 +127,7 @@ class SelectingServices extends React.Component {
                             </View>
                             <View>
                               <TouchableHighlight onPress={this.ShowHideHoma}>
-                                <Text style={styles.heading}>Homa List</Text>
+                                <Text style={styles.heading}>Homa List <Icon style={styles.dropdownarrow} name="down" /></Text>
                               </TouchableHighlight>
                               {!this.state.showHoma ? (
                               <SelectMultiple                                                        
@@ -137,7 +139,7 @@ class SelectingServices extends React.Component {
                             </View>
                             <View>
                               <TouchableHighlight onPress={this.ShowHideFunctions}>
-                                <Text style={styles.heading}>Functions</Text>
+                                <Text style={styles.heading}>Functions <Icon style={styles.dropdownarrow} name="down" /></Text>
                               </TouchableHighlight>
                               {!this.state.showFunctions ? (
                               <SelectMultiple                                                        
@@ -149,7 +151,7 @@ class SelectingServices extends React.Component {
                             </View>
                             <View>
                               <TouchableHighlight onPress={this.ShowHideShradha}>
-                                <Text style={styles.heading}>Shradha</Text>
+                                <Text style={styles.heading}>Shradha <Icon style={styles.dropdownarrow} name="down" /></Text>
                               </TouchableHighlight>
                               {!this.state.showShradha ? (
                               <SelectMultiple                                                        
@@ -165,7 +167,7 @@ class SelectingServices extends React.Component {
                                 this.setModalVisible(!modalVisible);
                                 }}
                             >
-                                <Text style={styles.textStyle}>Submit</Text>
+                                <Text style={styles.textStyle}>Confirm</Text>
                             </TouchableHighlight>
                         </ScrollView>
                         </View>
@@ -197,7 +199,7 @@ const styles = StyleSheet.create({
       backgroundColor: "white",
       borderRadius: 20,
       padding: 5,
-      //alignItems: "center",
+      alignItems: "center",
       shadowColor: "#000",
       shadowOffset: {
         width: 0,
@@ -225,7 +227,9 @@ const styles = StyleSheet.create({
     },
     textStyles: {
       color: "#000",
-      padding: 10
+      padding: 10,
+      fontSize: 17,
+      marginBottom: 10
     },
     modalText: {
       marginBottom: 15,
@@ -237,7 +241,14 @@ const styles = StyleSheet.create({
     },
     heading: {
       fontSize: 20,
-      marginTop: 10
+      marginTop: 20,
+      textAlign: "center",
+      borderRadius: 20,
+      backgroundColor: "#000",
+      color: "#fff"
+    },
+    dropdownarrow: {
+      color: "#fff"
     }
   });
 

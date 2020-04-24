@@ -11,8 +11,14 @@ import {
 import { connect } from 'react-redux';
 
 //import DropdownPicker from './DropdownPicker';
-import SearchDropdown from './SearchDropdown';
-import SelectingServices from './SelectingServices';
+import TypesOfService from './TypesOfService';
+//import SearchDropdown from './SearchDropdown';
+import SelectServices from './SelectServices';
+//import SelectingServices from './SelectingServices';
+import SelectStateCity from './SelectStateCity';
+import PurohitCaste from './PurohitCaste';
+import ServiceCaste from './ServiceCaste';
+import SearchArea from './SearchArea';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/Feather';
@@ -79,6 +85,14 @@ const Profile = ({ auth }) => {
         }) */
         setAvatarSrc({...image})
       });
+      /* ImagePicker.openCamera({
+        width: 300,
+        height: 400,
+        cropping: true,
+      }).then(image => {
+        console.log(image);
+        setAvatarSrc({...image})
+      }); */
     }
 
     const sourceUri = avatarSrc.path ? { uri: avatarSrc.path }
@@ -127,8 +141,15 @@ const Profile = ({ auth }) => {
                                 value={formData.email}                    
                             />
                             {/* <DropdownPicker /> */}
-                            <SearchDropdown />
-                            <SelectingServices />
+                            {/* <SelectingServices /> */}
+                            <SelectServices />
+                            
+                            <PurohitCaste />                            
+                            <TypesOfService />
+                            <ServiceCaste />
+                            <SelectStateCity />
+                            <SearchArea />
+                            {/* <SearchDropdown />                             */}
                             <TextFieldGroup                     
                                 placeholder="Area"
                                 onChange={text => setFormData({...formData, area: text})}
