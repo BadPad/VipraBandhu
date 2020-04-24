@@ -6,10 +6,6 @@ import { ScreenWidth } from "@freakycoder/react-native-helpers";
 import { CustomLayoutSpring } from "react-native-animation-layout";
 import stylesImported, { centerSubtitleStyle } from "./Search/styles/styles";
 
-import Icon from 'react-native-vector-icons/AntDesign'
-import Card from './Card/Card';
-import CardSection from './Card/CardSection';
-
 class SearchServices extends Component {
     constructor(props) {
         super(props);
@@ -64,7 +60,7 @@ class SearchServices extends Component {
         return (
             <GradientCard
                 key={item.serviceName}
-                id={item.serviceId}
+                data={item}
                 title={item.serviceName}
                 style={stylesImported.cardStyle}
                 imageSource={item.serviceImages}
@@ -113,7 +109,6 @@ class SearchServices extends Component {
     }
 
     render() {
-        const { route } = this.props;
         return (
             <View>
                 <View style={stylesImported.container}>
@@ -136,15 +131,6 @@ class SearchServices extends Component {
                         onPress={e => e.nativeEvent.text !== '' ? this.searchNavigate(e.nativeEvent.text) : console.log('Empty search')}
                     />
                 </View>
-                {route.name === 'ServicesList' &&
-                <Card>
-                    <CardSection style={styles.filterSection}>
-                        <Text>Hello</Text>
-                        <TouchableOpacity>
-                            <Icon name="filter"></Icon>
-                        </TouchableOpacity>
-                    </CardSection>
-                </Card>}
                 {this.state.show ? (
                     <View style={stylesImported.flatListStyle}>
 
@@ -162,12 +148,5 @@ class SearchServices extends Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    filterSection: {
-        justifyContent: 'space-between',
-        paddingHorizontal: 6
-    }
-})
 
 export default SearchServices;

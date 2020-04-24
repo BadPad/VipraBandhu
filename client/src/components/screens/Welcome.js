@@ -23,11 +23,11 @@ const Welcome = ({
 
     const pooja = (type) => {
         if(type === 'pooja') {
-            poojaServices('searchPooja')
+            poojaServices(type)
         } else if(type === 'homa') {
-            homaServices('searchHoma')
+            homaServices(type)
         } else if(type === 'function') {
-            functionServices('searchFunction')
+            functionServices(type)
         }
         navigation.navigate('ServicesList', { category: 'purohit' })
     }

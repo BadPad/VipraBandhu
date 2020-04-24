@@ -14,7 +14,7 @@ import FastImage from "react-native-fast-image";
 
 const GradientCard = props => {
   const {
-    id,
+    data,
     onSelectService,
     end,
     start,
@@ -46,7 +46,7 @@ const GradientCard = props => {
   } = props;
 
   return (
-    <TouchableOpacity style={[style, shadowStyle || _shadowStyle(shadowColor)]} onPress={() => onSelectService(id)}>
+    <TouchableOpacity style={[style, shadowStyle || _shadowStyle(shadowColor)]} onPress={() => onSelectService(data)}>
       <LinearGradient
         start={start || { x: 0, y: 0 }}
         end={end || { x: 1, y: 0 }}
