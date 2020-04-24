@@ -28,11 +28,11 @@ const Welcome = ({
 
     const pooja = (type) => {
         if (type === 'pooja') {
-            poojaServices('searchPooja')
+            poojaServices(type)
         } else if (type === 'homa') {
-            homaServices('searchHoma')
+            homaServices(type)
         } else if (type === 'function') {
-            functionServices('searchFunction')
+            functionServices(type)
         }
         navigation.navigate('ServicesList', { category: 'purohit' })
     }
@@ -386,7 +386,6 @@ const styles = StyleSheet.create({
     }
 })
 
-
 Welcome.propTypes = {
     serviceList: PropTypes.func.isRequired,
     poojaServices: PropTypes.func.isRequired,
@@ -398,14 +397,9 @@ Welcome.propTypes = {
     festivals: PropTypes.array.isRequired
 }
 
-
-
 const mapStateToProps = state => ({
-
     services: state.serviceList,
     festivals: state.upcomingFestivals,
-
-
 })
 
 const mapDispatchToProps = { serviceList, poojaServices, homaServices, functionServices, searchServices, upcomingFestivals }
