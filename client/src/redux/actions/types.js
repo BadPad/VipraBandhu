@@ -21,3 +21,5 @@ export const FILTER_CATEGORY = 'FILTER_CATEGORY';
 
 
 export const UPCOMING_FESTIVALS = 'UPCOMING_FESTIVALS';
+
+export const GET_AREAS = 'GET_AREAS';
