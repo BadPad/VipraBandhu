@@ -1,50 +1,47 @@
-//This is an example code to understand Picker// 
-import React from 'react';
-//import react in our code. 
-import { Picker, View, StyleSheet, Text, ScrollView } from 'react-native';
-//import all the components we are going to use. 
-export default class SelectStateCity extends React.Component {
-  state = {choosenLabel: '', choosenindex: ''}
-  render() {
-    return (
-      // enclose all components in this View tag
-      <View style={styles.container}>
-        {/*Text to show selected picker value*/}
-        <Text style = {styles.texts}>Select your State</Text>
-        {/*Text to show selected index */}
-        {/* <Text style = {styles.text}>{this.state.choosenindex}</Text> */}
-        {/*Picker with multiple chose to choose*/}
-        {/*selectedValue to set the preselected value if any*/}
-        {/*onValueChange will help to handle the changes*/}
-        <ScrollView>
-            <Picker 
-            style = {styles.text}
-            selectedValue={this.state.choosenLabel}
-            onValueChange={
-            (itemValue, itemIndex) => this.setState({
-                choosenLabel: itemValue, 
-                choosenindex:itemIndex})
-            }>
-                
-                <Picker.Item label = "Karnataka" value = "karnataka" />
-            </Picker>
-            <Text style = {styles.texts}>Select your City</Text>  
-            <Picker 
-            style = {styles.text}
-            selectedValue={this.state.choosenLabel}
-            onValueChange={
-            (itemValue, itemIndex) => this.setState({
-                choosenLabel: itemValue, 
-                choosenindex:itemIndex})
-            }>
-                <Picker.Item label = "Bangalore" value = "Blore" />
-                <Picker.Item label = "Mysore" value = "Blore" />
-            </Picker>
-        </ScrollView>
-      </View>
-    );  
+import React, { useState } from 'react';
+import { Picker, View, StyleSheet, Text} from 'react-native';
+
+const SelectStateCity = ({ districtOrCity, selectedState, selectedCity }) => {
+  const [state, setState] = useState('0');
+  const [city, setCity] = useState('0');
+  const handleChange = (value) => {
+    if(value.state && value.state !== 0) {
+      console.log(value.state)
+      setState(value.state);
+      selectedState(value.state)
+    }
+
+    if(value.city && value.city !== 0) {
+      console.log(value.city)
+      setCity(value.city)
+      selectedCity(value.city)
+    }
   } 
-}
+  return (
+    <View style={styles.container}>
+      <Picker 
+        style={styles.text}
+        selectedValue={state}
+        onValueChange={(itemValue) => handleChange({state: itemValue})}
+      > 
+        <Picker.Item key={0} label="Select your State" value={0} />
+        <Picker.Item key={1} label="Karnataka" value="karnataka" />
+        <Picker.Item key={2} label="TamilNadu" value="TamilNadu" />
+      </Picker>
+      <Picker
+        style={styles.text}
+        selectedValue={city}
+        onValueChange={(itemValue) => handleChange({city: itemValue})}
+      >
+        <Picker.Item key={0} label="Select your City" value={0} />
+        {districtOrCity.map((list, i) => (
+          <Picker.Item key={i + 1} label={list} value={list} />
+        ))}
+      </Picker> 
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -52,12 +49,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   text: {
-      fontSize: 20,
-      marginLeft: 8
-      //alignSelf: 'center',
-   },
-   texts: {
-    fontSize: 12,
-    alignSelf: 'center'
+    fontSize: 20,
+    marginLeft: 8
    }
 });
+
+export default SelectStateCity;

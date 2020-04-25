@@ -393,8 +393,7 @@ Welcome.propTypes = {
     functionServices: PropTypes.func.isRequired,
     searchServices: PropTypes.func.isRequired,
     services: PropTypes.object.isRequired,
-    upcomingFestivals: PropTypes.object.isRequired,
-    festivals: PropTypes.array.isRequired
+    festivals: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

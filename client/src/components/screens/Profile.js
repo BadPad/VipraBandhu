@@ -9,6 +9,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 //import DropdownPicker from './DropdownPicker';
 import TypesOfService from './TypesOfService';
@@ -32,6 +33,8 @@ import ImagePicker from 'react-native-image-crop-picker'
 import TextFieldGroup from '../Reusable_Component/TextFieldGroup';
 import FieldButton from '../Reusable_Component/FieldButton';
 
+import { getDistrictOrCity, getAreas } from '../../redux/actions/cityAreaActions';
+
 const initialState = {
   firstName: '',
   lastName: '',
@@ -39,17 +42,21 @@ const initialState = {
   email: '',
   area: '',
   landmark: '',
-  city: ''
+  city: '',
+  state: ''
 }
 
-const Profile = ({ auth }) => {
+const Profile = ({ auth, services, getDistrictOrCity, getAreas, cityAreaList }) => {
     const [formData, setFormData] = useState({...initialState});
     const [editView, setEditView] = useState(false);
     const [avatarSrc, setAvatarSrc] = useState({});
 
+    useEffect(() => {
+      getDistrictOrCity();
+    }, [])
+
     useEffect(()=> {
       const { user } = auth;
-      console.log(user)
       setFormData({
         firstName: user.firstName,
         lastName: user.lastName,
@@ -70,7 +77,8 @@ const Profile = ({ auth }) => {
     }
 
     const submit = () => {
-        setEditView(false)
+      setEditView(false)
+      console.log(formData)
     }
 
     const openGallery = () => {
@@ -98,6 +106,12 @@ const Profile = ({ auth }) => {
     const sourceUri = avatarSrc.path ? { uri: avatarSrc.path }
         : {uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'};
 
+    const { fullServiceList } = services;
+
+    const category = fullServiceList.filter(list => list.serviceCategory === 'purohit');
+
+    const subCatList = category.map(list => list.serviceSubCategory).filter((value, index, self) => self.indexOf(value) === index)
+    
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -147,8 +161,17 @@ const Profile = ({ auth }) => {
                             <PurohitCaste />                            
                             <TypesOfService />
                             <ServiceCaste />
-                            <SelectStateCity />
-                            <SearchArea />
+                            <SelectStateCity 
+                              districtOrCity={cityAreaList.getDistricrOrCity} 
+                              selectedState={state => setFormData({...formData, state})}
+                              selectedCity={city => {
+                                setFormData({...formData, city});
+                                getAreas(city);
+                              }}
+                            />
+                            <SearchArea 
+                              areas={cityAreaList.getAreasList} 
+                            />
                             {/* <SearchDropdown />                             */}
                             <TextFieldGroup                     
                                 placeholder="Area"
@@ -288,8 +311,18 @@ const styles = StyleSheet.create({
   }
 });
 
+Profile.propTypes = {
+  getDistrictOrCity: PropTypes.func.isRequired,
+  getAreas: PropTypes.func.isRequired,
+  services: PropTypes.object.isRequired
+}
+
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  services: state.serviceList,
+  cityAreaList: state.cityAreaList
 })
+
+const mapDispatchToProps = { getDistrictOrCity, getAreas };
  
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

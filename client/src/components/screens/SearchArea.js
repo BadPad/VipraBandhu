@@ -79,7 +79,8 @@ class ServiceArea extends Component {
 
   render() {
     const { selectedItems } = this.state;
-
+    const { areas } = this.props;
+    console.log(areas)
     return (
       <View style={{ flex: 1 }}>
         <ScrollView>

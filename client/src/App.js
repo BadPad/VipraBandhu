@@ -3,7 +3,8 @@ import { AsyncStorage, StatusBar } from 'react-native';
 import Navigation from './components/Navigation/Navigation';
 
 import { Provider } from 'react-redux';
-import store from './store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store';
 
 import { setCurrentUser } from './redux/actions/authActions';
 
@@ -17,13 +18,12 @@ AsyncStorage.getItem('SukalpaSeva')
 
 function App() {
   return (
-    <>
-    <StatusBar barStyle = "light-content" backgroundColor="#d42425"/>
     <Provider store={ store }>
-      <Navigation />
+      <StatusBar barStyle = "light-content" backgroundColor="#d42425"/>
+      <PersistGate loading={null} persistor={persistor} >
+        <Navigation />
+      </PersistGate>
     </Provider>
-      </>    
-
   )
 }
 
