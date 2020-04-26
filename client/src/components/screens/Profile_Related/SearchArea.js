@@ -33,18 +33,15 @@ export default class SearchArea extends Component {
   };
 
   render() {
-      const { areas } = this.props;
-      console.log(areas)
+    const { areas } = this.props;
+    
+    function setID(item, index) {
+        const newFormat = {"id": index,"name": item};
+        return newFormat;
+    }
 
-      const data = areas;
-      data.sort();
-        function setID(item, index) {
-            const newFormat = {"id": index,"name": item};
-            return newFormat;
-        }
-
-        const output = data.map(setID);
-        console.log(output);
+    const output = areas && areas.map(setID);
+    console.log(output);
 
     return (
       <View>

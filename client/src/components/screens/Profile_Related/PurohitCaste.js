@@ -10,6 +10,7 @@ const PurohitCaste = ({ caste, selectedCaste }) => {
       selectedCaste(value.castes)
     }
   } 
+  const typeOfCaste = caste.reverse();
   return (
     <View style={styles.container}>
       <Picker
@@ -18,7 +19,7 @@ const PurohitCaste = ({ caste, selectedCaste }) => {
         onValueChange={(itemValue) => handleChange({castes: itemValue})}
       >
         <Picker.Item key={0} label="Select your Caste" value={0} />
-        {caste && caste.map((list, i) => (
+        {typeOfCaste && typeOfCaste.map((list, i) => (
           <Picker.Item key={i + 1} label={list} value={list} />
         ))}
       </Picker> 

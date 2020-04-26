@@ -1,15 +1,15 @@
-import { GET_CASTE } from '../actions/types';
+import { GET_CASTES } from '../actions/types';
 
 const initialState = {
-    getCaste: null
+    getCasteList: null
 }
 
 export default function(state = initialState, action) {
     switch(action.type) {
-        case GET_CASTE:
+        case GET_CASTES:
             return {
                 ...state,
-                getCaste: action.payload
+                getCasteList: action.payload
             }
         default:
             return state;

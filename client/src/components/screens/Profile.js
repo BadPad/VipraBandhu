@@ -34,7 +34,7 @@ import TextFieldGroup from '../Reusable_Component/TextFieldGroup';
 import FieldButton from '../Reusable_Component/FieldButton';
 
 import { getDistrictOrCity, getAreas } from '../../redux/actions/cityAreaActions';
-import { getCaste } from '../../redux/actions/casteActions';
+import { getCastes } from '../../redux/actions/casteActions';
 
 const initialState = {
   firstName: '',
@@ -48,17 +48,14 @@ const initialState = {
   state: ''
 }
 
-const Profile = ({ auth, services, getDistrictOrCity, getAreas, cityAreaList, getCaste }) => {
+const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityAreaList, casteList }) => {
     const [formData, setFormData] = useState({...initialState});
     const [editView, setEditView] = useState(false);
     const [avatarSrc, setAvatarSrc] = useState({});
 
     useEffect(() => {
+      getCastes();
       getDistrictOrCity();
-    }, [])
-    
-    useEffect(() => {
-      getCaste();
     }, [])
 
     useEffect(()=> {
@@ -166,8 +163,8 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, cityAreaList, ge
                             <SelectServices />
                             
                             <PurohitCaste 
-                            caste={getCaste}                             
-                            selectedCaste={castes => setFormData({...formData, castes})}                              }}
+                              caste={casteList && casteList.getCasteList}
+                              selectedCaste={castes => setFormData({... formData, castes})}
                             /> 
 
                             <TypesOfService />
@@ -181,7 +178,7 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, cityAreaList, ge
                               }}
                             />
                             <SearchArea 
-                              areas={cityAreaList.getAreasList} 
+                              areas={cityAreaList && cityAreaList.getAreasList} 
                             />
                             {/* <SearchDropdown />                             */}
                             {/* <TextFieldGroup                     
@@ -325,17 +322,20 @@ const styles = StyleSheet.create({
 Profile.propTypes = {
   getDistrictOrCity: PropTypes.func.isRequired,
   getAreas: PropTypes.func.isRequired,
+  getCastes: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
   services: PropTypes.object.isRequired,
-  getCaste: PropTypes.func.isRequired
+  cityAreaList: PropTypes.object.isRequired,
+  casteList: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
   auth: state.auth,
   services: state.serviceList,
   cityAreaList: state.cityAreaList,
-  caste: state.caste
+  casteList: state.casteList
 })
 
-const mapDispatchToProps = { getDistrictOrCity, getAreas, getCaste };
+const mapDispatchToProps = { getDistrictOrCity, getAreas, getCastes };
  
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

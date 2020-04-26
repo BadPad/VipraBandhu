@@ -5,8 +5,8 @@ import { AsyncStorage } from 'react-native';
 import authReducer from './authReducer';
 import cityAreaReducer from './cityAreaReducer';
 import upcomingFestReducer from './upcomingFestReducer';
+import casteListReducer from './casteReducer';
 import serviceListReducer from './serviceListReducer';
-import casteReducer from './casteReducer';
 
 
 const persistConfig = {
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
     cityAreaList: cityAreaReducer,
     upcomingFestivals: upcomingFestReducer,
     serviceList: serviceListReducer,
-    caste: casteReducer
+    casteList: casteListReducer
 })
 
 export default persistReducer(persistConfig, rootReducer);
