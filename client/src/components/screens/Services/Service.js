@@ -10,6 +10,7 @@ const Service = ({ navigation, route }) => {
 
     const service = route.params.id;
 
+    navigation.setOptions({ title: service.serviceName })
     // const displayService = staticData.find(service => service.id === serviceId);
 
     return (
