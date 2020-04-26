@@ -6,6 +6,7 @@ import authReducer from './authReducer';
 import cityAreaReducer from './cityAreaReducer';
 import upcomingFestReducer from './upcomingFestReducer';
 import serviceListReducer from './serviceListReducer';
+import casteReducer from './casteReducer';
 
 
 const persistConfig = {
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
     auth: authReducer,
     cityAreaList: cityAreaReducer,
     upcomingFestivals: upcomingFestReducer,
-    serviceList: serviceListReducer
+    serviceList: serviceListReducer,
+    caste: casteReducer
 })
 
 export default persistReducer(persistConfig, rootReducer);

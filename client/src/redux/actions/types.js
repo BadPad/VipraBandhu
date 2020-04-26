@@ -10,6 +10,9 @@ export const GET_DISTRICT_OR_CITY = 'GET_DISTRICT_OR_CITY';
 /*--- GET AREAS ---*/
 export const GET_AREAS = 'GET_AREAS';
 
+/*--- GET CASTE ---*/
+export const GET_CASTE = 'GET_CASTE';
+
 /*--- UPCOMING FESTIVALS ---*/
 export const UPCOMING_FESTIVALS = 'UPCOMING_FESTIVALS';
 

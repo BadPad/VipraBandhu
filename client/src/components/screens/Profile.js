@@ -19,7 +19,7 @@ import SelectServices from './Profile_Related/SelectServices';
 import SelectStateCity from './Profile_Related/SelectStateCity';
 import PurohitCaste from './Profile_Related/PurohitCaste';
 import ServiceCaste from './Profile_Related/ServiceCaste';
-//import SearchArea from './SearhArea';
+import SearchArea from './Profile_Related/SearchArea';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/Feather';
@@ -34,25 +34,31 @@ import TextFieldGroup from '../Reusable_Component/TextFieldGroup';
 import FieldButton from '../Reusable_Component/FieldButton';
 
 import { getDistrictOrCity, getAreas } from '../../redux/actions/cityAreaActions';
+import { getCaste } from '../../redux/actions/casteActions';
 
 const initialState = {
   firstName: '',
   lastName: '',
   phoneNumber: '',
   email: '',
+  castes: '',
   area: '',
   landmark: '',
   city: '',
   state: ''
 }
 
-const Profile = ({ auth, services, getDistrictOrCity, getAreas, cityAreaList }) => {
+const Profile = ({ auth, services, getDistrictOrCity, getAreas, cityAreaList, getCaste }) => {
     const [formData, setFormData] = useState({...initialState});
     const [editView, setEditView] = useState(false);
     const [avatarSrc, setAvatarSrc] = useState({});
 
     useEffect(() => {
       getDistrictOrCity();
+    }, [])
+    
+    useEffect(() => {
+      getCaste();
     }, [])
 
     useEffect(()=> {
@@ -62,6 +68,7 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, cityAreaList }) 
         lastName: user.lastName,
         phoneNumber: user.phoneNumber,
         email: user.email,
+        castes: user.castes,
         area: user.area,
         landmark: user.landmark,
         city: user.city
@@ -158,7 +165,11 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, cityAreaList }) 
                             {/* <SelectingServices /> */}
                             <SelectServices />
                             
-                            <PurohitCaste />                            
+                            <PurohitCaste 
+                            caste={getCaste}                             
+                            selectedCaste={castes => setFormData({...formData, castes})}                              }}
+                            /> 
+
                             <TypesOfService />
                             <ServiceCaste />
                             <SelectStateCity 
@@ -173,7 +184,7 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, cityAreaList }) 
                               areas={cityAreaList.getAreasList} 
                             />
                             {/* <SearchDropdown />                             */}
-                            <TextFieldGroup                     
+                            {/* <TextFieldGroup                     
                                 placeholder="Area"
                                 onChange={text => setFormData({...formData, area: text})}
                                 value={formData.area}                    
@@ -187,7 +198,7 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, cityAreaList }) 
                                 placeholder="City"
                                 onChange={text => setFormData({...formData, city: text})}
                                 value={formData.city}                    
-                            />
+                            /> */}
                             <FieldButton 
                                 name='Update Profile'
                                 onPress={submit}
@@ -314,15 +325,17 @@ const styles = StyleSheet.create({
 Profile.propTypes = {
   getDistrictOrCity: PropTypes.func.isRequired,
   getAreas: PropTypes.func.isRequired,
-  services: PropTypes.object.isRequired
+  services: PropTypes.object.isRequired,
+  getCaste: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
   auth: state.auth,
   services: state.serviceList,
-  cityAreaList: state.cityAreaList
+  cityAreaList: state.cityAreaList,
+  caste: state.caste
 })
 
-const mapDispatchToProps = { getDistrictOrCity, getAreas };
+const mapDispatchToProps = { getDistrictOrCity, getAreas, getCaste };
  
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
