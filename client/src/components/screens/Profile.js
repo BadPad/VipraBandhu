@@ -12,14 +12,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 //import DropdownPicker from './DropdownPicker';
-import TypesOfService from './TypesOfService';
+import TypesOfService from './Profile_Related/TypesOfService';
 //import SearchDropdown from './SearchDropdown';
-import SelectServices from './SelectServices';
+import SelectServices from './Profile_Related/SelectServices';
 //import SelectingServices from './SelectingServices';
-import SelectStateCity from './SelectStateCity';
-import PurohitCaste from './PurohitCaste';
-import ServiceCaste from './ServiceCaste';
-import SearchArea from './SearchArea';
+import SelectStateCity from './Profile_Related/SelectStateCity';
+import PurohitCaste from './Profile_Related/PurohitCaste';
+import ServiceCaste from './Profile_Related/ServiceCaste';
+//import SearchArea from './SearhArea';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/Feather';
