@@ -7,12 +7,12 @@ import cityAreaReducer from './cityAreaReducer';
 import upcomingFestReducer from './upcomingFestReducer';
 import casteListReducer from './casteReducer';
 import serviceListReducer from './serviceListReducer';
-
+import bookingCartReducer from './bookingCartReducer';
 
 const persistConfig = {
     key: 'SukalpaSeva',
     storage: AsyncStorage,
-    whitelist: []
+    whitelist: ['bookingCartServices']
 }
 
 const rootReducer = combineReducers({
@@ -20,7 +20,8 @@ const rootReducer = combineReducers({
     cityAreaList: cityAreaReducer,
     upcomingFestivals: upcomingFestReducer,
     serviceList: serviceListReducer,
-    casteList: casteListReducer
+    casteList: casteListReducer,
+    bookingCartServices: bookingCartReducer
 })
 
 export default persistReducer(persistConfig, rootReducer);

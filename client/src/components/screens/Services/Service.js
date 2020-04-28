@@ -1,17 +1,26 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Card from '../../Reusable_Component/Card/Card';
 import CardSection from '../../Reusable_Component/Card/CardSection';
 import Heading from '../../Reusable_Component/Heading';
 import Carousel from '../../Reusable_Component/Image_Carousel/Carousel';
 import FieldButton from '../../Reusable_Component/FieldButton';
+import { addToBookingCart } from '../../../redux/actions/bookingCartActions';
+import isEmpty from '../../Reusable_Component/is-empty';
 
-const Service = ({ navigation, route }) => {
+const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) => {
 
     const service = route.params.id;
 
+    let cartServices;
+    if(isEmpty(bookingCartServices.bookingCartList) ===false) {
+        cartServices = bookingCartServices.bookingCartList.find(list => list.serviceId === service.serviceId && list.serviceName === service.serviceName)
+        console.log(cartServices)
+    }
+
     navigation.setOptions({ title: service.serviceName })
-    // const displayService = staticData.find(service => service.id === serviceId);
 
     return (
         <View>
@@ -25,7 +34,7 @@ const Service = ({ navigation, route }) => {
                     <CardSection>
                         <View>
                             <Heading containerStyle={styles.containerTitle} style={styles.serviceTitleStyle} name={service.serviceName} />
-                            <Heading containerStyle={styles.containerPoojaAmount} style={styles.poojaAmount} name={`Rs ${service.serviceName}`} />
+                            <Heading containerStyle={styles.containerPoojaAmount} style={styles.poojaAmount} name={`Rs ${service.servicePrice}`} />
                         </View>
                     </CardSection>
                     <CardSection style={styles.contentDescription}>
@@ -36,8 +45,10 @@ const Service = ({ navigation, route }) => {
             </ScrollView>
             <FieldButton 
                 butonContainer={styles.butonContainer}
-                buttonTouch={styles.buttonTouch}
-                name='Book' 
+                buttonTouch={cartServices === undefined || null ? styles.buttonTouch : styles.TouchButton}
+                buttonTouchText={cartServices === undefined || null ? null : styles.buttonTouchText}
+                name={cartServices === undefined || null ? 'Book' : 'Added to Booking Cart'} 
+                onPress={() => cartServices === undefined || null ? addToBookingCart(service) : Alert.alert('Error','This Service already added to Cart')}
             />
         </View>
     )
@@ -82,7 +93,25 @@ const styles = StyleSheet.create({
     },
     buttonTouch:{
         borderRadius: 0
+    },
+    TouchButton: {
+        borderRadius: 0,
+        backgroundColor: '#f0c14b'
+    },
+    buttonTouchText: {
+        color: '#000',
+        fontWeight: 'bold'
     }
 })
 
-export default Service;
+Service.propTypes = {
+    bookingCartServices: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    bookingCartServices: state.bookingCartServices
+})
+
+const mapDispatchToProps = { addToBookingCart }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Service);

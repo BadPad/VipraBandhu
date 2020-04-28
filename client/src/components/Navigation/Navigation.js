@@ -22,6 +22,7 @@ import Notifications from '../screens/Notifications';
 import Welcome from '../screens/Welcome';
 import ServicesList from '../screens/Services/ServicesList';
 import Service from '../screens/Services/Service';
+import BookingCart from '../screens/Booking_Cart/BookingCart';
 import BookingsList from '../screens/Bookings/BookingsList';
 import Booking from '../screens/Bookings/Booking';
 
@@ -69,7 +70,7 @@ const HomeStackScreen = ({ navigation }) => (
           <View style={styles.headerRightIcons}>
             <Icon style={styles.iconCart} name="ios-cart" size={25}
               backgroundColor="#D63031" color="#fff"
-              onPress={() => navigation.navigate('MyBookings')}
+              onPress={() => navigation.navigate('BookingCart')}
             >
             </Icon >
             <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
@@ -91,6 +92,21 @@ const HomeStackScreen = ({ navigation }) => (
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
+        ),
+        headerRight: () => (
+          <View style={styles.headerRightIcons}>
+            <Icon style={styles.iconCart} name="ios-cart" size={25}
+              backgroundColor="#D63031" color="#fff"
+              onPress={() => navigation.navigate('BookingCart')}
+            >
+            </Icon >
+            <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
+              backgroundColor="#D63031" color="#fff"
+              onPress={() => navigation.navigate('Notifications')}
+            >
+            </Icon >
+
+          </View>
         )
       }}
     />
@@ -103,6 +119,48 @@ const HomeStackScreen = ({ navigation }) => (
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
+        ),
+        headerRight: () => (
+          <View style={styles.headerRightIcons}>
+            <Icon style={styles.iconCart} name="ios-cart" size={25}
+              backgroundColor="#D63031" color="#fff"
+              onPress={() => navigation.navigate('BookingCart')}
+            >
+            </Icon >
+            <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
+              backgroundColor="#D63031" color="#fff"
+              onPress={() => navigation.navigate('Notifications')}
+            >
+            </Icon >
+
+          </View>
+        )
+      }}
+    />
+    <HomeStack.Screen name="BookingCart" component={BookingCart} 
+      options={{
+        title: 'Booking Cart',
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        ),
+        headerRight: () => (
+          <View style={styles.headerRightIcons}>
+            <Icon style={styles.iconCart} name="ios-cart" size={25}
+              backgroundColor="#D63031" color="#fff"
+              onPress={() => navigation.navigate('BookingCart')}
+            >
+            </Icon >
+            <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
+              backgroundColor="#D63031" color="#fff"
+              onPress={() => navigation.navigate('Notifications')}
+            >
+            </Icon >
+
+          </View>
         )
       }}
     />
