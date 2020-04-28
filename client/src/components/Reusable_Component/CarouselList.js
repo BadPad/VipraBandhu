@@ -94,7 +94,7 @@ class CarouselList extends Component {
         else if (item.AdName === 'Omkar Melodies') {
             return (
                 <View style={styles.upFestSlideView}>
-                    <ImageBackground source={require('../images/blue_bg.png')}
+                    <ImageBackground source={require('../images/red_bg.png')}
                         style={{ width: '100%' }}>
                         <Text style={styles.AdName}>{item.AdName}</Text>
                         <Text style={styles.Ad}>{item.Ad1}</Text>
