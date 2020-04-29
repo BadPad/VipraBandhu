@@ -22,6 +22,11 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
 
     navigation.setOptions({ title: service.serviceName })
 
+    const addAndCheckout = (service) => {
+        addToBookingCart(service)
+        navigation.navigate('BookingCart')
+    }
+
     return (
         <View>
             <ScrollView>
@@ -48,7 +53,27 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
                 buttonTouch={cartServices === undefined || null ? styles.buttonTouch : styles.TouchButton}
                 buttonTouchText={cartServices === undefined || null ? null : styles.buttonTouchText}
                 name={cartServices === undefined || null ? 'Book' : 'Added to Booking Cart'} 
-                onPress={() => cartServices === undefined || null ? addToBookingCart(service) : Alert.alert('Error','This Service already added to Cart')}
+                onPress={() => 
+                    cartServices === undefined || null ? 
+                        addAndCheckout(service) 
+                    : 
+                        Alert.alert(
+                            'Error',
+                            'This Service is already added to Cart.',
+                            [
+                                {
+                                    text: 'Cancel',
+                                    onPress: () => console.log('Cancel'),
+                                    style:'cancel'
+                                },
+                                {
+                                    text: 'Checkout', 
+                                    onPress: () => navigation.navigate('BookingCart')
+                                }
+                            ],
+                            { cancelable: false },
+                        )
+                }
             />
         </View>
     )

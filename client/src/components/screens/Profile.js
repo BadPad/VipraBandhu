@@ -42,7 +42,7 @@ const initialState = {
   phoneNumber: '',
   email: '',
   castes: '',
-  servicecast: '',
+  serviceCastes: [],
   area: '',
   landmark: '',
   city: '',
@@ -67,7 +67,7 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
         phoneNumber: user.phoneNumber,
         email: user.email,
         castes: user.castes,
-        servicecast: user.servicecast,
+        serviceCastes: user.serviceCastes,
         area: user.area,
         landmark: user.landmark,
         city: user.city
@@ -173,8 +173,9 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
                             
                             <ServiceCaste 
                               caste={casteList && casteList.getCasteList}
-                              selectedCaste={servicecast => setFormData({... formData, servicecast})}
-                              />
+                              selectedCaste={serviceCastes => setFormData({... formData, serviceCastes})}
+                              selectedItems={formData.serviceCastes}
+                            />
 
                             <SelectStateCity 
                               districtOrCity={cityAreaList.getDistricrOrCity} 
@@ -232,7 +233,7 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
                           <Text style={styles.info}>Ph.no:</Text><Text style={styles.infos}> {` ${formData.phoneNumber}`}</Text>
                           <Text style={styles.description}>email:</Text><Text style={styles.descriptions}> {` ${formData.email}`}</Text>
                           <Text style={styles.caste}>Your Caste:</Text><Text style={styles.castes}> {` ${formData.castes}`}</Text>
-                          <Text style={styles.caste}>Your Service for:</Text><Text style={styles.castes}> {` ${formData.servicecast}`}</Text>
+                          <Text style={styles.caste}>Your Service for:</Text><Text style={styles.castes}> {` ${formData.serviceCastes}`}</Text>
                           <Text style={styles.location}>Location:</Text><Text style={styles.locations}> {` ${formData.area}, ${formData.landmark}, ${formData.city}, ${formData.state}`}</Text>
                         </View>
                     </View>
