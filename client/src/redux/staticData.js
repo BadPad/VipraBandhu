@@ -6,9 +6,11 @@ export const usersList = [
         email: 'ananthamadhava95@gmail.com', 
         phoneNumber: 9740544464 ,
         castes: 'Madhwa',
+        servicecast: 'Smartha',
         area: 'Hsk',
         landmark: 'Near Basavanna Temple',
-        city: 'Bangalore'
+        city: 'Bangalore',
+        state: 'Karnataka'
     },
     { 
         id: 2, 
@@ -17,9 +19,11 @@ export const usersList = [
         email: 'paneendragautham@gmail.com', 
         phoneNumber: 9986445810 ,
         castes: 'Madhwa',
+        servicecast: 'Smartha',
         area: 'BSK',
         landmark: 'Near Banshankari Temple',
-        city: 'Bangalore'
+        city: 'Bangalore',
+        state: 'Karnataka'
     },
     { 
         id: 3, 
@@ -28,8 +32,10 @@ export const usersList = [
         email: 'pavan.gautham17@gmail.com', 
         phoneNumber: 7259691900 ,
         castes: 'Madhwa',
+        servicecast: 'Madhwa',
         area: 'BSK',
         landmark: 'Near Banshankari Temple',
-        city: 'Bangalore'
+        city: 'Bangalore',
+        state: 'Karnataka'
     }
 ]

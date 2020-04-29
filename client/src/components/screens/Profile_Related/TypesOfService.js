@@ -49,6 +49,9 @@ const styles = StyleSheet.create({
    },
    texts: {
     fontSize: 12,
-    alignSelf: 'center'
+    //alignSelf: 'center'
+    marginTop: 10,
+    paddingLeft: 16,
+    color: "#696969"
    }
 });

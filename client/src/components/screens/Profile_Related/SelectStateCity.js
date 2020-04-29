@@ -26,7 +26,7 @@ const SelectStateCity = ({ districtOrCity, selectedState, selectedCity }) => {
       > 
         <Picker.Item key={0} label="Select your State" value={0} />
         <Picker.Item key={1} label="Karnataka" value="karnataka" />
-        <Picker.Item key={2} label="TamilNadu" value="TamilNadu" />
+        {/* <Picker.Item key={2} label="TamilNadu" value="TamilNadu" /> */}
       </Picker>
       <Picker
         style={styles.text}

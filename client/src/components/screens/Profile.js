@@ -42,6 +42,7 @@ const initialState = {
   phoneNumber: '',
   email: '',
   castes: '',
+  servicecast: '',
   area: '',
   landmark: '',
   city: '',
@@ -66,6 +67,7 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
         phoneNumber: user.phoneNumber,
         email: user.email,
         castes: user.castes,
+        servicecast: user.servicecast,
         area: user.area,
         landmark: user.landmark,
         city: user.city
@@ -168,7 +170,12 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
                             /> 
 
                             <TypesOfService />
-                            <ServiceCaste />
+                            
+                            <ServiceCaste 
+                              caste={casteList && casteList.getCasteList}
+                              selectedCaste={servicecast => setFormData({... formData, servicecast})}
+                              />
+
                             <SelectStateCity 
                               districtOrCity={cityAreaList.getDistricrOrCity} 
                               selectedState={state => setFormData({...formData, state})}
@@ -222,9 +229,11 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
                     <View style={styles.body}>
                         <View style={styles.bodyContent}>
                           <Text style={styles.name}>{formData.firstName} {formData.lastName} </Text>
-                          <Text style={styles.info}><Icon style={styles.info} name="phone" color="#000" />{` ${formData.phoneNumber}`}</Text>
-                          <Text style={styles.description}><Icons style={styles.mail} name="mail" color="#000" />{` ${formData.email}`}</Text>
-                          <Text style={styles.location}><Iconlocation style={styles.address} name="location-pin" color="#000" />{` ${formData.area}, ${formData.landmark}, ${formData.city}`}</Text>
+                          <Text style={styles.info}>Ph.no:</Text><Text style={styles.infos}> {` ${formData.phoneNumber}`}</Text>
+                          <Text style={styles.description}>email:</Text><Text style={styles.descriptions}> {` ${formData.email}`}</Text>
+                          <Text style={styles.caste}>Your Caste:</Text><Text style={styles.castes}> {` ${formData.castes}`}</Text>
+                          <Text style={styles.caste}>Your Service for:</Text><Text style={styles.castes}> {` ${formData.servicecast}`}</Text>
+                          <Text style={styles.location}>Location:</Text><Text style={styles.locations}> {` ${formData.area}, ${formData.landmark}, ${formData.city}, ${formData.state}`}</Text>
                         </View>
                     </View>
                 </>
@@ -268,8 +277,8 @@ const styles = StyleSheet.create({
   },
   bodyContent: {
     flex: 1,
-    alignItems: 'center',
-    padding:30,
+    //alignItems: 'center',
+    padding:20,
   },
   name:{
     fontSize:28,
@@ -277,26 +286,56 @@ const styles = StyleSheet.create({
     fontWeight: "600"
   },
   info:{
-    fontSize:25,
+    fontSize:18,
     color: "#696969",
     marginTop:25,
-    textAlign: 'center'
+    //textAlign: 'center'
+  },
+  infos:{
+    fontSize:18,
+    color: "#696969",
+    //marginTop:25,
+    //textAlign: 'center'
   },
   description:{
-    fontSize:20,
+    fontSize:18,
     color: "#696969",
     marginTop:25,
-    textAlign: 'center'
+    //textAlign: 'center'
+  },
+  descriptions:{
+    fontSize:18,
+    color: "#696969",
+    //marginTop:25,
+    //textAlign: 'center'
+  },
+  caste:{
+    fontSize:18,
+    color: "#696969",
+    marginTop:25,
+    //textAlign: 'center'
+  },
+  castes:{
+    fontSize:18,
+    color: "#696969",
+    //marginTop:25,
+    //textAlign: 'center'
   },
   mail: {
     fontSize: 26,
     color: "#696969"
   },
   location: {
-    fontSize:23,
+    fontSize:18,
     color: "#696969",
     marginTop:  25,
-    textAlign: 'center'
+    //textAlign: 'center'
+  },
+  locations: {
+    fontSize:18,
+    color: "#696969",
+    //marginTop:  25,
+    //textAlign: 'center'
   },
   address:{
     fontSize:25,

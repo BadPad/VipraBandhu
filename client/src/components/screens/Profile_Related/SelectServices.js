@@ -186,6 +186,18 @@ export default class SelectServices extends Component {
           uniqueKey="id"
           subKey="children"
           selectText="Select your Services"
+          styles={{
+            subItemText : {
+              color: '#000'
+            },
+            selectedItem: {
+              backgroundColor:'red'
+            },
+            selectToggleText: {
+              fontSize: 16,
+              paddingLeft: 7
+            }
+          }}
           showDropDowns={true}
           readOnlyHeadings={true}
           onSelectedItemsChange={this.onSelectedItemsChange}

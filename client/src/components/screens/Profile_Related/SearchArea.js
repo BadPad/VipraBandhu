@@ -42,6 +42,7 @@ export default class SearchArea extends Component {
 
     const output = areas && areas.map(setID);
     console.log(output);
+    
 
     return (
       <View>
@@ -49,6 +50,12 @@ export default class SearchArea extends Component {
           items={output}
           uniqueKey="id"
           selectText="Areas"
+          styles={{
+            selectToggleText: {
+              fontSize: 16,
+              paddingLeft: 7
+            }
+          }}
           showDropDowns={true}
           single={true}
           onSelectedItemsChange={this.onSelectedItemsChange}
