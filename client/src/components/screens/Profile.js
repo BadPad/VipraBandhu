@@ -41,6 +41,7 @@ const initialState = {
   lastName: '',
   phoneNumber: '',
   email: '',
+  selectedServices: [],
   castes: '',
   serviceCastes: [],
   area: '',
@@ -66,6 +67,7 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
         lastName: user.lastName,
         phoneNumber: user.phoneNumber,
         email: user.email,
+        selectedServices: user.selectedServices,
         castes: user.castes,
         serviceCastes: user.serviceCastes,
         area: user.area,
@@ -112,12 +114,6 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
     const sourceUri = avatarSrc.path ? { uri: avatarSrc.path }
         : {uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'};
 
-    const { fullServiceList } = services;
-
-    const category = fullServiceList.filter(list => list.serviceCategory === 'purohit');
-
-    const subCatList = category.map(list => list.serviceSubCategory).filter((value, index, self) => self.indexOf(value) === index)
-    
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -162,7 +158,11 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
                             />
                             {/* <DropdownPicker /> */}
                             {/* <SelectingServices /> */}
-                            <SelectServices />
+                            <SelectServices 
+                              services={services && services.fullServiceList}
+                              selectedServices={selectedServices => setFormData({...formData, selectedServices})}
+                              selectedItems={formData.selectedServices}
+                            />
                             
                             <PurohitCaste 
                               caste={casteList && casteList.getCasteList}
