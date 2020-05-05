@@ -21,10 +21,28 @@ const ServiceCaste = ({ caste, selectedCaste, selectedItems }) => {
         uniqueKey="id"
         selectText="Caste"
         styles={{
-          selectToggleText: {
+          selectedItem: {
+            backgroundColor:'red'
+          },
+          selectToggleText:{
+            paddingTop:8
+          },
+          container: {
+            maxHeight: 250,
+          },
+          modalWrapper: {
+            alignContent: 'center'
+          },
+          selectToggle:{
+            width: "100%",
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            borderRadius: 25,
+            paddingHorizontal: 16,
             fontSize: 16,
-            paddingLeft: 7
-          }
+            marginVertical: 3,
+            minHeight: 40,
+            marginBottom: 10
+          },
         }}
         showDropDowns={true}
         hideSearch={true}

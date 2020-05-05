@@ -18,7 +18,7 @@ const PurohitCaste = ({ caste, selectedCaste }) => {
         selectedValue={castes}
         onValueChange={(itemValue) => handleChange({castes: itemValue})}
       >
-        <Picker.Item key={0} label="Select your Caste" value={0} />
+        <Picker.Item key={0} label="Select Caste" value={0} />
         {caste && caste.map((list, i) => (
           <Picker.Item key={i + 1} label={list} value={list} />
         ))}
@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   text: {
     fontSize: 20,
