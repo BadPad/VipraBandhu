@@ -40,8 +40,15 @@ const initialState = {
   firstName: '',
   lastName: '',
   phoneNumber: '',
+  alternateNumber: '',
   email: '',
+  account: '',
+  reconfirm: '',
+  ifsc: '',
+  aadhar: '',
+  selectedServices: [],
   castes: '',
+  serviceCastes: [],
   area: '',
   landmark: '',
   city: '',
@@ -50,7 +57,8 @@ const initialState = {
 
 const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityAreaList, casteList }) => {
     const [formData, setFormData] = useState({...initialState});
-    const [editView, setEditView] = useState(false);
+    const [self, setSelf] = useState(true);
+    const [service, setService] = useState(true);
     const [avatarSrc, setAvatarSrc] = useState({});
 
     useEffect(() => {
@@ -64,24 +72,45 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
         firstName: user.firstName,
         lastName: user.lastName,
         phoneNumber: user.phoneNumber,
+        alternateNumber: user.alternateNumber,
         email: user.email,
+        account: user.account,
+        reconfirm: user.reconfirm,
+        ifsc:user.ifsc,
+        aadhar: user.aadhar,
+        selectedServices: user.selectedServices,
         castes: user.castes,
+        serviceCastes: user.serviceCastes,
         area: user.area,
         landmark: user.landmark,
         city: user.city
       })
     }, auth)
 
-    const showEdit = () => {
-        setEditView(true)
+      /* To hide and show Self details */
+    const showSelf = () => {
+      setSelf(false)
     }
 
     const goBack = () => {
-        setEditView(false)
+      setSelf(true)
+    }
+    
+    const update = () => {
+      setSelf(true)
+      console.log(formData)
+    }
+      /* To hide and show Service details */
+    const showService = () => {
+      setService(false)
+    }
+
+    const goBackService = () => {
+      setService(true)
     }
 
     const submit = () => {
-      setEditView(false)
+      setService(true)
       console.log(formData)
     }
 
@@ -110,65 +139,101 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
     const sourceUri = avatarSrc.path ? { uri: avatarSrc.path }
         : {uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'};
 
-    const { fullServiceList } = services;
-
-    const category = fullServiceList.filter(list => list.serviceCategory === 'purohit');
-
-    const subCatList = category.map(list => list.serviceSubCategory).filter((value, index, self) => self.indexOf(value) === index)
-    
     return (
       <View style={styles.container}>
         <ScrollView>
-            {editView ? (
-                <>
+            {/* {editView ? ( */}
+              {self ? (
+                <>             
                     <View>
-                        <TouchableOpacity>
-                            <Text style={styles.edit} onPress={goBack} > <Iconback style={styles.edit} name="back" color="#000" /> Back</Text>
-                        </TouchableOpacity>
-                    </View>
-                    
+                      <Text style={{textAlign:"center",fontSize:15}}>Upload photo</Text>
                       <TouchableHighlight onPress={openGallery}>
                         <Image 
                           source={ sourceUri } 
                           indicator={ProgressBar} 
                           style={styles.avatar}/>
                       </TouchableHighlight>
-                    
-                    {/* <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/> */}
+                    </View>     
+                    <View style={styles.selfnservice}>
+                      <TouchableOpacity onPress={showSelf}>
+                        <Text style={{fontSize: 30, color:'#000', borderStyle:'dashed'}}>Self Details <Icon style={styles.edit} name="chevron-down" color="#000" /></Text>                        
+                      </TouchableOpacity>    
+                    </View>                                                          
+                </>    
+                ) : (                                                        
+                <>    
                     <View style={styles.bodyEdit}>
-                        <View style={styles.bodyEditContent}>
+                      <View style={styles.bodyEditContent}>
+                      <View style={styles.selfnservice}>
+                      <TouchableOpacity onPress={goBack}>
+                        <Text style={{fontSize: 30, textAlign:'center'}}>Self Details <Icon style={styles.edit} name="chevron-up" color="#000" /></Text>
+                      </TouchableOpacity>    
+                    </View>
+                          
+                            <Text style = {styles.texts}>First Name:</Text>
                             <TextFieldGroup                     
                                 placeholder="First Name"
                                 onChange={text => setFormData({...formData, firstName: text})}
                                 value={formData.firstName}                    
                             />
+                            <Text style = {styles.texts}>Last Name:</Text>
                             <TextFieldGroup                     
                                 placeholder="Last Name"
                                 onChange={text => setFormData({...formData, lastName: text})}
                                 value={formData.lastName}                    
                             />
+                            <Text style = {styles.texts}>Phone No:</Text>
                             <TextFieldGroup
                                 type="numeric"                   
                                 placeholder="Phone Number"
                                 onChange={text => setFormData({...formData, phoneNumber: text})}
                                 value={formData.phoneNumber}                    
                             />
+                            <Text style = {styles.texts}>Alternate Contact No:</Text>
+                            <TextFieldGroup
+                                type="numeric"                   
+                                placeholder="Alternate Number"
+                                onChange={text => setFormData({...formData, alternateNumber: text})}
+                                value={formData.alternateNumber}                    
+                            />
+                            <Text style = {styles.texts}>Email Id:</Text>
                             <TextFieldGroup                     
                                 placeholder="Email Id"
                                 onChange={text => setFormData({...formData, email: text})}
                                 value={formData.email}                    
                             />
-                            {/* <DropdownPicker /> */}
-                            {/* <SelectingServices /> */}
-                            <SelectServices />
-                            
+                            <Text style = {styles.texts}>Account No:</Text>
+                            <TextFieldGroup
+                                type="numeric"                     
+                                placeholder="Account Number"
+                                onChange={text => setFormData({...formData, account: text})}
+                                value={formData.account}                    
+                            />
+                            <Text style = {styles.texts}>Re-Enter Account No:</Text>
+                            <TextFieldGroup
+                                type="numeric"                     
+                                placeholder="Re-enter Number"
+                                onChange={text => setFormData({...formData, reconfirm: text})}
+                                value={formData.reconfirm}                    
+                            />
+                            <Text style = {styles.texts}>IFSC code:</Text>
+                            <TextFieldGroup                                                 
+                                placeholder="IFSC code"
+                                onChange={text => setFormData({...formData, ifsc: text})}
+                                value={formData.ifsc}                    
+                            />
+                            <Text style = {styles.texts}>Aadhar Number:</Text>
+                            <TextFieldGroup
+                                type="numeric"                     
+                                placeholder="Aadhar Number"
+                                onChange={text => setFormData({...formData, aadhar: text})}
+                                value={formData.aadhar}                    
+                            />
+                            <Text style = {styles.texts}>Caste:</Text>
                             <PurohitCaste 
                               caste={casteList && casteList.getCasteList}
                               selectedCaste={castes => setFormData({... formData, castes})}
                             /> 
-
-                            <TypesOfService />
-                            <ServiceCaste />
                             <SelectStateCity 
                               districtOrCity={cityAreaList.getDistricrOrCity} 
                               selectedState={state => setFormData({...formData, state})}
@@ -177,58 +242,69 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
                                 getAreas(city);
                               }}
                             />
+                            <Text style = {styles.texts}>Area:</Text>
                             <SearchArea 
                               areas={cityAreaList && cityAreaList.getAreasList} 
                             />
-                            {/* <SearchDropdown />                             */}
-                            {/* <TextFieldGroup                     
-                                placeholder="Area"
-                                onChange={text => setFormData({...formData, area: text})}
-                                value={formData.area}                    
-                            />
-                            <TextFieldGroup                     
-                                placeholder="Landmark"
-                                onChange={text => setFormData({...formData, landmark: text})}
-                                value={formData.landmark}                    
-                            />
-                            <TextFieldGroup                     
-                                placeholder="City"
-                                onChange={text => setFormData({...formData, city: text})}
-                                value={formData.city}                    
-                            /> */}
+
                             <FieldButton 
-                                name='Update Profile'
+                                name='Save'
+                                onPress={update}
+                            ></FieldButton>
+                      </View>
+                    </View>
+                    
+                  </>
+                  )}
+
+                    {service ? (
+                    <>
+                    <View style={styles.selfnservice}>
+                      <TouchableOpacity onPress={showService}>
+                        <Text style={{fontSize: 30, color:'#000'}}>Service Details <Icon style={styles.edit} name="chevron-down" color="#000" /></Text>
+                      </TouchableOpacity>    
+                    </View>
+                    </>
+                    ) : (
+                    <>
+                    <View style={styles.bodyEdit}>
+                        <View style={styles.bodyEditContent}>
+                        <View style={styles.selfnservice}>
+                          <TouchableOpacity onPress={goBackService}>
+                            <Text style={{fontSize: 30, textAlign:'center'}}>Service Details <Icon style={styles.edit} name="chevron-up" color="#000" /></Text>
+                          </TouchableOpacity>    
+                        </View>
+                            <Text style = {styles.texts}>Select Services:</Text>
+                            <SelectServices 
+                              services={services && services.fullServiceList}
+                              selectedServices={selectedServices => setFormData({...formData, selectedServices})}
+                              selectedItems={formData.selectedServices}
+                            />
+                            <Text style = {styles.texts}>Service Type:</Text>                            
+                            <TypesOfService />
+                            
+                            <Text style = {styles.texts}>Preferred Cast:</Text>
+                            <ServiceCaste 
+                              caste={casteList && casteList.getCasteList}
+                              selectedCaste={serviceCastes => setFormData({... formData, serviceCastes})}
+                              selectedItems={formData.serviceCastes}
+                            />
+                                                                                    
+                            <FieldButton 
+                                name='Save'
                                 onPress={submit}
                             ></FieldButton>
                             
                         </View>
                     </View>
-                </>
-            ) : (
-                <>
-                    <View>
-                        <TouchableOpacity>
-                            <Text style={styles.edit} onPress={showEdit} > <Icon style={styles.edit} name="edit" color="#000" /> Edit</Text>
-                        </TouchableOpacity>
-                    </View>
-                      <TouchableHighlight onPress={openGallery}>
-                        <Image 
-                          source={ sourceUri } 
-                          indicator={ProgressBar} 
-                          style={styles.avatar}/>
-                      </TouchableHighlight>
-                      
-                    {/* <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/> */}
-                    <View style={styles.body}>
-                        <View style={styles.bodyContent}>
-                          <Text style={styles.name}>{formData.firstName} {formData.lastName} </Text>
-                          <Text style={styles.info}><Icon style={styles.info} name="phone" color="#000" />{` ${formData.phoneNumber}`}</Text>
-                          <Text style={styles.description}><Icons style={styles.mail} name="mail" color="#000" />{` ${formData.email}`}</Text>
-                          <Text style={styles.location}><Iconlocation style={styles.address} name="location-pin" color="#000" />{` ${formData.area}, ${formData.landmark}, ${formData.city}`}</Text>
-                        </View>
-                    </View>
-                </>
-            )}          
+                     
+                  </>
+                )}
+                <View style={{ marginTop: 80 }}>
+                  <FieldButton
+                      name='Back to home'
+                  ></FieldButton>
+                </View>
         </ScrollView>
       </View>
     );
@@ -239,10 +315,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#D63031",
     height:100,
   },
+  selfnservice:{
+    marginTop: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    //justifyContent: "space-between",
+    justifyContent: "center",
+    alignItems: "center"
+  },
   edit: {
-      color: "#000",
-      marginLeft: 10,
-      marginTop: 10,
+      color: "red",
       fontSize: 20
   },
   avatar: {
@@ -268,8 +351,8 @@ const styles = StyleSheet.create({
   },
   bodyContent: {
     flex: 1,
-    alignItems: 'center',
-    padding:30,
+    //alignItems: 'center',
+    padding:20,
   },
   name:{
     fontSize:28,
@@ -277,26 +360,56 @@ const styles = StyleSheet.create({
     fontWeight: "600"
   },
   info:{
-    fontSize:25,
+    fontSize:18,
     color: "#696969",
     marginTop:25,
-    textAlign: 'center'
+    //textAlign: 'center'
+  },
+  infos:{
+    fontSize:18,
+    color: "#696969",
+    //marginTop:25,
+    //textAlign: 'center'
   },
   description:{
-    fontSize:20,
+    fontSize:18,
     color: "#696969",
     marginTop:25,
-    textAlign: 'center'
+    //textAlign: 'center'
+  },
+  descriptions:{
+    fontSize:18,
+    color: "#696969",
+    //marginTop:25,
+    //textAlign: 'center'
+  },
+  caste:{
+    fontSize:18,
+    color: "#696969",
+    marginTop:25,
+    //textAlign: 'center'
+  },
+  castes:{
+    fontSize:18,
+    color: "#696969",
+    //marginTop:25,
+    //textAlign: 'center'
   },
   mail: {
     fontSize: 26,
     color: "#696969"
   },
   location: {
-    fontSize:23,
+    fontSize:18,
     color: "#696969",
     marginTop:  25,
-    textAlign: 'center'
+    //textAlign: 'center'
+  },
+  locations: {
+    fontSize:18,
+    color: "#696969",
+    //marginTop:  25,
+    //textAlign: 'center'
   },
   address:{
     fontSize:25,
@@ -316,6 +429,13 @@ const styles = StyleSheet.create({
   },
   textContainer : {
       color: "#FFF"
+  },
+  texts: {
+    fontSize: 13,
+    //alignSelf: 'center'
+    marginTop: 10,
+    paddingLeft: 14,
+    color: "#696969"
   }
 });
 

@@ -17,7 +17,6 @@ export default class TypesOfService extends React.Component {
         {/*selectedValue to set the preselected value if any*/}
         {/*onValueChange will help to handle the changes*/}
         <ScrollView>
-        <Text style = {styles.texts}>Type of Services:</Text>
             <Picker 
             style = {styles.text}
             selectedValue={this.state.choosenLabel}
@@ -40,7 +39,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)'
   },
   text: {
       fontSize: 20,
@@ -48,7 +48,10 @@ const styles = StyleSheet.create({
       //alignSelf: 'center',
    },
    texts: {
-    fontSize: 12,
-    alignSelf: 'center'
+    fontSize: 13,
+    //alignSelf: 'center'
+    marginTop: 10,
+    paddingLeft: 14,
+    color: "#696969"
    }
 });

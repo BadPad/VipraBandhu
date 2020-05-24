@@ -9,7 +9,7 @@ export default function(state = initialState, action) {
         case GET_CASTES:
             return {
                 ...state,
-                getCasteList: action.payload
+                getCasteList: action.payload.reverse()
             }
         default:
             return state;
