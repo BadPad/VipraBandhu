@@ -29,10 +29,13 @@ const styles = StyleSheet.create({
     inputBox: {
         width: "100%",
         backgroundColor: 'rgba(255, 255, 255, 0.2)',
-        borderRadius: 25,
-        paddingHorizontal: 16,
+        borderRadius: 5,
+        padding: 5,
+        paddingLeft: 10,
         fontSize: 16,
-        marginVertical: 3
+        marginVertical: 2,
+        borderWidth:0.5,
+        borderColor:'lightgrey'
     },
     error: {
         paddingHorizontal: 16,

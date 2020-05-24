@@ -6,16 +6,19 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  TouchableHighlight
+  TouchableHighlight,
+  Dimensions 
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { TabView, SceneMap } from 'react-native-tab-view';
 
 //import DropdownPicker from './DropdownPicker';
 import TypesOfService from './Profile_Related/TypesOfService';
 //import SearchDropdown from './SearchDropdown';
 import SelectServices from './Profile_Related/SelectServices';
-//import SelectingServices from './SelectingServices';
+//import SelectingServices from './Profile_Related/SelectingServices';
+import ServiceSelect from './Profile_Related/ServiceSelect';
 import SelectStateCity from './Profile_Related/SelectStateCity';
 import PurohitCaste from './Profile_Related/PurohitCaste';
 import ServiceCaste from './Profile_Related/ServiceCaste';
@@ -30,11 +33,13 @@ import Iconback from 'react-native-vector-icons/AntDesign';
 import ProgressBar from 'react-native-progress/Bar';
 import ImagePicker from 'react-native-image-crop-picker'
 
+import Accordian from '../Reusable_Component/Acoordian';
 import TextFieldGroup from '../Reusable_Component/TextFieldGroup';
 import FieldButton from '../Reusable_Component/FieldButton';
 
 import { getDistrictOrCity, getAreas } from '../../redux/actions/cityAreaActions';
 import { getCastes } from '../../redux/actions/casteActions';
+
 
 const initialState = {
   firstName: '',
@@ -55,11 +60,137 @@ const initialState = {
   state: ''
 }
 
+
 const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityAreaList, casteList }) => {
     const [formData, setFormData] = useState({...initialState});
-    const [self, setSelf] = useState(true);
-    const [service, setService] = useState(true);
     const [avatarSrc, setAvatarSrc] = useState({});
+    const [index, setIndex] = React.useState(0);
+    const [routes] = React.useState([
+      { key: 'first', title: 'Self Details' },
+      { key: 'second', title: 'Service Details' },
+    ]);
+  
+    const FirstRoute = () => (
+      <View style={[styles.scene, { backgroundColor: '#fff' }]} >
+        <ScrollView>
+        <View>
+          <Text style={{textAlign:"center",fontSize:15}}>Upload photo</Text>
+          <TouchableHighlight onPress={openGallery}>
+            <Image 
+              source={ sourceUri } 
+              indicator={ProgressBar} 
+              style={styles.avatar}/>
+          </TouchableHighlight>
+        </View>
+        
+            <Text style = {styles.texts}>First Name:</Text>
+            <TextFieldGroup 
+                style={styles.inputBox}                    
+                placeholder="First Name"
+                onChange={text => setFormData({...formData, firstName: text})}
+                value={formData.firstName}                    
+            />
+            <Text style = {styles.texts}>Last Name:</Text>
+            <TextFieldGroup                     
+                placeholder="Last Name"
+                onChange={text => setFormData({...formData, lastName: text})}
+                value={formData.lastName}                    
+            />
+            <Text style = {styles.texts}>Phone No:</Text>
+            <TextFieldGroup
+                type="numeric"                   
+                placeholder="Phone Number"
+                onChange={text => setFormData({...formData, phoneNumber: text})}
+                value={formData.phoneNumber}                    
+            />
+            <Text style = {styles.texts}>Alternate Contact No:</Text>
+            <TextFieldGroup
+                type="numeric"                   
+                placeholder="Alternate Number"
+                onChange={text => setFormData({...formData, alternateNumber: text})}
+                value={formData.alternateNumber}                    
+            />
+            <Text style = {styles.texts}>Email Id:</Text>
+            <TextFieldGroup                     
+                placeholder="Email Id"
+                onChange={text => setFormData({...formData, email: text})}
+                value={formData.email}                    
+            />
+            <Text style = {styles.texts}>Account No:</Text>
+            <TextFieldGroup
+                type="numeric"                     
+                placeholder="Account Number"
+                onChange={text => setFormData({...formData, account: text})}
+                value={formData.account}                    
+            />
+            <Text style = {styles.texts}>Re-Enter Account No:</Text>
+            <TextFieldGroup
+                type="numeric"                     
+                placeholder="Re-enter Number"
+                onChange={text => setFormData({...formData, reconfirm: text})}
+                value={formData.reconfirm}                    
+            />
+            <Text style = {styles.texts}>IFSC code:</Text>
+            <TextFieldGroup                                                 
+                placeholder="IFSC code"
+                onChange={text => setFormData({...formData, ifsc: text})}
+                value={formData.ifsc}                    
+            />
+            <Text style = {styles.texts}>Aadhar Number:</Text>
+            <TextFieldGroup
+                type="numeric"                     
+                placeholder="Aadhar Number"
+                onChange={text => setFormData({...formData, aadhar: text})}
+                value={formData.aadhar}                    
+            />
+            <Text style = {styles.texts}>Caste:</Text>
+            <PurohitCaste 
+              caste={casteList && casteList.getCasteList}
+              selectedCaste={castes => setFormData({... formData, castes})}
+            /> 
+            <SelectStateCity 
+              districtOrCity={cityAreaList.getDistricrOrCity} 
+              selectedState={state => setFormData({...formData, state})}
+              selectedCity={city => {
+                setFormData({...formData, city});
+                getAreas(city);
+              }}
+            />
+            <Text style = {styles.texts}>Area:</Text>
+            <SearchArea 
+              areas={cityAreaList && cityAreaList.getAreasList} 
+            /> 
+        </ScrollView>
+      </View>
+    );
+     
+    const SecondRoute = () => (
+      <View style={[styles.scene, { backgroundColor: '#fff' }]} >
+        <Text style = {styles.texts}>Select Services:</Text>
+          <SelectServices 
+            services={services && services.fullServiceList}
+            selectedServices={selectedServices => setFormData({...formData, selectedServices})}
+            selectedItems={formData.selectedServices}
+          />
+          <ServiceSelect />
+          <Text style = {styles.texts}>Service Type:</Text>                            
+          <TypesOfService />
+          
+          <Text style = {styles.texts}>Preferred Caste:</Text>
+          <ServiceCaste 
+            caste={casteList && casteList.getCasteList}
+            selectedCaste={serviceCastes => setFormData({... formData, serviceCastes})}
+            selectedItems={formData.serviceCastes}
+          />                                     
+      </View>
+    );
+    
+    const initialLayout = { width: Dimensions.get('window').width };
+  
+    const renderScene = SceneMap({
+      first: FirstRoute,
+      second: SecondRoute,
+    });
 
     useEffect(() => {
       getCastes();
@@ -86,32 +217,11 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
         city: user.city
       })
     }, auth)
-
-      /* To hide and show Self details */
-    const showSelf = () => {
-      setSelf(false)
-    }
-
-    const goBack = () => {
-      setSelf(true)
-    }
-    
-    const update = () => {
-      setSelf(true)
-      console.log(formData)
-    }
-      /* To hide and show Service details */
-    const showService = () => {
-      setService(false)
-    }
-
-    const goBackService = () => {
-      setService(true)
-    }
+      
 
     const submit = () => {
-      setService(true)
-      console.log(formData)
+      //setService(true)
+      //console.log(formData)
     }
 
     const openGallery = () => {
@@ -140,173 +250,13 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
         : {uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'};
 
     return (
-      <View style={styles.container}>
-        <ScrollView>
-            {/* {editView ? ( */}
-              {self ? (
-                <>             
-                    <View>
-                      <Text style={{textAlign:"center",fontSize:15}}>Upload photo</Text>
-                      <TouchableHighlight onPress={openGallery}>
-                        <Image 
-                          source={ sourceUri } 
-                          indicator={ProgressBar} 
-                          style={styles.avatar}/>
-                      </TouchableHighlight>
-                    </View>     
-                    <View style={styles.selfnservice}>
-                      <TouchableOpacity onPress={showSelf}>
-                        <Text style={{fontSize: 30, color:'#000', borderStyle:'dashed'}}>Self Details <Icon style={styles.edit} name="chevron-down" color="#000" /></Text>                        
-                      </TouchableOpacity>    
-                    </View>                                                          
-                </>    
-                ) : (                                                        
-                <>    
-                    <View style={styles.bodyEdit}>
-                      <View style={styles.bodyEditContent}>
-                      <View style={styles.selfnservice}>
-                      <TouchableOpacity onPress={goBack}>
-                        <Text style={{fontSize: 30, textAlign:'center'}}>Self Details <Icon style={styles.edit} name="chevron-up" color="#000" /></Text>
-                      </TouchableOpacity>    
-                    </View>
-                          
-                            <Text style = {styles.texts}>First Name:</Text>
-                            <TextFieldGroup                     
-                                placeholder="First Name"
-                                onChange={text => setFormData({...formData, firstName: text})}
-                                value={formData.firstName}                    
-                            />
-                            <Text style = {styles.texts}>Last Name:</Text>
-                            <TextFieldGroup                     
-                                placeholder="Last Name"
-                                onChange={text => setFormData({...formData, lastName: text})}
-                                value={formData.lastName}                    
-                            />
-                            <Text style = {styles.texts}>Phone No:</Text>
-                            <TextFieldGroup
-                                type="numeric"                   
-                                placeholder="Phone Number"
-                                onChange={text => setFormData({...formData, phoneNumber: text})}
-                                value={formData.phoneNumber}                    
-                            />
-                            <Text style = {styles.texts}>Alternate Contact No:</Text>
-                            <TextFieldGroup
-                                type="numeric"                   
-                                placeholder="Alternate Number"
-                                onChange={text => setFormData({...formData, alternateNumber: text})}
-                                value={formData.alternateNumber}                    
-                            />
-                            <Text style = {styles.texts}>Email Id:</Text>
-                            <TextFieldGroup                     
-                                placeholder="Email Id"
-                                onChange={text => setFormData({...formData, email: text})}
-                                value={formData.email}                    
-                            />
-                            <Text style = {styles.texts}>Account No:</Text>
-                            <TextFieldGroup
-                                type="numeric"                     
-                                placeholder="Account Number"
-                                onChange={text => setFormData({...formData, account: text})}
-                                value={formData.account}                    
-                            />
-                            <Text style = {styles.texts}>Re-Enter Account No:</Text>
-                            <TextFieldGroup
-                                type="numeric"                     
-                                placeholder="Re-enter Number"
-                                onChange={text => setFormData({...formData, reconfirm: text})}
-                                value={formData.reconfirm}                    
-                            />
-                            <Text style = {styles.texts}>IFSC code:</Text>
-                            <TextFieldGroup                                                 
-                                placeholder="IFSC code"
-                                onChange={text => setFormData({...formData, ifsc: text})}
-                                value={formData.ifsc}                    
-                            />
-                            <Text style = {styles.texts}>Aadhar Number:</Text>
-                            <TextFieldGroup
-                                type="numeric"                     
-                                placeholder="Aadhar Number"
-                                onChange={text => setFormData({...formData, aadhar: text})}
-                                value={formData.aadhar}                    
-                            />
-                            <Text style = {styles.texts}>Caste:</Text>
-                            <PurohitCaste 
-                              caste={casteList && casteList.getCasteList}
-                              selectedCaste={castes => setFormData({... formData, castes})}
-                            /> 
-                            <SelectStateCity 
-                              districtOrCity={cityAreaList.getDistricrOrCity} 
-                              selectedState={state => setFormData({...formData, state})}
-                              selectedCity={city => {
-                                setFormData({...formData, city});
-                                getAreas(city);
-                              }}
-                            />
-                            <Text style = {styles.texts}>Area:</Text>
-                            <SearchArea 
-                              areas={cityAreaList && cityAreaList.getAreasList} 
-                            />
-
-                            <FieldButton 
-                                name='Save'
-                                onPress={update}
-                            ></FieldButton>
-                      </View>
-                    </View>
-                    
-                  </>
-                  )}
-
-                    {service ? (
-                    <>
-                    <View style={styles.selfnservice}>
-                      <TouchableOpacity onPress={showService}>
-                        <Text style={{fontSize: 30, color:'#000'}}>Service Details <Icon style={styles.edit} name="chevron-down" color="#000" /></Text>
-                      </TouchableOpacity>    
-                    </View>
-                    </>
-                    ) : (
-                    <>
-                    <View style={styles.bodyEdit}>
-                        <View style={styles.bodyEditContent}>
-                        <View style={styles.selfnservice}>
-                          <TouchableOpacity onPress={goBackService}>
-                            <Text style={{fontSize: 30, textAlign:'center'}}>Service Details <Icon style={styles.edit} name="chevron-up" color="#000" /></Text>
-                          </TouchableOpacity>    
-                        </View>
-                            <Text style = {styles.texts}>Select Services:</Text>
-                            <SelectServices 
-                              services={services && services.fullServiceList}
-                              selectedServices={selectedServices => setFormData({...formData, selectedServices})}
-                              selectedItems={formData.selectedServices}
-                            />
-                            <Text style = {styles.texts}>Service Type:</Text>                            
-                            <TypesOfService />
-                            
-                            <Text style = {styles.texts}>Preferred Cast:</Text>
-                            <ServiceCaste 
-                              caste={casteList && casteList.getCasteList}
-                              selectedCaste={serviceCastes => setFormData({... formData, serviceCastes})}
-                              selectedItems={formData.serviceCastes}
-                            />
-                                                                                    
-                            <FieldButton 
-                                name='Save'
-                                onPress={submit}
-                            ></FieldButton>
-                            
-                        </View>
-                    </View>
-                     
-                  </>
-                )}
-                <View style={{ marginTop: 80 }}>
-                  <FieldButton
-                      name='Back to home'
-                  ></FieldButton>
-                </View>
-        </ScrollView>
-      </View>
+      <TabView
+      navigationState={{ index, routes }}
+      renderScene={renderScene}
+      onIndexChange={setIndex}
+      initialLayout={initialLayout}
+    />
+    
     );
 }
 
@@ -323,6 +273,9 @@ const styles = StyleSheet.create({
     //justifyContent: "space-between",
     justifyContent: "center",
     alignItems: "center"
+  },
+  inputBox:{
+    borderStyle: 'dashed'
   },
   edit: {
       color: "red",
@@ -341,9 +294,11 @@ const styles = StyleSheet.create({
   },
   bodyEdit:{
     marginTop:10,
+    
   },
   bodyEditContent: {
     flex: 1,
+    
    // padding:20,
   },
   body:{
@@ -434,9 +389,12 @@ const styles = StyleSheet.create({
     fontSize: 13,
     //alignSelf: 'center'
     marginTop: 10,
-    paddingLeft: 14,
+    paddingLeft: 5,
     color: "#696969"
-  }
+  },
+  scene: {
+    flex: 1,
+  },
 });
 
 Profile.propTypes = {

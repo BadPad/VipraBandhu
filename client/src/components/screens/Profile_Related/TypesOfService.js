@@ -40,18 +40,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     flexDirection: 'column',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)'
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderRadius: 5,
+    borderWidth:0.5,
+    borderColor:'lightgrey'
   },
   text: {
-      fontSize: 20,
-      marginLeft: 8
-      //alignSelf: 'center',
-   },
-   texts: {
-    fontSize: 13,
-    //alignSelf: 'center'
-    marginTop: 10,
-    paddingLeft: 14,
-    color: "#696969"
+    fontSize: 16,
+    padding: 5,
+    paddingLeft: 10,
    }
 });

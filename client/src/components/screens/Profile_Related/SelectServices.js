@@ -38,20 +38,22 @@ const SelectServices = ({ services, selectedServices, selectedItems }) => {
             color: '#000'
           },
           selectedItem: {
-            backgroundColor:'red'
+            //backgroundColor:'red'
           },
           selectToggleText:{
-            paddingTop:8
+            //paddingTop:8
           },
           selectToggle:{
             width: "100%",
             backgroundColor: 'rgba(255, 255, 255, 0.2)',
-            borderRadius: 25,
+            borderRadius: 5,
             paddingHorizontal: 16,
             fontSize: 16,
             marginVertical: 3,
-            minHeight: 40,
-            marginBottom: 5            
+            padding: 5,
+            paddingLeft: 10,
+            borderWidth:0.5,
+            borderColor:'lightgrey'            
           }
         }}
         showDropDowns={true}

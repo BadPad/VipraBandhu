@@ -33,10 +33,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'column',
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderRadius: 5,
+    borderWidth:0.5,
+    borderColor:'lightgrey'
   },
   text: {
-    fontSize: 20,
-    marginLeft: 8
+    fontSize: 16,
+    padding: 5,
+    paddingLeft: 10,
    }
 });
 

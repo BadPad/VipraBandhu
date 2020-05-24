@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Modal, TouchableHighlight, ScrollView } from 'react-native';
 import SelectMultiple from 'react-native-select-multiple';
+import Accordian from '../../Reusable_Component/Acoordian';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -29,55 +30,27 @@ const shradha = ['Vaikunta Samaradhana', 'Thithi', 'Paksha']
     )
   } */
 
-class SelectingServices extends React.Component {
+class ServiceSelect extends React.Component {
 
     state = {
         modalVisible: false,
         selectedPooja: [],
-        /* selectedHoma: [],
+        selectedHoma: [],
         selectedFunctions: [],
-        selectedShradha: [], */
-        showPooja: true,
+        selectedShradha: [],
+        
         /* showHoma: true,
         showFunctions: true,
         showShradha: true, */
       };
-
-    ShowHidePooja = () => {
-      if (this.state.showPooja == true) {
-        this.setState({ showPooja: false });
-      } else {
-        this.setState({ showPooja: true });
-      }
-    };
-    /* ShowHideHoma = () => {
-      if (this.state.showHoma == true) {
-        this.setState({ showHoma: false });
-      } else {
-        this.setState({ showHoma: true });
-      }
-    };
-    ShowHideFunctions = () => {
-      if (this.state.showFunctions == true) {
-        this.setState({ showFunctions: false });
-      } else {
-        this.setState({ showFunctions: true });
-      }
-    };
-    ShowHideShradha = () => {
-      if (this.state.showShradha == true) {
-        this.setState({ showShradha: false });
-      } else {
-        this.setState({ showShradha: true });
-      }
-    }; */
+    
 
     onSelectionsChange = (selectedPooja) => {
     // selectedFruits is array of { label, value }
     this.setState({ selectedPooja })
     }
     
-    /* onSelectionsChange = (selectedHoma) => {
+    onSelectionsChange = (selectedHoma) => {
     // selectedFruits is array of { label, value }
     this.setState({ selectedHoma })
     }
@@ -90,7 +63,7 @@ class SelectingServices extends React.Component {
     onSelectionsChange = (selectedShradha) => {
     // selectedFruits is array of { label, value }
     this.setState({ selectedShradha })
-    } */
+    } 
 
     setModalVisible = (visible) => {
     this.setState({ modalVisible: visible });
@@ -113,54 +86,36 @@ class SelectingServices extends React.Component {
                         <View style={styles.modalView}>
                         <ScrollView>
                             <Text style={styles.text}>Select your Services</Text>
-                            <View>
-                              <TouchableHighlight onPress={this.ShowHidePooja}>
-                                <Text style={styles.heading}>Pooja List <Icon style={styles.dropdownarrow} name="down" /></Text>
-                              </TouchableHighlight>
-                              {!this.state.showPooja ? (
-                              <SelectMultiple
-                              items={pooja}                            
-                              
-                              selectedItems={this.state.selectedPooja}                            
-                              onSelectionsChange={this.onSelectionsChange} />
-                              ) : null}
-                            </View>
-                            {/* <View>
-                              <TouchableHighlight onPress={this.ShowHideHoma}>
-                                <Text style={styles.heading}>Homa List <Icon style={styles.dropdownarrow} name="down" /></Text>
-                              </TouchableHighlight>
-                              {!this.state.showHoma ? (
-                              <SelectMultiple                                                        
-                                                          
-                              items={homa}
-                              selectedItems={this.state.selectedHoma}
-                              onSelectionsChange={this.onSelectionsChange} />
-                              ) : null}
-                            </View>
-                            <View>
-                              <TouchableHighlight onPress={this.ShowHideFunctions}>
-                                <Text style={styles.heading}>Functions <Icon style={styles.dropdownarrow} name="down" /></Text>
-                              </TouchableHighlight>
-                              {!this.state.showFunctions ? (
-                              <SelectMultiple                                                        
-                                                          
-                              items={functions}
-                              selectedItems={this.state.selectedFunctions}
-                              onSelectionsChange={this.onSelectionsChange} />
-                              ) : null}
-                            </View>
-                            <View>
-                              <TouchableHighlight onPress={this.ShowHideShradha}>
-                                <Text style={styles.heading}>Shradha <Icon style={styles.dropdownarrow} name="down" /></Text>
-                              </TouchableHighlight>
-                              {!this.state.showShradha ? (
-                              <SelectMultiple                                                        
-                                                          
-                              items={shradha}
-                              selectedItems={this.state.selectedShradha}
-                              onSelectionsChange={this.onSelectionsChange} />
-                              ) : null}
-                            </View> */}
+
+                            <Accordian title="Pooja List">
+                                <SelectMultiple
+                                items={pooja}                            
+                                
+                                selectedItems={this.state.selectedPooja}                            
+                                onSelectionsChange={this.onSelectionsChange} />
+                            </Accordian>
+                            <Accordian title="Homa List">
+                                <SelectMultiple
+                                items={homa}                            
+                                
+                                selectedItems={this.state.selectedHoma}                            
+                                onSelectionsChange={this.onSelectionsChange} />
+                            </Accordian>
+                            <Accordian title="Functions">
+                                <SelectMultiple
+                                items={functions}                            
+                                
+                                selectedItems={this.state.selectedFunctions}                            
+                                onSelectionsChange={this.onSelectionsChange} />
+                            </Accordian>
+                            <Accordian title="Shradha">
+                                <SelectMultiple
+                                items={shradha}                            
+                                
+                                selectedItems={this.state.selectedShradha}                            
+                                onSelectionsChange={this.onSelectionsChange} />
+                            </Accordian>
+                            
                             <TouchableHighlight
                                 style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
                                 onPress={() => {
@@ -252,5 +207,5 @@ const styles = StyleSheet.create({
     }
   });
 
-export default SelectingServices
+export default ServiceSelect
 

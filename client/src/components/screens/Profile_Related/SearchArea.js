@@ -40,7 +40,7 @@ export default class SearchArea extends Component {
     }
 
     const output = areas && areas.map(setID);
-    console.log(output);
+    //console.log(output);
     
 
     return (
@@ -51,17 +51,19 @@ export default class SearchArea extends Component {
           selectText="Areas"
           styles={{
             selectToggleText:{
-              paddingTop:8
+              
             },
             selectToggle:{
               width: "100%",
               backgroundColor: 'rgba(255, 255, 255, 0.2)',
-              borderRadius: 25,
+              borderRadius: 5,
               paddingHorizontal: 16,
               fontSize: 16,
               marginVertical: 3,
-              minHeight: 40,
-              marginBottom: 5
+              padding: 5,
+              paddingLeft: 10,
+              borderWidth:0.5,
+              borderColor:'lightgrey'
             },
           }}
           showDropDowns={true}
