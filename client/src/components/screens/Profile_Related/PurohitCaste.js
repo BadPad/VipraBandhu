@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Picker, View, StyleSheet, Text} from 'react-native';
 
-const PurohitCaste = ({ caste, selectedCaste }) => {
-  const [castes, setCaste] = useState('0');
+const PurohitCaste = ({ caste, selectCaste, selectedCaste }) => {
   const handleChange = (value) => {
     if(value.castes && value.castes !== 0) {
       console.log(value.castes)
-      setCaste(value.castes)
-      selectedCaste(value.castes)
+      selectCaste(value.castes)
     }
   } 
   
@@ -15,7 +13,7 @@ const PurohitCaste = ({ caste, selectedCaste }) => {
     <View style={styles.container}>
       <Picker
         style={styles.text}
-        selectedValue={castes}
+        selectedValue={selectedCaste === '' ? 0 : selectedCaste}
         onValueChange={(itemValue) => handleChange({castes: itemValue})}
       >
         <Picker.Item key={0} label="Select Caste" value={0} />

@@ -41,8 +41,7 @@ export default class SearchArea extends Component {
 
     const output = areas && areas.map(setID);
     //console.log(output);
-    
-
+  
     return (
       <View>
         <SectionedMultiSelect

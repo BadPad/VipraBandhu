@@ -28,7 +28,7 @@ const ServiceCaste = ({ caste, selectedCaste, selectedItems }) => {
             //paddingTop:8
           },
           container: {
-            maxHeight: 250,
+            // maxHeight: 250,
           },
           selectToggle:{
             width: "100%",

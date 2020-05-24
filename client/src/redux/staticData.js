@@ -15,8 +15,8 @@ export const usersList = [
         serviceCastes: [],
         area: 'Hsk',
         landmark: 'Near Basavanna Temple',
-        city: 'Bangalore',
-        state: 'Karnataka'
+        city: 'Bengaluru',
+        state: 'karnataka'
     },
     { 
         id: 2, 
@@ -34,8 +34,8 @@ export const usersList = [
         serviceCastes: [],
         area: 'BSK',
         landmark: 'Near Banshankari Temple',
-        city: 'Bangalore',
-        state: 'Karnataka'
+        city: 'Bengaluru',
+        state: 'karnataka'
     },
     { 
         id: 3, 
@@ -53,7 +53,7 @@ export const usersList = [
         serviceCastes: [],
         area: 'BSK',
         landmark: 'Near Banshankari Temple',
-        city: 'Bangalore',
-        state: 'Karnataka'
+        city: 'Bengaluru',
+        state: 'karnataka'
     }
 ]

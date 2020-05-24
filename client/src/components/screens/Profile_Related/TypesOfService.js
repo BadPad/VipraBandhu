@@ -16,7 +16,6 @@ export default class TypesOfService extends React.Component {
         {/*Picker with multiple chose to choose*/}
         {/*selectedValue to set the preselected value if any*/}
         {/*onValueChange will help to handle the changes*/}
-        <ScrollView>
             <Picker 
             style = {styles.text}
             selectedValue={this.state.choosenLabel}
@@ -30,14 +29,12 @@ export default class TypesOfService extends React.Component {
                 <Picker.Item label = "Labour Contract" value = "labour" />
                 <Picker.Item label = "Both" value = "both" />
             </Picker>
-        </ScrollView>
       </View>
     );  
   } 
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     flexDirection: 'column',
     backgroundColor: 'rgba(255, 255, 255, 0.2)',

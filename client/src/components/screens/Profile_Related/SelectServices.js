@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 
 const SelectServices = ({ services, selectedServices, selectedItems }) => {
