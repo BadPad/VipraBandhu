@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontWeight: '500',
         color: '#fff',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'OpenSans-Regular',
     }
 })
 

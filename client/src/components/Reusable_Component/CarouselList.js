@@ -15,23 +15,24 @@ class CarouselList extends Component {
                     Ad1: "For details on Festivals, Pooja, Madhwa Parampare refer",
                     Ad2: "www.sumadhwaseva.com",
                     Ad3: "Contact: Narahari Sumadhwa @ 9042719165",
-                    AdImage: "red_bg.png"
+                    AdImage: "orange_bg.png"
                 },
                 {
                     AdName: "Omkar Melodies",
                     Ad1: "Karoake's : All languages",
                     Ad2: "Orchestra: Marriage Functions",
                     Ad3: "Contact: Sridhar Dixit @ 9845040962",
-                    AdImage: "red_bg.png"
+                    AdImage: "pink_bg.png"
                 },
                 {
                     AdName: "Advertisment Banner",
                     Ad1: "",
                     Ad3: "",
                     Ad2: "Contact: Guru Prasad @ 9945226465",
-                    AdImage: "red_bg.png"
+                    AdImage: "purple_bg.png"
                 },
             ],
+            colors: ["orange_bg.png", "pink_bg.png", "purple_bg.png"]
         };
     }
 
@@ -78,45 +79,60 @@ class CarouselList extends Component {
     }
 
     _renderAds = ({ item, index }) => {
-        if (item.AdName === 'Sumadhwa Seva') {
-            return (
-                <View style={styles.upFestSlideView}>
-                    <ImageBackground source={require('../images/red_bg.png')}
-                        style={{ width: '100%' }}>
-                        <Text style={styles.AdName}>{item.AdName}</Text>
-                        <Text style={styles.Ad}>{item.Ad1}</Text>
-                        <Text style={styles.Ad}>{item.Ad2}</Text>
-                        <Text style={styles.Ad}>{item.Ad3}</Text>
-                    </ImageBackground>
-                </View>
-            );
-        }
-        else if (item.AdName === 'Omkar Melodies') {
-            return (
-                <View style={styles.upFestSlideView}>
-                    <ImageBackground source={require('../images/red_bg.png')}
-                        style={{ width: '100%' }}>
-                        <Text style={styles.AdName}>{item.AdName}</Text>
-                        <Text style={styles.Ad}>{item.Ad1}</Text>
-                        <Text style={styles.Ad}>{item.Ad2}</Text>
-                        <Text style={styles.Ad}>{item.Ad3}</Text>
-                    </ImageBackground>
-                </View>
-            );
-        }
-        else {
-            return (
-                <View style={styles.upFestSlideView}>
-                    <ImageBackground source={require('../images/purple_bg.png')}
-                        style={{ width: '100%' }}>
-                        <Text style={styles.AdName}>{item.AdName}</Text>
-                        <Text style={styles.Ad}>{item.Ad1}</Text>
-                        <Text style={styles.Ad}>{item.Ad2}</Text>
-                        <Text style={styles.Ad}>{item.Ad3}</Text>
-                    </ImageBackground>
-                </View>
-            );
-        }
+        //var imageUrl = require('../images/' + item.AdImage);
+        console.warn(item.AdImage)
+
+        return (
+            <View style={styles.upFestSlideView}>
+                <ImageBackground source={require('../images/purple_bg.png')}
+                    style={{ width: '100%' }}>
+                    <Text style={styles.AdName}>{item.AdName}</Text>
+                    <Text style={styles.Ad}>{item.Ad1}</Text>
+                    <Text style={styles.Ad}>{item.Ad2}</Text>
+                    <Text style={styles.Ad}>{item.Ad3}</Text>
+                </ImageBackground>
+            </View>
+        );
+
+        // if (item.AdName === 'Sumadhwa Seva') {
+        //     return (
+        //         <View style={styles.upFestSlideView}>
+        //             <ImageBackground source={require('../images/red_bg.png')}
+        //                 style={{ width: '100%' }}>
+        //                 <Text style={styles.AdName}>{item.AdName}</Text>
+        //                 <Text style={styles.Ad}>{item.Ad1}</Text>
+        //                 <Text style={styles.Ad}>{item.Ad2}</Text>
+        //                 <Text style={styles.Ad}>{item.Ad3}</Text>
+        //             </ImageBackground>
+        //         </View>
+        //     );
+        // }
+        // else if (item.AdName === 'Omkar Melodies') {
+        //     return (
+        //         <View style={styles.upFestSlideView}>
+        //             <ImageBackground source={require('../images/red_bg.png')}
+        //                 style={{ width: '100%' }}>
+        //                 <Text style={styles.AdName}>{item.AdName}</Text>
+        //                 <Text style={styles.Ad}>{item.Ad1}</Text>
+        //                 <Text style={styles.Ad}>{item.Ad2}</Text>
+        //                 <Text style={styles.Ad}>{item.Ad3}</Text>
+        //             </ImageBackground>
+        //         </View>
+        //     );
+        // }
+        // else {
+        //     return (
+        //         <View style={styles.upFestSlideView}>
+        //             <ImageBackground source={require('../images/purple_bg.png')}
+        //                 style={{ width: '100%' }}>
+        //                 <Text style={styles.AdName}>{item.AdName}</Text>
+        //                 <Text style={styles.Ad}>{item.Ad1}</Text>
+        //                 <Text style={styles.Ad}>{item.Ad2}</Text>
+        //                 <Text style={styles.Ad}>{item.Ad3}</Text>
+        //             </ImageBackground>
+        //         </View>
+        //     );
+        // }
     }
 
     openLink() {
@@ -189,7 +205,6 @@ const styles = StyleSheet.create({
     upFestName: {
         width: '100%',
         fontSize: 18,
-        fontWeight: 'bold',
         color: '#fff',
         textAlign: 'center',
         fontFamily: 'OpenSans-Regular'

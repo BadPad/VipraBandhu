@@ -1,4 +1,5 @@
-import { GET_SERVICE_LIST, SEARCH_SERVICES, SELECTED_CATEGORY, FILTER_CATEGORY, POOJA_SERVICES, HOMA_SERVICES, FUNCTION_SERVICES} from '../actions/types';
+import { GET_SERVICE_LIST, SEARCH_SERVICES, SELECTED_CATEGORY, FILTER_CATEGORY, POOJA_SERVICES, HOMA_SERVICES, FUNCTION_SERVICES
+, BREAKFAST_SERVICES, LUNCH_SERVICES, SNACKS_SERVICES, DINNER_SERVICES} from '../actions/types';
 
 const initialState = {
     fullServiceList: null,
@@ -64,6 +65,43 @@ export default function(state = initialState, action) {
                 filteredList: filterFunction,
                 filterCategory: functions
             }
+        case BREAKFAST_SERVICES:
+            const fullServices1 = state.fullServiceList;
+            const breakfast = action.payload;
+            const filteredBreakfast = fullServices1.filter(list => list.serviceSubCategory === breakfast)
+            return {
+                ...state,
+                filteredList: filteredBreakfast,
+                filterCategory: breakfast
+            }
+        case LUNCH_SERVICES:
+            const fullServices2 = state.fullServiceList;
+            const lunch = action.payload;
+            const filteredLunch = fullServices2.filter(list => list.serviceSubCategory === lunch)
+            return {
+                ...state,
+                filteredList: filteredLunch,
+                filterCategory: lunch
+            }
+        case SNACKS_SERVICES:
+            const fullServices3 = state.fullServiceList;
+            const snacks = action.payload;
+            const filterSnacks = fullServices3.filter(list => list.serviceSubCategory === snacks)
+            return {
+                ...state,
+                filteredList: filterSnacks,
+                filterCategory: snacks
+            }
+        case DINNER_SERVICES:
+            const fullServices4 = state.fullServiceList;
+            const dinner = action.payload;
+            const filterDinner = fullServices4.filter(list => list.serviceSubCategory === dinner)
+            return {
+                ...state,
+                filteredList: filterDinner,
+                filterCategory: dinner
+            }
+            
         default:
             return state;
     }

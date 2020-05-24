@@ -5,7 +5,10 @@ import PropTypes from 'prop-types';
 import SearchServices from "../Reusable_Component/SearchServices";
 import Carousel from "../Reusable_Component/CarouselList";
 
-import { serviceList, poojaServices, homaServices, functionServices, searchServices } from '../../redux/actions/serviceListActions';
+import {
+    serviceList, poojaServices, homaServices, functionServices, searchServices,
+    breakfastServices, lunchServices, snacksServices, dinnerServices
+} from '../../redux/actions/serviceListActions';
 import { upcomingFestivals } from '../../redux/actions/upcomingFestActions';
 
 const Welcome = ({
@@ -18,7 +21,11 @@ const Welcome = ({
     services,
     searchServices,
     upcomingFestivals,
-    festivals
+    festivals,
+    breakfastServices,
+    lunchServices,
+    snacksServices,
+    dinnerServices
 }) => {
 
     useEffect(() => {
@@ -37,10 +44,27 @@ const Welcome = ({
         navigation.navigate('ServicesList', { category: 'purohit' })
     }
 
-    const catering = () => {
-        navigation.navigate('ServicesList', { category: 'catering' })
+    const catering = (type) => {
+        breakfastServices("breakfast")
+        lunchServices("lunch")
+        
+        dinnerServices("dinner")
+        snacksServices("snacks")
+        navigation.navigate('ServicesList', { category: 'Catering' })
     }
 
+    // const catering = (type) => {
+    //     if (type === 'breakfast') {
+    //         breakfastServices(type)
+    //     } else if (type === 'lunch') {
+    //         lunchServices(type)
+    //     } else if (type === 'snacks') {
+    //         snacksServices(type)
+    //     } else if (type === 'dinner') {
+    //         dinnerServices(type)
+    //     }
+    //     navigation.navigate('ServicesList', { category: 'Catering' })
+    // }
 
     return (
 
@@ -137,41 +161,33 @@ const Welcome = ({
                     </View>
                     <View style={styles.serviceBody}>
                         <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering}>
+                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering('catering')}>
                                 <Image
                                     style={styles.serviceIcons}
-                                    source={require('../images/Cooking.png')}
+                                    source={require('../images/breakfast.png')}
                                 />
-                                <Text style={styles.serviceBodyBoxTitle}>Breakfast</Text>
+                                <Text style={styles.serviceBodyBoxTitle}>Catering</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering}>
+                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering('fullContract')}>
                                 <Image
                                     style={styles.serviceIcons}
-                                    source={require('../images/Cooking.png')}
+                                    source={require('../images/lunch.png')}
                                 />
-                                <Text style={styles.serviceBodyBoxTitle}>Lunch</Text>
+                                <Text style={styles.serviceBodyBoxTitle}>Full Contract</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering}>
+                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering('laborContract')}>
                                 <Image
                                     style={styles.serviceIcons}
-                                    source={require('../images/Cooking.png')}
+                                    source={require('../images/Snacks.png')}
                                 />
-                                <Text style={styles.serviceBodyBoxTitle}>Snacks</Text>
+                                <Text style={styles.serviceBodyBoxTitle}>Labor Contract</Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering}>
-                                <Image
-                                    style={styles.serviceIcons}
-                                    source={require('../images/Cooking.png')}
-                                />
-                                <Text style={styles.serviceBodyBoxTitle}>Dinner</Text>
-                            </TouchableOpacity>
-                        </View>
+
                     </View>
                 </View>
 
@@ -288,7 +304,7 @@ const styles = StyleSheet.create({
     },
     // Pooja and Cooking Services CSS - End
 
-    poojaView:{
+    poojaView: {
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -393,7 +409,13 @@ Welcome.propTypes = {
     functionServices: PropTypes.func.isRequired,
     searchServices: PropTypes.func.isRequired,
     services: PropTypes.object.isRequired,
-    festivals: PropTypes.object.isRequired
+    festivals: PropTypes.object.isRequired,
+    upcomingFestivals: PropTypes.object.isRequired,
+    festivals: PropTypes.array.isRequired,
+    breakfastServices: PropTypes.func.isRequired,
+    lunchServices: PropTypes.func.isRequired,
+    snacksServices: PropTypes.func.isRequired,
+    dinnerServices: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -401,6 +423,6 @@ const mapStateToProps = state => ({
     festivals: state.upcomingFestivals,
 })
 
-const mapDispatchToProps = { serviceList, poojaServices, homaServices, functionServices, searchServices, upcomingFestivals }
+const mapDispatchToProps = { serviceList, poojaServices, homaServices, functionServices, searchServices, upcomingFestivals, breakfastServices, lunchServices, snacksServices, dinnerServices }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome)

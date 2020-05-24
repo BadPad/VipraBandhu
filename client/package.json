@@ -21,6 +21,7 @@
     "react-native": "0.61.5",
     "react-native-animation-layout": "0.0.13",
     "react-native-autocomplete-input": "^4.1.0",
+    "react-native-collapsible": "^1.5.2",
     "react-native-dynamic-search-bar": "^0.3.1",
     "react-native-dynamic-vector-icons": "^0.2.2",
     "react-native-elements": "^1.2.7",
