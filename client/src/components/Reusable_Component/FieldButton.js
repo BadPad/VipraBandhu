@@ -1,12 +1,12 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableHighlight, StyleSheet } from 'react-native'
 
 const FieldButton = ({butonContainer, buttonTouch, buttonTouchText, children, name, onPress}) => {
     return (
         <View style={butonContainer}>
-            <TouchableOpacity style={{...styles.button, ...buttonTouch}} onPress={onPress}>
+            <TouchableHighlight style={{...styles.button, ...buttonTouch}} onPress={onPress}>
                 <Text style={{...styles.buttonText, ...buttonTouchText}}>{name}</Text>
-            </TouchableOpacity>
+            </TouchableHighlight>
             {children}
         </View>
     )
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 17,
-        fontWeight: '500',
+        fontWeight: 'bold',
         color: '#fff',
         textAlign: 'center',
         fontFamily: 'OpenSans-Regular',

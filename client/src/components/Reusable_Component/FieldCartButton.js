@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, TouchableHighlight, StyleSheet, Dimensions } from 'react-native'
 
 const { width, height } = Dimensions.get('window');
 
@@ -12,14 +12,14 @@ const FieldCartButton = ({
     children
  }) => {
     return (
-        <View style={{...styles.container, ...totalContainer}}>
-            <TouchableOpacity style={{...styles.processButton, ...touchButton}} onPress={onPress}>
+        <TouchableHighlight style={{...styles.container, ...totalContainer}}>
+            <View style={{...styles.processButton, ...touchButton}} onPress={onPress}>
                 <View>
                     <Text style={{...styles.textButton, ...buttonText}}>{name}</Text>
                 </View>
                 {children}
-            </TouchableOpacity>
-        </View>
+            </View>
+        </TouchableHighlight>
     )
 }
 

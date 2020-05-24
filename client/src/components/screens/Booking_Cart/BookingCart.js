@@ -10,9 +10,11 @@ import Card from '../../Reusable_Component/Card/Card';
 import CardSection from '../../Reusable_Component/Card/CardSection';
 import FieldCartButton from '../../Reusable_Component/FieldCartButton';
 
-import Icon from 'react-native-vector-icons/AntDesign'
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const BookingCart = ({ bookingCartServices, deleteFromBookingCart }) => {
+
+    console.log(bookingCartServices.bookingCartList)
 
     const renderSeviceCartList = ({ item }) => {
         return (
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         backgroundColor: '#fff',
-        
+        paddingBottom: 55
     },
     cartTotalItems: {
         justifyContent: 'space-between',
@@ -97,6 +99,7 @@ const styles = StyleSheet.create({
 })
 
 BookingCart.propTypes = {
+    deleteFromBookingCart: PropTypes.func.isRequired,
     bookingCartServices: PropTypes.object.isRequired
 }
 

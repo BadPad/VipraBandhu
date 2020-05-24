@@ -17,8 +17,6 @@ import FieldButton from '../../Reusable_Component/FieldButton';
 import FilterCategory from '../../utils/FilterCategory';
 import Accordian from '../../Reusable_Component/Accordian';
 
-
-
 const { height } = Dimensions.get('window');
 
 const ServicesList = ({ navigation, route, serviceList, searchServices, selectedCategory, filterCategory }) => {
@@ -142,6 +140,7 @@ const ServicesList = ({ navigation, route, serviceList, searchServices, selected
                 buttonTouch={styles.buttonTouch}
                 name="Submit"
                 onPress={() => {
+                    bottomSheetRef.current.snapTo(1);
                     bottomSheetRef.current.snapTo(1);
                     filterCategory(checkedCategory);
                 }}
@@ -351,10 +350,10 @@ const styles = StyleSheet.create({
         fontFamily: 'OpenSans-Bold',
         fontSize: 16,
         textAlign: 'center',
-
-
-        color: '#000',
-        padding: 3
+        fontWeight:'bold',
+        backgroundColor:'#595959',
+        color:'#fff',
+        padding:3
     },
     panel: {
         height: 600,
