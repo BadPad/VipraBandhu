@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, Text, TouchableHighlight, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const FieldCartButton = ({ 
     totalContainer,
@@ -12,14 +12,14 @@ const FieldCartButton = ({
     children
  }) => {
     return (
-        <TouchableHighlight style={{...styles.container, ...totalContainer}}>
-            <View style={{...styles.processButton, ...touchButton}} onPress={onPress}>
+        <TouchableOpacity style={{...styles.container, ...totalContainer}} onPress={onPress}>
+            <View style={{...styles.processButton, ...touchButton}}>
                 <View>
                     <Text style={{...styles.textButton, ...buttonText}}>{name}</Text>
                 </View>
                 {children}
             </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
     )
 }
 

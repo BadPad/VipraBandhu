@@ -29,7 +29,7 @@ const Login = ({ navigation, loginUser }) => {
         
         if(isValid) {
             setErrors(errors)
-            loginUser(formData)
+            loginUser(formData, navigation)
         } else {
             setErrors(errors)
         }

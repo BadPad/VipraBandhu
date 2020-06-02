@@ -5,16 +5,16 @@ import PropTypes from 'prop-types';
 import isEmpty from '../../Reusable_Component/is-empty';
 import Heading from '../../Reusable_Component/Heading';
 import BookingCartServiceList from '../../utils/BookingCartServiceList';
-import { deleteFromBookingCart } from '../../../redux/actions/bookingCartActions';
+import { deleteFromBookingCart, bookingCartStructure } from '../../../redux/actions/bookingCartActions';
 import Card from '../../Reusable_Component/Card/Card';
 import CardSection from '../../Reusable_Component/Card/CardSection';
 import FieldCartButton from '../../Reusable_Component/FieldCartButton';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 
-const BookingCart = ({ bookingCartServices, deleteFromBookingCart }) => {
+const BookingCart = ({ navigation, bookingCartServices, deleteFromBookingCart, bookingCartStructure }) => {
 
-    console.log(bookingCartServices.bookingCartList)
+    // console.log(bookingCartServices.bookingCartList)
 
     const renderSeviceCartList = ({ item }) => {
         return (
@@ -52,7 +52,10 @@ const BookingCart = ({ bookingCartServices, deleteFromBookingCart }) => {
                 </ScrollView>
                 <FieldCartButton 
                     name="Checkout"
-                    onPress={() => console.log('Cart')}
+                    onPress={() => {
+                        bookingCartStructure()
+                        navigation.navigate('DeliveryOptions')
+                    }}
                 >
                     <View>
                         <Text style={styles.buttonText}>₹ {sum}   <Icon name="arrowright" size={20} backgroundColor="transparent" color="#000"></Icon ></Text>
@@ -100,6 +103,7 @@ const styles = StyleSheet.create({
 
 BookingCart.propTypes = {
     deleteFromBookingCart: PropTypes.func.isRequired,
+    bookingCartStructure: PropTypes.func.isRequired,
     bookingCartServices: PropTypes.object.isRequired
 }
 
@@ -107,6 +111,6 @@ const mapStateToProps = state => ({
     bookingCartServices: state.bookingCartServices
 })
 
-const mapDispatchToProps = { deleteFromBookingCart }
+const mapDispatchToProps = { deleteFromBookingCart, bookingCartStructure }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookingCart)

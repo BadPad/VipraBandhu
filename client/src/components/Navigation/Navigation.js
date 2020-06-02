@@ -1,12 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
-import { logoutUser } from '../../redux/actions/authActions';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -25,429 +21,43 @@ import Service from '../screens/Services/Service';
 import BookingCart from '../screens/Booking_Cart/BookingCart';
 import BookingsList from '../screens/Bookings/BookingsList';
 import Booking from '../screens/Bookings/Booking';
+import DeliveryOptions from '../screens/Delivery_Options/DeliveryOptions';
+import DrawnContent from './DrawnContent';
 
-const HomeStack = createStackNavigator();
-const LoginStack = createStackNavigator();
-const RegisterStack = createStackNavigator();
-const AboutStack = createStackNavigator();
-const OfferStack = createStackNavigator();
-const MyProfileStack = createStackNavigator();
-const MyBookingsStack = createStackNavigator();
-const MyWalletStack = createStackNavigator();
-const CustomerServiceStack = createStackNavigator();
-const NotificationStack = createStackNavigator();
-
+const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator();
 
-const HomeStackScreen = ({ navigation }) => (
-
-  <HomeStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: '#D63031',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-        fontFamily: 'OpenSans-Regular'
-      },
-    }}
-  >
-    <HomeStack.Screen name="Welcome" component={Welcome}
-      options={{
-        title: 'Sukalpa Seva',
-        headerTitleStyle:{
-          fontFamily: 'OpenSans-Regular'
-        },
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
-            }>
-          </Icon.Button >
-        ),
-        headerRight: () => (
-          <View style={styles.headerRightIcons}>
-            <Icon style={styles.iconCart} name="ios-cart" size={25}
-              backgroundColor="#D63031" color="#fff"
-              onPress={() => navigation.navigate('BookingCart')}
-            >
-            </Icon >
-            <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
-              backgroundColor="#D63031" color="#fff"
-              onPress={() => navigation.navigate('Notifications')}
-            >
-            </Icon >
-
-          </View>
-        )
-      }}
-    />
-    <HomeStack.Screen name="ServicesList" component={ServicesList}
-      options={{
-        title: 'Pooja Service List',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
-            }>
-          </Icon.Button >
-        ),
-        headerRight: () => (
-          <View style={styles.headerRightIcons}>
-            <Icon style={styles.iconCart} name="ios-cart" size={25}
-              backgroundColor="#D63031" color="#fff"
-              onPress={() => navigation.navigate('BookingCart')}
-            >
-            </Icon >
-            <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
-              backgroundColor="#D63031" color="#fff"
-              onPress={() => navigation.navigate('Notifications')}
-            >
-            </Icon >
-
-          </View>
-        )
-      }}
-    />
-    <HomeStack.Screen name="Service" component={Service}
-      options={{
-        title: 'Sukalpa Seva',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
-            }>
-          </Icon.Button >
-        ),
-        headerRight: () => (
-          <View style={styles.headerRightIcons}>
-            <Icon style={styles.iconCart} name="ios-cart" size={25}
-              backgroundColor="#D63031" color="#fff"
-              onPress={() => navigation.navigate('BookingCart')}
-            >
-            </Icon >
-            <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
-              backgroundColor="#D63031" color="#fff"
-              onPress={() => navigation.navigate('Notifications')}
-            >
-            </Icon >
-
-          </View>
-        )
-      }}
-    />
-    <HomeStack.Screen name="BookingCart" component={BookingCart} 
-      options={{
-        title: 'Booking Cart',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
-            }>
-          </Icon.Button >
-        ),
-        headerRight: () => (
-          <View style={styles.headerRightIcons}>
-            <Icon style={styles.iconCart} name="ios-cart" size={25}
-              backgroundColor="#D63031" color="#fff"
-              onPress={() => navigation.navigate('BookingCart')}
-            >
-            </Icon >
-            <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
-              backgroundColor="#D63031" color="#fff"
-              onPress={() => navigation.navigate('Notifications')}
-            >
-            </Icon >
-
-          </View>
-        )
-      }}
-    />
-  </HomeStack.Navigator>
-);
-
-const LoginStackScreen = ({ navigation }) => (
-
-  <LoginStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: '#D63031',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold'
-      },
-    }}
-  >
-    <LoginStack.Screen name="Login" component={Login}
-      options={{
-        title: 'Login',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
-            }>
-          </Icon.Button >
-        )
-      }}
-    />
-  </LoginStack.Navigator>
-);
-
-const RegisterStackScreen = ({ navigation }) => (
-
-  <RegisterStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: '#D63031',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold'
-      },
-    }}
-  >
-    <RegisterStack.Screen name="Register" component={Register}
-      options={{
-        title: 'Register',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
-            }>
-          </Icon.Button >
-        )
-      }}
-    />
-  </RegisterStack.Navigator>
-);
-
-const AboutStackScreen = ({ navigation }) => (
-
-  <AboutStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: '#D63031',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold'
-      },
-    }}
-  >
-    <AboutStack.Screen name="AboutUs" component={About}
-      options={{
-        title: 'About Us',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
-            }>
-          </Icon.Button >
-        )
-      }}
-    />
-  </AboutStack.Navigator>
-);
-
-const OfferStackScreen = ({ navigation }) => (
-
-  <OfferStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: '#D63031',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold'
-      },
-    }}
-  >
-    <OfferStack.Screen name="Offers" component={Offers}
-      options={{
-        title: 'Offers',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
-            }>
-          </Icon.Button >
-        )
-      }}
-    />
-  </OfferStack.Navigator>
-);
-
-const MyProfileStackScreen = ({ navigation }) => (
-
-  <MyProfileStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: '#D63031',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold'
-      },
-    }}
-  >
-    <MyProfileStack.Screen name="MyProfile" component={Profile}
-      options={{
-        title: 'My Profile',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
-            }>
-          </Icon.Button >
-        )
-      }}
-    />
-  </MyProfileStack.Navigator>
-);
-
-const MyBookingsStackScreen = ({ navigation }) => (
-
-  <MyBookingsStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: '#D63031',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold'
-      },
-    }}
-  >
-    <MyBookingsStack.Screen name="BookingsList" component={BookingsList}
-      options={{
-        title: 'My Bookings',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
-            }>
-          </Icon.Button >
-        )
-      }}
-    />
-    <MyBookingsStack.Screen name="Booking" component={Booking}
-      
-        options={({ route }) => ({ title: route.params.name })}
-        
-      
-    />
-  </MyBookingsStack.Navigator>
-);
-
-
-const MyWalletStackScreen = ({ navigation }) => (
-
-  <MyWalletStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: '#D63031',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold'
-      },
-    }}
-  >
-    <MyWalletStack.Screen name="MyWallet" component={Wallet}
-      options={{
-        title: 'My Wallet',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
-            }>
-          </Icon.Button >
-        ),
-        headerRight: () => (
-          <>
-            {/* <Icon.Button name="ios-cart" size={25} 
-          backgroundColor="#232f3e" color="#fff" >
-          </Icon.Button > */}
-            <Icon.Button name="ios-notifications" size={25}
-              backgroundColor="#D63031" color="#fff" >
-            </Icon.Button >
-          </>
-        )
-      }}
-    />
-  </MyWalletStack.Navigator>
-);
-
-
-const CustomerServiceStackScreen = ({ navigation }) => (
-
-  <CustomerServiceStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: '#D63031',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold'
-      },
-    }}
-  >
-    <CustomerServiceStack.Screen name="CustomerServicet" component={CustomerService}
-      options={{
-        title: 'Customer Service',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
-            }>
-          </Icon.Button >
-        )
-      }}
-    />
-  </CustomerServiceStack.Navigator>
-);
-
-
-const NotificationStackScreen = ({ navigation }) => (
-
-  <NotificationStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: '#D63031',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold'
-      },
-    }}
-  >
-    <NotificationStack.Screen name="Notifications" component={Notifications}
-      options={{
-        title: 'Notifications',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
-            }>
-          </Icon.Button >
-        )
-      }}
-    />
-  </NotificationStack.Navigator>
-);
-
-showHeaders = (route) => {
-  console.log(route)
-}
-
 function getHeaderTitle(route) {
-  const routeName = route.state ? route.state.routes[route.state.index].name : 'Welcome';
-
+  const routeName = route.name? route.name : 'Welcome';
   switch (routeName) {
-    case 'Welcome' || 'Register' || 'Login':
-      return false
+    case 'Welcome':
+      return 'Sukalpa Seva'
+    case 'ServicesList':
+      return 'Pooja Service List'
+    case 'Service':
+      return 'Sukalpa Seva'
+    case 'BookingCart':
+      return 'Booking Cart'
+    case 'DeliveryOptions':
+      return 'Address & Time Confirmation'
+    case 'AboutUs':
+      return 'About Us'
+    case 'Login':
+      return 'Login'
+    case 'Register':
+      return 'Register'
+    case 'Offers':
+      return 'Offers'
+    case 'MyProfile':
+      return 'My Profile'
+    case 'BookingsList':
+      return 'My Bookings'
+    case 'MyWallet':
+      return 'My Wallet'
+    case 'CustomerService':
+      return 'Customer Service'
+    case 'Notifications':
+      return 'Notifications'
     default:
       return true
   }
@@ -464,48 +74,252 @@ shouldHeaderBeShowm = (route) => {
   }
 }
 
+const StackNavigation = ({ navigation }) => (
+  <Stack.Navigator
+    initialRouteName="Welcome"
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: '#D63031',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold'
+      },
+    }}
+  >
+    <Stack.Screen name="Welcome" component={Welcome}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        ),
+        headerRight: () => (
+          <View style={styles.headerRightIcons}>
+            <Icon style={styles.iconCart} name="ios-cart" size={25}
+              backgroundColor="#D63031" color="#fff"
+              onPress={() => navigation.navigate('BookingCart')}
+            >
+            </Icon >
+            <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
+              backgroundColor="#D63031" color="#fff"
+              onPress={() => navigation.navigate('Notifications')}
+            >
+            </Icon >
 
-function Navigation({ auth, logoutUser }) {
-  const { isAuthenticated } = auth;
+          </View>
+        )
+      })}
+    />
+    <Stack.Screen name="ServicesList" component={ServicesList}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        ),
+        headerRight: () => (
+          <View style={styles.headerRightIcons}>
+            <Icon style={styles.iconCart} name="ios-cart" size={25}
+              backgroundColor="#D63031" color="#fff"
+              onPress={() => navigation.navigate('BookingCart')}
+            >
+            </Icon >
+            <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
+              backgroundColor="#D63031" color="#fff"
+              onPress={() => navigation.navigate('Notifications')}
+            >
+            </Icon >
 
-  const signOut = () => {
-    logoutUser();
-  }
+          </View>
+        )
+      })}
+    />
+    <Stack.Screen name="Service" component={Service}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        ),
+        headerRight: () => (
+          <View style={styles.headerRightIcons}>
+            <Icon style={styles.iconCart} name="ios-cart" size={25}
+              backgroundColor="#D63031" color="#fff"
+              onPress={() => navigation.navigate('BookingCart')}
+            >
+            </Icon >
+            <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
+              backgroundColor="#D63031" color="#fff"
+              onPress={() => navigation.navigate('Notifications')}
+            >
+            </Icon >
+
+          </View>
+        )
+      })}
+    />
+    <Stack.Screen name="BookingCart" component={BookingCart} 
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="DeliveryOptions" component={DeliveryOptions}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="AboutUs" component={About}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="Login" component={Login}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="Register" component={Register}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="Offers" component={Offers}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="MyProfile" component={Profile}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="BookingsList" component={BookingsList}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="MyWallet" component={Wallet}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        ),
+        headerRight: () => (
+          <Icon.Button name="ios-notifications" size={25}
+            backgroundColor="#D63031" color="#fff" >
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="CustomerService" component={CustomerService}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="Notifications" component={Notifications}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+  </Stack.Navigator>
+)
+
+function Navigation() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Home" component={HomeStackScreen} />
-        <Drawer.Screen name="AboutUs" component={AboutStackScreen} />
-        <Drawer.Screen name="Offers" component={OfferStackScreen} />
-          {!isAuthenticated ? (
-            <>
-              <Drawer.Screen name="Login" component={LoginStackScreen} />
-              <Drawer.Screen name="Register" component={RegisterStackScreen} />
-            </>
-          ) : (
-              <>
-                <Drawer.Screen name="MyProfile" component={MyProfileStackScreen} />
-                <Drawer.Screen name="MyOrders/Bookings" component={MyBookingsStackScreen} />
-                <Drawer.Screen name="MyWallet" component={MyWalletStackScreen} />
-                <Drawer.Screen name="SignOut" component={signOut} />
-              </>
-          )}
-        <Drawer.Screen name="Notifications" component={NotificationStackScreen} />
-        <Drawer.Screen name="CustomerService" component={CustomerServiceStackScreen} />
+      <Drawer.Navigator 
+        initialRouteName="Home" 
+        drawerContent={props => <DrawnContent {...props} />}
+      >
+        <Drawer.Screen name="Screens" component={StackNavigation} />
       </Drawer.Navigator>
     </NavigationContainer>
   )
 }
-
-Navigation.propTypes = {
-  logoutUser: PropTypes.func.isRequired
-}
-
-const mapStateToProps = state => ({
-  auth: state.auth
-})
-
-const mapDispatchToProps = { logoutUser }
 
 const styles = StyleSheet.create({
   headerRightIcons: {
@@ -520,4 +334,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
+export default Navigation;

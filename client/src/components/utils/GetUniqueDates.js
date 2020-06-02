@@ -14,6 +14,14 @@ export const getDate = date => {
     return moment(date).format('DD/MM/YYYY')
 }
 
+export const getShortMonth = date => {
+    return moment(date).format('DD MMM')
+}
+
+export const getShortDay = date => {
+    return moment(date).format('ddd')
+}
+
 export const getTime = time => {
-    return moment(value).format('hh:mm A')
+    return moment(time).format('hh:mm A')
 }

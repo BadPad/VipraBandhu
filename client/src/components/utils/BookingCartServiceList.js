@@ -6,17 +6,16 @@ import Heading from '../Reusable_Component/Heading'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { getDate } from './GetUniqueDates'
 
-const BookingCartServiceList = ({ data, deleteSelected }) => {
-    console.log(data)
+const BookingCartServiceList = ({ data, deleteSelected, noDelete }) => {
     return (
         <Card style={styles.container}>
             <CardSection style={styles.cartContent}>
                 <View>
                     <Heading containerStyle={styles.containerTitle} style={styles.serviceTitleStyle} name={data.serviceName} />
-                    <Heading containerStyle={styles.containerPoojaInfo} style={styles.poojaDetails} name={`Date : ${getDate(data.serviceDate)}`} />
+                    <Heading containerStyle={noDelete ? styles.noDelete : styles.containerPoojaInfo} style={styles.poojaDetails} name={`Date : ${getDate(data.serviceDate)}`} />
                     <Heading containerStyle={styles.containerPoojaInfo} style={styles.poojaDetails} name={`Amount : Rs ${data.servicePrice}`} />
                 </View>
-                <TouchableOpacity style={styles.deleteCartService} onPress={() => deleteSelected(data)}>
+                <TouchableOpacity style={noDelete ? styles.noDelete : styles.deleteCartService} onPress={() => deleteSelected(data)}>
                     <View style={styles.deleteCartIcon} >
                         <Icon name="delete" size={20} 
                             backgroundColor="transparent" color="#D63031" 
@@ -57,6 +56,9 @@ const styles = StyleSheet.create({
     },
     deleteCartIcon: {
         padding: 10
+    },
+    noDelete: {
+        display: 'none'
     }
 })
 

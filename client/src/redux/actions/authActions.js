@@ -38,9 +38,10 @@ export const regCook = userData => dispatch => {
 }
 
 // Login - Get User Token
-export const loginUser = userData => dispatch => {
+export const loginUser = (userData, navigation) => dispatch => {
     const data = usersList.find(data => data.email === userData.emailOrPhone);
     AsyncStorage.setItem('SukalpaSeva', data.id.toString())
+    navigation.navigate('Welcome')
     dispatch(setCurrentUser(data.id))
 }
 

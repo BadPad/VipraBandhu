@@ -37,7 +37,7 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
         setIsModel(false)
         setAddNewDate(!addNewDate)
         addToBookingCart(service)
-        navigation.navigate('BookingCart')
+        // navigation.navigate('BookingCart')
     }
 
     const onDateChange = (event, selectedDate) => {
@@ -57,7 +57,7 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
                     value={newDate}
                     mode="date"
                     is24Hour={true}
-                    display="calendar"
+                    display="default"
                     onPress={() => setShowDate(!showDate)}
                     onChange={onDateChange}
                 />
