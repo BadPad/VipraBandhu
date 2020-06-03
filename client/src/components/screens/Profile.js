@@ -229,12 +229,12 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
     const SecondRoute = () => (
       <View>
         <Text style = {styles.texts}>Select Services:</Text>
-          <SelectServices 
+          {/* <SelectServices 
             services={services && services.fullServiceList}
             selectedServices={selectedServices => setFormData({...formData, selectedServices})}
             selectedItems={formData.selectedServices}
-          />
-          {/* <ServiceSelect /> */}
+          /> */}
+          <ServiceSelect />
           <Text style = {styles.texts}>Service Type:</Text>                            
           <TypesOfService />
           <Text style = {styles.texts}>Preferred Caste:</Text>

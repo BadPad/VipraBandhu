@@ -32,7 +32,7 @@ const SelectServices = ({ services, selectedServices, selectedItems }) => {
         items={servicesList}
         uniqueKey="id"
         subKey="services"
-        selectText="Select your Services"
+        selectText="Select Services"
         styles={{
           subItemText : {
             color: '#000'
@@ -53,7 +53,7 @@ const SelectServices = ({ services, selectedServices, selectedItems }) => {
             padding: 5,
             paddingLeft: 10,
             borderWidth:0.5,
-            borderColor:'lightgrey'            
+            borderColor:'lightgrey'
           }
         }}
         showDropDowns={true}

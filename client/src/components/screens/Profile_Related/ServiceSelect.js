@@ -50,17 +50,17 @@ class ServiceSelect extends React.Component {
     this.setState({ selectedPooja })
     }
     
-    onSelectionsChange = (selectedHoma) => {
+    onSelectionChange = (selectedHoma) => {
     // selectedFruits is array of { label, value }
     this.setState({ selectedHoma })
     }
     
-    onSelectionsChange = (selectedFunctions) => {
+    onSelectChange = (selectedFunctions) => {
     // selectedFruits is array of { label, value }
     this.setState({ selectedFunctions })
     }
     
-    onSelectionsChange = (selectedShradha) => {
+    onSelectionsChanges = (selectedShradha) => {
     // selectedFruits is array of { label, value }
     this.setState({ selectedShradha })
     } 
@@ -99,21 +99,21 @@ class ServiceSelect extends React.Component {
                                 items={homa}                            
                                 
                                 selectedItems={this.state.selectedHoma}                            
-                                onSelectionsChange={this.onSelectionsChange} />
+                                onSelectionsChange={this.onSelectionChange} />
                             </Accordian>
                             <Accordian title="Functions">
                                 <SelectMultiple
                                 items={functions}                            
                                 
                                 selectedItems={this.state.selectedFunctions}                            
-                                onSelectionsChange={this.onSelectionsChange} />
+                                onSelectionsChange={this.onSelectChange} />
                             </Accordian>
                             <Accordian title="Shradha">
                                 <SelectMultiple
                                 items={shradha}                            
                                 
                                 selectedItems={this.state.selectedShradha}                            
-                                onSelectionsChange={this.onSelectionsChange} />
+                                onSelectionsChange={this.onSelectionsChanges} />
                             </Accordian>
                             
                             <TouchableHighlight
@@ -129,16 +129,16 @@ class ServiceSelect extends React.Component {
                         
                     </View>
                 </Modal>
-                
+                  <View style={styles.serviceView}>
                     <TouchableHighlight
                     style={styles.openButtonm}
                     onPress={() => {
                       this.setModalVisible(true);
                     }}
                     >
-                        <Text style={styles.textStyles}> Select your Services</Text>
+                        <Text style={styles.textStyles}> Select Services</Text>
                     </TouchableHighlight>
-                                   
+                  </View>               
             </View>
         )
     }
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
       backgroundColor: "white",
       borderRadius: 20,
       padding: 5,
-      alignItems: "center",
+      //alignItems: "center",
       shadowColor: "#000",
       shadowOffset: {
         width: 0,
@@ -182,9 +182,9 @@ const styles = StyleSheet.create({
     },
     textStyles: {
       color: "#000",
-      padding: 10,
+      //padding: 10,
       fontSize: 17,
-      marginBottom: 10
+      //marginBottom: 10
     },
     modalText: {
       marginBottom: 15,
@@ -204,6 +204,18 @@ const styles = StyleSheet.create({
     },
     dropdownarrow: {
       color: "#fff"
+    },
+    serviceView: {
+      width: "100%",
+      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+      borderRadius: 5,
+      paddingHorizontal: 16,
+      fontSize: 16,
+      marginVertical: 3,
+      padding: 5,
+      paddingLeft: 5,
+      borderWidth:0.5,
+      borderColor:'lightgrey'
     }
   });
 
