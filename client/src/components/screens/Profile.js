@@ -39,6 +39,7 @@ import FieldButton from '../Reusable_Component/FieldButton';
 
 import { getDistrictOrCity, getAreas } from '../../redux/actions/cityAreaActions';
 import { getCastes } from '../../redux/actions/casteActions';
+import isEmpty from '../Reusable_Component/is-empty';
 
 
 const initialState = {
@@ -234,7 +235,19 @@ const Profile = ({ auth, services, getDistrictOrCity, getAreas, getCastes, cityA
             selectedServices={selectedServices => setFormData({...formData, selectedServices})}
             selectedItems={formData.selectedServices}
           /> */}
-          <ServiceSelect />
+          <ServiceSelect 
+            services={services && services.fullServiceList}
+            selectedServices={selectedServices => setFormData({...formData, selectedServices})}
+            selectedItems={formData.selectedServices}
+          />
+          {console.log(formData.selectedServices)}
+          {isEmpty(formData.selectedServices) === false && (
+            <View style={styles.selectedItems}>
+              {formData.selectedServices.map(list => (
+                <Text  style={styles.selectedText} key={list.value}>{list.label}</Text>
+              ))}
+            </View>
+          )}
           <Text style = {styles.texts}>Service Type:</Text>                            
           <TypesOfService />
           <Text style = {styles.texts}>Preferred Caste:</Text>
@@ -401,6 +414,19 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingLeft: 5,
     color: "#696969"
+  },
+  selectedItems: {
+    flexDirection: 'row',
+    margin: 2,
+    flexGrow: 1
+  },
+  selectedText: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    margin: 2
   }
 });
 

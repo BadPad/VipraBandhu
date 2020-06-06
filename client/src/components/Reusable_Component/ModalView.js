@@ -4,6 +4,7 @@ import Modal from 'react-native-modal';
 
 const ModalView = ({
     isVisible,
+    modalContainer,
     children,
     close,
     animationIn,
@@ -18,13 +19,13 @@ const ModalView = ({
                 isVisible={isVisible} 
                 onBackdropPress={close}
                 onBackButtonPress={close}
-                animationIn={animationIn}
-                animationOut={animationOut}
+                animationIn={animationIn || 'slideInUp'}
+                animationOut={animationOut || 'slideOutDown'}
                 animationInTiming={animationInTiming}
                 animationOutTiming={animationOutTiming}
                 propagateSwipe={propagateSwipe}
             >
-                <View style={styles.container}>
+                <View style={[styles.container, modalContainer]}>
                     {children}
                 </View>
             </Modal>

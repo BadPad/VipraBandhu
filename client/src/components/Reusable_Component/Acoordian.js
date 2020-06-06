@@ -27,7 +27,6 @@ export default class Accordian extends Component {
         return (
             <View style={[styles.container]}>
                 <View style={styles.titleContainer} >
-                    <Text style={styles.headerTitle}>{this.state.title}</Text>
                     <TouchableHighlight
                         style={styles.button}
                         onPress={() => {
@@ -37,10 +36,13 @@ export default class Accordian extends Component {
                             });
                         }}
                         underlayColor="#fff">
+                        <View style={styles.touch}>
+                            <Text style={styles.headerTitle}>{this.state.title}</Text>
 
-                        <Icon style={styles.iconCart} name={icon} size={20}
-                            color="#D63031"
-                        ></Icon>
+                            <Icon style={styles.iconCart} name={icon} size={20}
+                                color="#D63031"
+                            ></Icon>
+                        </View>
                     </TouchableHighlight>
                 </View>
                 {this.state.expanded && (
@@ -55,7 +57,7 @@ export default class Accordian extends Component {
 var styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',        
-        overflow: 'hidden',
+        overflow: 'hidden'
     },
     titleContainer: {
         flexDirection: 'row',
@@ -69,14 +71,22 @@ var styles = StyleSheet.create({
         padding: 10,
         color: '#2a2f43',
         fontSize: 15,
+        textTransform: 'capitalize'
     },
     button: {
-        width: 30,
+        width: '100%',
         alignSelf: 'center'
     },
     buttonImage: {
         width: 30,
         height: 25
+    },
+    touch: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    iconCart: {
+        paddingRight: 20
     },
     body: {
         padding: 10,
