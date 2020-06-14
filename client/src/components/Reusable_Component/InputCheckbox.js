@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
         paddingVertical: 5
     },
     error: {
-        paddingHorizontal: 16,
-        paddingBottom: 5,
+        // paddingHorizontal: 16,
+        // paddingBottom: 5,
         color: '#c81912'
     }
 })

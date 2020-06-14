@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { ListItem } from 'react-native-elements';
+import { Avatar } from 'react-native-elements';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -14,17 +14,23 @@ const DrawnContent = (props) => {
     const { isAuthenticated, user } = props.auth;
     return (
         <View style={styles.container}>
-            <ListItem
-                leftAvatar={{
-                    source: { uri: 'https://p7.hiclipart.com/preview/636/702/321/computer-icons-user-profile-avatar-black-man.jpg' },
-                    showAccessory: true,
-                    size: 60
-                }}
-                title={isAuthenticated ? user.firstName: 'Login'}
-                subtitle={isAuthenticated ? 'Customer' : null}
-                chevron={isAuthenticated ? true : false}
-                onPress={() => isAuthenticated? props.navigation.navigate('MyProfile') : props.navigation.navigate('Login')}
-            />
+            <TouchableHighlight style={styles.touchUser}>
+                <View style={styles.pImageContainer}>
+                    <View style={styles.imageBox}>
+                        <Avatar
+                            rounded
+                            source={{
+                                uri: 'https://p7.hiclipart.com/preview/636/702/321/computer-icons-user-profile-avatar-black-man.jpg',
+                            }}
+                            size="medium"
+                        />
+                        <Text style={styles.userName}>{isAuthenticated ? user.FirstName: 'Login'}</Text>
+                    </View>
+                    <View>
+                        <MaterialCommunityIcons name="chevron-right" color="rgba(249,249,249,0.5)" size={20} />
+                    </View>
+                </View>
+            </TouchableHighlight>
             <DrawerContentScrollView {...props}>
                 <DrawerItem 
                     icon={({color, size}) => (
@@ -61,6 +67,17 @@ const DrawnContent = (props) => {
                 />
                 {isAuthenticated &&
                 <>
+                    <DrawerItem 
+                        icon={({color, size}) => (
+                            <MaterialCommunityIcons 
+                                name="face-profile"
+                                color={color}
+                                size={size}
+                            />
+                        )}
+                        label="My Profile"
+                        onPress={() => props.navigation.navigate('MyProfile')}
+                    />
                     <DrawerItem 
                         icon={({color, size}) => (
                             <MaterialCommunityIcons 
@@ -132,6 +149,27 @@ const DrawnContent = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    touchUser: {
+        backgroundColor: '#D63031'
+    },
+    pImageContainer: {
+        flexDirection: 'row',
+        padding: 15,
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    imageBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    userName: {
+        fontSize: 19,
+        color: '#F9F9F9',
+        paddingLeft: 15
+    },
+    iconContainer: {
+        justifyContent: 'flex-end'
     }
 })
 

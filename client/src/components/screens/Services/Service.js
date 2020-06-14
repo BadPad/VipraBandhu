@@ -30,8 +30,6 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
         cartServices = bookingCartServices.bookingCartList.find(list => list.serviceId === service.serviceId && list.serviceName === service.serviceName)
     }
 
-    navigation.setOptions({ title: service.serviceName })
-
     const addAndCheckout = (service) => {
         service.serviceDate = newDate.toISOString();
         setIsModel(false)

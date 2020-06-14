@@ -1,37 +1,52 @@
-import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Platform, TouchableNativeFeedback } from 'react-native'
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const RegisterGridTiles = ({data, onSelect}) => {
-    let TouchableCmp = TouchableOpacity;
-
-    if(Platform.OS === 'android' && Platform.Version >= 21) {
-        TouchableCmp = TouchableNativeFeedback;
-    }
+const RegisterGridTiles = ({data, onSelect, selectedReg}) => {
     return (
-        <TouchableCmp onPress={() => onSelect(data.name)}>
-            <View style={styles.registerType}>
+        <TouchableOpacity onPress={() => onSelect(data.name)}>
+            <View style={selectedReg === data.name? {...styles.registerBlock, ...styles.selectedRegisterBlock}: styles.registerBlock}>
                 <Text style={styles.text}>{data.name}</Text>
+                {selectedReg === data.name &&
+                <MaterialCommunityIcons 
+                    style={styles.selectedIcon}
+                    name="check-decagram" 
+                />}
             </View>
-        </TouchableCmp>
+        </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
-    registerType: {
-        height: 100,
-        width: '100%',
-        borderRadius: 10,
-        overflow: 'hidden',
-        marginVertical: 10,
-        borderColor: '#916dd5',
+    registerBlock: {
+        marginHorizontal: 10,
+        marginVertical: 20,
         borderWidth: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#3e206d'
+        borderRadius: 2,
+        borderColor: '#ddd',
+        shadowColor: '#000',
+        backgroundColor: '#fff',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 3
+    },
+    selectedRegisterBlock: {
+        borderColor: '#D63031'
+    },
+    selectedIcon: {
+        position: 'absolute',
+        top: -6,
+        right: -6,
+        color: '#D63031',
+        backgroundColor: '#fff'
     },
     text: {
-        fontSize: 18,
-        color: '#f0e3ff'
+        color: '#3c3b37',
+        width: 100,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        padding: 15,
     }
 })
 

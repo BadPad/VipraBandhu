@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import About from '../screens/About';
 import Login from '../screens/Register_Login/Login';
 import Register from '../screens/Register_Login/Register';
+import OTPConfirmation from '../screens/Register_Login/OTPConfirmation';
 import Offers from '../screens/Offers';
 import Profile from '../screens/Profile';
 import MyBookings from '../screens/MyBookings';
@@ -29,13 +30,15 @@ const Drawer = createDrawerNavigator();
 
 function getHeaderTitle(route) {
   const routeName = route.name? route.name : 'Welcome';
+  // console.log(route)
+  const routeParams = route.params
   switch (routeName) {
     case 'Welcome':
       return 'Sukalpa Seva'
     case 'ServicesList':
-      return 'Pooja Service List'
+      return routeParams.category === 'purohit' ? 'Pooja Service List' : routeParams.category === 'Catering' ? 'Catering Service List' : null
     case 'Service':
-      return 'Sukalpa Seva'
+      return routeParams.id.serviceName
     case 'BookingCart':
       return 'Booking Cart'
     case 'DeliveryOptions':
@@ -206,6 +209,7 @@ const StackNavigation = ({ navigation }) => (
     />
     <Stack.Screen name="Login" component={Login}
       options={({route}) => ({
+        headerShown: false,
         title: getHeaderTitle(route),
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -218,6 +222,20 @@ const StackNavigation = ({ navigation }) => (
     />
     <Stack.Screen name="Register" component={Register}
       options={({route}) => ({
+        headerShown: false,
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="OTPConfirmation" component={OTPConfirmation}
+      options={({route}) => ({
+        headerShown: false,
         title: getHeaderTitle(route),
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}

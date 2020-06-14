@@ -1,16 +1,29 @@
 import React from 'react';
 import { AsyncStorage, StatusBar } from 'react-native';
 import Navigation from './components/Navigation/Navigation';
+import setAuthToken from './components/Reusable_Component/setAuthToken';
 
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store';
 
-import { setCurrentUser } from './redux/actions/authActions';
+import { setCustomerUser, setPurohitUser, setCookUser } from './redux/actions/authActions';
 
 AsyncStorage.getItem('SukalpaSeva')
 .then(res => {
-  store.dispatch(setCurrentUser(parseInt(res)));
+  if(res) {
+    // console.log(res)
+    const sukalpaSevaToken = JSON.parse(res);
+    const { ss_auth, ss_user } = sukalpaSevaToken;
+    setAuthToken(ss_auth)
+    if(ss_user === 'customer') {
+      store.dispatch(setCustomerUser());
+    } else if(ss_user === 'purohit') {
+      store.dispatch(setPurohitUser());
+    } else if(ss_user === 'cook') {
+      store.dispatch(setCookUser())
+    }
+  }
 })
 .catch(err => {
   console.log(err)

@@ -3,6 +3,7 @@ import { persistReducer } from 'redux-persist';
 import { AsyncStorage } from 'react-native';
 
 import authReducer from './authReducer';
+import registerReducer from './registerReducer';
 import cityAreaReducer from './cityAreaReducer';
 import upcomingFestReducer from './upcomingFestReducer';
 import casteListReducer from './casteReducer';
@@ -17,6 +18,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    newRegister: registerReducer,
     cityAreaList: cityAreaReducer,
     upcomingFestivals: upcomingFestReducer,
     serviceList: serviceListReducer,

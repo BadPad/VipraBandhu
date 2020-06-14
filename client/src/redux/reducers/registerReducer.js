@@ -1,24 +1,21 @@
-import isEmpty from '../../components/Reusable_Component/is-empty';
-import { SET_AUTH_LOADING, SET_CURRENT_USER } from '../actions/types';
+import { REGISTER_NEW_LOADING, REGISTER_NEW_USER } from '../actions/types';
 
 const initialState = {
     loading: false,
-    isAuthenticated: false,
-    user: {}
+    regNewUser: null
 };
 
 export default function(state = initialState, action) {
     switch(action.type) {
-        case SET_AUTH_LOADING:
+        case REGISTER_NEW_LOADING: 
             return {
                 ...state,
                 loading: true
             }
-        case SET_CURRENT_USER:
+        case REGISTER_NEW_USER: 
             return {
                 ...state,
-                isAuthenticated: !isEmpty(action.payload),
-                user: action.payload,
+                regNewUser: action.payload,
                 loading: false
             }
         default:

@@ -12,7 +12,7 @@ const Container = ({ children, style }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#C8C8C8'
+        // backgroundColor: '#C8C8C8'
     }
 })
 

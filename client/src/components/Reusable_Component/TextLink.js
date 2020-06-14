@@ -19,10 +19,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     text: {
-        fontSize: 16
+        fontSize: 16,
+        color: '#3c3b37'
     },
     linkButton: {
-        color: '#d89cf6',
+        color: '#D63031',
         fontSize: 16,
         fontWeight: '500'
     }
