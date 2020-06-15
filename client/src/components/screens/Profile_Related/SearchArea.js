@@ -22,24 +22,20 @@ import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 ];  */
 
 export default class SearchArea extends Component {
-  constructor() {
-    super();
-    this.state = {
-      selectedItems: [],
-    };
-  }
+  
   onSelectedItemsChange = (selectedItems) => {
-    this.setState({ selectedItems });
+    const { selectArea } = this.props;
+    selectArea(selectedItems)
   };
 
   render() {
-    const { areas } = this.props;
+    const { area, selectedArea } = this.props;
     function setID(item, index) {
         const newFormat = {"id": index,"name": item};        
         return newFormat;
     }
 
-    const output = areas && areas.map(setID);
+    const output = area && area.map(setID);
     //console.log(output);
   
     return (
@@ -68,7 +64,7 @@ export default class SearchArea extends Component {
           showDropDowns={true}
           single={true}
           onSelectedItemsChange={this.onSelectedItemsChange}
-          selectedItems={this.state.selectedItems}
+          selectedItems={selectedArea}
         />
       </View>
     );

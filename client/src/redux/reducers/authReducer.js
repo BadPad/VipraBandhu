@@ -1,10 +1,11 @@
 import isEmpty from '../../components/Reusable_Component/is-empty';
-import { SET_AUTH_LOADING, SET_CURRENT_USER } from '../actions/types';
+import { SET_AUTH_LOADING, SET_CURRENT_USER_TYPE, SET_CURRENT_USER } from '../actions/types';
 
 const initialState = {
     loading: false,
     isAuthenticated: false,
-    user: {}
+    user: {},
+    userType: null
 };
 
 export default function(state = initialState, action) {
@@ -13,6 +14,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: true
+            }
+        case SET_CURRENT_USER_TYPE: 
+            return {
+                ...state,
+                userType: action.payload
             }
         case SET_CURRENT_USER:
             return {

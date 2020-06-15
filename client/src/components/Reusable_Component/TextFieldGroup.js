@@ -29,22 +29,22 @@ const TextFieldGroup = ({
 
 const styles = StyleSheet.create({
     container: {
-        margin: 10
+        marginHorizontal: 10,
+        marginVertical: 5
     },
     title: {
-        color: 'rgba(60, 59, 55, .9)',
-        marginBottom: 3
+        color: 'rgba(60, 59, 55, .9)'
     },
     inputBox: {
         width: "100%",
-        backgroundColor: 'rgba(68,68,68,0.1)',
         borderRadius: 2,
         padding: 5,
         paddingLeft: 10,
         fontSize: 14,
         marginVertical: 2,
         borderWidth:0.5,
-        borderColor:'lightgrey'
+        borderColor: 'rgba(68,68,68,1)',
+        color: 'rgba(60, 59, 55, .9)'
     },
     error: {
         paddingHorizontal: 16,

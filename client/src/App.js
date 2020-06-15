@@ -1,5 +1,6 @@
 import React from 'react';
 import { AsyncStorage, StatusBar } from 'react-native';
+import FlashMessage from "react-native-flash-message";
 import Navigation from './components/Navigation/Navigation';
 import setAuthToken from './components/Reusable_Component/setAuthToken';
 
@@ -7,7 +8,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store';
 
-import { setCustomerUser, setPurohitUser, setCookUser } from './redux/actions/authActions';
+import { setCurrentUserType, setCustomerUser, setPurohitUser, setCookUser } from './redux/actions/authActions';
 
 AsyncStorage.getItem('SukalpaSeva')
 .then(res => {
@@ -16,6 +17,7 @@ AsyncStorage.getItem('SukalpaSeva')
     const sukalpaSevaToken = JSON.parse(res);
     const { ss_auth, ss_user } = sukalpaSevaToken;
     setAuthToken(ss_auth)
+    store.dispatch(setCurrentUserType(ss_user))
     if(ss_user === 'customer') {
       store.dispatch(setCustomerUser());
     } else if(ss_user === 'purohit') {
@@ -36,6 +38,7 @@ function App() {
       <PersistGate loading={null} persistor={persistor} >
         <Navigation />
       </PersistGate>
+      <FlashMessage position="top" floating />
     </Provider>
   )
 }

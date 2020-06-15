@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { SET_AUTH_LOADING, SET_CURRENT_USER } from '../actions/types';
+import { SET_AUTH_LOADING, SET_CURRENT_USER_TYPE, SET_CURRENT_USER } from '../actions/types';
 import { AsyncStorage } from 'react-native';
 import setAuthToken from '../../components/Reusable_Component/setAuthToken';
+import { showMessage } from "react-native-flash-message";
 
 /*--- Register & login Customer ---*/
 export const regLogCustomer = (userData, from, navigation) => dispatch => {
@@ -10,15 +11,49 @@ export const regLogCustomer = (userData, from, navigation) => dispatch => {
     axios.post('https://ljuw2br52c.execute-api.ap-south-1.amazonaws.com/prod/register', userData)
     .then(res => {
         // console.log(res)
-        const { id_token } = res && res.data;
+        const { id_token, status } = res && res.data;
         const sukalpaSevaToken = {
             ss_auth : id_token,
             ss_user : 'customer'
         }
-        // console.log(sukalpaSevaToken)
-        AsyncStorage.setItem('SukalpaSeva', JSON.stringify(sukalpaSevaToken));
-        setAuthToken(id_token)
-        dispatch(setCustomerUser(from, navigation))
+        if(from === 'register') {
+            if(status === 201) {
+                // console.log(sukalpaSevaToken)
+                showMessage({
+                    message: `${userData.FirstName} Registered Successfully as Customer`,
+                    type: 'success'
+                })
+                AsyncStorage.setItem('SukalpaSeva', JSON.stringify(sukalpaSevaToken));
+                setAuthToken(id_token)
+                dispatch(setCurrentUserType('customer'))
+                dispatch(setCustomerUser(from, navigation))
+            } else if(status === 200 || status === 401) {
+                // console.log('user already registered')
+                showMessage({
+                    message: 'Mobile Number already Registered as Customer',
+                    type: 'danger'
+                })
+                navigation.navigate('Login')
+            }
+        } else if(from === 'login') {
+            if(status === 200) {
+                // console.log(sukalpaSevaToken)
+                AsyncStorage.setItem('SukalpaSeva', JSON.stringify(sukalpaSevaToken));
+                setAuthToken(id_token)
+                dispatch(setCurrentUserType('customer'))
+                dispatch(setCustomerUser(from, navigation))
+                showMessage({
+                    message: 'Login Successfully as Customer',
+                    type: 'success'
+                })
+            } else if(status === 401) {
+                // console.log('The username or password is incorrect')
+                showMessage({
+                    message: 'Mobile Number or password is incorrect',
+                    type: 'danger'
+                })
+            }
+        }
     })
     .catch(err => {
         console.log(err)
@@ -32,15 +67,49 @@ export const regLogPurohit = (userData, from, navigation) => dispatch => {
     axios.post('https://mb5u8yz9e7.execute-api.ap-south-1.amazonaws.com/prod/purohit-register', userData)
     .then(res => {
         // console.log(res)
-        const { id_token } = res && res.data;
+        const { id_token, status } = res && res.data;
         const sukalpaSevaToken = {
             ss_auth : id_token,
             ss_user : 'purohit'
         }
-        // console.log(sukalpaSevaToken)
-        AsyncStorage.setItem('SukalpaSeva', JSON.stringify(sukalpaSevaToken));
-        setAuthToken(id_token)
-        dispatch(setPurohitUser(from, navigation))
+        if(from === 'register') {
+            if(status === 201) {
+                // console.log(sukalpaSevaToken)
+                showMessage({
+                    message: `${userData.FirstName} Registered Successfully as Purohit`,
+                    type: 'success'
+                })
+                AsyncStorage.setItem('SukalpaSeva', JSON.stringify(sukalpaSevaToken));
+                setAuthToken(id_token)
+                dispatch(setCurrentUserType('purohit'))
+                dispatch(setPurohitUser(from, navigation))
+            } else if(status === 200 || status === 401) {
+                // console.log('user already registered')
+                showMessage({
+                    message: 'Mobile Number already Registered as Purohit',
+                    type: 'danger'
+                })
+                navigation.navigate('Login')
+            }
+        } else if(from === 'login') {
+            if(status === 200) {
+                // console.log(sukalpaSevaToken)
+                AsyncStorage.setItem('SukalpaSeva', JSON.stringify(sukalpaSevaToken));
+                setAuthToken(id_token)
+                dispatch(setCurrentUserType('purohit'))
+                dispatch(setPurohitUser(from, navigation))
+                showMessage({
+                    message: 'Login Successfully as Purohit',
+                    type: 'success'
+                })
+            } else if(status === 401) {
+                // console.log('The username or password is incorrect')
+                showMessage({
+                    message: 'Mobile Number or password is incorrect',
+                    type: 'danger'
+                })
+            }
+        }
     })
     .catch(err => {
         console.log(err)
@@ -54,15 +123,49 @@ export const regLogCook = (userData, from, navigation) => dispatch => {
     axios.post('https://azcbpg0u4m.execute-api.ap-south-1.amazonaws.com/prod/cook-register', userData)
     .then(res => {
         // console.log(res)
-        const { id_token } = res && res.data;
+        const { id_token, status } = res && res.data;
         const sukalpaSevaToken = {
             ss_auth : id_token,
             ss_user : 'cook'
         }
-        // console.log(sukalpaSevaToken)
-        AsyncStorage.setItem('SukalpaSeva', JSON.stringify(sukalpaSevaToken));
-        setAuthToken(id_token)
-        dispatch(setCookUser(from, navigation))
+        if(from === 'register') {
+            if(status === 201) {
+                // console.log(sukalpaSevaToken)
+                showMessage({
+                    message: `${userData.FirstName} registered Successfully as Cook`,
+                    type: 'success'
+                })
+                AsyncStorage.setItem('SukalpaSeva', JSON.stringify(sukalpaSevaToken));
+                setAuthToken(id_token)
+                dispatch(setCurrentUserType('cook'))
+                dispatch(setCookUser(from, navigation))
+            } else if(status === 200 || status === 401) {
+                // console.log('user already registered')
+                showMessage({
+                    message: 'Mobile Number already registered as Cook',
+                    type: 'danger'
+                })
+                navigation.navigate('Login')
+            }
+        } else if(from === 'login') {
+            if(status === 200) {
+                // console.log(sukalpaSevaToken)
+                AsyncStorage.setItem('SukalpaSeva', JSON.stringify(sukalpaSevaToken));
+                setAuthToken(id_token)
+                dispatch(setCurrentUserType('cook'))
+                dispatch(setCookUser(from, navigation))
+                showMessage({
+                    message: 'Login Successfully as Cook',
+                    type: 'success'
+                })
+            } else if(status === 401) {
+                // console.log('The username or password is incorrect')
+                showMessage({
+                    message: 'Mobile Number or password is incorrect',
+                    type: 'danger'
+                })
+            }
+        }
     })
     .catch(err => {
         console.log(err)
@@ -124,6 +227,14 @@ export const setCookUser = (from, navigation) => dispatch => {
     .catch(err => {
         console.log(err.response)
     })
+}
+
+/*--- Set Current User Type ---*/
+export const setCurrentUserType = user => {
+    return {
+        type: SET_CURRENT_USER_TYPE,
+        payload: user
+    }
 }
 
 /*--- Log user out ---*/
