@@ -80,7 +80,7 @@ class CarouselList extends Component {
 
     _renderAds = ({ item, index }) => {
         //var imageUrl = require('../images/' + item.AdImage);
-        console.warn(item.AdImage)
+        //console.warn(item.AdImage)
 
         return (
             <View style={styles.upFestSlideView}>

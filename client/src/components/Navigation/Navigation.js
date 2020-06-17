@@ -282,6 +282,18 @@ const StackNavigation = ({ navigation }) => (
         )
       })}
     />
+    <Stack.Screen name="Booking" component={Booking}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
     <Stack.Screen name="MyWallet" component={Wallet}
       options={({route}) => ({
         title: getHeaderTitle(route),

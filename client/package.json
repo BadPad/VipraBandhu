@@ -27,6 +27,7 @@
     "react-native-collapsible": "^1.5.2",
     "react-native-dynamic-search-bar": "^0.3.1",
     "react-native-dynamic-vector-icons": "^0.2.2",
+    "react-native-easy-grid": "^0.2.2",
     "react-native-elements": "^1.2.7",
     "react-native-fast-image": "^8.1.5",
     "react-native-flash-message": "^0.1.15",
