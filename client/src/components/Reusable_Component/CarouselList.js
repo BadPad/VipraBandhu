@@ -74,6 +74,12 @@ class CarouselList extends Component {
         else if(mm === 5){
             mm = "May"
         }
+        else if(mm === 6){
+            mm = "Jun"
+        }
+        else if(mm === 7){
+            mm = "Jul"
+        }
         
         return "(" + dd + "-" + mm +  "-" +yyyy + ")";
     }

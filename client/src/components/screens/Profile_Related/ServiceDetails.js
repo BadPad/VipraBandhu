@@ -73,9 +73,10 @@ const styles = StyleSheet.create({
         color: "#696969"
     },
     selectedItems: {
-        flexDirection: 'row',
+        
+
         margin: 2,
-        flexGrow: 1
+        width:'70%'
     },
     selectedText: {
         borderWidth: 1,

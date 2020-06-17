@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Dimensions } from 'react-native';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  TouchableHighlight
+} from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SelfDetails from './Profile_Related/SelfDetails';
@@ -8,8 +15,7 @@ import ServiceDetails from './Profile_Related/ServiceDetails';
 import { getDistrictOrCity, getAreas } from '../../redux/actions/cityAreaActions';
 import { getCastes } from '../../redux/actions/casteActions';
 import { updateCook, updatePurohit, updateCustomer } from '../../redux/actions/profileActions';
-
-const initialLayout = { width: Dimensions.get('window').width };
+import Accordian from '../Reusable_Component/Acoordian';
 
 const Profile = ({
   auth, 
@@ -24,7 +30,7 @@ const Profile = ({
   updateCustomer
 }) => {
 
-  const [formData, setFormData] = useState({...auth.user});
+    const [formData, setFormData] = useState({...auth.user});
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: 'first', title: 'Self Details' },
@@ -38,63 +44,71 @@ const Profile = ({
     getAreas(formData.city)
   }, [])
 
-  const renderScene = SceneMap({
-    first: () => (
-      <SelfDetails 
-        formData={formData} 
-        casteList={casteList && casteList.getCasteList}
-        cityAreaList={cityAreaList && cityAreaList}
-        getAreas={city => getAreas(city)}
-        updatedForm={data => setFormData(data)}
-        updateProfile={() => {
-          if(auth.userType === 'cook') {
-            updateCook(formData)
-          } else if(auth.userType === 'purohit') {
-            updatePurohit(formData)
-          } else if(auth.userType === 'customer') {
-            updateCustomer(formData)
-          }
-        }}
-      />
-    ),
-    second: () => (
-      <ServiceDetails 
-        formData={formData} 
-        auth={auth}
-        casteList={casteList && casteList.getCasteList}
-        services={services && services}
-        updatedForm={data => setFormData(data)}
-        updateProfile={() => {
-          if(auth.userType === 'cook') {
-            updateCook(formData)
-          } else if(auth.userType === 'purohit') {
-            updatePurohit(formData)
-          } else if(auth.userType === 'customer') {
-            updateCustomer(formData)
-          }
-        }}
-      />
-    ),
-  });
 
-  const renderTabBar = props => (
-    <TabBar
-      {...props}
-      indicatorStyle={{ backgroundColor: '#fff' }}
-      style={{ backgroundColor: '#D63031' }}
-    />
-  );
+    return (
+      <View style={styles.container}>
+        <ScrollView>
+                                                             
+                    <Accordian title="Self Details">                                                                            
+                    <View style={styles.bodyEdit}>
+                      <SelfDetails 
+                        formData={formData} 
+                        casteList={casteList && casteList.getCasteList}
+                        cityAreaList={cityAreaList && cityAreaList}
+                        getAreas={city => getAreas(city)}
+                        updatedForm={data => setFormData(data)}
+                        updateProfile={() => {
+                          if(auth.userType === 'cook') {
+                            updateCook(formData)
+                          } else if(auth.userType === 'purohit') {
+                            updatePurohit(formData)
+                          } else if(auth.userType === 'customer') {
+                            updateCustomer(formData)
+                          }
+                        }}
+                      />
+                    </View>
+                    </Accordian>                    
 
-  return (
-    <TabView
-      renderTabBar={renderTabBar}
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={initialLayout}
-    />
-  );
+                    <Accordian title="Service Details">                                                                                                       
+                    <View style={styles.bodyEdit}>
+                      <ServiceDetails 
+                        formData={formData} 
+                        auth={auth}
+                        casteList={casteList && casteList.getCasteList}
+                        services={services && services}
+                        updatedForm={data => setFormData(data)}
+                        updateProfile={() => {
+                          if(auth.userType === 'cook') {
+                            updateCook(formData)
+                          } else if(auth.userType === 'purohit') {
+                            updatePurohit(formData)
+                          } else if(auth.userType === 'customer') {
+                            updateCustomer(formData)
+                          }
+                        }}
+                      />
+                    </View>
+                    </Accordian>
+                    
+        </ScrollView>
+          
+      </View>
+    );
 }
+
+const styles = StyleSheet.create({
+  
+  bodyEdit:{
+    marginTop:10,
+    
+  },
+  bodyEditContent: {
+    flex: 1,
+    
+   // padding:20,
+  },
+});
 
 Profile.propTypes = {
   getDistricrOrCity: PropTypes.func.isRequired,
@@ -125,4 +139,5 @@ const mapDispatchToProps = {
   updateCustomer 
 }
 
+ 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

@@ -52,6 +52,7 @@ const ServiceSelect = ({ services, selectedServices, selectedItems }) => {
           butonContainer={styles.butonContainer}
           buttonTouch={styles.buttonTouch}
           name="Confirm"
+          onPress={() => setIsModal(!isModal)}
         />
       </View>
     </>
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   buttonTouch: {
-    backgroundColor: '#2196F3'
+    backgroundColor: '#D63031'
   }
 })
 
