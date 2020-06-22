@@ -457,6 +457,7 @@ import { registerNewUser } from '../../../redux/actions/registerActions';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Indicator from '../../Reusable_Component/SpinnerIndicator/Indicator';
 
 const { height } = Dimensions.get('window');
 
@@ -494,6 +495,7 @@ const Register = ({ navigation, registerNewUser }) => {
 
     return (
         <ScrollView style={styles.container}>
+            {registerNewUser.loading && <Indicator />}
             <View style={styles.columnContainer}>
                 <View style={styles.logo}>
                     <Text style={styles.logoText}>Sukalpaseva</Text>

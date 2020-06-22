@@ -14,7 +14,7 @@ const DrawnContent = (props) => {
     const { isAuthenticated, user } = props.auth;
     return (
         <View style={styles.container}>
-            <TouchableHighlight style={styles.touchUser}>
+            <TouchableHighlight style={styles.touchUser} onPress={() => isAuthenticated ? props.navigation.navigate('MyProfile') : props.navigation.navigate('Login')}>
                 <View style={styles.pImageContainer}>
                     <View style={styles.imageBox}>
                         <Avatar

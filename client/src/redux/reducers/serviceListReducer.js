@@ -1,7 +1,8 @@
-import { GET_SERVICE_LIST, SEARCH_SERVICES, SELECTED_CATEGORY, FILTER_CATEGORY, POOJA_SERVICES, HOMA_SERVICES, FUNCTION_SERVICES
+import { SERVICES_LIST_LOADING, GET_SERVICE_LIST, SEARCH_SERVICES, SELECTED_CATEGORY, FILTER_CATEGORY, POOJA_SERVICES, HOMA_SERVICES, FUNCTION_SERVICES
 , BREAKFAST_SERVICES, LUNCH_SERVICES, SNACKS_SERVICES, DINNER_SERVICES} from '../actions/types';
 
 const initialState = {
+    loading: false,
     fullServiceList: null,
     filteredList: [],
     filterCategory: null
@@ -9,10 +10,16 @@ const initialState = {
 
 export default function(state = initialState, action) {
     switch(action.type) {
+        case SERVICES_LIST_LOADING:
+            return {
+                ...state,
+                loading: true
+            }
         case GET_SERVICE_LIST:
             return {
                 ...state,
-                fullServiceList: action.payload
+                fullServiceList: action.payload,
+                loading: false
             }
         case SEARCH_SERVICES:
             const allServices = state.fullServiceList;

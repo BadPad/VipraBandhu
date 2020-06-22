@@ -20,7 +20,7 @@ export const regLogCustomer = (userData, from, navigation) => dispatch => {
             if(status === 201) {
                 // console.log(sukalpaSevaToken)
                 showMessage({
-                    message: `${userData.FirstName} Registered Successfully as Customer`,
+                    message: `${userData.FirstName} you Registered Successfully as Customer`,
                     type: 'success'
                 })
                 AsyncStorage.setItem('SukalpaSeva', JSON.stringify(sukalpaSevaToken));
@@ -76,7 +76,7 @@ export const regLogPurohit = (userData, from, navigation) => dispatch => {
             if(status === 201) {
                 // console.log(sukalpaSevaToken)
                 showMessage({
-                    message: `${userData.FirstName} Registered Successfully as Purohit`,
+                    message: `${userData.FirstName} you Registered Successfully as Purohit`,
                     type: 'success'
                 })
                 AsyncStorage.setItem('SukalpaSeva', JSON.stringify(sukalpaSevaToken));
@@ -132,7 +132,7 @@ export const regLogCook = (userData, from, navigation) => dispatch => {
             if(status === 201) {
                 // console.log(sukalpaSevaToken)
                 showMessage({
-                    message: `${userData.FirstName} registered Successfully as Cook`,
+                    message: `${userData.FirstName} you registered Successfully as Cook`,
                     type: 'success'
                 })
                 AsyncStorage.setItem('SukalpaSeva', JSON.stringify(sukalpaSevaToken));

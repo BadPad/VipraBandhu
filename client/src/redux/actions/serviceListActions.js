@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { GET_SERVICE_LIST, SEARCH_SERVICES, FILTER_CATEGORY, SELECTED_CATEGORY, POOJA_SERVICES, HOMA_SERVICES, FUNCTION_SERVICES,
+import { SERVICES_LIST_LOADING, GET_SERVICE_LIST, SEARCH_SERVICES, FILTER_CATEGORY, SELECTED_CATEGORY, POOJA_SERVICES, HOMA_SERVICES, FUNCTION_SERVICES,
     BREAKFAST_SERVICES, LUNCH_SERVICES, SNACKS_SERVICES, DINNER_SERVICES} from './types';
 
 /*--- Service List ---*/
 export const serviceList = () => dispatch => {
+    dispatch(servicesLoading())
     axios.get('https://9cvp8sblj1.execute-api.ap-south-1.amazonaws.com/default/Purohit_Service_Get_Function')
     .then(res => 
         dispatch({
@@ -94,5 +95,12 @@ export const dinnerServices = type => {
     return {
         type: DINNER_SERVICES,
         payload: type
+    }
+}
+
+/*--- Services Loading ---*/
+export const servicesLoading = () => {
+    return {
+        type: SERVICES_LIST_LOADING
     }
 }

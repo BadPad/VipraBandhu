@@ -10,6 +10,7 @@ import {
     breakfastServices, lunchServices, snacksServices, dinnerServices
 } from '../../redux/actions/serviceListActions';
 import { upcomingFestivals } from '../../redux/actions/upcomingFestActions';
+import Indicator from "../Reusable_Component/SpinnerIndicator/Indicator";
 
 const Welcome = ({
     navigation,
@@ -67,10 +68,8 @@ const Welcome = ({
     // }
 
     return (
-
-
-
         <View style={styles.container}>
+            {festivals.loading || services.loading ? <Indicator /> : null}
             <SearchServices
                 navigation={navigation}
                 route={route}
@@ -190,7 +189,6 @@ const Welcome = ({
 
                     </View>
                 </View>
-
             </ScrollView>
         </View>
     )

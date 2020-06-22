@@ -6,10 +6,11 @@ import PropTypes from 'prop-types';
 import TextFieldHookGroup from '../../Reusable_Component/TextFieldHookGroup';
 import FieldButton from '../../Reusable_Component/FieldButton';
 import { regLogCook, regLogPurohit, regLogCustomer } from '../../../redux/actions/authActions';
+import Indicator from '../../Reusable_Component/SpinnerIndicator/Indicator';
 
 const { height } = Dimensions.get('window');
 
-const OTPConfirmation = ({ navigation, newRegister, regLogCook, regLogPurohit, regLogCustomer }) => {
+const OTPConfirmation = ({ navigation, newRegister, auth, regLogCook, regLogPurohit, regLogCustomer }) => {
     const { control, errors, handleSubmit } = useForm({
         mode: "onSubmit",
         validateCriteriaMode: 'all',
@@ -42,6 +43,7 @@ const OTPConfirmation = ({ navigation, newRegister, regLogCook, regLogPurohit, r
 
     return (
         <ScrollView style={styles.container}>
+            {auth.loading && <Indicator />}
             <View style={styles.columnContainer}>
                 <View style={styles.logo}>
                     <Text style={styles.logoText}>Sukalpaseva</Text>
@@ -124,13 +126,15 @@ const styles = StyleSheet.create({
 
 OTPConfirmation.propTypes = {
     newRegister: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
     regLogCook: PropTypes.func.isRequired, 
     regLogPurohit: PropTypes.func.isRequired, 
     regLogCustomer: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-    newRegister: state.newRegister
+    newRegister: state.newRegister,
+    auth: state.auth
 })
 
 const mapDispatchToProps = { regLogCook, regLogPurohit, regLogCustomer }
