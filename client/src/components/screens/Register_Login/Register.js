@@ -543,18 +543,18 @@ const Register = ({ navigation, registerNewUser }) => {
                 <View style={styles.content}>
                     <TextFieldHookGroup 
                         name="firstName"
-                        placeholder="First Name"
+                        placeholder="First Name *"
                         control={control}
                         onChange={args => args[0].nativeEvent.text}
                         rules={{ required: true }}
                         defaultValue=""
-                        errors={errors.firstName && 'First Name is required.'}
+                        errors={errors.firstName && 'First Name is required! *'}
                     />
                     <TextFieldHookGroup 
                         name="lastName"
                         placeholder="Last Name"
                         control={control}
-                        onChange={args => args[0].nativeEvent.text}
+                        onChange={args => args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '')}
                         defaultValue=""
                     />
                     <TextFieldHookGroup 
@@ -570,16 +570,16 @@ const Register = ({ navigation, registerNewUser }) => {
                     <TextFieldHookGroup 
                         type="numeric"
                         name="phoneNumber"
-                        placeholder="Mobile Number"
+                        placeholder="Mobile Number *"
                         control={control}
                         onChange={args => args[0].nativeEvent.text}
                         rules={{ required: true, minLength: 10, maxLength: 10, pattern: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/i }}
                         defaultValue=""
-                        errors={errors?.phoneNumber?.types?.required ? 'Mobile Number is required!' : errors?.phoneNumber?.types?.pattern ? 'Mobile Number should be 10 digit number' : null}
+                        errors={errors?.phoneNumber?.types?.required ? 'Mobile Number is required! *' : errors?.phoneNumber?.types?.pattern ? 'Mobile Number should be 10 digit number' : null}
                     />
                     <TextFieldHookGroup 
                         name="password"
-                        placeholder="Password"
+                        placeholder="Password *"
                         secureTextEntry={true}
                         control={control}
                         onChange={args => args[0].nativeEvent.text}
@@ -587,19 +587,19 @@ const Register = ({ navigation, registerNewUser }) => {
                         defaultValue=""
                         errors={
                             errors?.password?.types?.required ? 
-                                'Password is required!'  
+                                'Password is required! *'  
                             : errors?.password?.types?.minLength ? 
                                 'Password must be Minimum eight characters' 
                         : null}
                     />
                     <TextFieldHookGroup 
                         name="cpassword"
-                        placeholder="Confirm Password"
+                        placeholder="Confirm Password *"
                         secureTextEntry={true}
                         control={control}
                         onChange={args => args[0].nativeEvent.text}
                         rules={{ 
-                            required: 'Please confirm password!', 
+                            required: 'Please confirm password! *', 
                             validate: {
                                 matchesPreviousPassword: value => {
                                     const { password } = getValues();

@@ -1,12 +1,13 @@
-import { ADD_TO_BOOKING_CART, DELETE_FROM_BOOKING_CART, BOOKING_CART_STRUCTURE, BOOKING_CART_STRUCTURE_SELECTED_DATE, ADD_TIME_TO_STRUCTURE_SELECTED_DATE, ADD_PAYMENT_TYPE, ADD_SERVICE_CASTE_PREFER, ADD_SERVICE_LOCATION, PAYMENT_DATA_STRUCTURED } from '../actions/types';
+import { ADD_TO_BOOKING_CART, DELETE_FROM_BOOKING_CART, BOOKING_CART_STRUCTURE, BOOKING_CART_STRUCTURE_SELECTED_DATE, ADD_TIME_TO_STRUCTURE_SELECTED_DATE, ADD_PAYMENT_TYPE, ADD_SERVICE_CASTE_PREFER, ADD_SERVICE_LOCATION, PAYMENT_DATA_STRUCTURED, CLEAR_BOOKING_CART } from '../actions/types';
 import isEmpty from '../../components/Reusable_Component/is-empty';
 import { uniqueDates, getDate } from '../../components/utils/GetUniqueDates';
 
 const initialState = {
     bookingCartList: [],
     bookingServiceDates: null,
-    amountPaid: null,
+    totalAmount: null,
     amountPayable: null,
+    amountbalance: null,
     paymentType: null,
     preferCaste: null,
     location: null,
@@ -56,7 +57,8 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 poojaCartStructure: newPoojaStructuredServices,
-                amountPaid: sum
+                totalAmount: sum,
+                amountPayable: sum
             }
         case BOOKING_CART_STRUCTURE_SELECTED_DATE:
             const { poojaCartStructure } = state;
@@ -86,9 +88,20 @@ export default function(state = initialState, action) {
                 bookingCartStructureSelected
             }
         case ADD_PAYMENT_TYPE:
+            const { totalAmount } = state;
+            const percentage = 20/100;
+            let payableAmount;
+            if(action.payload === 'Full Payment') {
+                payableAmount = totalAmount
+            } else if(action.payload === 'Partial Payment') {
+                payableAmount = percentage * totalAmount
+            }
+            const balanceAmount = totalAmount - payableAmount;
             return {
                 ...state,
-                paymentType: action.payload
+                paymentType: action.payload,
+                amountPayable: payableAmount,
+                amountbalance: balanceAmount
             }
         case ADD_SERVICE_CASTE_PREFER: 
             return {
@@ -113,8 +126,6 @@ export default function(state = initialState, action) {
                     })
                 }
             })
-            console.log(poojaCart)
-            console.log(poojaCartData)
             return {
                 ...state,
                 paymentDataStructured: {
@@ -122,9 +133,24 @@ export default function(state = initialState, action) {
                     cook_services: [],
                     payment_type: state.paymentType,
                     location: state.location,
-                    amount_paid: state.amountPaid,
-                    balance_amount: state.amountPayable
+                    amount_paid: state.amountPayable,
+                    balance_amount: state.amountbalance
                 }
+            }
+        case CLEAR_BOOKING_CART:
+            return {
+                bookingCartList: [],
+                bookingServiceDates: null,
+                totalAmount: null,
+                amountPayable: null,
+                amountbalance: null,
+                paymentType: null,
+                preferCaste: null,
+                location: null,
+                bookingCartStructureSelected: null,
+                poojaCartStructure: null,
+                cateringCartStructure: null,
+                paymentDataStructured: null,
             }
         default:
             return state;

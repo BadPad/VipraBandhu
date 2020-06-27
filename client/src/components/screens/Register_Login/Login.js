@@ -112,7 +112,7 @@ const Login = ({ navigation, auth, regLogCook, regLogPurohit, regLogCustomer }) 
             <TextFieldHookGroup 
                 type="numeric"
                 name="phoneNumber"
-                placeholder="Mobile Number"
+                placeholder="Mobile Number *"
                 control={control}
                 onChange={args => args[0].nativeEvent.text}
                 rules={{ required: true, minLength: 10, maxLength: 10, pattern: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/i }}
@@ -121,7 +121,7 @@ const Login = ({ navigation, auth, regLogCook, regLogPurohit, regLogCustomer }) 
             />
             <TextFieldHookGroup 
                 name="password"
-                placeholder="Password"
+                placeholder="Password *"
                 secureTextEntry={true}
                 control={control}
                 onChange={args => args[0].nativeEvent.text}

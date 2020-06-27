@@ -6,6 +6,7 @@ import FieldCartButton from '../../Reusable_Component/FieldCartButton'
 import Heading from '../../Reusable_Component/Heading'
 
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Card from '../../Reusable_Component/Card/Card';
 import CardSection from '../../Reusable_Component/Card/CardSection';
 import DeliveryDatesServiceList from '../../utils/DeliveryDatesServiceList';
@@ -47,7 +48,9 @@ const DeliveryOptions = ({
     }, [])
 
     useEffect(() => {
-        setDateTime(new Date(bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.date))
+        if(bookingCartServices.bookingCartStructureSelected !== null) {
+            setDateTime(new Date(bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.date))
+        }
     }, [bookingCartServices.bookingCartStructureSelected])
 
     const { user } = auth;
@@ -86,7 +89,7 @@ const DeliveryOptions = ({
         addTimeToStructureSelectedDate(currentDateTime);
     }
 
-    const customerPreferCaste = casteList.getCasteList && casteList.getCasteList.reduce((pV, cV, cI) => {
+    const customerPreferCaste = casteList && casteList.getCasteList && casteList.getCasteList.reduce((pV, cV, cI) => {
         pV.push({ label: cV, value: cV});
         return pV;
     }, [{ label: "Prefer Caste", value: 0 }])
@@ -139,7 +142,7 @@ const DeliveryOptions = ({
                 <View>
                     <FlatList 
                         keyExtractor={item => item}
-                        data={bookingCartServices.bookingServiceDates}
+                        data={bookingCartServices && bookingCartServices.bookingServiceDates}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         renderItem={renderServiceDatesList}
@@ -174,13 +177,16 @@ const DeliveryOptions = ({
             </ScrollView>
             <FieldCartButton 
                 name="Process to pay"
-                touchButton={styles.touchButton}
                 onPress={() => {
                     addServiceLocation(address);
                     paymentDataStructured()
                     navigation.navigate('Payment')
                 }}
-            />
+            >
+                <View>
+                    <Text style={styles.buttonText}>₹ {bookingCartServices.amountPayable}   <AntDesign name="arrowright" size={20} backgroundColor="transparent" color="#000" /></Text>
+                </View>
+            </FieldCartButton>
         </View>
     )
 }
@@ -263,8 +269,9 @@ const styles = StyleSheet.create({
     selectedPoojaList: {
         margin: 10,
     },
-    touchButton: {
-        justifyContent: 'center'
+    buttonText: {
+        fontSize: 17,
+        fontWeight: 'bold',
     }
 })
 

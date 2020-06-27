@@ -7,7 +7,8 @@ import CardSection from '../../Reusable_Component/Card/CardSection';
 import Heading from '../../Reusable_Component/Heading';
 import Carousel from '../../Reusable_Component/Image_Carousel/Carousel';
 import FieldButton from '../../Reusable_Component/FieldButton';
-import { addToBookingCart } from '../../../redux/actions/bookingCartActions';
+import MultipleFieldButton from '../../Reusable_Component/MultipleFieldButton';
+import { addToBookingCart, bookingCartStructure } from '../../../redux/actions/bookingCartActions';
 import isEmpty from '../../Reusable_Component/is-empty';
 import ModalView from '../../Reusable_Component/ModalView';
 import DatePicker from '../../Reusable_Component/DateTimeSelector/DatePicker';
@@ -22,7 +23,7 @@ const serviceData = [
     {label: "Labour Contract", value: "Labour Contract"},
 ]
 
-const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) => {
+const Service = ({ navigation, route, auth, addToBookingCart, bookingCartStructure, bookingCartServices }) => {
 
     const [date, setDate] = useState(new Date().setSeconds(0,0));
     const [showDate, setShowDate] = useState(false);
@@ -142,6 +143,8 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
         )
     }
 
+    const { isAuthenticated } = auth;
+
     return (
         <View>
             <ScrollView>
@@ -181,7 +184,7 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
                 animationInTiming={0}
                 animationOutTiming={0}
             />
-            <FieldButton 
+            {/* <FieldButton 
                 butonContainer={styles.butonContainer}
                 buttonTouch={cartServices === undefined || null ? styles.buttonTouch : styles.TouchButton}
                 buttonTouchText={cartServices === undefined || null ? null : styles.buttonTouchText}
@@ -206,6 +209,22 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
                             ],
                             { cancelable: false },
                         )
+                }
+            /> */}
+            <MultipleFieldButton 
+                butonContainer={styles.butonContainer}
+                buttonBckTouch={cartServices === undefined || null ? null : styles.buttonBckTouch}
+                buttoncheckTouch={cartServices === undefined || null ? styles.buttoncheckTouch : styles.TouchButton}
+                buttoncheckTouchText={cartServices === undefined || null ? null : styles.buttoncheckTouchText}
+                name={cartServices === undefined || null ? 'Book' : 'Checkout'}
+                onPressBck={() => navigation.goBack()}
+                onPressCheck={() => isAuthenticated?
+                            cartServices === undefined || null ? 
+                            setIsModel(!isModal)
+                        : 
+                            (bookingCartStructure(),navigation.navigate('DeliveryOptions'))
+                    :
+                        navigation.navigate('Login')
                 }
             />
         </View>
@@ -249,21 +268,24 @@ const styles = StyleSheet.create({
     content: {
         borderRadius: 0,
         padding: 5,
-        marginBottom: 42
+        paddingBottom: 55
     },
     butonContainer: {
         position: 'absolute',
         bottom: 0,
         width: '100%'
     },
-    buttonTouch:{
+    buttonBckTouch: {
+        backgroundColor: '#fff4e1'
+    },
+    buttoncheckTouch:{
         borderRadius: 0
     },
     TouchButton: {
         borderRadius: 0,
         backgroundColor: '#f0c14b'
     },
-    buttonTouchText: {
+    buttoncheckTouchText: {
         color: '#000',
         fontWeight: 'bold'
     },
@@ -282,13 +304,16 @@ const styles = StyleSheet.create({
 
 Service.propTypes = {
     addToBookingCart: PropTypes.func.isRequired,
+    bookingCartStructure: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
     bookingCartServices: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
+    auth: state.auth,
     bookingCartServices: state.bookingCartServices
 })
 
-const mapDispatchToProps = { addToBookingCart }
+const mapDispatchToProps = { addToBookingCart, bookingCartStructure }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Service);

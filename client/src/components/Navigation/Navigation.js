@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { store } from '../../store';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -26,6 +27,7 @@ import DeliveryOptions from '../screens/Delivery_Options/DeliveryOptions';
 import ChooseAddress from '../screens/Delivery_Options/ChooseAddress';
 import AddNewAddress from '../screens/Delivery_Options/AddNewAddress';
 import Payment from '../screens/Payment';
+import TransactionInfo from '../screens/TransactionInfo';
 import DrawnContent from './DrawnContent';
 
 const Stack = createStackNavigator()
@@ -52,6 +54,8 @@ function getHeaderTitle(route) {
       return 'Add Address'
     case 'Payment':
       return 'Payment'
+    case 'TransactionInfo':
+      return 'Transaction Info'
     case 'AboutUs':
       return 'About Us'
     case 'Login':
@@ -73,6 +77,12 @@ function getHeaderTitle(route) {
     default:
       return true
   }
+}
+
+getCartCount = () => {
+  const { bookingCartServices } = store.getState();
+  const cartCount = bookingCartServices.bookingCartList.length;
+  return cartCount
 }
 
 shouldHeaderBeShowm = (route) => {
@@ -111,11 +121,14 @@ const StackNavigation = ({ navigation }) => (
         ),
         headerRight: () => (
           <View style={styles.headerRightIcons}>
-            <Icon style={styles.iconCart} name="ios-cart" size={25}
-              backgroundColor="#D63031" color="#fff"
-              onPress={() => navigation.navigate('BookingCart')}
-            >
-            </Icon >
+            <TouchableOpacity onPress={() => navigation.navigate('BookingCart')}>
+              <View>
+                {getCartCount() !== 0  &&<Text style={styles.badge}>{getCartCount()}</Text>}
+                <Icon style={styles.iconCart} name="ios-cart" size={25}
+                  backgroundColor="#D63031" color="#fff"
+                />
+              </View>
+            </TouchableOpacity>
             <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
               backgroundColor="#D63031" color="#fff"
               onPress={() => navigation.navigate('Notifications')}
@@ -138,11 +151,14 @@ const StackNavigation = ({ navigation }) => (
         ),
         headerRight: () => (
           <View style={styles.headerRightIcons}>
-            <Icon style={styles.iconCart} name="ios-cart" size={25}
-              backgroundColor="#D63031" color="#fff"
-              onPress={() => navigation.navigate('BookingCart')}
-            >
-            </Icon >
+            <TouchableOpacity onPress={() => navigation.navigate('BookingCart')}>
+              <View>
+                {getCartCount() !== 0  &&<Text style={styles.badge}>{getCartCount()}</Text>}
+                <Icon style={styles.iconCart} name="ios-cart" size={25}
+                  backgroundColor="#D63031" color="#fff"
+                />
+              </View>
+            </TouchableOpacity>
             <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
               backgroundColor="#D63031" color="#fff"
               onPress={() => navigation.navigate('Notifications')}
@@ -165,11 +181,14 @@ const StackNavigation = ({ navigation }) => (
         ),
         headerRight: () => (
           <View style={styles.headerRightIcons}>
-            <Icon style={styles.iconCart} name="ios-cart" size={25}
-              backgroundColor="#D63031" color="#fff"
-              onPress={() => navigation.navigate('BookingCart')}
-            >
-            </Icon >
+            <TouchableOpacity onPress={() => navigation.navigate('BookingCart')}>
+              <View>
+                {getCartCount() !== 0  &&<Text style={styles.badge}>{getCartCount()}</Text>}
+                <Icon style={styles.iconCart} name="ios-cart" size={25}
+                  backgroundColor="#D63031" color="#fff"
+                />
+              </View>
+            </TouchableOpacity>
             <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
               backgroundColor="#D63031" color="#fff"
               onPress={() => navigation.navigate('Notifications')}
@@ -229,6 +248,18 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="Payment" component={Payment}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="md-arrow-round-back" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.goBack()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="TransactionInfo" component={TransactionInfo}
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerLeft: () => (
@@ -406,6 +437,20 @@ const styles = StyleSheet.create({
   },
   iconCart: {
 
+  },
+  badge: {
+    position: 'absolute',
+    right: -10,
+    top: -14,
+    zIndex: 1,
+    backgroundColor: "#FFCC00",
+    borderRadius: 10,
+    textAlign: 'center',
+    paddingTop: 3,
+    width: 20,
+    height: 20,
+    fontSize: 10,
+    fontWeight: 'bold'
   }
 })
 

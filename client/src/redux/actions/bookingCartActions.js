@@ -1,4 +1,5 @@
-import { ADD_TO_BOOKING_CART, DELETE_FROM_BOOKING_CART, BOOKING_CART_STRUCTURE, BOOKING_CART_STRUCTURE_SELECTED_DATE, ADD_TIME_TO_STRUCTURE_SELECTED_DATE, ADD_PAYMENT_TYPE, ADD_SERVICE_CASTE_PREFER, ADD_SERVICE_LOCATION, PAYMENT_DATA_STRUCTURED } from './types';
+import axios from 'axios';
+import { ADD_TO_BOOKING_CART, DELETE_FROM_BOOKING_CART, BOOKING_CART_STRUCTURE, BOOKING_CART_STRUCTURE_SELECTED_DATE, ADD_TIME_TO_STRUCTURE_SELECTED_DATE, ADD_PAYMENT_TYPE, ADD_SERVICE_CASTE_PREFER, ADD_SERVICE_LOCATION, PAYMENT_DATA_STRUCTURED, CLEAR_BOOKING_CART } from './types';
 
 /*--- Add To Booking Cart ---*/
 export const addToBookingCart = service => {
@@ -67,5 +68,25 @@ export const addServiceLocation = location => {
 export const paymentDataStructured = () => {
     return {
         type: PAYMENT_DATA_STRUCTURED
+    }
+}
+
+/*--- Service Order Confirm ---*/
+export const serviceOrderConfirm = (serviceOrder, navigation) => dispatch => {
+    axios.post('https://yd5lw8j6q8.execute-api.ap-south-1.amazonaws.com/Api/booking_post', serviceOrder)
+    .then(res => {
+        console.log(res.data)
+        navigation.navigate('TransactionInfo')
+        dispatch(clearBookingCart())
+    })
+    .catch(err => {
+        console.log(err && err.response)
+    })
+}
+
+/*--- Clear Booking Cart ---*/
+export const clearBookingCart = () => {
+    return {
+        type: CLEAR_BOOKING_CART
     }
 }
