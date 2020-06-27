@@ -1,12 +1,19 @@
-import { ADD_TO_BOOKING_CART, DELETE_FROM_BOOKING_CART, BOOKING_CART_STRUCTURE, BOOKING_CART_STRUCTURE_SELECTED_DATE, ADD_TIME_TO_STRUCTURE_SELECTED_DATE } from '../actions/types';
+import { ADD_TO_BOOKING_CART, DELETE_FROM_BOOKING_CART, BOOKING_CART_STRUCTURE, BOOKING_CART_STRUCTURE_SELECTED_DATE, ADD_TIME_TO_STRUCTURE_SELECTED_DATE, ADD_PAYMENT_TYPE, ADD_SERVICE_CASTE_PREFER, ADD_SERVICE_LOCATION, PAYMENT_DATA_STRUCTURED } from '../actions/types';
 import isEmpty from '../../components/Reusable_Component/is-empty';
 import { uniqueDates, getDate } from '../../components/utils/GetUniqueDates';
 
 const initialState = {
     bookingCartList: [],
     bookingServiceDates: null,
-    bookingCartStructure: null,
-    bookingCartStructureSelected: null
+    amountPaid: null,
+    amountPayable: null,
+    paymentType: null,
+    preferCaste: null,
+    location: null,
+    bookingCartStructureSelected: null,
+    poojaCartStructure: null,
+    cateringCartStructure: null,
+    paymentDataStructured: null,
 }
 
 export default function(state = initialState, action) {
@@ -37,7 +44,7 @@ export default function(state = initialState, action) {
         case BOOKING_CART_STRUCTURE:
             const cartList = state.bookingCartList;
             const uniqueDate = state.bookingServiceDates;
-            const newStructuredServices = uniqueDate.map(item => {
+            const newPoojaStructuredServices = uniqueDate.map(item => {
                 const subTypes = cartList.filter(d => getDate(d.serviceDate) === getDate(item))
                 return {
                     date: item,
@@ -45,20 +52,22 @@ export default function(state = initialState, action) {
                     poojaService : subTypes
                 }
             })
+            const sum = cartList.reduce((total, obj) => parseInt(obj.servicePrice) + parseInt(total), 0);
             return {
                 ...state,
-                bookingCartStructure: newStructuredServices
+                poojaCartStructure: newPoojaStructuredServices,
+                amountPaid: sum
             }
         case BOOKING_CART_STRUCTURE_SELECTED_DATE:
-            const { bookingCartStructure } = state;
+            const { poojaCartStructure } = state;
             const selectedDate = action.payload;
-            const getSelectedData = bookingCartStructure.find(item => getDate(item.date) === getDate(selectedDate))
+            const getSelectedData = poojaCartStructure.find(item => getDate(item.date) === getDate(selectedDate))
             return {
                 ...state,
                 bookingCartStructureSelected: getSelectedData
             }
         case ADD_TIME_TO_STRUCTURE_SELECTED_DATE:
-            const structured = state.bookingCartStructure;
+            const structured = state.poojaCartStructure;
             const { bookingCartStructureSelected } = state;
             const selectedDateTime = action.payload;
             bookingCartStructureSelected.date = selectedDateTime.toISOString();
@@ -73,8 +82,49 @@ export default function(state = initialState, action) {
             ];
             return {
                 ...state,
-                bookingCartStructure: structureUpdated,
+                poojaCartStructure: structureUpdated,
                 bookingCartStructureSelected
+            }
+        case ADD_PAYMENT_TYPE:
+            return {
+                ...state,
+                paymentType: action.payload
+            }
+        case ADD_SERVICE_CASTE_PREFER: 
+            return {
+                ...state,
+                preferCaste: action.payload
+            }
+        case ADD_SERVICE_LOCATION:
+            return {
+                ...state,
+                location: action.payload
+            }
+        case PAYMENT_DATA_STRUCTURED:
+            const poojaCart = state.poojaCartStructure;
+            const poojaCartData = poojaCart.map(item => {
+                return {
+                    service_date: item.date,
+                    bookings: item.poojaService.map(pooja => {
+                        return {
+                            service_id: pooja.serviceId,
+                            contract_type: pooja.contractType
+                        }
+                    })
+                }
+            })
+            console.log(poojaCart)
+            console.log(poojaCartData)
+            return {
+                ...state,
+                paymentDataStructured: {
+                    purohit_services: poojaCartData,
+                    cook_services: [],
+                    payment_type: state.paymentType,
+                    location: state.location,
+                    amount_paid: state.amountPaid,
+                    balance_amount: state.amountPayable
+                }
             }
         default:
             return state;

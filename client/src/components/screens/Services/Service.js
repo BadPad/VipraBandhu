@@ -11,7 +11,16 @@ import { addToBookingCart } from '../../../redux/actions/bookingCartActions';
 import isEmpty from '../../Reusable_Component/is-empty';
 import ModalView from '../../Reusable_Component/ModalView';
 import DatePicker from '../../Reusable_Component/DateTimeSelector/DatePicker';
+import ServiceType from '../../Reusable_Component/ServiceType/ServiceType';
 import ExistingDateSelector from '../../utils/ExistingDateSelector';
+
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
+const serviceData = [
+    {label: "Select contract Type", value: 0},
+    {label: "Full Contract", value: "Full Contract"},
+    {label: "Labour Contract", value: "Labour Contract"},
+]
 
 const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) => {
 
@@ -20,6 +29,7 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
     const [addNewDate, setAddNewDate] = useState(false);
     const [exDate, setExDate] = useState(false);
     const [isModal, setIsModel] = useState(false);
+    const [contractType, setContractType] = useState('')
 
     const newDate = new Date(date);
 
@@ -32,6 +42,8 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
 
     const addAndCheckout = (service) => {
         service.serviceDate = newDate.toISOString();
+        service.contractType = contractType
+        service.servicePrice = contractType === 'Full Contract' ? service.fullContract : contractType === 'Labour Contract' ? service.labourContract : null
         setIsModel(false)
         setAddNewDate(!addNewDate)
         addToBookingCart(service)
@@ -48,6 +60,7 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
     if(isEmpty(bookingCartServices.bookingCartList) || addNewDate) {
         modalContent = (
             <>
+                <Text style={styles.existingHeading}>Date <FontAwesome5 name="star-of-life" color="rgba(214, 48, 49, 0.5)" size={7} /></Text>
                 <DatePicker 
                     name="Date"
                     timeZoneOffsetInMinutes={0}
@@ -59,16 +72,31 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
                     onPress={() => setShowDate(!showDate)}
                     onChange={onDateChange}
                 />
+                <View style={styles.serviceType}>
+                    <Text style={styles.existingHeading}>Contract Type <FontAwesome5 name="star-of-life" color="rgba(214, 48, 49, 0.5)" size={7} /></Text>
+                    <ServiceType 
+                        data={serviceData}
+                        selectedService={type => setContractType(type)}
+                        selectedItem={contractType}
+                    />
+                </View>
                 <FieldButton 
                     name="Continue"
-                    onPress={() => addAndCheckout(service)}
+                    onPress={() => contractType === '' ? 
+                            Alert.alert(
+                                '',
+                                'Please select the Server Date and contaract Type you want to offer'
+                            )
+                        : 
+                            addAndCheckout(service)
+                    }
                 />
             </>
         )
     } else {
         modalContent = (
             <>
-                <Text style={styles.existingHeading}>Preferred Dates</Text>
+                <Text style={styles.existingHeading}>Preferred Date <FontAwesome5 name="star-of-life" color="rgba(214, 48, 49, 0.5)" size={7} /></Text>
                 <FlatList 
                     keyExtractor={(item, index) => index.toString()}
                     data={bookingCartServices.bookingServiceDates}
@@ -87,11 +115,25 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
                         )
                     }}
                 />
+                <View style={{...styles.serviceType, ...styles.newServiceType}}>
+                    <Text style={styles.existingHeading}>Contract Type <FontAwesome5 name="star-of-life" color="rgba(214, 48, 49, 0.5)" size={7} /></Text>
+                    <ServiceType 
+                        data={serviceData}
+                        selectedService={type => setContractType(type)}
+                        selectedItem={contractType}
+                    />
+                </View>
                 <FieldButton 
                     name={exDate ? "Continue" : "Add New Date"}
                     onPress={() => 
                         exDate ?
-                            addAndCheckout(service)
+                            contractType === '' ? 
+                                Alert.alert(
+                                    '',
+                                    'Please select the Server Date and Service Type you want to offer'
+                                )
+                            :
+                                addAndCheckout(service)
                         :
                             setAddNewDate(!addNewDate)
                     }
@@ -112,7 +154,16 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
                     <CardSection>
                         <View>
                             <Heading containerStyle={styles.containerTitle} style={styles.serviceTitleStyle} name={service.serviceName} />
-                            <Heading containerStyle={styles.containerPoojaAmount} style={styles.poojaAmount} name={`Rs ${service.servicePrice}`} />
+                        </View>
+                    </CardSection>
+                    <CardSection style={styles.serviceAmount}>
+                        <View>
+                            <Heading containerStyle={styles.containerPoojaAmount} style={styles.poojaAmountFor} name="Full Contract" />
+                            <Heading containerStyle={styles.containerPoojaAmount} style={styles.poojaAmount} name={`Rs ${service.fullContract}`} />
+                        </View>
+                        <View>
+                            <Heading containerStyle={styles.containerPoojaAmount} style={styles.poojaAmountFor} name="Labour Contract" />
+                            <Heading containerStyle={styles.containerPoojaAmount} style={styles.poojaAmount} name={`Rs ${service.labourContract}`} />
                         </View>
                     </CardSection>
                     <CardSection style={styles.contentDescription}>
@@ -134,7 +185,7 @@ const Service = ({ navigation, route, addToBookingCart, bookingCartServices }) =
                 butonContainer={styles.butonContainer}
                 buttonTouch={cartServices === undefined || null ? styles.buttonTouch : styles.TouchButton}
                 buttonTouchText={cartServices === undefined || null ? null : styles.buttonTouchText}
-                name={cartServices === undefined || null ? 'Book' : 'Added to Booking Cart'} 
+                name={cartServices === undefined || null ? 'Book' : 'Checkout'} 
                 onPress={() => 
                     cartServices === undefined || null ? 
                         setIsModel(!isModal)
@@ -170,13 +221,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         letterSpacing: 0.2
     },
+    serviceAmount: {
+        justifyContent: 'space-between'
+    },
     containerPoojaAmount: {
         alignSelf: 'flex-start',
         paddingBottom: 0
     },
+    poojaAmountFor: {
+        fontSize: 15,
+        fontWeight: 'bold'
+    },
     poojaAmount: {
         fontSize: 14,
-        fontWeight: 'bold'
+        // fontWeight: 'bold'
     },
     imageComponentStyle: { 
         width: '100%',
@@ -210,9 +268,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     existingHeading: {
-        textAlign: 'center',
+        // textAlign: 'center',
         fontSize: 15,
         fontWeight: 'bold'
+    },
+    serviceType: {
+        marginBottom: 20
+    },
+    newServiceType: {
+        marginTop: 15
     }
 })
 

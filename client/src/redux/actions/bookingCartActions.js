@@ -1,4 +1,4 @@
-import { ADD_TO_BOOKING_CART, DELETE_FROM_BOOKING_CART, BOOKING_CART_STRUCTURE, BOOKING_CART_STRUCTURE_SELECTED_DATE, ADD_TIME_TO_STRUCTURE_SELECTED_DATE } from './types';
+import { ADD_TO_BOOKING_CART, DELETE_FROM_BOOKING_CART, BOOKING_CART_STRUCTURE, BOOKING_CART_STRUCTURE_SELECTED_DATE, ADD_TIME_TO_STRUCTURE_SELECTED_DATE, ADD_PAYMENT_TYPE, ADD_SERVICE_CASTE_PREFER, ADD_SERVICE_LOCATION, PAYMENT_DATA_STRUCTURED } from './types';
 
 /*--- Add To Booking Cart ---*/
 export const addToBookingCart = service => {
@@ -33,9 +33,39 @@ export const bookingCartStructureSelectedDate = selectedDate => {
 
 /*--- Add Time to Structure Select Date ---*/
 export const addTimeToStructureSelectedDate = selectedTime => {
-    console.log(selectedTime)
     return {
         type: ADD_TIME_TO_STRUCTURE_SELECTED_DATE,
         payload: selectedTime
+    }
+}
+
+/*--- Add Payment Type ---*/
+export const addPaymentType = type => {
+    return {
+        type: ADD_PAYMENT_TYPE,
+        payload: type
+    }
+}
+
+/*--- Add Service Caste Prefer ---*/
+export const addServiceCastePrefer = caste => {
+    return {
+        type: ADD_SERVICE_CASTE_PREFER,
+        payload: caste
+    }
+}
+
+/*--- Add Service Location ---*/
+export const addServiceLocation = location => {
+    return {
+        type: ADD_SERVICE_LOCATION,
+        payload: location
+    }
+}
+
+/*--- payment Data Structured ---*/
+export const paymentDataStructured = () => {
+    return {
+        type: PAYMENT_DATA_STRUCTURED
     }
 }

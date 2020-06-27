@@ -20,12 +20,11 @@ const SelectStateCity = ({ districtOrCity, selectState, selectCity, selectedStat
     <View style={styles.container}>
       <Picker 
         style={styles.text}
-        selectedValue={selectedState === '' ? 0 : selectedState}
+        selectedValue={selectedState === '' ? 1 : selectedState}
         onValueChange={(itemValue) => handleChange({state: itemValue})}
       > 
         <Picker.Item key={0} label="Select State" value={0} />
         <Picker.Item key={1} label="karnataka" value="karnataka" />
-        <Picker.Item key={2} label="TamilNadu" value="TamilNadu" />
       </Picker>
     </View>
     <Text style = {styles.texts}>City:</Text>

@@ -23,6 +23,9 @@ import BookingCart from '../screens/Booking_Cart/BookingCart';
 import BookingsList from '../screens/Bookings/BookingsList';
 import Booking from '../screens/Bookings/Booking';
 import DeliveryOptions from '../screens/Delivery_Options/DeliveryOptions';
+import ChooseAddress from '../screens/Delivery_Options/ChooseAddress';
+import AddNewAddress from '../screens/Delivery_Options/AddNewAddress';
+import Payment from '../screens/Payment';
 import DrawnContent from './DrawnContent';
 
 const Stack = createStackNavigator()
@@ -42,7 +45,13 @@ function getHeaderTitle(route) {
     case 'BookingCart':
       return 'Booking Cart'
     case 'DeliveryOptions':
-      return 'Address & Time Confirmation'
+      return 'Address and Date & Time'
+    case 'ChooseAddress':
+      return 'Choose Address'
+    case 'AddNewAddress':
+      return 'Add Address'
+    case 'Payment':
+      return 'Payment'
     case 'AboutUs':
       return 'About Us'
     case 'Login':
@@ -175,9 +184,9 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
+          <Icon.Button name="md-arrow-round-back" size={25}
             backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
+            onPress={() => navigation.goBack()
             }>
           </Icon.Button >
         )
@@ -187,9 +196,45 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
+          <Icon.Button name="md-arrow-round-back" size={25}
             backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
+            onPress={() => navigation.goBack()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="ChooseAddress" component={ChooseAddress} 
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="md-arrow-round-back" size={25}
+          backgroundColor="#D63031" color="#fff"
+          onPress={() => navigation.goBack()
+          }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="AddNewAddress" component={AddNewAddress} 
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="md-arrow-round-back" size={25}
+          backgroundColor="#D63031" color="#fff"
+          onPress={() => navigation.goBack()
+          }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="Payment" component={Payment}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="md-arrow-round-back" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.goBack()
             }>
           </Icon.Button >
         )

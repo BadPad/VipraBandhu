@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native'
-import { connect } from 'react-redux'
+import { View, Text, StyleSheet, ScrollView, FlatList, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FieldCartButton from '../../Reusable_Component/FieldCartButton'
 import Heading from '../../Reusable_Component/Heading'
@@ -9,17 +9,32 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import Card from '../../Reusable_Component/Card/Card';
 import CardSection from '../../Reusable_Component/Card/CardSection';
 import DeliveryDatesServiceList from '../../utils/DeliveryDatesServiceList';
-import { bookingCartStructureSelectedDate, addTimeToStructureSelectedDate } from '../../../redux/actions/bookingCartActions';
+import { getCastes } from '../../../redux/actions/casteActions';
+import { bookingCartStructureSelectedDate, addTimeToStructureSelectedDate, addPaymentType, addServiceCastePrefer, addServiceLocation, paymentDataStructured } from '../../../redux/actions/bookingCartActions';
 import BookingCartServiceList from '../../utils/BookingCartServiceList';
 import DatePicker from '../../Reusable_Component/DateTimeSelector/DatePicker';
 import FieldButton from '../../Reusable_Component/FieldButton';
+import Dropdown from '../../Reusable_Component/Dropdown';
+
+const customerpaymentType = [
+    {label: "Select Payment Type", value: 0},
+    {label: "Full Payment", value: "Full Payment"},
+    {label: "Partial Payment", value: "Partial Payment"}
+]
 
 const DeliveryOptions = ({ 
     navigation, 
+    getCastes,
     auth, 
+    casteList,
     bookingCartServices, 
     bookingCartStructureSelectedDate,
-    addTimeToStructureSelectedDate
+    addTimeToStructureSelectedDate,
+    addPaymentType,
+    addServiceCastePrefer,
+    addServiceLocation,
+    paymentDataStructured,
+    ListView_Ref
 }) => {
 
     const [selectedDate, setSelectedDate] = useState(`${bookingCartServices.bookingServiceDates[0]}`);
@@ -27,6 +42,7 @@ const DeliveryOptions = ({
     const [showDateTime, setShowDateTime] = useState(false);
 
     useEffect(() => {
+        getCastes()
         bookingCartStructureSelectedDate(selectedDate)
     }, [])
 
@@ -63,33 +79,61 @@ const DeliveryOptions = ({
     }
 
     const onDateTimeChange = (event, selectedDate) => {
+        ListView_Ref.scrollToEnd({ animated: true });
         const currentDateTime = selectedDate || date;
         setShowDateTime(!showDateTime);
         setDateTime(currentDateTime);
         addTimeToStructureSelectedDate(currentDateTime);
     }
 
+    const customerPreferCaste = casteList.getCasteList && casteList.getCasteList.reduce((pV, cV, cI) => {
+        pV.push({ label: cV, value: cV});
+        return pV;
+    }, [{ label: "Prefer Caste", value: 0 }])
+
     return (
         <View style={styles.container}>
-            <ScrollView>
+            <ScrollView 
+                style={styles.scrollContainer} 
+                ref={ref => ListView_Ref = ref}
+            >
                 <Card>
                     <CardSection style={styles.addressHeading}>
                         <View style={styles.headLogText}>
                             <Icon name="location-pin" size={20} color="#D63031" />
                             <Heading containerStyle={styles.contAddHeading} style={styles.addHeading} name="Home" />
                         </View>
-                        <View style={styles.changeAddButton}>
+                        <TouchableOpacity style={styles.changeAddButton} onPress={() => navigation.navigate('ChooseAddress')}>
                             <Text style={styles.changeAddText}>Change</Text>
-                        </View>
+                        </TouchableOpacity>
                     </CardSection>
-                    <CardSection>
-                        <View style={styles.selectedAddress}>
-                            <Text>{user.firstName}</Text>
-                            <Text>{address}</Text>
-                        </View>
+                    <CardSection style={styles.selectedAddress}>
+                        <Text>{user.firstName}</Text>
+                        <Text>{address}</Text>
                     </CardSection>
+                    <Card style={styles.servicePayContainer}>
+                        {/* <Text style={styles.servicePayHead}>Service prefer Type</Text> */}
+                        <CardSection style={styles.servicePay}>
+                            <Text style={styles.servicePref}>Payment Type</Text>
+                            <Dropdown 
+                                data={customerpaymentType} 
+                                style={styles.payType}
+                                selectDrop={drop => addPaymentType(drop)}
+                                selectedItem={bookingCartServices && bookingCartServices.paymentType}
+                            />
+                        </CardSection>
+                        <CardSection style={styles.servicePay}>
+                            <Text style={styles.servicePref}>Service Caste Prefer</Text>
+                            <Dropdown 
+                                data={customerPreferCaste && customerPreferCaste} 
+                                style={styles.castePref}
+                                selectDrop={drop => addServiceCastePrefer(drop)}
+                                selectedItem={bookingCartServices && bookingCartServices.preferCaste}
+                            />
+                        </CardSection>
+                    </Card>
                     <CardSection style={styles.serviceSlots}>
-                        <Text style={styles.serviceSlotsText}>Choose service timings for you services</Text>
+                        {/* <Text style={styles.serviceSlotsText}>Choose service timings for you services</Text> */}
                     </CardSection>
                 </Card>
                 <View>
@@ -131,7 +175,11 @@ const DeliveryOptions = ({
             <FieldCartButton 
                 name="Process to pay"
                 touchButton={styles.touchButton}
-                onPress={() => console.log('paymeny')}
+                onPress={() => {
+                    addServiceLocation(address);
+                    paymentDataStructured()
+                    navigation.navigate('Payment')
+                }}
             />
         </View>
     )
@@ -141,6 +189,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F9F9F9'
+    },
+    scrollContainer: {
+        marginBottom: 50
     },
     addressHeading: {
         justifyContent: 'space-between',
@@ -155,7 +206,7 @@ const styles = StyleSheet.create({
         marginLeft: 5
     },
     addHeading : {
-        fontSize: 20,
+        fontSize: 17,
         fontWeight: 'bold',
     },
     changeAddButton: {
@@ -169,12 +220,40 @@ const styles = StyleSheet.create({
         color: '#D63031'
     },
     selectedAddress: {
-        paddingHorizontal: 5
+        paddingHorizontal: 5,
+        flexDirection: 'column',
+        paddingBottom: 10
+    },
+    servicePayContainer: {
+        paddingTop: 8,
+        backgroundColor: '#EEE8E7',
+    },
+    servicePayHead: {
+        textAlign: 'center',
+        padding: 5,
+        color: '#757473'
+    },
+    servicePay: {
+        backgroundColor: '#f9f9f9',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderColor: '#EEE8E7',
+        borderWidth: 0.7
+    },
+    servicePref: {
+        paddingHorizontal: 4,
+        fontSize: 17,
+        fontWeight: 'bold'
+    },
+    payType: {
+        marginLeft: 70
+    },
+    castePref: {
+        marginLeft: 50
     },
     serviceSlots : {
         backgroundColor: '#EEE8E7',
-        padding: 8,
-        marginTop: 15,
+        paddingTop: 8,
         justifyContent: 'center'
     },
     serviceSlotsText: {
@@ -193,17 +272,24 @@ DeliveryOptions.propTypes = {
     bookingCartStructureSelectedDate: PropTypes.func.isRequired,
     addTimeToStructureSelectedDate: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
+    casteList: PropTypes.object.isRequired,
     bookingCartServices: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
     auth: state.auth,
+    casteList: state.casteList,
     bookingCartServices: state.bookingCartServices
 })
 
 const mapDispatchToProps = { 
+    getCastes,
     bookingCartStructureSelectedDate, 
-    addTimeToStructureSelectedDate 
+    addTimeToStructureSelectedDate,
+    addPaymentType,
+    addServiceCastePrefer,
+    addServiceLocation,
+    paymentDataStructured
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeliveryOptions)
