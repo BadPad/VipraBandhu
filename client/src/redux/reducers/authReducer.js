@@ -1,5 +1,5 @@
 import isEmpty from '../../components/Reusable_Component/is-empty';
-import { SET_AUTH_LOADING, SET_CURRENT_USER_TYPE, SET_CURRENT_USER } from '../actions/types';
+import { SET_AUTH_LOADING, SET_CURRENT_USER_TYPE, SET_CURRENT_USER, SET_AUTH_FALSE_LOADING } from '../actions/types';
 
 const initialState = {
     loading: false,
@@ -25,6 +25,11 @@ export default function(state = initialState, action) {
                 ...state,
                 isAuthenticated: !isEmpty(action.payload),
                 user: action.payload,
+                loading: false
+            }
+        case SET_AUTH_FALSE_LOADING:
+            return {
+                ...state,
                 loading: false
             }
         default:

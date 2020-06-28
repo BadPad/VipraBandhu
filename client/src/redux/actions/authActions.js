@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SET_AUTH_LOADING, SET_CURRENT_USER_TYPE, SET_CURRENT_USER } from '../actions/types';
+import { SET_AUTH_LOADING, SET_CURRENT_USER_TYPE, SET_CURRENT_USER, SET_AUTH_FALSE_LOADING } from '../actions/types';
 import { AsyncStorage } from 'react-native';
 import setAuthToken from '../../components/Reusable_Component/setAuthToken';
 import { showMessage } from "react-native-flash-message";
@@ -29,6 +29,7 @@ export const regLogCustomer = (userData, from, navigation) => dispatch => {
                 dispatch(setCustomerUser(from, navigation))
             } else if(status === 200 || status === 401) {
                 // console.log('user already registered')
+                dispatch(regLogStopLoading());
                 showMessage({
                     message: 'Mobile Number already Registered as Customer',
                     type: 'danger'
@@ -48,6 +49,7 @@ export const regLogCustomer = (userData, from, navigation) => dispatch => {
                 })
             } else if(status === 401) {
                 // console.log('The username or password is incorrect')
+                dispatch(regLogStopLoading());
                 showMessage({
                     message: 'Mobile Number or password is incorrect',
                     type: 'danger'
@@ -85,6 +87,7 @@ export const regLogPurohit = (userData, from, navigation) => dispatch => {
                 dispatch(setPurohitUser(from, navigation))
             } else if(status === 200 || status === 401) {
                 // console.log('user already registered')
+                dispatch(regLogStopLoading());
                 showMessage({
                     message: 'Mobile Number already Registered as Purohit',
                     type: 'danger'
@@ -104,6 +107,7 @@ export const regLogPurohit = (userData, from, navigation) => dispatch => {
                 })
             } else if(status === 401) {
                 // console.log('The username or password is incorrect')
+                dispatch(regLogStopLoading());
                 showMessage({
                     message: 'Mobile Number or password is incorrect',
                     type: 'danger'
@@ -141,6 +145,7 @@ export const regLogCook = (userData, from, navigation) => dispatch => {
                 dispatch(setCookUser(from, navigation))
             } else if(status === 200 || status === 401) {
                 // console.log('user already registered')
+                dispatch(regLogStopLoading());
                 showMessage({
                     message: 'Mobile Number already registered as Cook',
                     type: 'danger'
@@ -160,6 +165,7 @@ export const regLogCook = (userData, from, navigation) => dispatch => {
                 })
             } else if(status === 401) {
                 // console.log('The username or password is incorrect')
+                dispatch(regLogStopLoading());
                 showMessage({
                     message: 'Mobile Number or password is incorrect',
                     type: 'danger'
@@ -254,5 +260,12 @@ export const logoutUser = () => dispatch => {
 export const regLogLoading = () => {
     return {
         type: SET_AUTH_LOADING
+    }
+}
+
+/*--- Registert Log Stop Loading ---*/
+export const regLogStopLoading = () => {
+    return {
+        type: SET_AUTH_FALSE_LOADING
     }
 }
