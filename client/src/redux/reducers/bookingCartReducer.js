@@ -1,4 +1,4 @@
-import { ADD_TO_BOOKING_CART, DELETE_FROM_BOOKING_CART, BOOKING_CART_STRUCTURE, BOOKING_CART_STRUCTURE_SELECTED_DATE, ADD_TIME_TO_STRUCTURE_SELECTED_DATE, ADD_PAYMENT_TYPE, ADD_SERVICE_CASTE_PREFER, ADD_SERVICE_LOCATION, PAYMENT_DATA_STRUCTURED, CLEAR_BOOKING_CART } from '../actions/types';
+import { ADD_TO_BOOKING_CART, DELETE_FROM_BOOKING_CART, BOOKING_CART_STRUCTURE, BOOKING_CART_STRUCTURE_SELECTED_DATE, ADD_TIME_TO_STRUCTURE_SELECTED_DATE, ADD_PAYMENT_TYPE, ADD_SERVICE_CASTE_PREFER, ADD_SERVICE_LOCATION, PAYMENT_DATA_STRUCTURED, CLEAR_BOOKING_CART, SERVICE_ORDER_CONFIRM } from '../actions/types';
 import isEmpty from '../../components/Reusable_Component/is-empty';
 import { uniqueDates, getDate } from '../../components/utils/GetUniqueDates';
 
@@ -15,6 +15,7 @@ const initialState = {
     poojaCartStructure: null,
     cateringCartStructure: null,
     paymentDataStructured: null,
+    serviceOrderConfirm: null
 }
 
 export default function(state = initialState, action) {
@@ -137,20 +138,14 @@ export default function(state = initialState, action) {
                     balance_amount: state.amountbalance
                 }
             }
+        case SERVICE_ORDER_CONFIRM:
+            return {
+                ...state,
+                serviceOrderConfirm: action.payload
+            }
         case CLEAR_BOOKING_CART:
             return {
-                bookingCartList: [],
-                bookingServiceDates: null,
-                totalAmount: null,
-                amountPayable: null,
-                amountbalance: null,
-                paymentType: null,
-                preferCaste: null,
-                location: null,
-                bookingCartStructureSelected: null,
-                poojaCartStructure: null,
-                cateringCartStructure: null,
-                paymentDataStructured: null,
+                ...initialState
             }
         default:
             return state;

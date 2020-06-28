@@ -16,6 +16,7 @@ import BookingCartServiceList from '../../utils/BookingCartServiceList';
 import DatePicker from '../../Reusable_Component/DateTimeSelector/DatePicker';
 import FieldButton from '../../Reusable_Component/FieldButton';
 import Dropdown from '../../Reusable_Component/Dropdown';
+import isEmpty from '../../Reusable_Component/is-empty';
 
 const customerpaymentType = [
     {label: "Select Payment Type", value: 0},
@@ -48,10 +49,10 @@ const DeliveryOptions = ({
     }, [])
 
     useEffect(() => {
-        if(bookingCartServices.bookingCartStructureSelected !== null) {
+        if(!isEmpty(bookingCartServices.bookingCartList)) {
             setDateTime(new Date(bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.date))
         }
-    }, [bookingCartServices.bookingCartStructureSelected])
+    }, [bookingCartServices && bookingCartServices.bookingCartStructureSelected] !== null)
 
     const { user } = auth;
 
@@ -106,7 +107,7 @@ const DeliveryOptions = ({
                             <Icon name="location-pin" size={20} color="#D63031" />
                             <Heading containerStyle={styles.contAddHeading} style={styles.addHeading} name="Home" />
                         </View>
-                        <TouchableOpacity style={styles.changeAddButton} onPress={() => navigation.navigate('ChooseAddress')}>
+                        <TouchableOpacity style={styles.changeAddButton} onPress={() => console.log('change')}>
                             <Text style={styles.changeAddText}>Change</Text>
                         </TouchableOpacity>
                     </CardSection>
@@ -184,7 +185,7 @@ const DeliveryOptions = ({
                 }}
             >
                 <View>
-                    <Text style={styles.buttonText}>₹ {bookingCartServices.amountPayable}   <AntDesign name="arrowright" size={20} backgroundColor="transparent" color="#000" /></Text>
+                    <Text style={styles.buttonText}>₹ {bookingCartServices && bookingCartServices.amountPayable}   <AntDesign name="arrowright" size={20} backgroundColor="transparent" color="#000" /></Text>
                 </View>
             </FieldCartButton>
         </View>

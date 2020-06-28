@@ -26,6 +26,7 @@ const Login = ({ navigation, auth, regLogCook, regLogPurohit, regLogCustomer }) 
     });
     const [regData, setRegData] = useState('');
     const [selectRegData, setSelectRegData] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         if(auth.isAuthenticated) {
@@ -122,7 +123,9 @@ const Login = ({ navigation, auth, regLogCook, regLogPurohit, regLogCustomer }) 
             <TextFieldHookGroup 
                 name="password"
                 placeholder="Password *"
-                secureTextEntry={true}
+                secureTextEntry={showPassword ? false : true}
+                passwordControl={() => setShowPassword(!showPassword)}
+                showPassword={showPassword}
                 control={control}
                 onChange={args => args[0].nativeEvent.text}
                 rules={{ required: true }}

@@ -470,7 +470,8 @@ const Register = ({ navigation, registerNewUser }) => {
         nativeValidation: true,
     });
     const [regData, setRegData] = useState('');
-    const [selectRegData, setSelectRegData] = useState(false)
+    const [selectRegData, setSelectRegData] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const onSelected = type => {
         setRegData(type)
@@ -580,7 +581,9 @@ const Register = ({ navigation, registerNewUser }) => {
                     <TextFieldHookGroup 
                         name="password"
                         placeholder="Password *"
-                        secureTextEntry={true}
+                        secureTextEntry={showPassword ? false : true}
+                        passwordControl={() => setShowPassword(!showPassword)}
+                        showPassword={showPassword}
                         control={control}
                         onChange={args => args[0].nativeEvent.text}
                         rules={{ required: true, minLength: 8 }}

@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Controller } from "react-hook-form";
 import PropTypes from 'prop-types';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const TextFieldHookGroup = ({
     type,
@@ -13,6 +14,8 @@ const TextFieldHookGroup = ({
     onChange,
     rules,
     defaultValue,
+    passwordControl,
+    showPassword,
     errors
 }) => {
     return (
@@ -31,6 +34,10 @@ const TextFieldHookGroup = ({
                 rules={rules}
                 defaultValue={defaultValue}
             />
+            {name === 'password' && 
+            <TouchableOpacity style={styles.showPassword} onPress={passwordControl}>
+                <Ionicons name={showPassword ? 'ios-eye' : 'ios-eye-off'} color={showPassword ? 'rgba(68,68,68,0.8)' : 'rgba(68,68,68,0.5)'} size={20} />    
+            </TouchableOpacity>}
             {errors && <Text style={styles.error}><FontAwesome5 name="exclamation" />  {errors}</Text>}
         </View>
     )
@@ -55,6 +62,11 @@ const styles = StyleSheet.create({
         marginVertical: 2,
         borderWidth:0.5,
         borderColor: 'rgba(68,68,68,1)'
+    },
+    showPassword: {
+        position: 'absolute',
+        right: 0,
+        padding: 11
     },
     error: {
         color: '#c81912'
