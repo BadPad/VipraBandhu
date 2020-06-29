@@ -65,6 +65,7 @@ export default class SearchArea extends Component {
           single={true}
           onSelectedItemsChange={this.onSelectedItemsChange}
           selectedItems={selectedArea}
+          hideConfirm={true}
         />
       </View>
     );

@@ -90,7 +90,7 @@ export default function(state = initialState, action) {
             }
         case ADD_PAYMENT_TYPE:
             const { totalAmount } = state;
-            const percentage = 20/100;
+            const percentage = 25/100;
             let payableAmount;
             if(action.payload === 'Full Payment') {
                 payableAmount = totalAmount
@@ -134,6 +134,7 @@ export default function(state = initialState, action) {
                     cook_services: [],
                     payment_type: state.paymentType,
                     location: state.location,
+                    caste_prefered: state.preferCaste,
                     amount_paid: state.amountPayable,
                     balance_amount: state.amountbalance
                 }

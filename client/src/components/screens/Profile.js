@@ -30,7 +30,7 @@ const Profile = ({
   updateCustomer
 }) => {
 
-    const [formData, setFormData] = useState({...auth.user});
+  const [formData, setFormData] = useState({...auth.user});
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: 'first', title: 'Self Details' },
@@ -44,57 +44,54 @@ const Profile = ({
     getAreas(formData.city)
   }, [])
 
+  return (
+    <View style={styles.container}>
+      <ScrollView>                                          
+        <Accordian title="Self Details">                                                                            
+          <View style={styles.bodyEdit}>
+            <SelfDetails 
+              formData={formData} 
+              casteList={casteList && casteList.getCasteList}
+              cityAreaList={cityAreaList && cityAreaList}
+              getAreas={city => getAreas(city)}
+              updatedForm={data => setFormData(data)}
+              updateProfile={() => {
+                if(auth.userType === 'cook') {
+                  updateCook(formData)
+                } else if(auth.userType === 'purohit') {
+                  updatePurohit(formData)
+                } else if(auth.userType === 'customer') {
+                  updateCustomer(formData)
+                }
+              }}
+            />
+          </View>
+        </Accordian>                    
 
-    return (
-      <View style={styles.container}>
-        <ScrollView>
-                                                             
-                    <Accordian title="Self Details">                                                                            
-                    <View style={styles.bodyEdit}>
-                      <SelfDetails 
-                        formData={formData} 
-                        casteList={casteList && casteList.getCasteList}
-                        cityAreaList={cityAreaList && cityAreaList}
-                        getAreas={city => getAreas(city)}
-                        updatedForm={data => setFormData(data)}
-                        updateProfile={() => {
-                          if(auth.userType === 'cook') {
-                            updateCook(formData)
-                          } else if(auth.userType === 'purohit') {
-                            updatePurohit(formData)
-                          } else if(auth.userType === 'customer') {
-                            updateCustomer(formData)
-                          }
-                        }}
-                      />
-                    </View>
-                    </Accordian>                    
-
-                    <Accordian title="Service Details">                                                                                                       
-                    <View style={styles.bodyEdit}>
-                      <ServiceDetails 
-                        formData={formData} 
-                        auth={auth}
-                        casteList={casteList && casteList.getCasteList}
-                        services={services && services}
-                        updatedForm={data => setFormData(data)}
-                        updateProfile={() => {
-                          if(auth.userType === 'cook') {
-                            updateCook(formData)
-                          } else if(auth.userType === 'purohit') {
-                            updatePurohit(formData)
-                          } else if(auth.userType === 'customer') {
-                            updateCustomer(formData)
-                          }
-                        }}
-                      />
-                    </View>
-                    </Accordian>
-                    
-        </ScrollView>
-          
-      </View>
-    );
+        {auth.userType !== 'customer'&& 
+        <Accordian title="Service Details">                                                                                                       
+          <View style={styles.bodyEdit}>
+            <ServiceDetails 
+              formData={formData} 
+              auth={auth}
+              casteList={casteList && casteList.getCasteList}
+              services={services && services}
+              updatedForm={data => setFormData(data)}
+              updateProfile={() => {
+                if(auth.userType === 'cook') {
+                  updateCook(formData)
+                } else if(auth.userType === 'purohit') {
+                  updatePurohit(formData)
+                } else if(auth.userType === 'customer') {
+                  updateCustomer(formData)
+                }
+              }}
+            />
+          </View>
+        </Accordian>}
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

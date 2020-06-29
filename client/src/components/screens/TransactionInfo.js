@@ -11,8 +11,10 @@ const TransactionInfo = ({ navigation, bookingCartServices, clearBookingCart }) 
     useEffect(() => {
         setTimeout(() => {
             clearBookingCart();
+        },5000);
+        setTimeout(() => {
             navigation.navigate('Welcome')
-        }, 5000);
+        },4000)
     }, [])
 
     const { serviceOrderConfirm } = bookingCartServices;

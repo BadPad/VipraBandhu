@@ -19,7 +19,6 @@ const SelfDetails = ({
     getAreas,
     updateProfile
 }) => {
-
     const [avatarSrc, setAvatarSrc] = useState({});
 
     /* const openGallery = () => {
@@ -76,7 +75,7 @@ const SelfDetails = ({
                     type="numeric"
                     name="Phone Number"
                     star="*"
-                    maxLength={10}
+                    maxLength={13}
                     value={formData["phone number"]}
                     onChange={text => updatedForm({...formData, "phone number": text.replace(/[^0-9]/g, '')})}
                 />
@@ -124,22 +123,6 @@ const SelfDetails = ({
                         selectedCaste={formData.purohitCaste}
                         selectCaste={purohitCaste => updatedForm({... formData, purohitCaste})}
                     />
-                    <SelectStateCity 
-                        districtOrCity={cityAreaList && cityAreaList.getDistricrOrCity}
-                        selectedState={formData.state}
-                        selectedCity={formData.city}
-                        selectState={state => updatedForm({...formData, state})}
-                        selectCity={city => {
-                        updatedForm({...formData, city});
-                        getAreas(city);
-                        }}
-                    />
-                    <Text style = {styles.texts}>Area: <Text style={{ color: 'red', fontSize: 15, paddingLeft: 10 }}>*</Text></Text>
-                    <SearchArea 
-                        area={cityAreaList && cityAreaList.getAreasList}
-                        selectedArea={formData.area}
-                        selectArea={area => updatedForm({...formData, area})}
-                    />
                     <Text style={{ fontSize: 20, marginTop: 10, marginBottom: 10 }}>Address</Text>
                     <TextFieldGroup 
                         name="Address 1"
@@ -162,12 +145,33 @@ const SelfDetails = ({
                         value={formData.AddressThree}
                         onChange={text => updatedForm({...formData, AddressThree: text})}
                     />
+                    <SelectStateCity 
+                        districtOrCity={cityAreaList && cityAreaList.getDistricrOrCity}
+                        selectedState={formData.state}
+                        selectedCity={formData.city}
+                        selectState={state => updatedForm({...formData, state})}
+                        selectCity={city => {
+                        updatedForm({...formData, city});
+                        getAreas(city);
+                        }}
+                    />
+                    <Text style = {styles.texts}>Area: <Text style={{ color: 'red', fontSize: 15, paddingLeft: 10 }}>*</Text></Text>
+                    <SearchArea 
+                        area={cityAreaList && cityAreaList.getAreasList}
+                        selectedArea={formData.area}
+                        selectArea={area => updatedForm({...formData, area})}
+                    />
                 </View>
                 <View style={{ marginTop: 20 }}>
-                    <FieldButton 
-                        name="Update Profile"
-                        onPress={updateProfile}
-                    />
+                    {
+                    formData.FirstName === '' || formData['phone number'] === '' ?
+                        null
+                    :
+                        <FieldButton 
+                            name="Update Profile"
+                            onPress={updateProfile}
+                        />
+                    }
                 </View>
             </ScrollView>
         </View>

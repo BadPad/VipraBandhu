@@ -39,8 +39,8 @@ const DeliveryOptions = ({
     ListView_Ref
 }) => {
 
-    const [selectedDate, setSelectedDate] = useState(`${bookingCartServices.bookingServiceDates[0]}`);
-    const [dateTime, setDateTime] = useState(new Date(bookingCartServices && bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.date));
+    const [selectedDate, setSelectedDate] = useState(`${bookingCartServices && bookingCartServices.bookingServiceDates && bookingCartServices.bookingServiceDates[0]}`);
+    const [dateTime, setDateTime] = useState(`${bookingCartServices && bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.date}`);
     const [showDateTime, setShowDateTime] = useState(false);
 
     useEffect(() => {
@@ -49,10 +49,8 @@ const DeliveryOptions = ({
     }, [])
 
     useEffect(() => {
-        if(!isEmpty(bookingCartServices.bookingCartList)) {
-            setDateTime(new Date(bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.date))
-        }
-    }, [bookingCartServices && bookingCartServices.bookingCartStructureSelected] !== null)
+        setDateTime(new Date(bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.date))
+    }, [bookingCartServices && bookingCartServices.bookingCartStructureSelected])
 
     const { user } = auth;
 
@@ -161,7 +159,7 @@ const DeliveryOptions = ({
                                 name="Pooja Time"
                                 timeZoneOffsetInMinutes={0}
                                 show={showDateTime}
-                                value={dateTime && dateTime}
+                                value={new Date(dateTime && dateTime)}
                                 mode="time"
                                 is24Hour={false}
                                 display="default"
