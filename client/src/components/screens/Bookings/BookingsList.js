@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet, FlatList, ScrollView, Dimensions, View } from 'react-native'
+import React, { useEffect } from "react";
+import { StyleSheet, FlatList, ScrollView, Dimensions, AsyncStorage, Alert, Clipboard, Text } from 'react-native'
 import BookingsCardList from '../../utils/BookingsCardList';
 import staticData from "../../Reusable_Component/StaticData/BookingsStaticData";
 import isEmpty from '../../Reusable_Component/is-empty';
@@ -7,40 +7,54 @@ import Heading from '../../Reusable_Component/Heading';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
+import { myBookingsOrders, getPurohitBookings } from '../../../redux/actions/myBookingActions';
 
-//const userType = "customer";
-//const userType = "purohit";
-//const userType = "cook";
+const BookingsList = ({ navigation, route, auth, myBookingsOrders, myOrders, getPurohitBookings, purohitBookings }) => {
 
-const BookingsList = ({ navigation, route, auth }) => {
-    
-    const onSelectBooking = data => {
-        navigation.navigate('Booking', { id: data })
+    const onSelectBooking = (data, type) => {
+        navigation.navigate('Booking', { rowData: data, userType: type })
     }
 
+    useEffect(() => {
+        myBookingsOrders(),
+            getPurohitBookings()
+    }, [])
+
     const FirstRoute = () => {
-        console.warn(auth.userType);
-        let newData;
-        if (auth.userType === "purohit") {
-            newData = staticData.filter(list => list.userType === 'purohit')
+
+        let currentUserType = auth.userType;
+        let pendingData = null;
+
+        if (currentUserType === 'customer') {
+            if (myOrders.myBookingsOrdersList != null) {
+                pendingData = myOrders.myBookingsOrdersList.pending_bookings
+            }
         }
-        else if (auth.userType === "cook") {
-            newData = staticData.filter(list => list.userType === 'cook')
+        else if (currentUserType === 'purohit') {
+            if (purohitBookings.getPurohitBookingsList != null) {
+                pendingData = purohitBookings.getPurohitBookingsList.pending_bookings
+            }
         }
-        else if (auth.userType === "customer") {
-            newData = staticData.filter(list => list.userType === 'customer')
+        else if (currentUserType === 'cook') {
+
+        }
+        else {
+
         }
 
         return (
-            <ScrollView style={[styles.scene, { backgroundColor: 'lightgrey' }]}>
-                <FlatList
-                    keyExtractor={item => item.id.toString()}
-                    data={newData.filter(list => list.status === 'pending')}
-                    renderItem={({ item, index }) => (
-                        <BookingsCardList data={item} onSelectBooking={onSelectBooking} status={"pending"} userType={auth.userType}/>
-                    )}
-                />
-
+            <ScrollView style={[styles.scene, { backgroundColor: '#fdfcfa' }]}>
+                {
+                    pendingData != null ?
+                        <FlatList
+                            //keyExtractor={item => item.bookingID.toString()}
+                            data={pendingData}
+                            renderItem={({ item, index }) => (
+                                <BookingsCardList data={item[0]} onSelectBooking={onSelectBooking} status={"pending"} userType={auth.userType} isNotification={false} />
+                            )}
+                        />
+                        : null
+                }
             </ScrollView>
         )
     }
@@ -99,8 +113,8 @@ const BookingsList = ({ navigation, route, auth }) => {
 
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
-        { key: 'first', title: 'Pending' },
-        { key: 'second', title: 'Accepted' },
+        { key: 'first', title: (auth.userType === 'customer') ? 'Tracking' : 'Pending' },
+        { key: 'second', title: (auth.userType === 'customer') ? 'Confirmed' : 'Accepted' },
         { key: 'third', title: 'Completed' },
     ]);
 
@@ -193,14 +207,19 @@ const styles = StyleSheet.create({
 
 BookingsList.propTypes = {
     auth: PropTypes.object.isRequired,
-  }
-  
-  const mapStateToProps = state => ({
-    auth: state.auth,
-  })
+    myBookingsOrders: PropTypes.object.isRequired,
+    myOrders: PropTypes.object.isRequired,
+    getPurohitBookings: PropTypes.object.isRequired,
+    purohitBookings: PropTypes.object.isRequired,
+}
 
-  const mapDispatchToProps = { 
-    
-  }
+const mapStateToProps = state => ({
+    auth: state.auth,
+    myOrders: state.myBookingsOrders,
+    purohitBookings: state.getPurohitBookings,
+})
+
+const mapDispatchToProps = { myBookingsOrders, getPurohitBookings }
+//const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookingsList)

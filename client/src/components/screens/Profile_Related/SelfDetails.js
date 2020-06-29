@@ -42,7 +42,7 @@ const SelfDetails = ({
     }
 
     const sourceUri = avatarSrc.path ? { uri: avatarSrc.path }
-    : {uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'};
+    : {uri: 'http://www.sumadhwaseva.com/wp-content/uploads/2020/06/diwalii.png'};
 
     return (
         <View style={styles.container}>

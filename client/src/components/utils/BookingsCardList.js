@@ -1,75 +1,122 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Modal, TouchableHighlight } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, TouchableHighlight } from 'react-native'
 import FieldButton from '../Reusable_Component/FieldButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomModal from "../Reusable_Component/CustomModal";
 
-const BookingsCardList = ({ data, onSelectBooking, status, userType }) => {
+const BookingsCardList = ({ data, onSelectBooking, status, userType, isNotification }) => {
 
     const [modalVisible, setModalVisible] = React.useState(false);
 
+    const bookingStatus = (data.bookingStatus === "pending") ? "Pending" : data.bookingStatus
+    const serviceDateTime = data.serviceDate;
+
     return (
+        <>
 
-        <View style={styles.outerBoxVendor}>
-            <TouchableOpacity activeOpacity={.9} onPress={() => onSelectBooking(data.id)}>
-                <View style={styles.box}>
-                    <View style={styles.values}>
-                        <Text style={styles.dataServiceText}>{data.name}</Text>
-
-                    </View>
-                    <View style={styles.arrow}>
-                        <Icon name="ios-arrow-forward" size={20}
-                            backgroundColor="transparent" color="#fff"
-                        ></Icon >
-                    </View>
-                </View>
-            </TouchableOpacity>
-            <View style={styles.detailsBox}>
-                <View style={styles.values}>
-                    <Text style={styles.dataText}>Date - {data.date} ({data.time})</Text>
-                    <Text style={styles.dataText}>Area - {data.area}</Text>
-                    <Text style={styles.dataText}>Type - {data.type}</Text>
-                </View>
-            </View>
             {
-                (userType === "purohit" || userType === "cook") && (status === "pending") ?
+                (data != null && isNotification === false) ?
+                    <View style={styles.outerBoxVendor}>
+                        <View style={styles.firstBox}>
+                            <View style={styles.firstBoxView}>
+                                <View style={styles.serviceNameView}>
+                                    <Text style={styles.serviceNameText}>{data.serviceName}</Text>
+                                </View>
+                                <View style={styles.serviceDateView}>
+                                    <View>
+                                        <Text style={styles.serviceHeadersRegular}>Type:<Text style={styles.serviceValuesRegular}> {data.contractType}</Text></Text>
+                                    </View>
+                                    <View>
+                                        <Text style={styles.serviceHeadersRegular}>Status:<Text style={styles.serviceValuesRegular}> {bookingStatus}</Text></Text>
+                                    </View>
 
-                    <View style={styles.accept}>
-                        <View style={styles.buttonView}>
-                            <View style={styles.button}>
-                                <FieldButton buttonTouch={styles.buttonTouchDetails}
-                                    buttonTouchText={styles.buttonTextDetails} name='Details'
-                                    onPress={() => onSelectBooking(data.id)}
-                                ></FieldButton>
+                                </View>
                             </View>
-                            <View style={styles.button}>
-                                <FieldButton buttonTouch={styles.buttonTouch} buttonTouchText={styles.buttonText}
-                                    name='Accept'
-                                    onPress={() => setModalVisible(true)}
-                                ></FieldButton>
+
+                        </View>
+                        <View style={styles.secondBox}>
+                            <View style={styles.secondBoxView}>
+                                <View style={styles.secondBox1}>
+                                    <Text style={styles.serviceHeaders}>Booking ID:</Text>
+                                    <Text style={styles.serviceValues}>{data.bookingNumber}</Text>
+                                </View>
+                                <View style={styles.secondBox2}>
+                                    <Text style={styles.serviceHeaders}>Service Date:</Text>
+                                    <Text style={styles.serviceValues}>{(serviceDateTime != null) ? serviceDateTime.split('T')[0] : serviceDateTime}</Text>
+                                </View>
+                                <View style={styles.secondBox3}>
+                                    <Text style={styles.serviceHeaders}>Service Time:</Text>
+                                    <Text style={styles.serviceValues}>{(serviceDateTime != null) ? serviceDateTime.split('T')[1].split(':')[0] + ":" + serviceDateTime.split('T')[1].split(':')[1] : serviceDateTime}</Text>
+                                </View>
                             </View>
                         </View>
+                        <View style={styles.thirdBox}>
+                            <View style={styles.thirdBoxView}>
+                                <Icon name="ios-pin" size={20}
+                                    backgroundColor="transparent" color="#D63031"
+                                ></Icon >
+                                <Text style={styles.serviceValuesRegular}>
+                                    {""} {data.location}
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={styles.fourthBox}>
+                            <View style={styles.fourthBoxView}>
+                                <TouchableOpacity style={(userType === "customer") ? styles.boxDetailsFullWidth : styles.boxDetails} activeOpacity={.9} onPress={() => onSelectBooking(data, userType)}>
+                                    <Text style={styles.btnDetailsText}>Details {""}
+                                        <Icon style={{ paddingRight: 5 }} name="ios-arrow-dropright" size={20}
+                                            backgroundColor="transparent" color="maroon"
+                                        ></Icon >
+                                    </Text>
+                                </TouchableOpacity>
+                                {
+                                    (userType === "purohit" || userType === "cook") && (status === "pending") ?
+                                        <TouchableOpacity style={styles.boxApprove} activeOpacity={.9} onPress={() => onSelectBooking(data, userType)}>
+                                            <Text style={styles.btnApproveText}>Accept {""}
+                                                <Icon name="ios-checkmark-circle" size={20}
+                                                    backgroundColor="transparent" color="green"
+                                                ></Icon >
+                                            </Text>
+                                        </TouchableOpacity>
 
-                        <CustomModal visibility={modalVisible}
-                            modalText={"Are you sure want to confirm this booking"}
-                            closeIconPress={() => {
-                                setModalVisible(false);
-                            }}
-                            cancelButtonPress={() => {
-                                setModalVisible(false);
-                            }}
-                            submitButtonPress={() => {
-                                setModalVisible(false);
-                            }}
-                        ></CustomModal>
+                                        : null
+                                }
+
+
+                            </View>
+                        </View>
                     </View>
-                    
                     : null
             }
 
+            {
+                (data != null && isNotification === true) ?
+                    <View style={{marginTop:10}}>
+                        <View style={styles.outerBoxVendor2}>
+                            <TouchableOpacity activeOpacity={.9} onPress={() => onSelectBooking(data, userType)}>
+                                <View style={styles.firstBox}>
+                                    <View style={styles.firstBoxView}>
+                                        <View style={styles.serviceNameView}>
+                                            <Text style={styles.serviceNameText}>{data.serviceName}</Text>
+                                        </View>
+                                        <View style={styles.serviceDateView}>
+                                            <View>
+                                                <Text style={styles.serviceHeadersRegular}>Service Date:<Text style={styles.serviceValuesRegular}> {(serviceDateTime != null) ? serviceDateTime.split('T')[0] : serviceDateTime}</Text></Text>
+                                            </View>
+                                            <View>
+                                                <Text style={styles.serviceHeadersRegular}>Status:<Text style={styles.serviceValuesRegular}> {bookingStatus}</Text></Text>
+                                            </View>
+                                        </View>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    : null
+            }
 
+        </>
 
-        </View >
     )
 }
 
@@ -79,8 +126,8 @@ const styles = StyleSheet.create({
         margin: 10,
         marginBottom: 0,
         borderWidth: 0.5,
-        borderColor: "darkgrey",
-        borderRadius: 10,
+        borderColor: "grey",
+        borderRadius: 1,
         shadowColor: "#000",
         shadowOffset: {
             width: 5,
@@ -90,6 +137,150 @@ const styles = StyleSheet.create({
         shadowRadius: 25.84,
         elevation: 15
     },
+    outerBoxVendor2: {
+        backgroundColor: 'white',
+        marginLeft: 10,
+        marginRight:10,
+        marginBottom: 0,
+        borderWidth: 0.5,
+        borderColor: "grey",
+        borderRadius: 1,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 5,
+            height: 5
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 25.84,
+        elevation: 15
+    },
+    firstBox: {
+        borderBottomWidth: 1,
+        borderBottomColor: 'lightgrey',
+    },
+    secondBox: {
+        borderBottomWidth: 1,
+        borderBottomColor: 'lightgrey',
+    },
+    thirdBox: {
+        borderBottomWidth: 1,
+        borderBottomColor: 'lightgrey',
+        paddingLeft: 5
+    },
+    fourthBox: {
+        borderBottomWidth: 1,
+        borderBottomColor: 'lightgrey',
+    },
+    serviceNameView: {
+        paddingBottom: 3
+    },
+    serviceNameText: {
+        fontSize: 16,
+        fontFamily: 'OpenSans-Bold',
+        color: 'black'
+    },
+    serviceDateView: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 0,
+        fontFamily: 'OpenSans-Regular',
+
+    },
+    serviceHeaders: {
+        fontFamily: 'OpenSans-Bold',
+        color: 'grey'
+    },
+    serviceHeadersRegular: {
+        fontFamily: 'OpenSans-Regular',
+        color: 'grey'
+    },
+    serviceValues: {
+        fontFamily: 'OpenSans-Bold',
+        color: 'black'
+    },
+    serviceValuesRegular: {
+        fontFamily: 'OpenSans-Regular',
+        color: 'black'
+    },
+    firstBoxView: {
+        padding: 5,
+        paddingLeft: 10,
+        paddingRight: 10
+    },
+    secondBoxView: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 0,
+        fontFamily: 'OpenSans-Regular',
+
+    },
+    thirdBoxView: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        marginBottom: 0,
+        fontFamily: 'OpenSans-Regular',
+        padding: 5
+    },
+    fourthBoxView: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 0,
+        fontFamily: 'OpenSans-Regular',
+        backgroundColor: '#f5f5f5',
+
+    },
+    secondBox1: {
+        width: '33%',
+        alignItems: 'center',
+        padding: 5
+    },
+    secondBox2: {
+        width: '34%',
+        alignItems: 'center',
+        borderLeftWidth: 0.7,
+        borderRightWidth: 0.7,
+        borderLeftColor: 'lightgrey',
+        borderRightColor: 'lightgrey',
+        padding: 5
+    },
+    secondBox3: {
+        width: '33%',
+        alignItems: 'center',
+        padding: 5
+
+    },
+
+    boxDetails: {
+        width: '50%',
+        alignItems: 'center',
+        padding: 5
+    },
+    boxDetailsFullWidth: {
+        width: '100%',
+        alignItems: 'center',
+        padding: 5
+    },
+    boxApprove: {
+        width: '50%',
+        alignItems: 'center',
+        borderLeftWidth: 0.7,
+        borderLeftColor: 'grey',
+        padding: 5
+    },
+    btnDetailsText: {
+        fontFamily: 'OpenSans-Regular',
+        fontSize: 17
+    },
+    btnApproveText: {
+        fontFamily: 'OpenSans-Regular',
+        fontSize: 17
+    },
+
+
     box: {
         flex: 1,
         flexDirection: 'row',
@@ -100,13 +291,12 @@ const styles = StyleSheet.create({
         fontFamily: 'OpenSans-Regular',
         borderBottomWidth: 1,
         borderBottomColor: '#D63031',
-        backgroundColor: "#D63031",
+
     },
     detailsBox: {
         padding: 10,
         fontFamily: 'OpenSans-Regular',
-        borderBottomWidth: 1,
-        borderBottomColor: 'lightgrey'
+
     },
     accept: {
         marginTop: 0
@@ -123,7 +313,7 @@ const styles = StyleSheet.create({
     dataServiceText: {
         fontSize: 17,
         fontFamily: 'OpenSans-Bold',
-        color: 'white'
+        color: 'black'
     },
     dataText: {
         fontSize: 15,
@@ -133,7 +323,7 @@ const styles = StyleSheet.create({
     button: {
         padding: 10,
         textAlign: "center",
-        width: "40%",
+        width: "60%",
         alignSelf: "center",
 
     },
@@ -147,13 +337,13 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     buttonTouch: {
-        backgroundColor: 'lightgrey',
+        backgroundColor: '#D63031',
         borderRadius: 5,
 
     },
     buttonText: {
         fontFamily: 'OpenSans-Bold',
-        color: 'black'
+        color: '#fff'
     },
     buttonTextDetails: {
         fontFamily: 'OpenSans-Bold',

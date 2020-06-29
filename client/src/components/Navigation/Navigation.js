@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet,Text, TouchableOpacity } from 'react-native';
 import { store } from '../../store';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -29,6 +30,7 @@ import AddNewAddress from '../screens/Delivery_Options/AddNewAddress';
 import Payment from '../screens/Payment';
 import TransactionInfo from '../screens/TransactionInfo';
 import DrawnContent from './DrawnContent';
+import NotificationIcon from '../Reusable_Component/NotificationIcon'
 
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator();
@@ -129,11 +131,8 @@ const StackNavigation = ({ navigation }) => (
                 />
               </View>
             </TouchableOpacity>
-            <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
-              backgroundColor="#D63031" color="#fff"
-              onPress={() => navigation.navigate('Notifications')}
-            >
-            </Icon >
+            <NotificationIcon onPress={() => navigation.navigate('Notifications')}
+            ></NotificationIcon>
 
           </View>
         )
@@ -451,6 +450,7 @@ const styles = StyleSheet.create({
     height: 20,
     fontSize: 10,
     fontWeight: 'bold'
+    
   }
 })
 

@@ -9,6 +9,7 @@ import upcomingFestReducer from './upcomingFestReducer';
 import casteListReducer from './casteReducer';
 import serviceListReducer from './serviceListReducer';
 import bookingCartReducer from './bookingCartReducer';
+import myBookingsOrdersReducer from './myBookingsOrdersReducer';
 
 const persistConfig = {
     key: 'SukalpaSeva',
@@ -23,7 +24,9 @@ const rootReducer = combineReducers({
     upcomingFestivals: upcomingFestReducer,
     serviceList: serviceListReducer,
     casteList: casteListReducer,
-    bookingCartServices: bookingCartReducer
+    bookingCartServices: bookingCartReducer,
+    myBookingsOrders: myBookingsOrdersReducer,
+    getPurohitBookings: myBookingsOrdersReducer
 })
 
 export default persistReducer(persistConfig, rootReducer);

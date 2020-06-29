@@ -9,40 +9,69 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import staticData from "../../Reusable_Component/StaticData/BookingsStaticData";
 import CustomModal from "../../Reusable_Component/CustomModal";
 import moment from "moment";
+import { cancelCustomerBooking } from '../../../redux/actions/myBookingActions';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import Iconback from 'react-native-vector-icons/AntDesign';
 
 //const { width, height } = Dimensions.get('window');
 
-const Booking = ({ navigation, route }) => {
+const Booking = ({ navigation, route, cancelCustomerBooking }) => {
 
-    const [modalVisible, setModalVisible] = React.useState(false);
+    const [modalCustomerVisible, setModalCustomerVisible] = React.useState(false);
     const [modalVisible1, setModalVisible1] = React.useState(false);
 
-    const serviceId = route.params.id;
+    const [modalTextCustomer, setModalTextCustomer] = React.useState("");
+
+    const displayService = route.params.rowData;
+    const userType = route.params.userType;
+    const bookingStatus = displayService.bookingStatus;
+    const bookingId = displayService.bookingID;
+    const serviceDateTime = displayService.serviceDate.toString();
+    const serviceDate = serviceDateTime.split('T')[0];
+    const serviceTime = serviceDateTime.split('T')[1].split(':')[0] + ":" + serviceDateTime.split('T')[1].split(':')[1];
 
 
-    const displayService = staticData.find(service => service.id === serviceId);
-    const bookingStatus = displayService.status;
-    const userType = displayService.userType;
-    navigation.setOptions({ title: displayService.date })
+    //console.warn(serviceDate);
+    navigation.setOptions({ title: serviceDate })
 
-    const cancelBookingBtn = () => {
-        let serviceDt = moment(displayService.date, 'DD-MM-YYYY')
-        let currentDt = new Date();
-        let currentDt2 = moment(currentDt, 'DD-MM-YYYY')
+    const cancelCustomerBookingBtn = () => {
 
-        const dateDiff = serviceDt.diff(currentDt2, 'days');
-        //console.warn(dateDiff)
+        const dtServiceDate = serviceDate + " " + serviceTime
+        const dtServiceDateMoment = moment(dtServiceDate, "YYYY-MM-DD HH:mm")
 
-        if (dateDiff < 2) {
-            //setModalVisible1(false);
-            Alert.alert('Booking cannot be cancelled within 48 hours of the service date')
+        let currentDate = new Date();
+        let dtCurrentDate = moment(currentDate, "YYYY-MM-DD HH:mm")
+
+        const dateDiff = dtServiceDateMoment.diff(dtCurrentDate, 'hours');
+        console.warn(dateDiff)
+
+        if ((dateDiff > 0) && (dateDiff < 25)) {
+            setModalTextCustomer('By cancelling the booking within 24 hours of the service time, you will not be receiving any refund. Click "Yes" to continue and "No" to go back')
+            setModalCustomerVisible(true);
         }
+
+        else if ((dateDiff > 24) && (dateDiff < 49)) {
+            setModalTextCustomer('By cancelling the booking between 24-48 hours of the service time, you will be receiving 50% of the partial amount as refund. Click "Yes" to continue and "No" to go back')
+            setModalCustomerVisible(true);
+        }
+
+        else if ((dateDiff > 48) && (dateDiff < 73)) {
+            setModalTextCustomer('By cancelling the booking between 48-72 hours of the service time, you will be receiving 75% of the partial amount as refund. Click "Yes" to continue and "No" to go back')
+            setModalCustomerVisible(true);
+        }
+
         else {
-            setModalVisible1(true);
+            setModalTextCustomer('By cancelling the booking within 72 hours of the service time, you will be receiving 100% refund amount. Click "Yes" to continue and "No" to go back')
+            setModalCustomerVisible(true);
         }
-        //setModalVisible1(true);
+    }
+
+    const customerCancelClick = () => {
+        const data = {
+            "bookingID": bookingId
+        }
+        cancelCustomerBooking(data, navigation)
     }
 
     return (
@@ -60,7 +89,7 @@ const Booking = ({ navigation, route }) => {
                                         <Text style={styles.bookingDetailsHeader}>Name:</Text>
                                     </Col>
                                     <Col style={styles.colDetails}>
-                                        <Text style={styles.bookingDetails}>{displayService.name}</Text>
+                                        <Text style={styles.bookingDetails}>{displayService.serviceName}</Text>
                                     </Col>
                                 </Row>
                                 <Row>
@@ -68,7 +97,7 @@ const Booking = ({ navigation, route }) => {
                                         <Text style={styles.bookingDetailsHeader}>Date:</Text>
                                     </Col>
                                     <Col style={styles.colDetails}>
-                                        <Text style={styles.bookingDetails}>{displayService.date}</Text>
+                                        <Text style={styles.bookingDetails}>{serviceDate}</Text>
                                     </Col>
                                 </Row>
                                 <Row>
@@ -76,7 +105,7 @@ const Booking = ({ navigation, route }) => {
                                         <Text style={styles.bookingDetailsHeader}>Time:</Text>
                                     </Col>
                                     <Col style={styles.colDetails}>
-                                        <Text style={styles.bookingDetails}>{displayService.time}</Text>
+                                        <Text style={styles.bookingDetails}>{serviceTime}</Text>
                                     </Col>
                                 </Row>
                                 <Row>
@@ -84,7 +113,7 @@ const Booking = ({ navigation, route }) => {
                                         <Text style={styles.bookingDetailsHeader}>Address:</Text>
                                     </Col>
                                     <Col style={styles.colDetails}>
-                                        <Text style={styles.bookingDetails}>{displayService.address}</Text>
+                                        <Text style={styles.bookingDetails}>{displayService.location}</Text>
                                     </Col>
                                 </Row>
                                 <Row>
@@ -92,7 +121,7 @@ const Booking = ({ navigation, route }) => {
                                         <Text style={styles.bookingDetailsHeader}>Type:</Text>
                                     </Col>
                                     <Col style={styles.colDetails}>
-                                        <Text style={styles.bookingDetails}>{displayService.type}</Text>
+                                        <Text style={styles.bookingDetails}>{displayService.contractType}</Text>
                                     </Col>
                                 </Row>
 
@@ -110,19 +139,20 @@ const Booking = ({ navigation, route }) => {
                                             buttonTouch={styles.buttonTouch}
                                             name='Cancel Booking'
                                             onPress={() => {
-                                                setModalVisible(true);
+                                                cancelCustomerBookingBtn();
                                             }}
                                         ></FieldButton>
-                                        <CustomModal visibility={modalVisible}
-                                            modalText={"Are you sure want to cancel this booking"}
+                                        <CustomModal visibility={modalCustomerVisible}
+                                            modalText={modalTextCustomer}
                                             closeIconPress={() => {
-                                                setModalVisible(false);
+                                                setModalCustomerVisible(false);
                                             }}
                                             cancelButtonPress={() => {
-                                                setModalVisible(false);
+                                                setModalCustomerVisible(false);
                                             }}
                                             submitButtonPress={() => {
-                                                setModalVisible(false);
+                                                setModalCustomerVisible(false);
+                                                customerCancelClick()
                                             }}
                                         ></CustomModal>
 
@@ -426,4 +456,19 @@ const styles = StyleSheet.create({
 
 })
 
-export default Booking;
+//export default Booking;
+
+
+
+Booking.propTypes = {    
+    cancelCustomerBooking: PropTypes.func.isRequired,    
+}
+
+const mapStateToProps = state => ({
+    
+})
+
+const mapDispatchToProps = { cancelCustomerBooking }
+//const mapDispatchToProps = {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Booking)
