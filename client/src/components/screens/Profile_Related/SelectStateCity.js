@@ -16,7 +16,7 @@ const SelectStateCity = ({ districtOrCity, selectState, selectCity, selectedStat
   } 
   return (
     <>
-    <Text style = {styles.texts}>State:</Text>
+    <Text style = {styles.texts}>State: <Text style={{ color: 'red', fontSize: 15, paddingLeft: 10 }}>*</Text></Text>
     <View style={styles.container}>
       <Picker 
         style={styles.text}
@@ -27,7 +27,7 @@ const SelectStateCity = ({ districtOrCity, selectState, selectCity, selectedStat
         <Picker.Item key={1} label="karnataka" value="karnataka" />
       </Picker>
     </View>
-    <Text style = {styles.texts}>City:</Text>
+    <Text style = {styles.texts}>City: <Text style={{ color: 'red', fontSize: 15, paddingLeft: 10 }}>*</Text></Text>
     <View style={styles.container}>
       <Picker
         style={styles.text}

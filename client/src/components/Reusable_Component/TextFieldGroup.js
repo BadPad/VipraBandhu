@@ -9,11 +9,17 @@ const TextFieldGroup = ({
     placeholder,
     onChange,
     value,
-    errors
+    errors,
+    maxLength,
+    multiline,
+    star
 }) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{name}</Text>
+            <View style={styles.row}>
+                <Text style={styles.title}>{name}</Text>
+                <Text style={styles.required}>{star}</Text>
+            </View>
             <TextInput 
                 style={styles.inputBox}
                 keyboardType={type}
@@ -21,6 +27,8 @@ const TextFieldGroup = ({
                 placeholder={placeholder}
                 onChangeText={onChange}
                 value={value}
+                maxLength={maxLength}
+                multiline={multiline}
             />
             {errors && <Text style={styles.error}>{errors}</Text>}
         </View>
@@ -32,8 +40,17 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         marginVertical: 5
     },
+    row: {
+        flex: 1,
+        flexDirection: "row"
+    },
     title: {
         color: 'rgba(60, 59, 55, .9)'
+    },
+    required: {
+        color: 'red',
+        fontSize: 15,
+        paddingLeft: 5
     },
     inputBox: {
         width: "100%",

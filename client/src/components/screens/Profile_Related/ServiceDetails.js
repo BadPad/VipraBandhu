@@ -20,7 +20,7 @@ const ServiceDetails = ({
             <View style={styles.contentBlock}>
                 {userType === 'purohit' &&
                 <>
-                    <Text style = {styles.texts}>Select Services:</Text>
+                    <Text style = {styles.texts}>Select Services: <Text style={{ color: 'red', fontSize: 18, paddingLeft: 10 }}>*</Text></Text>
                     <ServiceSelect 
                         services={services && services.fullServiceList}
                         selectedServices={selectedServices => updatedForm({...formData, selectedServices})}
@@ -36,12 +36,12 @@ const ServiceDetails = ({
                 </>}
                 {userType === 'cook' || userType === 'purohit' ?
                 <>
-                    <Text style={styles.texts}>Service Type:</Text>                            
+                    <Text style={styles.texts}>Service Type: <Text style={{ color: 'red', fontSize: 18, paddingLeft: 10 }}>*</Text></Text>                            
                     <TypesOfService
                         selectedTypeOfService={typeOfService => updatedForm({...formData, typeOfService})}
                         selectedItem={formData.typeOfService}
                     />
-                    <Text style = {styles.texts}>Preferred Caste:</Text>
+                    <Text style = {styles.texts}>Preferred Caste: <Text style={{ color: 'red', fontSize: 18, paddingLeft: 10 }}>*</Text></Text>
                     <ServiceCaste 
                         caste={casteList && casteList}
                         selectedCaste={serviceCastes => updatedForm({... formData, serviceCastes})}
