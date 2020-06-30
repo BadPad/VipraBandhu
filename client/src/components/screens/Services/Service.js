@@ -86,7 +86,7 @@ const Service = ({ navigation, route, auth, addToBookingCart, bookingCartStructu
                     onPress={() => contractType === '' ? 
                             Alert.alert(
                                 '',
-                                'Please select the Server Date and contaract Type you want to offer'
+                                'Please select the Server Date and contract Type you want to offer'
                             )
                         : 
                             addAndCheckout(service)
