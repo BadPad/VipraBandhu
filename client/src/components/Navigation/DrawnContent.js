@@ -24,7 +24,7 @@ const DrawnContent = (props) => {
                             }}
                             size="medium"
                         />
-                        <Text style={styles.userName}>{isAuthenticated ? user.FirstName: 'Login'}</Text>
+                        <Text style={styles.userName}>{isAuthenticated ? user.FirstName: 'Login / Register'}</Text>
                     </View>
                     <View>
                         <MaterialCommunityIcons name="chevron-right" color="rgba(249,249,249,0.5)" size={20} />
@@ -125,7 +125,7 @@ const DrawnContent = (props) => {
                         )}
                         label="Sign Out"
                         onPress={() => {
-                            props.logoutUser()
+                            props.logoutUser(props.navigation)
                             props.navigation.closeDrawer()
                         }}
                     />
@@ -138,7 +138,7 @@ const DrawnContent = (props) => {
                                 size={size}
                             />
                         )}
-                        label="Login"
+                        label="Login / Register"
                         onPress={() => props.navigation.navigate('Login')}
                     />
             }

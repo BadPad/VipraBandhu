@@ -19,6 +19,7 @@ const Welcome = ({
     poojaServices,
     homaServices,
     functionServices,
+    auth,
     services,
     searchServices,
     upcomingFestivals,
@@ -67,6 +68,7 @@ const Welcome = ({
     //     navigation.navigate('ServicesList', { category: 'Catering' })
     // }
 
+    const { userType } = auth;
     return (
         <View style={styles.container}>
             {festivals.loading || services.loading ? <Indicator /> : null}
@@ -110,84 +112,88 @@ const Welcome = ({
 
                         </View>
                     </View>
+                    {
+                        userType === null || userType === 'customer' ?
+                            <>
+                                <View style={styles.poojaView}>
+                                    <View style={styles.serviceHeader}>
+                                        <Text style={styles.serviceHeaderText}>Pooja Services</Text>
+                                    </View>
+                                    <View style={styles.serviceBody}>
+                                        <View style={styles.serviceBodyBox}>
+                                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => pooja('pooja')}>
+                                                <Image
+                                                    style={styles.serviceIcons}
+                                                    source={require('../images/Kalasha.png')}
+                                                />
+                                                <Text style={styles.serviceBodyBoxTitle}>Pooja</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={styles.serviceBodyBox}>
+                                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => pooja('homa')}>
+                                                <Image
+                                                    style={styles.serviceIcons}
+                                                    source={require('../images/Homa.png')}
+                                                />
+                                                <Text style={styles.serviceBodyBoxTitle}>Homas</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={styles.serviceBodyBox}>
+                                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => pooja('function')}>
+                                                <Image
+                                                    style={styles.serviceIcons}
+                                                    source={require('../images/Vaadya.png')}
+                                                />
+                                                <Text style={styles.serviceBodyBoxTitle}>Functions</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={styles.serviceBodyBox}>
+                                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => pooja('shraddha')}>
+                                                <Image
+                                                    style={styles.serviceIcons}
+                                                    source={require('../images/Shraddha.png')}
+                                                />
+                                                <Text style={styles.serviceBodyBoxTitle}>Shraddha</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </View>
 
-                    <View style={styles.poojaView}>
-                        <View style={styles.serviceHeader}>
-                            <Text style={styles.serviceHeaderText}>Pooja Services</Text>
-                        </View>
-                        <View style={styles.serviceBody}>
-                            <View style={styles.serviceBodyBox}>
-                                <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => pooja('pooja')}>
-                                    <Image
-                                        style={styles.serviceIcons}
-                                        source={require('../images/Kalasha.png')}
-                                    />
-                                    <Text style={styles.serviceBodyBoxTitle}>Pooja</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.serviceBodyBox}>
-                                <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => pooja('homa')}>
-                                    <Image
-                                        style={styles.serviceIcons}
-                                        source={require('../images/Homa.png')}
-                                    />
-                                    <Text style={styles.serviceBodyBoxTitle}>Homas</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.serviceBodyBox}>
-                                <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => pooja('function')}>
-                                    <Image
-                                        style={styles.serviceIcons}
-                                        source={require('../images/Vaadya.png')}
-                                    />
-                                    <Text style={styles.serviceBodyBoxTitle}>Functions</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.serviceBodyBox}>
-                                <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => pooja('shraddha')}>
-                                    <Image
-                                        style={styles.serviceIcons}
-                                        source={require('../images/Shraddha.png')}
-                                    />
-                                    <Text style={styles.serviceBodyBoxTitle}>Shraddha</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-
-                    <View style={styles.serviceHeader}>
-                        <Text style={styles.serviceHeaderText}>Cooking Services</Text>
-                    </View>
-                    <View style={styles.serviceBody}>
-                        <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering('catering')}>
-                                <Image
-                                    style={styles.serviceIcons}
-                                    source={require('../images/breakfast.png')}
-                                />
-                                <Text style={styles.serviceBodyBoxTitle}>Catering</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering('fullContract')}>
-                                <Image
-                                    style={styles.serviceIcons}
-                                    source={require('../images/lunch.png')}
-                                />
-                                <Text style={styles.serviceBodyBoxTitle}>Full Contract</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.serviceBodyBox}>
-                            <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering('laborContract')}>
-                                <Image
-                                    style={styles.serviceIcons}
-                                    source={require('../images/Snacks.png')}
-                                />
-                                <Text style={styles.serviceBodyBoxTitle}>Labor Contract</Text>
-                            </TouchableOpacity>
-                        </View>
-
-                    </View>
+                                <View style={styles.serviceHeader}>
+                                    <Text style={styles.serviceHeaderText}>Cooking Services</Text>
+                                </View>
+                                <View style={styles.serviceBody}>
+                                    <View style={styles.serviceBodyBox}>
+                                        <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering('catering')}>
+                                            <Image
+                                                style={styles.serviceIcons}
+                                                source={require('../images/breakfast.png')}
+                                            />
+                                            <Text style={styles.serviceBodyBoxTitle}>Catering</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={styles.serviceBodyBox}>
+                                        <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering('fullContract')}>
+                                            <Image
+                                                style={styles.serviceIcons}
+                                                source={require('../images/lunch.png')}
+                                            />
+                                            <Text style={styles.serviceBodyBoxTitle}>Full Contract</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={styles.serviceBodyBox}>
+                                        <TouchableOpacity style={styles.imageContainerTouchable2} onPress={() => catering('laborContract')}>
+                                            <Image
+                                                style={styles.serviceIcons}
+                                                source={require('../images/Snacks.png')}
+                                            />
+                                            <Text style={styles.serviceBodyBoxTitle}>Labor Contract</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </>
+                        :null
+                    }
                 </View>
             </ScrollView>
         </View>
@@ -401,6 +407,7 @@ const styles = StyleSheet.create({
 })
 
 Welcome.propTypes = {
+    auth: PropTypes.func.isRequired,
     serviceList: PropTypes.func.isRequired,
     poojaServices: PropTypes.func.isRequired,
     homaServices: PropTypes.func.isRequired,
@@ -417,6 +424,7 @@ Welcome.propTypes = {
 }
 
 const mapStateToProps = state => ({
+    auth: state.auth,
     services: state.serviceList,
     festivals: state.upcomingFestivals,
 })

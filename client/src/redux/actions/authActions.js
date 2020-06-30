@@ -54,11 +54,19 @@ export const regLogCustomer = (userData, from, navigation) => dispatch => {
                     message: 'Mobile Number or password is incorrect',
                     type: 'danger'
                 })
+            } else if(status === 404) {
+                // console.log('Username does not exists')
+                dispatch(regLogStopLoading());
+                showMessage({
+                    message: 'Mobile Number does not exists please register',
+                    type: 'danger'
+                })
+                navigation.navigate('Register')
             }
         }
     })
     .catch(err => {
-        console.log(err)
+        console.log(err && err.response)
     })
 }
 
@@ -68,7 +76,7 @@ export const regLogPurohit = (userData, from, navigation) => dispatch => {
     dispatch(regLogLoading());
     axios.post('https://mb5u8yz9e7.execute-api.ap-south-1.amazonaws.com/prod/purohit-register', userData)
     .then(res => {
-        // console.log(res)
+        console.log(res)
         const { id_token, status } = res && res.data;
         const sukalpaSevaToken = {
             ss_auth : id_token,
@@ -112,11 +120,19 @@ export const regLogPurohit = (userData, from, navigation) => dispatch => {
                     message: 'Mobile Number or password is incorrect',
                     type: 'danger'
                 })
+            } else if(status === 404) {
+                // console.log('Username does not exists')
+                dispatch(regLogStopLoading());
+                showMessage({
+                    message: 'Mobile Number does not exists please register',
+                    type: 'danger'
+                })
+                navigation.navigate('Register')
             }
         }
     })
     .catch(err => {
-        console.log(err)
+        console.log(err && err.response)
     })
 }
 
@@ -126,7 +142,7 @@ export const regLogCook = (userData, from, navigation) => dispatch => {
     dispatch(regLogLoading());
     axios.post('https://azcbpg0u4m.execute-api.ap-south-1.amazonaws.com/prod/cook-register', userData)
     .then(res => {
-        // console.log(res)
+        console.log(res)
         const { id_token, status } = res && res.data;
         const sukalpaSevaToken = {
             ss_auth : id_token,
@@ -170,11 +186,19 @@ export const regLogCook = (userData, from, navigation) => dispatch => {
                     message: 'Mobile Number or password is incorrect',
                     type: 'danger'
                 })
+            } else if(status === 404) {
+                // console.log('Username does not exists')
+                dispatch(regLogStopLoading());
+                showMessage({
+                    message: 'Mobile Number does not exists please register',
+                    type: 'danger'
+                })
+                navigation.navigate('Register')
             }
         }
     })
     .catch(err => {
-        console.log(err)
+        console.log(err && err.response)
     })
 }
 
@@ -193,7 +217,7 @@ export const setCustomerUser = (from, navigation) => dispatch => {
         }
     })
     .catch(err => {
-        console.log(err.response)
+        console.log(err && err.response)
     })
 }
 
@@ -212,7 +236,7 @@ export const setPurohitUser = (from, navigation) => dispatch => {
         }
     })
     .catch(err => {
-        console.log(err.response)
+        console.log(err && err.response)
     })
 }
 
@@ -231,7 +255,7 @@ export const setCookUser = (from, navigation) => dispatch => {
         }
     })
     .catch(err => {
-        console.log(err.response)
+        console.log(err && err.response)
     })
 }
 
@@ -244,9 +268,13 @@ export const setCurrentUserType = user => {
 }
 
 /*--- Log user out ---*/
-export const logoutUser = () => dispatch => {
+export const logoutUser = navigation => dispatch => {
     // Remove token from the localstorage
     AsyncStorage.removeItem('SukalpaSeva');
+
+    // Remove auth headers from future requests
+    setAuthToken(false);
+
     // Set current user to {} which will set isAuthenticated to false
     // dispatch(setCurrentUser({}));
     dispatch(regLogLoading());
@@ -254,6 +282,7 @@ export const logoutUser = () => dispatch => {
         type: SET_CURRENT_USER,
         payload: {}
     })
+    navigation.navigate('Login')
 }
 
 /*--- Register Login Loading ---*/
