@@ -44,7 +44,7 @@ function getHeaderTitle(route) {
     case 'Welcome':
       return 'Sukalpa Seva'
     case 'ServicesList':
-      return routeParams.category === 'purohit' ? 'Pooja Service List' : routeParams.category === 'Catering' ? 'Catering Service List' : null
+      return routeParams.category === 'purohit' ? 'Pooja Service List' : routeParams.category === 'catering' ? 'Catering Service List' : null
     case 'Service':
       return routeParams.id.serviceName
     case 'BookingCart':

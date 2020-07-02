@@ -224,7 +224,7 @@ const ServicesList = ({ navigation, route, serviceList, searchServices, selected
                                         />
                                     </View>}
                             </>
-                            : serviceCategory === 'Catering' ?
+                            : serviceCategory === 'catering' ?
                                 <>
                                     {isEmpty(filteredList_Cook_Breakfast) === false &&
                                         <View style={styles.subCategory}>

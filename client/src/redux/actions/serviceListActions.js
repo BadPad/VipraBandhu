@@ -5,13 +5,14 @@ import { SERVICES_LIST_LOADING, GET_SERVICE_LIST, SEARCH_SERVICES, FILTER_CATEGO
 /*--- Service List ---*/
 export const serviceList = () => dispatch => {
     dispatch(servicesLoading())
-    axios.get('https://9cvp8sblj1.execute-api.ap-south-1.amazonaws.com/default/Purohit_Service_Get_Function')
-    .then(res => 
+    axios.get('https://yd5lw8j6q8.execute-api.ap-south-1.amazonaws.com/Api/vendor_services')
+    .then(res => {
+        const { cookServices, purohitServices } = res.data.body;
         dispatch({
             type: GET_SERVICE_LIST,
-            payload: res.data
+            payload: [...cookServices, ...purohitServices]
         })
-    )
+    })
     .catch(err => {
         console.log(err)
     })

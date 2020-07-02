@@ -49,10 +49,9 @@ const Welcome = ({
     const catering = (type) => {
         breakfastServices("breakfast")
         lunchServices("lunch")
-        
         dinnerServices("dinner")
         snacksServices("snacks")
-        navigation.navigate('ServicesList', { category: 'Catering' })
+        navigation.navigate('ServicesList', { category: 'catering' })
     }
 
     // const catering = (type) => {
