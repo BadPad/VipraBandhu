@@ -23,7 +23,7 @@ const SelectStateCity = ({ districtOrCity, selectState, selectCity, selectedStat
         selectedValue={selectedState === '' ? 1 : selectedState}
         onValueChange={(itemValue) => handleChange({state: itemValue})}
       > 
-        <Picker.Item key={0} label="Select State" value={0} />
+        {/* <Picker.Item key={0} label="Select State" value={0} /> */}
         <Picker.Item key={1} label="karnataka" value="karnataka" />
       </Picker>
     </View>

@@ -71,14 +71,14 @@ const SelfDetails = ({
                     value={formData.LastName}
                     onChange={text => updatedForm({...formData, LastName: text.replace(/[^A-Za-z]/ig, '')})}
                 />
-                <TextFieldGroup 
+                {/* <TextFieldGroup 
                     type="numeric"
                     name="Phone Number"
                     star="*"
                     maxLength={13}
                     value={formData["phone number"]}
                     onChange={text => updatedForm({...formData, "phone number": text.replace(/[^0-9]/g, '')})}
-                />
+                /> */}
                 <TextFieldGroup 
                     type="numeric"
                     name="Alternate Number"
@@ -125,26 +125,14 @@ const SelfDetails = ({
                     />
                     <Text style={{ fontSize: 20, marginTop: 10, marginBottom: 10 }}>Address</Text>
                     <TextFieldGroup 
-                        name="Address 1"
+                        name="Address"
                         star="*"
                         multiline={true}
+                        maxLength={250}
                         value={formData.AddressOne}
                         onChange={text => updatedForm({...formData, AddressOne: text})}
                     />
-                    <TextFieldGroup 
-                        name="Address 2"
-                        star="*"
-                        multiline={true}
-                        value={formData.AddressTwo}
-                        onChange={text => updatedForm({...formData, AddressTwo: text})}
-                    />
-                    <TextFieldGroup 
-                        name="Address 3"
-                        star="*"
-                        multiline={true}
-                        value={formData.AddressThree}
-                        onChange={text => updatedForm({...formData, AddressThree: text})}
-                    />
+                    
                     <SelectStateCity 
                         districtOrCity={cityAreaList && cityAreaList.getDistricrOrCity}
                         selectedState={formData.state}
@@ -162,7 +150,7 @@ const SelfDetails = ({
                         selectArea={area => updatedForm({...formData, area})}
                     />
                 </View>
-                <View style={{ marginTop: 20 }}>
+                {/* <View style={{ marginTop: 20 }}>
                     {
                     formData.FirstName === '' || formData['phone number'] === '' ?
                         null
@@ -172,7 +160,7 @@ const SelfDetails = ({
                             onPress={updateProfile}
                         />
                     }
-                </View>
+                </View> */}
             </ScrollView>
         </View>
     )

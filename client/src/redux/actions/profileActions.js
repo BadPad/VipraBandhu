@@ -3,7 +3,7 @@ import { setCustomerUser, setPurohitUser, setCookUser, regLogLoading } from '../
 import { showMessage } from "react-native-flash-message";
 
 // Update Customer
-export const updateCustomer = profile => dispatch => {
+export const updateCustomer = (profile, navigation) => dispatch => {
     // console.log(profile)
     dispatch(regLogLoading())
     axios.post('https://deabtoskqj.execute-api.ap-south-1.amazonaws.com/prod/customer', profile)
@@ -13,7 +13,8 @@ export const updateCustomer = profile => dispatch => {
             message: 'Profile Updated Successfully',
             type: 'success'
         })
-        dispatch(setCustomerUser())
+        dispatch(setCustomerUser());
+        navigation.navigate('MyProfile');
     })
     .catch(err => {
         console.log(err)
@@ -21,7 +22,7 @@ export const updateCustomer = profile => dispatch => {
 }
 
 // Update Purohit
-export const updatePurohit = profile => dispatch => {
+export const updatePurohit = (profile, navigation) => dispatch => {
     // console.log(profile)
     dispatch(regLogLoading())
     axios.post('https://deabtoskqj.execute-api.ap-south-1.amazonaws.com/prod/purohit', profile)
@@ -31,7 +32,8 @@ export const updatePurohit = profile => dispatch => {
             message: 'Profile Updated Successfully',
             type: 'success'
         })
-        dispatch(setPurohitUser())
+        dispatch(setPurohitUser());
+        navigation.navigate('MyProfile');
     })
     .catch(err => {
         console.log(err)
@@ -39,7 +41,7 @@ export const updatePurohit = profile => dispatch => {
 }
 
 // Update Cook
-export const updateCook = profile => dispatch => {
+export const updateCook = (profile, navigation) => dispatch => {
     // console.log(profile)
     dispatch(regLogLoading())
     axios.post('https://deabtoskqj.execute-api.ap-south-1.amazonaws.com/prod/cook', profile)
@@ -49,7 +51,8 @@ export const updateCook = profile => dispatch => {
             message: 'Profile Updated Successfully',
             type: 'success'
         })
-        dispatch(setCookUser())
+        dispatch(setCookUser());
+        navigation.navigate('MyProfile');
     })
     .catch(err => {
         console.log(err)
