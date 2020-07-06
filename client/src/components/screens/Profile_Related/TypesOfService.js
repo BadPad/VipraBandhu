@@ -19,7 +19,7 @@ const TypesOfService = ({selectedTypeOfService, selectedItem }) => {
         <Picker.Item key={0} label="Select your service type" value={0} />
         <Picker.Item key={1} label = "Full Contract" value = "Full Contract" />
         <Picker.Item key={2} label = "Labour Contract" value = "Labour Contract" />
-        <Picker.Item key={3} label = "Both" value = "Both" />
+        <Picker.Item key={3} label = "Both" value = "Full Contract and Labour Contract" />
       </Picker> 
     </View>
   );

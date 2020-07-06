@@ -14,6 +14,7 @@ import Register from '../screens/Register_Login/Register';
 import OTPConfirmation from '../screens/Register_Login/OTPConfirmation';
 import Offers from '../screens/Offers';
 import Profile from '../screens/Profile';
+import ProfileEdit from '../screens/ProfileEdit';
 import MyBookings from '../screens/MyBookings';
 import Wallet from '../screens/MyWallet';
 import CustomerService from '../screens/CustomerService';
@@ -314,6 +315,18 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="MyProfile" component={Profile}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="ProfileEdit" component={ProfileEdit}
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerLeft: () => (

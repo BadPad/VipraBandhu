@@ -47,10 +47,10 @@ const ServiceDetails = ({
                         selectedCaste={serviceCastes => updatedForm({... formData, serviceCastes})}
                         selectedItems={formData.serviceCastes}
                     />
-                    <FieldButton 
+                    {/* <FieldButton 
                         name="Update Profile"
                         onPress={updateProfile}
-                    />
+                    /> */}
                 </>
                 : null}
             </View>
