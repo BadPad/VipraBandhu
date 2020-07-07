@@ -3,13 +3,83 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, TouchableH
 import FieldButton from '../Reusable_Component/FieldButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomModal from "../Reusable_Component/CustomModal";
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import { purohitBookingAcceptance } from '../../redux/actions/myBookingActions';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import moment from "moment";
 
-const BookingsCardList = ({ data, onSelectBooking, status, userType, isNotification }) => {
+const BookingsCardList = ({ navigation, data, onSelectBooking, status, userType, isNotification, purohitBookingAcceptance }) => {
 
-    const [modalVisible, setModalVisible] = React.useState(false);
+    const [modalAcceptVisible, setModalAcceptVisible] = React.useState(false);
+    const [modalTextAccept, setModalTextAccept] = React.useState("");
 
-    const bookingStatus = (data.bookingStatus === "pending") ? "Pending" : data.bookingStatus
+    //const bookingStatus = (data.bookingStatus === "pending") ? "Pending" : (data.bookingStatus === "active") ? "Active" : data.bookingStatus
+
+    let bookingStatus = "";
+    let currentBookingStatus = data.bookingStatus;
+
+    if (userType === "customer") {
+        if(currentBookingStatus === "pending"){
+            bookingStatus = "Vendor acceptance pending";
+        }
+        else if(currentBookingStatus === "active"){
+            bookingStatus = "Vendor Accepted";
+        }
+        else if(currentBookingStatus === "cancelled"){
+            bookingStatus = "Cancelled";
+        }
+        else if(currentBookingStatus === "completed"){
+            bookingStatus = "Service Completed";
+        }
+    }
+
+    else if ((userType === "purohit") || (userType === "cook")) {
+        if(currentBookingStatus === "pending"){
+            bookingStatus = "New Booking";
+        }
+        else if(currentBookingStatus === "active"){
+            bookingStatus = "Vendor Accepted";
+        }
+        else if(currentBookingStatus === "cancelled"){
+            bookingStatus = "Cancelled";
+        }
+        else if(currentBookingStatus === "completed"){
+            bookingStatus = "Service Completed";
+        }
+    }
+
+
+    const bookingId = data.bookingID;
     const serviceDateTime = data.serviceDate;
+
+    //Calculate Service Date and Time
+    let serviceDate = "";
+    let serviceTime = "";
+
+    if (serviceDateTime != null) {
+        var date = new Date(serviceDateTime);
+        serviceDate = moment(date).format("DD-MMM-YYYY");
+        serviceTime = moment(date).format("hh:mm A");
+    }
+
+    //Vendor booking Acceptance (Modal View)
+    const acceptBookingBtn = () => {
+        setModalTextAccept('You are about to accept this booking. Do you want to confirm this booking ?')
+        setModalAcceptVisible(true);
+    }
+
+    //Vendor booking Acceptance
+    const acceptBookingConfirmed = () => {
+        const bookingIdArray = []
+        bookingIdArray.push(parseInt(bookingId))
+
+        const data = {
+            "bookingID": bookingIdArray
+        }
+
+        purohitBookingAcceptance(data, navigation)
+    }
 
     return (
         <>
@@ -42,11 +112,11 @@ const BookingsCardList = ({ data, onSelectBooking, status, userType, isNotificat
                                 </View>
                                 <View style={styles.secondBox2}>
                                     <Text style={styles.serviceHeaders}>Service Date:</Text>
-                                    <Text style={styles.serviceValues}>{(serviceDateTime != null) ? serviceDateTime.split('T')[0] : serviceDateTime}</Text>
+                                    <Text style={styles.serviceValues}>{serviceDate}</Text>
                                 </View>
                                 <View style={styles.secondBox3}>
                                     <Text style={styles.serviceHeaders}>Service Time:</Text>
-                                    <Text style={styles.serviceValues}>{(serviceDateTime != null) ? serviceDateTime.split('T')[1].split(':')[0] + ":" + serviceDateTime.split('T')[1].split(':')[1] : serviceDateTime}</Text>
+                                    <Text style={styles.serviceValues}>{serviceTime}</Text>
                                 </View>
                             </View>
                         </View>
@@ -62,7 +132,7 @@ const BookingsCardList = ({ data, onSelectBooking, status, userType, isNotificat
                         </View>
                         <View style={styles.fourthBox}>
                             <View style={styles.fourthBoxView}>
-                                <TouchableOpacity style={(userType === "customer") ? styles.boxDetailsFullWidth : styles.boxDetails} activeOpacity={.9} onPress={() => onSelectBooking(data, userType)}>
+                                <TouchableOpacity style={((userType === "customer") || (status === "active")) ? styles.boxDetailsFullWidth : styles.boxDetails} activeOpacity={.9} onPress={() => onSelectBooking(data, userType)}>
                                     <Text style={styles.btnDetailsText}>Details {""}
                                         <Icon style={{ paddingRight: 5 }} name="ios-arrow-dropright" size={20}
                                             backgroundColor="transparent" color="maroon"
@@ -70,13 +140,29 @@ const BookingsCardList = ({ data, onSelectBooking, status, userType, isNotificat
                                     </Text>
                                 </TouchableOpacity>
                                 {
-                                    (userType === "purohit" || userType === "cook") && (status === "pending") ?
-                                        <TouchableOpacity style={styles.boxApprove} activeOpacity={.9} onPress={() => onSelectBooking(data, userType)}>
+                                    ((userType === "purohit" || userType === "cook")) && (status === "pending") ?
+                                        <TouchableOpacity style={styles.boxApprove} activeOpacity={.9}
+                                            onPress={() => {
+                                                acceptBookingBtn();
+                                            }}>
                                             <Text style={styles.btnApproveText}>Accept {""}
                                                 <Icon name="ios-checkmark-circle" size={20}
                                                     backgroundColor="transparent" color="green"
                                                 ></Icon >
                                             </Text>
+                                            <CustomModal visibility={modalAcceptVisible}
+                                                modalText={modalTextAccept}
+                                                closeIconPress={() => {
+                                                    setModalAcceptVisible(false);
+                                                }}
+                                                cancelButtonPress={() => {
+                                                    setModalAcceptVisible(false);
+                                                }}
+                                                submitButtonPress={() => {
+                                                    setModalAcceptVisible(false);
+                                                    acceptBookingConfirmed();
+                                                }}
+                                            ></CustomModal>
                                         </TouchableOpacity>
 
                                         : null
@@ -91,22 +177,40 @@ const BookingsCardList = ({ data, onSelectBooking, status, userType, isNotificat
 
             {
                 (data != null && isNotification === true) ?
-                    <View style={{marginTop:10}}>
+                    <View>
                         <View style={styles.outerBoxVendor2}>
                             <TouchableOpacity activeOpacity={.9} onPress={() => onSelectBooking(data, userType)}>
                                 <View style={styles.firstBox}>
                                     <View style={styles.firstBoxView}>
-                                        <View style={styles.serviceNameView}>
-                                            <Text style={styles.serviceNameText}>{data.serviceName}</Text>
-                                        </View>
-                                        <View style={styles.serviceDateView}>
-                                            <View>
-                                                <Text style={styles.serviceHeadersRegular}>Service Date:<Text style={styles.serviceValuesRegular}> {(serviceDateTime != null) ? serviceDateTime.split('T')[0] : serviceDateTime}</Text></Text>
-                                            </View>
-                                            <View>
-                                                <Text style={styles.serviceHeadersRegular}>Status:<Text style={styles.serviceValuesRegular}> {bookingStatus}</Text></Text>
-                                            </View>
-                                        </View>
+                                        <Grid>
+                                            <Row>
+                                                <Col style={{ width: 40, justifyContent: "center" }}>
+                                                    <Icon name="md-alarm" size={30}
+                                                        backgroundColor="transparent" color="#D63031"
+                                                    ></Icon >
+                                                </Col>
+                                                <Col >
+                                                    <View style={styles.serviceNameView}>
+                                                        <Text style={styles.serviceNameText}>{data.serviceName} {" ("} {serviceDate} {")"}</Text>
+                                                    </View>
+                                                    <View style={styles.serviceDateView}>
+                                                        <View>
+                                                            {
+                                                                userType === "customer" ?
+                                                                    <Text style={styles.notificationMessage}>Your booking has been confirmed. You will be notified once the booking is accepted by vendor.</Text>
+
+                                                                    : userType === "purohit" || userType === "cook" ?
+                                                                        <Text style={styles.notificationMessageVendor}>New booking available! Click here to view service details</Text>
+                                                                        : null
+
+                                                            }
+                                                        </View>
+                                                    </View>
+
+                                                </Col>
+                                            </Row>
+                                        </Grid>
+
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -139,20 +243,8 @@ const styles = StyleSheet.create({
     },
     outerBoxVendor2: {
         backgroundColor: 'white',
-        marginLeft: 10,
-        marginRight:10,
-        marginBottom: 0,
-        borderWidth: 0.5,
-        borderColor: "grey",
-        borderRadius: 1,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 5,
-            height: 5
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 25.84,
-        elevation: 15
+        margin: 0,
+
     },
     firstBox: {
         borderBottomWidth: 1,
@@ -195,6 +287,7 @@ const styles = StyleSheet.create({
         fontFamily: 'OpenSans-Regular',
         color: 'grey'
     },
+
     serviceValues: {
         fontFamily: 'OpenSans-Bold',
         color: 'black'
@@ -279,6 +372,19 @@ const styles = StyleSheet.create({
         fontFamily: 'OpenSans-Regular',
         fontSize: 17
     },
+    notificationMessage: {
+        fontFamily: 'OpenSans-Regular',
+        color: 'grey',
+        fontSize: 12
+    },
+    notificationMessageVendor: {
+        fontFamily: 'OpenSans-Regular',
+        color: 'green',
+        fontSize: 12
+    },
+
+
+
 
 
     box: {
@@ -419,4 +525,16 @@ const styles = StyleSheet.create({
 
 })
 
-export default BookingsCardList
+//export default BookingsCardList
+
+BookingsCardList.propTypes = {
+    purohitBookingAcceptance: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = state => ({
+
+})
+
+const mapDispatchToProps = { purohitBookingAcceptance }
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookingsCardList)

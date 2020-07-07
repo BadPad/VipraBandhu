@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import { myBookingsOrders, getPurohitBookings } from '../../../redux/actions/myBookingActions';
 
+
 const BookingsList = ({ navigation, route, auth, myBookingsOrders, myOrders, getPurohitBookings, purohitBookings }) => {
 
     const onSelectBooking = (data, type) => {
@@ -45,12 +46,13 @@ const BookingsList = ({ navigation, route, auth, myBookingsOrders, myOrders, get
         return (
             <ScrollView style={[styles.scene, { backgroundColor: '#fdfcfa' }]}>
                 {
+                    //Check if the pending data is empty or atleast have one item
                     pendingData != null ?
                         <FlatList
                             //keyExtractor={item => item.bookingID.toString()}
                             data={pendingData}
                             renderItem={({ item, index }) => (
-                                <BookingsCardList data={item[0]} onSelectBooking={onSelectBooking} status={"pending"} userType={auth.userType} isNotification={false} />
+                                <BookingsCardList navigation={navigation} data={item[0]} onSelectBooking={onSelectBooking} status={"pending"} userType={auth.userType} isNotification={false} />
                             )}
                         />
                         : null
@@ -60,26 +62,40 @@ const BookingsList = ({ navigation, route, auth, myBookingsOrders, myOrders, get
     }
 
     const SecondRoute = () => {
-        let newData;
-        if (auth.userType === "purohit") {
-            newData = staticData.filter(list => list.userType === 'purohit')
+        let currentUserType = auth.userType;
+        let activeData = null;
+
+        if (currentUserType === 'customer') {
+            if (myOrders.myBookingsOrdersList != null) {
+                activeData = myOrders.myBookingsOrdersList.active_bookings
+            }
         }
-        else if (auth.userType === "cook") {
-            newData = staticData.filter(list => list.userType === 'cook')
+        else if (currentUserType === 'purohit') {
+            if (purohitBookings.getPurohitBookingsList != null) {
+                activeData = purohitBookings.getPurohitBookingsList.active_bookings
+            }
         }
-        else if (auth.userType === "customer") {
-            newData = staticData.filter(list => list.userType === 'customer')
+        else if (currentUserType === 'cook') {
+
+        }
+        else {
+
         }
 
         return (
-            <ScrollView style={[styles.scene, { backgroundColor: 'lightgrey' }]}>
-                <FlatList
-                    keyExtractor={item => item.id.toString()}
-                    data={newData.filter(list => list.status === 'accepted')}
-                    renderItem={({ item, index }) => (
-                        <BookingsCardList data={item} onSelectBooking={onSelectBooking} status={"accepted"} />
-                    )}
-                />
+            <ScrollView style={[styles.scene, { backgroundColor: '#fdfcfa' }]}>
+                {
+                    //Check if the pending data is empty or atleast have one item
+                    activeData != null ?
+                        <FlatList
+                            //keyExtractor={item => item.bookingID.toString()}
+                            data={activeData}
+                            renderItem={({ item, index }) => (
+                                <BookingsCardList navigation={navigation} data={item[0]} onSelectBooking={onSelectBooking} status={"active"} userType={auth.userType} isNotification={false} />
+                            )}
+                        />
+                        : null
+                }
             </ScrollView>
         )
     }

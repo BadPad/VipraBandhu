@@ -16,6 +16,7 @@ const Notifications = ({ navigation, auth, myBookingsOrders, myOrders, getPurohi
     }
 
     const callAPIsBasedOnUserType = () => {
+        
         let currentUserType = auth.userType;
         if (currentUserType === "customer") {
             myBookingsOrders();
@@ -41,7 +42,7 @@ const Notifications = ({ navigation, auth, myBookingsOrders, myOrders, getPurohi
     }
 
     return (
-        <ScrollView style={[styles.scene, { backgroundColor: '#fdfcfa' }]}>
+        <ScrollView style={[styles.scene, { backgroundColor: '#F8F8F8', marginTop:10 }]}>
             {
                 pendingData != null ?
 
@@ -62,14 +63,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-start',
-        backgroundColor: '#fff',
+        backgroundColor: 'lightgrey',
 
     },
     boxes: {
         margin: 10,
         padding: 10,
         borderWidth: 0.6,
-        borderColor: 'grey'
+        
     }
 })
 

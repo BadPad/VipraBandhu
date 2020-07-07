@@ -320,8 +320,10 @@ const styles = StyleSheet.create({
     },
     AdsContent: {
         marginTop: 10,
-        padding: 10,
-        backgroundColor: '#fff',
+        marginLeft:10,
+        marginRight:10,
+        
+        backgroundColor: 'transparent',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -330,7 +332,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        borderRadius: 5
+        borderRadius: 10,
+        borderWidth:1
 
     },
     upcomingFestivals: {

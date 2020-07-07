@@ -22,143 +22,167 @@ import FieldButton from '../Reusable_Component/FieldButton';
 
 
 
-const Profile = ({auth, navigation}) => {
-// console.log(user);
-const services = auth.user.selectedServices;
-let selectedServices = '';
+const Profile = ({ auth, navigation }) => {
 
-for(var i = 0; i < services.length; i++) {
-  var obj = services[i];
-  selectedServices = selectedServices + obj.label + ', '
-}
+  const currentUserType = auth.userType;
 
-selectedServices = selectedServices.replace(/,\s*$/, "");
+  // console.log(user);
+  const services = auth.user.selectedServices;
+  let selectedServices = '';
 
-console.log(auth.user.serviceCastes)
+  if (services != null) {
 
-const scs = auth.user.serviceCastes.filter(list => list.value)
+    for (var i = 0; i < services.length; i++) {
+      var obj = services[i];
+      selectedServices = selectedServices + obj.label + ', '
+    }
 
-const sc = [scs.map(list => list.value)]
+    selectedServices = selectedServices.replace(/,\s*$/, "");
+  }
 
+  //console.log(auth.user.serviceCastes)
+
+  const selectedCaste = auth.user.serviceCastes;
+  let sc;
+  if (selectedCaste != null) {
+    const scs = selectedCaste.filter(list => list.value)
+    sc = [scs.map(list => list.value)]
+    sc = sc.join(', ')
+  }
   return (
     <>
-    <ScrollView> 
-    <View style={styles.header}>    
-    <TouchableOpacity onPress={() => navigation.navigate('ProfileEdit')}>
-      <Text style={{ color: '#fff', fontSize: 20, paddingTop: 15, paddingLeft: 280 }}><Iconback name="form" style={{ color: '#fff', fontSize: 20 }} />Edit</Text>
-    </TouchableOpacity>  
-      <View style={styles.headerContent}>
-          <Image style={styles.avatar}
-            source={{uri: 'https://bootdey.com/img/Content/avatar/avatar1.png'}}/>
+      <ScrollView>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.navigate('ProfileEdit')}>
+            <Text style={{ color: '#fff', fontSize: 20, paddingTop: 15, paddingRight: 10, alignSelf: "flex-end" }}><Iconback name="form" style={{ color: '#fff', fontSize: 20 }} />Edit</Text>
+          </TouchableOpacity>
+          <View style={styles.headerContent}>
+            <Image style={styles.avatar}
+              source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar1.png' }} />
 
-          <Text style={styles.name}>
-            {/* {user.FirstName} {user.LastName} */}
-            {auth.user.FirstName} {auth.user.LastName}
-          </Text>
-          <Text style={styles.name}>
-            {/* {user['phone number']} */}
-            {auth.user['phone number']}
-          </Text>
-      </View>
-    </View>
-    
-    <View style={styles.row}>
-      <Icon name="mail" style={{ fontSize: 20 }} />
-      <View>
-      <View style={styles.msgContainer}>
-          <Text style={styles.msgTxt}>Email</Text>
+            <Text style={styles.name}>
+              {/* {user.FirstName} {user.LastName} */}
+              {auth.user.FirstName} {auth.user.LastName}
+            </Text>
+            <Text style={styles.name}>
+              {/* {user['phone number']} */}
+              {auth.user['phone number']}
+            </Text>
+          </View>
         </View>
-        <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.EmailId} </Text>
-          {/* <Text style={styles.mblTxt}>Mobile</Text> */}
-        </View>        
-      </View>
-    </View>
-    <View style={styles.row}>
-      <Icon name="phone" style={{ fontSize: 20 }} />
-      <View>
-      <View style={styles.msgContainer}>
-          <Text style={styles.msgTxt}>Alternate Mobile No</Text>
+
+        <View style={styles.row}>
+          <Icon name="mail" style={{ fontSize: 20 }} />
+          <View>
+            <View style={styles.msgContainer}>
+              <Text style={styles.msgTxt}>Email</Text>
+            </View>
+            <View style={styles.nameContainer}>
+              <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.EmailId} </Text>
+              {/* <Text style={styles.mblTxt}>Mobile</Text> */}
+            </View>
+          </View>
         </View>
-        <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.alternateNumber} </Text>
-          {/* <Text style={styles.mblTxt}>Mobile</Text> */}
-        </View>        
-      </View>
-    </View>    
-    <View style={styles.row}>
-      <Icon name="user" style={{ fontSize: 20 }} />
-      <View>
-      <View style={styles.msgContainer}>
-          <Text style={styles.msgTxt}>Caste</Text>
+        <View style={styles.row}>
+          <Icon name="phone" style={{ fontSize: 20 }} />
+          <View>
+            <View style={styles.msgContainer}>
+              <Text style={styles.msgTxt}>Alternate Mobile No</Text>
+            </View>
+            <View style={styles.nameContainer}>
+              <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.alternateNumber} </Text>
+              {/* <Text style={styles.mblTxt}>Mobile</Text> */}
+            </View>
+          </View>
         </View>
-        <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.purohitCaste} </Text>
-          {/* <Text style={styles.mblTxt}>Mobile</Text> */}
-        </View>        
-      </View>
-    </View>
-    <View style={styles.row}>
-      <Iconlocation name="location" style={{ fontSize: 20 }} />
-      <View>
-      <View style={styles.msgContainer}>
-          <Text style={styles.msgTxt}>Address</Text>
+        <View style={styles.row}>
+          <Icon name="user" style={{ fontSize: 20 }} />
+          <View>
+            <View style={styles.msgContainer}>
+              <Text style={styles.msgTxt}>Caste</Text>
+            </View>
+            <View style={styles.nameContainer}>
+              <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.purohitCaste} </Text>
+              {/* <Text style={styles.mblTxt}>Mobile</Text> */}
+            </View>
+          </View>
         </View>
-        <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{auth.user.AddressOne},{auth.user.city},{auth.user.state} </Text>
-          {/* <Text style={styles.mblTxt}>Mobile</Text> */}
-        </View>        
-      </View>
-    </View>
-    <Text style={{ textAlign: 'center', color: 'green', fontSize: 20 }}>Offered Services</Text>
-    <View style={styles.row}>
-      <Icons name="room-service-outline" style={{ fontSize: 20 }} />
-      <View>
-      <View style={styles.msgContainer}>
-          <Text style={styles.msgTxt}>Services</Text>
+        <View style={styles.row}>
+          <Iconlocation name="location" style={{ fontSize: 20 }} />
+          <View>
+            <View style={styles.msgContainer}>
+              <Text style={styles.msgTxt}>Address</Text>
+            </View>
+            <View style={styles.nameContainer}>
+              <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{auth.user.AddressOne},{auth.user.city},{auth.user.state} </Text>
+              {/* <Text style={styles.mblTxt}>Mobile</Text> */}
+            </View>
+          </View>
         </View>
-        <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt} numberOfLines={10} ellipsizeMode="tail">{selectedServices} </Text>
-          {/* <Text style={styles.mblTxt}>Mobile</Text> */}
-        </View>        
-      </View>
-    </View>
-    <View style={styles.row}>
-      <Icons name="room-service-outline" style={{ fontSize: 20 }} />
-      <View>
-      <View style={styles.msgContainer}>
-          <Text style={styles.msgTxt}>Service Type</Text>
-        </View>
-        <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{auth.user.typeOfService} </Text>
-          {/* <Text style={styles.mblTxt}>Mobile</Text> */}
-        </View>        
-      </View>
-    </View>
-    <View style={styles.row}>
-      <Icon name="user" style={{ fontSize: 20 }} />
-      <View>
-      <View style={styles.msgContainer}>
-          <Text style={styles.msgTxt}>Preferred Caste</Text>
-        </View>
-        <View style={styles.nameContainer}>
-          <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{sc.join(', ')} </Text>
-          {/* <Text style={styles.mblTxt}>Mobile</Text> */}
-        </View>        
-      </View>
-    </View>
-    </ScrollView>
-    
+        {
+          (currentUserType != "customer") ?
+
+            <View>
+              <Text style={{ textAlign: 'center', color: 'green', fontSize: 20 }}>Offered Services</Text>
+              {
+                (currentUserType != "cook") ?
+                  <View style={styles.row}>
+                    <Icons name="room-service-outline" style={{ fontSize: 20 }} />
+
+                    <View>
+                      <View style={styles.msgContainer}>
+                        <Text style={styles.msgTxt}>Services</Text>
+                      </View>
+                      <View style={styles.nameContainer}>
+                        <Text style={styles.nameTxt} numberOfLines={10} ellipsizeMode="tail">{selectedServices} </Text>
+                        {/* <Text style={styles.mblTxt}>Mobile</Text> */}
+                      </View>
+                    </View>
+
+
+
+                  </View>
+                  : null
+              }
+              <View style={styles.row}>
+                <Icons name="room-service-outline" style={{ fontSize: 20 }} />
+                <View>
+                  <View style={styles.msgContainer}>
+                    <Text style={styles.msgTxt}>Service Type</Text>
+                  </View>
+                  <View style={styles.nameContainer}>
+                    <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{auth.user.typeOfService} </Text>
+                    {/* <Text style={styles.mblTxt}>Mobile</Text> */}
+                  </View>
+                </View>
+              </View>
+              <View style={styles.row}>
+                <Icon name="user" style={{ fontSize: 20 }} />
+                <View>
+                  <View style={styles.msgContainer}>
+                    <Text style={styles.msgTxt}>Preferred Caste</Text>
+                  </View>
+                  <View style={styles.nameContainer}>
+                    <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{sc} </Text>
+                    {/* <Text style={styles.mblTxt}>Mobile</Text> */}
+                  </View>
+                </View>
+              </View>
+            </View>
+            : null
+        }
+      </ScrollView>
+
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  header:{
+  header: {
     backgroundColor: "#D63031",
   },
-  headerContent:{
-    padding:10,
+  headerContent: {
+    padding: 10,
     alignItems: 'center',
   },
   avatar: {
@@ -167,12 +191,12 @@ const styles = StyleSheet.create({
     borderRadius: 63,
     borderWidth: 4,
     borderColor: "white",
-    marginBottom:10,
+    marginBottom: 10,
   },
-  name:{
-    fontSize:18,
-    color:"#FFFFFF",
-    fontWeight:'600',
+  name: {
+    fontSize: 18,
+    color: "#FFFFFF",
+    fontWeight: '600',
   },
   row: {
     flexDirection: 'row',
@@ -197,7 +221,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#222',
     fontSize: 16,
-    width:260,
+    width: 260,
   },
   mblTxt: {
     fontWeight: '200',
@@ -220,8 +244,8 @@ Profile.propTypes = {
   getDistricrOrCity: PropTypes.func.isRequired,
   getAreas: PropTypes.func.isRequired,
   getCastes: PropTypes.func.isRequired,
-  updateCook: PropTypes.func.isRequired, 
-  updatePurohit: PropTypes.func.isRequired, 
+  updateCook: PropTypes.func.isRequired,
+  updatePurohit: PropTypes.func.isRequired,
   updateCustomer: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   services: PropTypes.object.isRequired,
@@ -236,13 +260,13 @@ const mapStateToProps = state => ({
   casteList: state.casteList
 })
 
-const mapDispatchToProps = { 
-  getDistrictOrCity, 
-  getAreas, 
-  getCastes, 
-  updateCook, 
-  updatePurohit, 
-  updateCustomer 
+const mapDispatchToProps = {
+  getDistrictOrCity,
+  getAreas,
+  getCastes,
+  updateCook,
+  updatePurohit,
+  updateCustomer
 }
- 
+
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

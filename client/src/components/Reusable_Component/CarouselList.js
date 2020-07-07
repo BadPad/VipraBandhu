@@ -89,8 +89,8 @@ class CarouselList extends Component {
         //console.warn(item.AdImage)
 
         return (
-            <View style={styles.upFestSlideView}>
-                <ImageBackground source={require('../images/purple_bg.png')}
+            <View style={styles.AdSlideView}>
+                <ImageBackground source={require('../images/darkPurple_bg.png')}
                     style={{ width: '100%' }}>
                     <Text style={styles.AdName}>{item.AdName}</Text>
                     <Text style={styles.Ad}>{item.Ad1}</Text>
@@ -196,6 +196,20 @@ const styles = StyleSheet.create({
     upFestSlideView: {
         width: '100%',
 
+    },
+    AdSlideView: {
+        width: '100%',
+        backgroundColor: 'transparent',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        borderRadius: 10,
+        borderWidth:1
     },
     Ad: {
         textAlign: 'center',

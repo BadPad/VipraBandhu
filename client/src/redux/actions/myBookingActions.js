@@ -35,6 +35,7 @@ export const getPurohitBookings = () => dispatch => {
 
 // Cancel Customer Booking
 export const cancelCustomerBooking = (data, navigation) => dispatch => {
+    console.warn(data)
     dispatch(regLogLoading());
     
     axios.post('https://yd5lw8j6q8.execute-api.ap-south-1.amazonaws.com/Api/customer_booking_cancel/pending', data)
@@ -52,6 +53,35 @@ export const cancelCustomerBooking = (data, navigation) => dispatch => {
                 // console.log('user already registered')
                 showMessage({
                     message: 'There was an issue while processing the request. Please try again after sometime',
+                    type: 'danger'
+                })
+                navigation.navigate('Welcome')
+            }
+        }
+        )
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+// Accept Customer Booking
+export const purohitBookingAcceptance = (data, navigation) => dispatch => {
+    //dispatch(regLogLoading());    
+    
+    axios.post('https://yd5lw8j6q8.execute-api.ap-south-1.amazonaws.com/Api/purohit_booking_acceptance', data)
+        .then(res => {
+            const status = res.data;
+            //console.warn(status.statusCode)
+            if (status.statusCode === 201) {
+                showMessage({
+                    message: 'Booking has been accepted successfully',
+                    type: 'success'
+                })
+                navigation.navigate('Welcome')
+            }
+            else {
+                showMessage({
+                    message: 'There was an issue while processing the request. Please try again after sometime' + status.statusCode ,
                     type: 'danger'
                 })
                 navigation.navigate('Welcome')

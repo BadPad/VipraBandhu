@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, ScrollView, Modal, TouchableHighlight, Alert } from 'react-native';
+import { StyleSheet, View, Text, Image, ScrollView, Modal, TouchableHighlight, AsyncStorage } from 'react-native';
 import Card from '../../Reusable_Component/Card/Card';
 import CardSection from '../../Reusable_Component/Card/CardSection';
 import Heading from '../../Reusable_Component/Heading';
@@ -9,32 +9,43 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import staticData from "../../Reusable_Component/StaticData/BookingsStaticData";
 import CustomModal from "../../Reusable_Component/CustomModal";
 import moment from "moment";
-import { cancelCustomerBooking } from '../../../redux/actions/myBookingActions';
+import { cancelCustomerBooking, purohitBookingAcceptance } from '../../../redux/actions/myBookingActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 
 //const { width, height } = Dimensions.get('window');
 
-const Booking = ({ navigation, route, cancelCustomerBooking }) => {
+const Booking = ({ navigation, route, cancelCustomerBooking, purohitBookingAcceptance }) => {
 
     const [modalCustomerVisible, setModalCustomerVisible] = React.useState(false);
-    const [modalVisible1, setModalVisible1] = React.useState(false);
+    const [modalVendorVisible, setModalVendorVisible] = React.useState(false);
 
     const [modalTextCustomer, setModalTextCustomer] = React.useState("");
+    const [modalTextVendor, setModalTextVendor] = React.useState("");
 
     const displayService = route.params.rowData;
     const userType = route.params.userType;
+
+
     const bookingStatus = displayService.bookingStatus;
     const bookingId = displayService.bookingID;
     const serviceDateTime = displayService.serviceDate.toString();
-    const serviceDate = serviceDateTime.split('T')[0];
-    const serviceTime = serviceDateTime.split('T')[1].split(':')[0] + ":" + serviceDateTime.split('T')[1].split(':')[1];
+
+    let serviceDate = "";
+    let serviceTime = "";
+
+    if (serviceDateTime != null) {
+        var date = new Date(serviceDateTime);
+        serviceDate = moment(date).format("DD-MMM-YYYY");
+        serviceTime = moment(date).format("hh:mm A");
+    }
 
 
-    //console.warn(serviceDate);
     navigation.setOptions({ title: serviceDate })
 
+
+    //Customer booking cancellation (Modal View)
     const cancelCustomerBookingBtn = () => {
 
         const dtServiceDate = serviceDate + " " + serviceTime
@@ -67,12 +78,32 @@ const Booking = ({ navigation, route, cancelCustomerBooking }) => {
         }
     }
 
-    const customerCancelClick = () => {
+    //Customer booking cancellation
+    const customerCancelConfirmed = () => {
         const data = {
             "bookingID": bookingId
         }
         cancelCustomerBooking(data, navigation)
     }
+
+    //Vendor booking Acceptance (Modal View)
+    const acceptBookingBtn = () => {
+        setModalTextVendor('You are about to accept this booking. Do you want to confirm this booking ?')
+        setModalVendorVisible(true);
+    }
+
+    //Vendor booking Acceptance
+    const acceptBookingConfirmed = () => {
+        const bookingIdArray = []
+        bookingIdArray.push(parseInt(bookingId))
+
+        const data = {
+            "bookingID": bookingIdArray
+        }
+        
+        purohitBookingAcceptance(data, navigation)
+    }
+
 
     return (
         <View style={styles.topView}>
@@ -84,7 +115,7 @@ const Booking = ({ navigation, route, cancelCustomerBooking }) => {
                         </View>
                         <View>
                             <Grid>
-                                <Row >
+                                <Row>
                                     <Col style={styles.colHeader}>
                                         <Text style={styles.bookingDetailsHeader}>Name:</Text>
                                     </Col>
@@ -152,7 +183,7 @@ const Booking = ({ navigation, route, cancelCustomerBooking }) => {
                                             }}
                                             submitButtonPress={() => {
                                                 setModalCustomerVisible(false);
-                                                customerCancelClick()
+                                                customerCancelConfirmed()
                                             }}
                                         ></CustomModal>
 
@@ -169,19 +200,19 @@ const Booking = ({ navigation, route, cancelCustomerBooking }) => {
                                                 buttonTouch={styles.buttonTouch}
                                                 name='Accept Booking'
                                                 onPress={() => {
-                                                    setModalVisible(true);
+                                                    acceptBookingBtn();
                                                 }}
                                             ></FieldButton>
-                                            <CustomModal visibility={modalVisible}
-                                                modalText={"Are you sure want to confirm this booking"}
+                                            <CustomModal visibility={modalVendorVisible}
+                                                modalText={modalTextVendor}
                                                 closeIconPress={() => {
-                                                    setModalVisible(false);
+                                                    setModalVendorVisible(false);
                                                 }}
                                                 cancelButtonPress={() => {
-                                                    setModalVisible(false);
+                                                    setModalVendorVisible(false);
                                                 }}
                                                 submitButtonPress={() => {
-                                                    setModalVisible(false);
+                                                    acceptBookingConfirmed();
                                                 }}
                                             ></CustomModal>
 
@@ -200,16 +231,16 @@ const Booking = ({ navigation, route, cancelCustomerBooking }) => {
                                                         cancelBookingBtn();
                                                     }}
                                                 ></FieldButton>
-                                                <CustomModal visibility={modalVisible1}
+                                                <CustomModal visibility={modalVendorVisible}
                                                     modalText={"Are you sure want to cancel this booking"}
                                                     closeIconPress={() => {
-                                                        setModalVisible1(false);
+                                                        setModalVendorVisible(false);
                                                     }}
                                                     cancelButtonPress={() => {
-                                                        setModalVisible1(false);
+                                                        setModalVendorVisible(false);
                                                     }}
                                                     submitButtonPress={() => {
-                                                        setModalVisible1(false);
+                                                        setModalVendorVisible(false);
                                                     }}
                                                 >
                                                 </CustomModal>
@@ -460,15 +491,16 @@ const styles = StyleSheet.create({
 
 
 
-Booking.propTypes = {    
-    cancelCustomerBooking: PropTypes.func.isRequired,    
+Booking.propTypes = {
+    cancelCustomerBooking: PropTypes.func.isRequired,
+    purohitBookingAcceptance: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
-    
+
 })
 
-const mapDispatchToProps = { cancelCustomerBooking }
+const mapDispatchToProps = { cancelCustomerBooking, purohitBookingAcceptance }
 //const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Booking)
