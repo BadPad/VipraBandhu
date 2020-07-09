@@ -17,6 +17,8 @@ import DatePicker from '../../Reusable_Component/DateTimeSelector/DatePicker';
 import FieldButton from '../../Reusable_Component/FieldButton';
 import Dropdown from '../../Reusable_Component/Dropdown';
 import isEmpty from '../../Reusable_Component/is-empty';
+import CateringBookingCartServiceList from '../../utils/CateringBookingCartServiceList';
+import Indicator from '../../Reusable_Component/SpinnerIndicator/Indicator';
 
 const customerpaymentType = [
     {label: "Select Payment Type", value: 0},
@@ -80,6 +82,16 @@ const DeliveryOptions = ({
         )
     }
 
+    const renderSelectedCateringList = ({ item }) => {
+        return (
+            <CateringBookingCartServiceList 
+                key={item.serviceId} 
+                data={item} 
+                noDelete
+            />
+        )
+    }
+
     const onDateTimeChange = (event, selectedDate) => {
         ListView_Ref.scrollToEnd({ animated: true });
         const currentDateTime = selectedDate || date;
@@ -93,8 +105,11 @@ const DeliveryOptions = ({
         return pV;
     }, [{ label: "Prefer Caste", value: 0 }])
 
+    const { loading } = bookingCartServices;
+
     return (
         <View style={styles.container}>
+            {loading && <Indicator />}
             <ScrollView 
                 style={styles.scrollContainer} 
                 ref={ref => ListView_Ref = ref}
@@ -147,32 +162,43 @@ const DeliveryOptions = ({
                         renderItem={renderServiceDatesList}
                     />
                 </View>
-                <View style={styles.selectedPoojaList}>
-                    {
-                        bookingCartServices && bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.time === false && !showDateTime ?
-                            <FieldButton 
-                                name="Select Pooja Timings"
-                                onPress={() => setShowDateTime(!showDateTime)}
-                            />
-                        : 
-                            <DatePicker 
-                                name="Pooja Time"
-                                timeZoneOffsetInMinutes={0}
-                                show={showDateTime}
-                                value={new Date(dateTime && dateTime)}
-                                mode="time"
-                                is24Hour={false}
-                                display="default"
-                                onPress={() => setShowDateTime(!showDateTime)}
-                                onChange={onDateTimeChange}
-                            />
-                    }
-                    <FlatList 
-                        keyExtractor={pooja => pooja.serviceId}
-                        data={bookingCartServices && bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.poojaService}
-                        renderItem={renderSelectedPoojaList}
-                    />
-                </View>
+                {!isEmpty(bookingCartServices && bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.poojaService) &&    
+                    <View style={styles.selectedList}>
+                        <Text style={styles.servicesTitle}>Pooja Services</Text>
+                        {
+                            bookingCartServices && bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.time === false && !showDateTime ?
+                                <FieldButton 
+                                    name="Select Pooja Timings"
+                                    onPress={() => setShowDateTime(!showDateTime)}
+                                />
+                            : 
+                                <DatePicker 
+                                    name="Pooja Time"
+                                    timeZoneOffsetInMinutes={0}
+                                    show={showDateTime}
+                                    value={new Date(dateTime && dateTime)}
+                                    mode="time"
+                                    is24Hour={false}
+                                    display="default"
+                                    onPress={() => setShowDateTime(!showDateTime)}
+                                    onChange={onDateTimeChange}
+                                />
+                        }
+                        <FlatList 
+                            keyExtractor={pooja => pooja.serviceId}
+                            data={bookingCartServices && bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.poojaService}
+                            renderItem={renderSelectedPoojaList}
+                        />
+                    </View>}
+                {!isEmpty(bookingCartServices && bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.cateringService) &&
+                    <View style={styles.selectedList}>
+                        <Text style={styles.servicesTitle}>Catering Service</Text>
+                        <FlatList 
+                            keyExtractor={catering => catering.serviceId}
+                            data={bookingCartServices && bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.cateringService}
+                            renderItem={renderSelectedCateringList}
+                        />
+                    </View>}
             </ScrollView>
             <FieldCartButton 
                 name="Process to pay"
@@ -265,8 +291,14 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#757473'
     },
-    selectedPoojaList: {
+    selectedList: {
         margin: 10,
+        marginTop: 5
+    },
+    servicesTitle: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        textAlign: 'center'
     },
     buttonText: {
         fontSize: 17,

@@ -22,10 +22,7 @@ const { height } = Dimensions.get('window');
 const ServicesList = ({ navigation, route, serviceList, searchServices, selectedCategory, filterCategory }) => {
 
     const [checkedCategory, setCheckedCategory] = useState('');
-
-    //let selectedCookItems = [];
-    const [selectedCookItemsCount, setCount] = useState(0);
-    const [selectedCookItems, setItems] = useState([]);
+    const [selectedCookItems, setSelectedCookItems] = useState([]);
 
     const onSelectService = data => {
         navigation.navigate('Service', { id: data, serviceType: "purohit" })
@@ -37,45 +34,22 @@ const ServicesList = ({ navigation, route, serviceList, searchServices, selected
         )
     }
 
-    const updateCookSelectedCount = (selected) => {
-        if (selected === "add") {
-            setCount(selectedCookItemsCount + 1);
-        }
-        else {
-            setCount(selectedCookItemsCount - 1);
-        }
-    }
-
-    const AddCookItems = (data, value) => {
-        setItems([...selectedCookItems, {
-            id: data,
-            value: value
-        }])
-    }
-
-    const RemoveCookItems = (data, value) => {
-        setItems(selectedCookItems.filter(item => item.id != data));
-    }
-
     const ShowSelectedItems = () => {
-        navigation.navigate('Service', { id: selectedCookItems, cookData: selectedCookItems, serviceType: "cook" })
+        navigation.navigate('Service', { id: selectedCookItems, serviceType: 'catering' })
     }
 
-    const onSelectCookService = (data, value, isChecked) => {
-        if (isChecked) {
-            updateCookSelectedCount("add");
-            AddCookItems(data, value);
-        }
-        else {
-            updateCookSelectedCount("subtract");
-            //setCount(selectedCookItemsCount - 1);
-            RemoveCookItems(data, value);
+    const onSelectCookService = data => {
+        let cookItems = selectedCookItems.find(list => list.serviceId === data.serviceId);
+        if(cookItems) {
+            setSelectedCookItems(selectedCookItems.filter(item => item.serviceId != data.serviceId))
+        } else {
+            setSelectedCookItems([...selectedCookItems, data])
         }
     }
 
     const renderServicesCookList = ({ item }) => {
         return (
-            <ServicesCardCookList data={item} onSelectCookService={onSelectCookService} />
+            <ServicesCardCookList key={item.serviceId} data={item} onSelectCookService={onSelectCookService} selectedCookService={selectedCookItems} />
         )
     }
 
@@ -151,12 +125,13 @@ const ServicesList = ({ navigation, route, serviceList, searchServices, selected
     if (isEmpty(filteredList) === false) {
         return (
             <>
+                {serviceCategory === 'purohit' &&
                 <SearchServices
                     navigation={navigation}
                     route={route}
                     services={services}
                     searchServices={searchServices}
-                />
+                />}
                 <BottomScrollSheet
                     bottomSheetRef={bottomSheetRef}
                     snapPoints={[height / 2, 0]}
@@ -167,9 +142,10 @@ const ServicesList = ({ navigation, route, serviceList, searchServices, selected
                     <Card>
                         <CardSection style={styles.filterSection}>
                             <Text style={styles.filterText} >{filteredList.length} Services Available</Text>
+                            {serviceCategory === 'purohit' &&
                             <TouchableOpacity style={styles.filterButton} onPress={() => bottomSheetRef.current.snapTo(0)}>
                                 <Icon name="filter" style={styles.filterIcon} >Filter</Icon>
-                            </TouchableOpacity>
+                            </TouchableOpacity>}
                         </CardSection>
                     </Card>
                     {
@@ -179,7 +155,7 @@ const ServicesList = ({ navigation, route, serviceList, searchServices, selected
                                     <View style={styles.subCategory}>
                                         <Text style={styles.subCategoryTitle}>
                                             Pooja
-                                    </Text>
+                                        </Text>
                                         <FlatList
                                             keyExtractor={item => item.serviceId.toString()}
                                             data={filteredList_Purohit_Pooja}
@@ -191,7 +167,7 @@ const ServicesList = ({ navigation, route, serviceList, searchServices, selected
                                     <View style={styles.subCategory}>
                                         <Text style={styles.subCategoryTitle}>
                                             Homa
-                                    </Text>
+                                        </Text>
                                         <FlatList
                                             keyExtractor={item => item.serviceId.toString()}
                                             data={filteredList_Purohit_Homa}
@@ -203,7 +179,7 @@ const ServicesList = ({ navigation, route, serviceList, searchServices, selected
                                     <View style={styles.subCategory}>
                                         <Text style={styles.subCategoryTitle}>
                                             Functions
-                                    </Text>
+                                        </Text>
                                         <FlatList
                                             keyExtractor={item => item.serviceId.toString()}
                                             data={filteredList_Purohit_Function}
@@ -215,7 +191,7 @@ const ServicesList = ({ navigation, route, serviceList, searchServices, selected
                                     <View style={styles.subCategory}>
                                         <Text style={styles.subCategoryTitle}>
                                             Shraddha
-                                    </Text>
+                                        </Text>
                                         <FlatList
                                             keyExtractor={item => item.serviceId.toString()}
                                             data={filteredList_Purohit_Shraddha}
@@ -225,7 +201,7 @@ const ServicesList = ({ navigation, route, serviceList, searchServices, selected
                                     </View>}
                             </>
                             : serviceCategory === 'catering' ?
-                                <>
+                                <View style={styles.catContainer}>
                                     {isEmpty(filteredList_Cook_Breakfast) === false &&
                                         <View style={styles.subCategory}>
                                             <Accordian title="Breakfast" >
@@ -270,26 +246,21 @@ const ServicesList = ({ navigation, route, serviceList, searchServices, selected
                                             </Accordian>
                                         </View>}
 
-                                </>
+                                </View>
                                 : null
                     }
                 </ScrollView>
-                <View>
-                    {
-                        serviceCategory === 'Catering' ?
-                            <>
-                                {
-                                    < FieldButton
-                                        name={'Next ( ' + selectedCookItemsCount + " selected)"}
-                                        butonContainer={styles.buttonContainer}
-                                        buttonTouch={styles.buttonTouch}
-                                        onPress={ShowSelectedItems}
-                                    ></FieldButton>
-                                }
-                            </>
-                            : null
-                    }
-                </View>
+                {
+                    serviceCategory === 'catering' &&
+                    <View>
+                        < FieldButton
+                            name={`Next ( ${selectedCookItems.length} Selected )`}
+                            butonContainer={styles.buttonContainer}
+                            buttonTouch={styles.buttonTouch}
+                            onPress={ShowSelectedItems}
+                        />
+                    </View>
+                }
             </>
         )
     } else {
@@ -305,8 +276,10 @@ const ServicesList = ({ navigation, route, serviceList, searchServices, selected
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        flexDirection:"column"
+        backgroundColor: '#fff'
+    },
+    catContainer: {
+        marginBottom: 50
     },
     filterSection: {
         justifyContent: 'space-between',
@@ -365,7 +338,6 @@ const styles = StyleSheet.create({
     },
     buttonTouch: {
         backgroundColor: '#D63031',
-        borderRadius: 5,
         fontFamily: 'OpenSans-Regular',
     },
     buttonContainer: {

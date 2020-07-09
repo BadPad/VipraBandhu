@@ -6,10 +6,13 @@ import Card from '../Reusable_Component/Card/Card'
 import CardSection from '../Reusable_Component/Card/CardSection'
 import FieldCartButton from '../Reusable_Component/FieldCartButton';
 import { serviceOrderConfirm } from '../../redux/actions/bookingCartActions';
+import Indicator from '../Reusable_Component/SpinnerIndicator/Indicator';
 
 const Payment = ({ navigation, bookingCartServices, serviceOrderConfirm }) => {
+    const { loading } = bookingCartServices;
     return (
         <View style={styles.container}>
+            {loading && <Indicator />}
             <View style={styles.contentContainer}>
                 <Card style={styles.paymentContainer}>
                     <CardSection style={styles.paymentCalculation}>

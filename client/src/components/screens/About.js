@@ -5,7 +5,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const About = ({ navigation }) => {
 
-
     return (
         <View style={styles.container}>
             <View style={styles.boxes}>
@@ -21,7 +20,6 @@ const About = ({ navigation }) => {
                     <View style={styles.textView}>
                         <Text style={styles.textStyle}>
                             We all know how difficult it is to organize or conduct an event where we have to talk to various service providers like purohit, catering, groceries, pooja items, etc.. get their contacts & book for various services, negotiate, run behind them, follow up and then to succeed is a nightmare. Instead, what if there is an easy and efficient way to book for all your pooja and catering services.
-
                         </Text>
                         <Text style={styles.textStyle}>
                             Sukalpa Seva is a one stop solution which provides an efficient platform for hassle free bookings for all your requirements of events at your convenience. Our vision is to use smart technology and processes to structure the highly unorganized services and provide easy ways to book for your essentials. We offer a chain of skilled professionals to cater all your requirements at your doorstep with just a few clicks.

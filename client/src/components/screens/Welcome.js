@@ -5,10 +5,7 @@ import PropTypes from 'prop-types';
 import SearchServices from "../Reusable_Component/SearchServices";
 import Carousel from "../Reusable_Component/CarouselList";
 
-import {
-    serviceList, poojaServices, homaServices, functionServices, searchServices,
-    breakfastServices, lunchServices, snacksServices, dinnerServices
-} from '../../redux/actions/serviceListActions';
+import { serviceList, poojaServices, homaServices, functionServices, searchServices, cateringServices } from '../../redux/actions/serviceListActions';
 import { upcomingFestivals } from '../../redux/actions/upcomingFestActions';
 import Indicator from "../Reusable_Component/SpinnerIndicator/Indicator";
 
@@ -24,10 +21,7 @@ const Welcome = ({
     searchServices,
     upcomingFestivals,
     festivals,
-    breakfastServices,
-    lunchServices,
-    snacksServices,
-    dinnerServices
+    cateringServices
 }) => {
 
     useEffect(() => {
@@ -47,10 +41,10 @@ const Welcome = ({
     }
 
     const catering = (type) => {
-        breakfastServices("breakfast")
-        lunchServices("lunch")
-        dinnerServices("dinner")
-        snacksServices("snacks")
+        if(type === 'catering') {
+            cateringServices(type)
+        }
+        
         navigation.navigate('ServicesList', { category: 'catering' })
     }
 
@@ -409,7 +403,7 @@ const styles = StyleSheet.create({
 })
 
 Welcome.propTypes = {
-    auth: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
     serviceList: PropTypes.func.isRequired,
     poojaServices: PropTypes.func.isRequired,
     homaServices: PropTypes.func.isRequired,
@@ -417,12 +411,7 @@ Welcome.propTypes = {
     searchServices: PropTypes.func.isRequired,
     services: PropTypes.object.isRequired,
     festivals: PropTypes.object.isRequired,
-    upcomingFestivals: PropTypes.object.isRequired,
-    festivals: PropTypes.array.isRequired,
-    breakfastServices: PropTypes.func.isRequired,
-    lunchServices: PropTypes.func.isRequired,
-    snacksServices: PropTypes.func.isRequired,
-    dinnerServices: PropTypes.func.isRequired,
+    cateringServices: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -431,6 +420,6 @@ const mapStateToProps = state => ({
     festivals: state.upcomingFestivals,
 })
 
-const mapDispatchToProps = { serviceList, poojaServices, homaServices, functionServices, searchServices, upcomingFestivals, breakfastServices, lunchServices, snacksServices, dinnerServices }
+const mapDispatchToProps = { serviceList, poojaServices, homaServices, functionServices, searchServices, upcomingFestivals, cateringServices }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome)

@@ -6,32 +6,28 @@ import InputCheckbox from '../Reusable_Component/InputCheckbox';
 import TextFieldGroup from '../Reusable_Component/TextFieldGroup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const ServicesCardCookList = ({ data, onSelectCookService }) => {
-    const [checked, unchecked] = useState(false);
+const ServicesCardCookList = ({ data, onSelectCookService, selectedCookService }) => {
+
     const [modalVisible, setModalVisible] = useState(false);
-    //const checkedCount = useState(0);
-
-    const checkBoxSelect = (selectedItemId, selectedItemName) => {
-        unchecked(!checked);
-        onSelectCookService(selectedItemId, selectedItemName, !checked)
-    }
+    
+    let selectedItems
+    selectedItems = selectedCookService.find(list => list.serviceId === data.serviceId)
+    
     return (
-
-
         <View>
             <View style={styles.outerView}>
                 <View style={styles.checkBoxView}>
                     <InputCheckbox
-                        checkValue={checked}
+                        checkValue={selectedItems ? true : false}
                         //onchange={() => unchecked(!checked)}
-                        onchange={() => checkBoxSelect(data.serviceId, data.serviceName)}
+                        onchange={() => onSelectCookService(data)}
                     ></InputCheckbox>
                 </View>
                 <View style={styles.serviceNameView}>
                     <Text style={styles.serviceName}>{data.serviceName}</Text>
                 </View>
                 <View style={styles.servicePriceView}>
-                    <Text style={styles.servicePrice}>Rs. {data.servicePrice}</Text>
+                    <Text style={styles.servicePrice}>Rs. {data.serviceAmount}</Text>
                 </View>
                 <View style={styles.infoView}>
                     <Modal
@@ -55,27 +51,28 @@ const ServicesCardCookList = ({ data, onSelectCookService }) => {
                                     ></Icon>
                                 </TouchableHighlight>
                                 <Text style={styles.serviceDesc}>
-                                    {data.serviceDescription}
+                                    {data.serviceItems && data.serviceItems.join(', ')}
                                 </Text>
                                 
                             </View>
                         </View>
                     </Modal>
-                    <TouchableHighlight
-                        style={styles.button}
-                        onPress={() => {
-                            setModalVisible(true);
-                        }}
-                        underlayColor="#fff">
+                    {data.serviceSubCategory === 'lunch' || data.serviceSubCategory === 'dinner' ?
+                        <TouchableHighlight
+                            style={styles.button}
+                            onPress={() => {
+                                setModalVisible(true);
+                            }}
+                            underlayColor="#fff">
 
-                        <Icon style={styles.iconInfo} name="ios-information-circle" size={20}
-                            color="#D63031"
-                        ></Icon>
-                    </TouchableHighlight>
+                            <Icon style={styles.iconInfo} name="ios-information-circle" size={20}
+                                color="#D63031"
+                            ></Icon>
+                        </TouchableHighlight>
+                    :null}
                 </View>
             </View>
         </View>
-
     )
 }
 

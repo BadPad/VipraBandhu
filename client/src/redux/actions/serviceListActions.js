@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { SERVICES_LIST_LOADING, GET_SERVICE_LIST, SEARCH_SERVICES, FILTER_CATEGORY, SELECTED_CATEGORY, POOJA_SERVICES, HOMA_SERVICES, FUNCTION_SERVICES,
-    BREAKFAST_SERVICES, LUNCH_SERVICES, SNACKS_SERVICES, DINNER_SERVICES} from './types';
+import { SERVICES_LIST_LOADING, GET_SERVICE_LIST, SEARCH_SERVICES, FILTER_CATEGORY, SELECTED_CATEGORY, POOJA_SERVICES, HOMA_SERVICES, FUNCTION_SERVICES, CATERING_SERVICES} from './types';
 
 /*--- Service List ---*/
 export const serviceList = () => dispatch => {
@@ -66,35 +65,10 @@ export const functionServices = type => {
     }
 }
 
-
-/*--- Filter Breakfast Service ---*/
-export const breakfastServices = type => {
+/*--- Catering Services ---*/
+export const cateringServices = type => {
     return {
-        type: BREAKFAST_SERVICES,
-        payload: type
-    }
-}
-
-/*--- Filter Lunch Service ---*/
-export const lunchServices = type => {
-    return {
-        type: LUNCH_SERVICES,
-        payload: type
-    }
-}
-
-/*--- Filter Snacks Service ---*/
-export const snacksServices = type => {
-    return {
-        type: SNACKS_SERVICES,
-        payload: type
-    }
-}
-
-/*--- Filter Dinner Service ---*/
-export const dinnerServices = type => {
-    return {
-        type: DINNER_SERVICES,
+        type: CATERING_SERVICES,
         payload: type
     }
 }

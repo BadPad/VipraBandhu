@@ -1,5 +1,4 @@
-import { SERVICES_LIST_LOADING, GET_SERVICE_LIST, SEARCH_SERVICES, SELECTED_CATEGORY, FILTER_CATEGORY, POOJA_SERVICES, HOMA_SERVICES, FUNCTION_SERVICES
-, BREAKFAST_SERVICES, LUNCH_SERVICES, SNACKS_SERVICES, DINNER_SERVICES} from '../actions/types';
+import { SERVICES_LIST_LOADING, GET_SERVICE_LIST, SEARCH_SERVICES, SELECTED_CATEGORY, FILTER_CATEGORY, POOJA_SERVICES, HOMA_SERVICES, FUNCTION_SERVICES, CATERING_SERVICES } from '../actions/types';
 
 const initialState = {
     loading: false,
@@ -72,43 +71,14 @@ export default function(state = initialState, action) {
                 filteredList: filterFunction,
                 filterCategory: functions
             }
-        case BREAKFAST_SERVICES:
-            const fullServices1 = state.fullServiceList;
-            const breakfast = action.payload;
-            const filteredBreakfast = fullServices1.filter(list => list.serviceSubCategory === breakfast)
+        case CATERING_SERVICES:
+            const allService = state.fullServiceList;
+            const catering = action.payload;
+            const filterCatering = allService.filter(list => list.serviceCategory === catering)
             return {
                 ...state,
-                filteredList: filteredBreakfast,
-                filterCategory: breakfast
+                filteredList: filterCatering
             }
-        case LUNCH_SERVICES:
-            const fullServices2 = state.fullServiceList;
-            const lunch = action.payload;
-            const filteredLunch = fullServices2.filter(list => list.serviceSubCategory === lunch)
-            return {
-                ...state,
-                filteredList: filteredLunch,
-                filterCategory: lunch
-            }
-        case SNACKS_SERVICES:
-            const fullServices3 = state.fullServiceList;
-            const snacks = action.payload;
-            const filterSnacks = fullServices3.filter(list => list.serviceSubCategory === snacks)
-            return {
-                ...state,
-                filteredList: filterSnacks,
-                filterCategory: snacks
-            }
-        case DINNER_SERVICES:
-            const fullServices4 = state.fullServiceList;
-            const dinner = action.payload;
-            const filterDinner = fullServices4.filter(list => list.serviceSubCategory === dinner)
-            return {
-                ...state,
-                filteredList: filterDinner,
-                filterCategory: dinner
-            }
-            
         default:
             return state;
     }

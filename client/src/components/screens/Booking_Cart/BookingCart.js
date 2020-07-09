@@ -5,23 +5,35 @@ import PropTypes from 'prop-types';
 import isEmpty from '../../Reusable_Component/is-empty';
 import Heading from '../../Reusable_Component/Heading';
 import BookingCartServiceList from '../../utils/BookingCartServiceList';
+import CateringBookingCartServiceList from '../../utils/CateringBookingCartServiceList';
 import { deleteFromBookingCart, bookingCartStructure } from '../../../redux/actions/bookingCartActions';
 import Card from '../../Reusable_Component/Card/Card';
 import CardSection from '../../Reusable_Component/Card/CardSection';
 import FieldCartButton from '../../Reusable_Component/FieldCartButton';
 
 import Icon from 'react-native-vector-icons/AntDesign';
+import FieldButton from '../../Reusable_Component/FieldButton';
 
 const BookingCart = ({ navigation, bookingCartServices, deleteFromBookingCart, bookingCartStructure }) => {
 
     // console.log(bookingCartServices.bookingCartList)
 
-    const renderSeviceCartList = ({ item }) => {
+    const renderPoojaSeviceCartList = ({ item }) => {
         return (
             <BookingCartServiceList 
                 key={item.serviceId} 
                 data={item} 
                 deleteSelected={selected => deleteFromBookingCart(selected)} 
+            />
+        )
+    }
+
+    const renderCateringSeviceCartList = ({ item }) => {
+        return (
+            <CateringBookingCartServiceList 
+                key={item.serviceId} 
+                data={item} 
+                deleteSelected={selected => deleteFromBookingCart(selected)}
             />
         )
     }
@@ -33,6 +45,8 @@ const BookingCart = ({ navigation, bookingCartServices, deleteFromBookingCart, b
             subCatList[i] = subCatList[i].charAt(0).toUpperCase() + subCatList[i].substr(1);;
         }
         const sum = bookingCartList.reduce((total, obj) => parseInt(obj.servicePrice) + parseInt(total), 0);
+        const poojaBookingCartList = bookingCartList.filter(list => list.serviceCategory === 'purohit');
+        const cateringBookingCartList = bookingCartList.filter(list => list.serviceCategory === 'catering');
         return(
             <View style={styles.container}>
                 <Card>
@@ -44,11 +58,29 @@ const BookingCart = ({ navigation, bookingCartServices, deleteFromBookingCart, b
                     </CardSection>
                 </Card>
                 <ScrollView>
-                    <FlatList 
-                        keyExtractor={service => service.serviceId}
-                        data={bookingCartServices.bookingCartList}
-                        renderItem={renderSeviceCartList}
+                    <FieldButton 
+                        name="Book New Service"
+                        butonContainer={styles.butonContainer}
+                        onPress={() => navigation.navigate('Welcome')}
                     />
+                    {!isEmpty(poojaBookingCartList) &&
+                    <View style={styles.cartServices}>
+                        <Text style={styles.cartServicesTitle}>Pooja Services</Text>
+                        <FlatList 
+                            keyExtractor={service => service.serviceId}
+                            data={poojaBookingCartList}
+                            renderItem={renderPoojaSeviceCartList}
+                        />
+                    </View>}
+                    {!isEmpty(cateringBookingCartList) &&
+                    <View style={styles.cartServices}>
+                        <Text style={styles.cartServicesTitle}>Catering Services</Text>
+                        <FlatList 
+                            keyExtractor={service => service.serviceId}
+                            data={cateringBookingCartList}
+                            renderItem={renderCateringSeviceCartList}
+                        />
+                    </View>}
                 </ScrollView>
                 <FieldCartButton 
                     name="Checkout"
@@ -98,6 +130,17 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 17,
         fontWeight: 'bold',
+    },
+    butonContainer: {
+        margin: 9
+    },
+    cartServices: {
+        margin: 5,
+    },
+    cartServicesTitle: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        textAlign: 'center'
     }
 })
 

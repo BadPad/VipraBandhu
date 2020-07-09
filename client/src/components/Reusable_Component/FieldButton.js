@@ -1,12 +1,12 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableHighlight } from 'react-native'
 
 const FieldButton = ({butonContainer, buttonTouch, buttonTouchText, children, name, onPress}) => {
     return (
         <View style={butonContainer}>
-            <TouchableOpacity style={{...styles.button, ...buttonTouch}} onPress={onPress}>
+            <TouchableHighlight style={{...styles.button, ...buttonTouch}} onPress={onPress}>
                 <Text style={{...styles.buttonText, ...buttonTouchText}}>{name}</Text>
-            </TouchableOpacity>
+            </TouchableHighlight>
             {children}
         </View>
     )
