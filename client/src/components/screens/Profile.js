@@ -53,6 +53,19 @@ const Profile = ({ auth, navigation }) => {
           <TouchableOpacity style={styles.editProfile} onPress={() => navigation.navigate('ProfileEdit')}>
             <Text style={{ color: '#fff', fontSize: 20, paddingTop: 15, paddingRight: 10, alignSelf: "flex-end" }}><Iconback name="form" style={{ color: '#fff', fontSize: 20 }} /> Edit</Text>
           </TouchableOpacity>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', }}>
+            <View>
+              <TouchableOpacity onPress={() => navigation.navigate('Faq')}>      
+                <Text style={{ color: '#fff', fontSize: 19, paddingLeft: 10 , paddingTop: 16, textDecorationLine: 'underline' }}>FAQs</Text>
+              </TouchableOpacity>
+            </View>
+            <View>
+              <TouchableOpacity onPress={() => navigation.navigate('ProfileEdit')}>      
+                <Text style={{ color: '#fff', fontSize: 20, paddingTop: 15, paddingRight: 10, alignSelf: "flex-end" }}><Iconback name="form" style={{ color: '#fff', fontSize: 20 }} />Edit</Text>
+              </TouchableOpacity>
+            </View>
+            
+          </View>
           <View style={styles.headerContent}>
             <Image style={styles.avatar}
               source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar1.png' }} />

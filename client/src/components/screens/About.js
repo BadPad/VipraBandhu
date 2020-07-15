@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { ScrollView } from 'react-native-gesture-handler';
+// import { ScrollView } from 'react-native-gesture-handler';
 
 const About = ({ navigation }) => {
 
     return (
+        
         <View style={styles.container}>
             <View style={styles.boxes}>
                 <View style={styles.topHeader}>
                     <Icon style={styles.iconLogo} name="ios-flower" size={100}
-                        backgroundColor="#D63031" color="#fff"
-                        onPress={() => navigation.navigate('MyBookings')}
+                        backgroundColor="#D63031" color="#fff"                        
                     >
                     </Icon >
                     <Text style={styles.headerText}>Sukalpa Seva</Text>
@@ -32,6 +32,7 @@ const About = ({ navigation }) => {
             </View>
 
         </View>
+        
     )
 }
 

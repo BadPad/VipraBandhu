@@ -33,6 +33,8 @@ import TransactionInfo from '../screens/TransactionInfo';
 import DrawnContent from './DrawnContent';
 import NotificationIcon from '../Reusable_Component/NotificationIcon'
 import BookingCartIcon from './BookingCartIcon';
+import FaqIcon from './FaqIcon';
+import Faq from '../screens/Faq';
 
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator();
@@ -80,6 +82,8 @@ function getHeaderTitle(route) {
       return 'Customer Service'
     case 'Notifications':
       return 'Notifications'
+    case 'Faq':
+      return 'Faq' 
     default:
       return true
   }
@@ -127,6 +131,7 @@ const StackNavigation = ({ navigation }) => (
         ),
         headerRight: () => (
           <View style={styles.headerRightIcons}>
+            <FaqIcon navigation={navigation} />
             <BookingCartIcon navigation={navigation} />
             <NotificationIcon onPress={() => navigation.navigate('Notifications')}
             ></NotificationIcon>
@@ -394,6 +399,18 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="Notifications" component={Notifications}
+      options={({route}) => ({
+        title: getHeaderTitle(route),
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor="#D63031" color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="Faq" component={Faq}
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerLeft: () => (

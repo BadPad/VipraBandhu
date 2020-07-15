@@ -112,6 +112,17 @@ const DrawnContent = (props) => {
                     label="CustomerService"
                     onPress={() => props.navigation.navigate('CustomerService')}
                 />
+                <DrawerItem 
+                    icon={({color, size}) => (
+                        <MaterialCommunityIcons 
+                            name="information-variant"
+                            color={color}
+                            size={size}
+                        />
+                    )}
+                    label="FAQs"
+                    onPress={() => props.navigation.navigate('Faq')}
+                />
             </DrawerContentScrollView>
             {
                 isAuthenticated ?
