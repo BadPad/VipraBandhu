@@ -21,8 +21,8 @@ const ModalView = ({
                 onBackButtonPress={close}
                 animationIn={animationIn || 'slideInUp'}
                 animationOut={animationOut || 'slideOutDown'}
-                animationInTiming={animationInTiming}
-                animationOutTiming={animationOutTiming}
+                animationInTiming={animationInTiming || 0}
+                animationOutTiming={animationOutTiming || 0}
                 propagateSwipe={propagateSwipe}
             >
                 <View style={[styles.container, modalContainer]}>

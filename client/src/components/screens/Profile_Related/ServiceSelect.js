@@ -8,12 +8,12 @@ const ServiceSelect = ({ services, selectedServices, selectedItems }) => {
 
   const [isModal, setIsModal] = useState(false);
 
-  const category = services.filter(list => list.serviceCategory === 'purohit');
+  const category = services && services.filter(list => list.serviceCategory === 'purohit');
 
   const subCatList = category.map(list => list.serviceSubCategory).filter((value, index, self) => self.indexOf(value) === index)
   
   const servicesList = subCatList.map((list,i) => {
-    const subCatType = services.filter(service => service.serviceSubCategory === list)
+    const subCatType = services && services.filter(service => service.serviceSubCategory === list)
     return {
       name: list,
       id: i,
@@ -87,14 +87,15 @@ const styles = StyleSheet.create({
   serviceView: {
     width: "100%",
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 5,
+    borderRadius: 2,
     paddingHorizontal: 16,
     fontSize: 16,
     marginVertical: 3,
     padding: 5,
     paddingLeft: 5,
     borderWidth:0.5,
-    borderColor:'lightgrey'
+    borderColor:'rgba(68,68,68,1)',
+    height: 40
   },
   openButtonn: {
     backgroundColor: "#FFF",
@@ -109,7 +110,8 @@ const styles = StyleSheet.create({
   },
   textStyles: {
     color: '#000',
-    fontSize: 17
+    fontSize: 17,
+    marginTop: 3
   },
   text: {
     fontSize: 20,

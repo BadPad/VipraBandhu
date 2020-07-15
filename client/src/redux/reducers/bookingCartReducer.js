@@ -132,7 +132,7 @@ export default function(state = initialState, action) {
         case ADD_SERVICE_CASTE_PREFER: 
             return {
                 ...state,
-                preferCaste: action.payload,
+                preferCaste: isEmpty(action.payload) ? null : action.payload,
                 loading: false
             }
         case ADD_SERVICE_LOCATION:
@@ -150,13 +150,13 @@ export default function(state = initialState, action) {
                         return {
                             service_id: pooja.serviceId,
                             service_date: new Date(item.date).toISOString(),
-                            contract_type: pooja.contractType,
-                            service_amount: pooja.servicePrice
+                            contract_type: pooja.contractType
                         }
                     })
                 }
             })
             const newPoojaCartData = poojaCartData.filter(list => !isEmpty(list.bookings))
+            // console.log(newPoojaCartData)
 
             const cateringCartData = finalPayment.map(item => {
                 return {
@@ -165,13 +165,13 @@ export default function(state = initialState, action) {
                             service_id: catering.serviceId,
                             service_date: catering.serviceDate,
                             contract_type: catering.contractType,
-                            person_count: catering.servicePersonsCount,
-                            service_amount: catering.servicePrice
+                            person_count: catering.servicePersonsCount
                         }
                     })
                 }
             })
             const newCateringCartData = cateringCartData.filter(list => !isEmpty(list.bookings))
+            // console.log(newCateringCartData)
             return {
                 ...state,
                 paymentDataStructured: {
@@ -179,9 +179,7 @@ export default function(state = initialState, action) {
                     cook_services: newCateringCartData,
                     payment_type: state.paymentType,
                     location: state.location,
-                    caste_prefered: state.preferCaste,
-                    amount_paid: state.amountPayable,
-                    balance_amount: state.paymentType === 'Full Payment' ? 0 : state.amountbalance
+                    caste_prefered: state.preferCaste
                 },
                 loading: false
             }

@@ -16,10 +16,10 @@ const TypesOfService = ({selectedTypeOfService, selectedItem }) => {
         selectedValue={selectedItem === '' ? 0 : selectedItem}
         onValueChange={(itemValue) => handleChange({castes: itemValue})}
       >
-        <Picker.Item key={0} label="Select your service type" value={0} />
+        <Picker.Item key={0} label="Select Your Service Type" value={0} />
         <Picker.Item key={1} label = "Full Contract" value = "Full Contract" />
         <Picker.Item key={2} label = "Labour Contract" value = "Labour Contract" />
-        <Picker.Item key={3} label = "Both" value = "Full Contract and Labour Contract" />
+        <Picker.Item key={3} label = "Both" value = "Both" />
       </Picker> 
     </View>
   );
@@ -31,9 +31,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'column',
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 5,
+    borderRadius: 2,
     borderWidth:0.5,
-    borderColor:'lightgrey'
+    borderColor: 'rgba(68,68,68,1)',
+    marginTop: 3,
+    height: 40
   },
   text: {
     fontSize: 16,

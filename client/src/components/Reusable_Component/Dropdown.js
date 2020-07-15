@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5
     },
     picker: {
-        height: 25
+        height: 30
     }
 });
 

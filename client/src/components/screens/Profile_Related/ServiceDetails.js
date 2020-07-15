@@ -73,8 +73,6 @@ const styles = StyleSheet.create({
         color: "#696969"
     },
     selectedItems: {
-        
-
         margin: 2,
         width:'70%'
     },

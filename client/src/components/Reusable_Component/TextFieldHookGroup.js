@@ -10,6 +10,9 @@ const TextFieldHookGroup = ({
     secureTextEntry,
     placeholder,
     control,
+    title,
+    required,
+    multiline,
     name,
     onChange,
     rules,
@@ -20,10 +23,11 @@ const TextFieldHookGroup = ({
 }) => {
     return (
         <View style={styles.container}>
-            {/* <Text style={styles.title}>{title}</Text> */}
+            {title && <Text style={styles.title}>{title}  {required && <FontAwesome5 name="star-of-life" color="rgba(214, 48, 49, 1)" size={8} />}</Text>}
             <Controller 
                 as={<TextInput 
                     style={styles.inputBox} 
+                    multiline={multiline}
                     keyboardType={type}
                     secureTextEntry={secureTextEntry}
                     placeholder={placeholder} 
@@ -49,8 +53,8 @@ const styles = StyleSheet.create({
         marginVertical: 5
     },
     title: {
-        color: 'rgba(60, 59, 55, .9)',
-        marginBottom: 3
+        color: '#008b8b',
+        // marginBottom: 3
     },
     inputBox: {
         width: "100%",
@@ -76,7 +80,7 @@ const styles = StyleSheet.create({
 TextFieldHookGroup.propTypes = {
     type: PropTypes.string.isRequired,
     secureTextEntry: PropTypes.bool,
-    placeholder: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     defaultValue: PropTypes.string.isRequired,
     errors: PropTypes.string
@@ -84,6 +88,7 @@ TextFieldHookGroup.propTypes = {
 
 TextFieldHookGroup.defaultProps = {
     type: 'default',
+    multiline: false,
     secureTextEntry: false
 }
 

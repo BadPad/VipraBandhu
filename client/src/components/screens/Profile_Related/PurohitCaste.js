@@ -4,7 +4,7 @@ import { Picker, View, StyleSheet, Text} from 'react-native';
 const PurohitCaste = ({ caste, selectCaste, selectedCaste }) => {
   const handleChange = (value) => {
     if(value.castes && value.castes !== 0) {
-      console.log(value.castes)
+      // console.log(value.castes)
       selectCaste(value.castes)
     }
   } 
@@ -31,9 +31,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'column',
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 5,
+    borderRadius: 2,
     borderWidth:0.5,
-    borderColor:'lightgrey'
+    borderColor:'rgba(68,68,68,1)',
+    height: 40
   },
   text: {
     fontSize: 16,

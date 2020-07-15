@@ -70,6 +70,8 @@ function getHeaderTitle(route) {
       return 'Offers'
     case 'MyProfile':
       return 'My Profile'
+    case 'ProfileEdit':
+      return 'Edit Profile'
     case 'BookingsList':
       return 'My Bookings'
     case 'MyWallet':
@@ -330,9 +332,9 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
+          <Icon.Button name="md-arrow-round-back" size={25}
             backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.openDrawer()
+            onPress={() => navigation.goBack()
             }>
           </Icon.Button >
         )

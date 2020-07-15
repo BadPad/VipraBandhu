@@ -139,8 +139,8 @@ const SelfDetails = ({
                         selectedCity={formData.city}
                         selectState={state => updatedForm({...formData, state})}
                         selectCity={city => {
-                        updatedForm({...formData, city});
-                        getAreas(city);
+                            updatedForm({...formData, city});
+                            getAreas(city);
                         }}
                     />
                     <Text style = {styles.texts}>Area: <Text style={{ color: 'red', fontSize: 15, paddingLeft: 10 }}>*</Text></Text>

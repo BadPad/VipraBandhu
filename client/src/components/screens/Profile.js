@@ -6,19 +6,17 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getDistrictOrCity, getAreas } from '../../redux/actions/cityAreaActions';
 import { getCastes } from '../../redux/actions/casteActions';
 import { updateCook, updatePurohit, updateCustomer } from '../../redux/actions/profileActions';
-import Accordian from '../Reusable_Component/Acoordian';
 import Iconback from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Iconlocation from 'react-native-vector-icons/Entypo';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
-import FieldButton from '../Reusable_Component/FieldButton';
+import isEmpty from '../Reusable_Component/is-empty';
 
 
 
@@ -44,28 +42,25 @@ const Profile = ({ auth, navigation }) => {
 
   const selectedCaste = auth.user.serviceCastes;
   let sc;
-  if (selectedCaste != null) {
-    const scs = selectedCaste.filter(list => list.value)
-    sc = [scs.map(list => list.value)]
-    sc = sc.join(', ')
+  if (!isEmpty(selectedCaste)) {
+    sc = selectedCaste.filter(list => list)
   }
+
   return (
     <>
       <ScrollView>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate('ProfileEdit')}>
-            <Text style={{ color: '#fff', fontSize: 20, paddingTop: 15, paddingRight: 10, alignSelf: "flex-end" }}><Iconback name="form" style={{ color: '#fff', fontSize: 20 }} />Edit</Text>
+          <TouchableOpacity style={styles.editProfile} onPress={() => navigation.navigate('ProfileEdit')}>
+            <Text style={{ color: '#fff', fontSize: 20, paddingTop: 15, paddingRight: 10, alignSelf: "flex-end" }}><Iconback name="form" style={{ color: '#fff', fontSize: 20 }} /> Edit</Text>
           </TouchableOpacity>
           <View style={styles.headerContent}>
             <Image style={styles.avatar}
               source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar1.png' }} />
 
             <Text style={styles.name}>
-              {/* {user.FirstName} {user.LastName} */}
               {auth.user.FirstName} {auth.user.LastName}
             </Text>
             <Text style={styles.name}>
-              {/* {user['phone number']} */}
               {auth.user['phone number']}
             </Text>
           </View>
@@ -79,7 +74,6 @@ const Profile = ({ auth, navigation }) => {
             </View>
             <View style={styles.nameContainer}>
               <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.EmailId} </Text>
-              {/* <Text style={styles.mblTxt}>Mobile</Text> */}
             </View>
           </View>
         </View>
@@ -91,7 +85,6 @@ const Profile = ({ auth, navigation }) => {
             </View>
             <View style={styles.nameContainer}>
               <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.alternateNumber} </Text>
-              {/* <Text style={styles.mblTxt}>Mobile</Text> */}
             </View>
           </View>
         </View>
@@ -102,8 +95,7 @@ const Profile = ({ auth, navigation }) => {
               <Text style={styles.msgTxt}>Caste</Text>
             </View>
             <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.purohitCaste} </Text>
-              {/* <Text style={styles.mblTxt}>Mobile</Text> */}
+              <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.caste} </Text>
             </View>
           </View>
         </View>
@@ -114,8 +106,7 @@ const Profile = ({ auth, navigation }) => {
               <Text style={styles.msgTxt}>Address</Text>
             </View>
             <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{auth.user.AddressOne},{auth.user.city},{auth.user.state} </Text>
-              {/* <Text style={styles.mblTxt}>Mobile</Text> */}
+              <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{auth.user.address}, {auth.user.city}, {auth.user.state} </Text>
             </View>
           </View>
         </View>
@@ -125,25 +116,22 @@ const Profile = ({ auth, navigation }) => {
             <View>
               <Text style={{ textAlign: 'center', color: 'green', fontSize: 20 }}>Offered Services</Text>
               {
-                (currentUserType != "cook") ?
-                  <View style={styles.row}>
+                (currentUserType === 'purohit') ?
+                  !isEmpty(selectedServices) &&
+                    <View style={styles.row}>
                     <Icons name="room-service-outline" style={{ fontSize: 20 }} />
-
                     <View>
                       <View style={styles.msgContainer}>
                         <Text style={styles.msgTxt}>Services</Text>
                       </View>
                       <View style={styles.nameContainer}>
                         <Text style={styles.nameTxt} numberOfLines={10} ellipsizeMode="tail">{selectedServices} </Text>
-                        {/* <Text style={styles.mblTxt}>Mobile</Text> */}
                       </View>
                     </View>
-
-
-
                   </View>
                   : null
               }
+              {!isEmpty(auth.user.typeOfService) &&
               <View style={styles.row}>
                 <Icons name="room-service-outline" style={{ fontSize: 20 }} />
                 <View>
@@ -152,10 +140,10 @@ const Profile = ({ auth, navigation }) => {
                   </View>
                   <View style={styles.nameContainer}>
                     <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{auth.user.typeOfService} </Text>
-                    {/* <Text style={styles.mblTxt}>Mobile</Text> */}
                   </View>
                 </View>
-              </View>
+              </View>}
+              {!isEmpty(sc) &&
               <View style={styles.row}>
                 <Icon name="user" style={{ fontSize: 20 }} />
                 <View>
@@ -163,11 +151,10 @@ const Profile = ({ auth, navigation }) => {
                     <Text style={styles.msgTxt}>Preferred Caste</Text>
                   </View>
                   <View style={styles.nameContainer}>
-                    <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{sc} </Text>
-                    {/* <Text style={styles.mblTxt}>Mobile</Text> */}
+                    <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{sc.join(', ')} </Text>
                   </View>
                 </View>
-              </View>
+              </View>}
             </View>
             : null
         }
@@ -181,8 +168,13 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: "#D63031",
   },
+  editProfile: {
+    position: 'absolute',
+    top: 0,
+    right: 0
+  },
   headerContent: {
-    padding: 10,
+    padding: 20,
     alignItems: 'center',
   },
   avatar: {

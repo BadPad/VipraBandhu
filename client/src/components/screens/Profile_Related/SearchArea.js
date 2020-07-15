@@ -2,25 +2,6 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 
- /* const items = [
-    {
-        id: 1,
-        name: 'Madhwa',
-    },
-    {
-        id: 2,
-        name: 'Smartha',
-    },
-    {
-        id: 3,
-        name: 'Iyengar',
-    },
-    {
-        id: 4,
-        name: 'Any',
-    },
-];  */
-
 export default class SearchArea extends Component {
   
   onSelectedItemsChange = (selectedItems) => {
@@ -43,7 +24,7 @@ export default class SearchArea extends Component {
         <SectionedMultiSelect
           items={output}
           uniqueKey="id"
-          selectText="Areas"
+          selectText="Area"
           styles={{
             selectToggleText:{
               
@@ -51,14 +32,15 @@ export default class SearchArea extends Component {
             selectToggle:{
               width: "100%",
               backgroundColor: 'rgba(255, 255, 255, 0.2)',
-              borderRadius: 5,
+              borderRadius: 2,
               paddingHorizontal: 16,
               fontSize: 16,
               marginVertical: 3,
               padding: 5,
               paddingLeft: 10,
               borderWidth:0.5,
-              borderColor:'lightgrey'
+              borderColor:'rgba(68,68,68,1)',
+              height: 40
             },
           }}
           showDropDowns={true}

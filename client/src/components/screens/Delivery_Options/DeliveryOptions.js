@@ -19,6 +19,7 @@ import Dropdown from '../../Reusable_Component/Dropdown';
 import isEmpty from '../../Reusable_Component/is-empty';
 import CateringBookingCartServiceList from '../../utils/CateringBookingCartServiceList';
 import Indicator from '../../Reusable_Component/SpinnerIndicator/Indicator';
+import MultipleSelectionDropdown from '../../Reusable_Component/MultipleSelectionDropdown';
 
 const customerpaymentType = [
     {label: "Select Payment Type", value: 0},
@@ -101,9 +102,9 @@ const DeliveryOptions = ({
     }
 
     const customerPreferCaste = casteList && casteList.getCasteList && casteList.getCasteList.reduce((pV, cV, cI) => {
-        pV.push({ label: cV, value: cV});
+        pV.push({ label: cV, value: `${cI}`});
         return pV;
-    }, [{ label: "Prefer Caste", value: 0 }])
+    }, [])
 
     const { loading } = bookingCartServices;
 
@@ -141,12 +142,13 @@ const DeliveryOptions = ({
                         </CardSection>
                         <CardSection style={styles.servicePay}>
                             <Text style={styles.servicePref}>Service Caste Prefer</Text>
-                            <Dropdown 
-                                data={customerPreferCaste && customerPreferCaste} 
-                                style={styles.castePref}
-                                selectDrop={drop => addServiceCastePrefer(drop)}
-                                selectedItem={bookingCartServices && bookingCartServices.preferCaste}
-                            />
+                            <View style={styles.servicePayCaste}>
+                                <MultipleSelectionDropdown 
+                                    data={customerPreferCaste && customerPreferCaste}
+                                    SelectedData={SelectedData => addServiceCastePrefer(SelectedData.map(list => list.value))}
+                                    selectedItems={bookingCartServices && bookingCartServices.preferCaste}
+                                />
+                            </View>
                         </CardSection>
                     </Card>
                     <CardSection style={styles.serviceSlots}>

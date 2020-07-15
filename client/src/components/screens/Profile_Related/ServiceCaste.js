@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, TouchableHighlight, FlatList } from 'react-nati
 import ModalView from '../../Reusable_Component/ModalView';
 import SelectMultiple from 'react-native-select-multiple';
 import FieldButton from '../../Reusable_Component/FieldButton';
+import isEmpty from '../../Reusable_Component/is-empty';
 
 const ServiceCaste = ({ caste, selectedCaste, selectedItems }) => {
 
   const [isModal, setIsModal] = useState(false);
 
   function setID(item, index) {
-    const newFormat = {"label": item,"value": item};
+    const newFormat = {"label": item,"value": `${index}`};
     return newFormat;
   }
 
@@ -27,7 +28,6 @@ const ServiceCaste = ({ caste, selectedCaste, selectedItems }) => {
         /> */}
 
       <SelectMultiple 
-        
         items={output} 
         selectedItems={selectedItems}
         onSelectionsChange={onSelectedData => selectedCaste(onSelectedData)}
@@ -58,7 +58,7 @@ const ServiceCaste = ({ caste, selectedCaste, selectedItems }) => {
               close={() => setIsModal(!isModal)}
               children={modalContent}
             />
-            <Text style={styles.textStyles}> Preferred Caste</Text>
+            <Text style={styles.textStyles}>{!isEmpty(selectedItems) ? ` Selected (${selectedItems.length})` : ' Preferred Caste'}</Text>
           </View>
         </TouchableHighlight>
       </View>
@@ -73,14 +73,15 @@ const styles = StyleSheet.create({
   serviceView: {
     width: "100%",
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 5,
+    borderRadius: 2,
     paddingHorizontal: 16,
     fontSize: 16,
     marginVertical: 3,
     padding: 5,
     paddingLeft: 5,
     borderWidth:0.5,
-    borderColor:'lightgrey'
+    borderColor: 'rgba(68,68,68,1)',
+    height: 40
   },
   openButtonn: {
     backgroundColor: "#FFF",
@@ -95,7 +96,8 @@ const styles = StyleSheet.create({
   },
   textStyles: {
     color: '#000',
-    fontSize: 17
+    fontSize: 17,
+    marginTop: 3
   },
   text: {
     fontSize: 20,
