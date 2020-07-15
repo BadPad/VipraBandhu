@@ -23,8 +23,8 @@ import MultipleSelectionDropdown from '../../Reusable_Component/MultipleSelectio
 
 const customerpaymentType = [
     {label: "Select Payment Type", value: 0},
-    {label: "Full Payment", value: "Full Payment"},
-    {label: "Partial Payment", value: "Partial Payment"}
+    {label: "Full Payment", value: "full"},
+    {label: "Partial Payment", value: "partial"}
 ]
 
 const DeliveryOptions = ({ 

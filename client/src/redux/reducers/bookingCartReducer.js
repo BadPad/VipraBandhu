@@ -9,7 +9,7 @@ const initialState = {
     totalAmount: null,
     amountPayable: null,
     amountbalance: null,
-    paymentType: 'Full Payment',
+    paymentType: 'full',
     preferCaste: null,
     location: null,
     bookingCartStructureSelected: null,
@@ -116,9 +116,9 @@ export default function(state = initialState, action) {
             const { totalAmount } = state;
             const percentage = 25/100;
             let payableAmount;
-            if(action.payload === 'Full Payment') {
+            if(action.payload === 'full') {
                 payableAmount = totalAmount
-            } else if(action.payload === 'Partial Payment') {
+            } else if(action.payload === 'partial') {
                 payableAmount = percentage * totalAmount
             }
             const balanceAmount = totalAmount - payableAmount;
@@ -150,13 +150,13 @@ export default function(state = initialState, action) {
                         return {
                             service_id: pooja.serviceId,
                             service_date: new Date(item.date).toISOString(),
-                            contract_type: pooja.contractType
+                            contract_type: pooja.contractType === 'Full Contract' ? 'full': pooja.contractType === 'Labour Contract' ? 'labour' : null
                         }
                     })
                 }
             })
             const newPoojaCartData = poojaCartData.filter(list => !isEmpty(list.bookings))
-            // console.log(newPoojaCartData)
+            console.log(newPoojaCartData)
 
             const cateringCartData = finalPayment.map(item => {
                 return {
@@ -165,13 +165,13 @@ export default function(state = initialState, action) {
                             service_id: catering.serviceId,
                             service_date: catering.serviceDate,
                             contract_type: catering.contractType,
-                            person_count: catering.servicePersonsCount
+                            person_count: catering.servicePersonsCount === 'Full Contract' ? 'full': catering.servicePersonsCount === 'Labour Contract' ? 'labour' : catering.servicePersonsCount
                         }
                     })
                 }
             })
             const newCateringCartData = cateringCartData.filter(list => !isEmpty(list.bookings))
-            // console.log(newCateringCartData)
+            console.log(newCateringCartData)
             return {
                 ...state,
                 paymentDataStructured: {

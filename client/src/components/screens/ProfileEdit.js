@@ -81,6 +81,13 @@ const ProfileEdit = ({
     const validError = {
       validError: {}
     }
+    
+    const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i
+
+    if(!isEmpty(formData.email) && regex.test(formData.email)) {
+      isError = true;
+      validError.validError.email = 'Email is invalid!'
+    }
 
     if(isEmpty(formData.caste)) {
       isError = true;
@@ -122,6 +129,7 @@ const ProfileEdit = ({
     return isError;
   }
 
+  console.log(validError)
   const onSubmit = data => {
 
     const err = validate();
@@ -182,8 +190,9 @@ const ProfileEdit = ({
                       required
                       control={control}
                       onChange={args => {
-                        args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '')
-                        setFormData({...formData, FirstName: args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '')})
+                        args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '');
+                        setFormData({...formData, FirstName: args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '')});
+                        setFormUpdated(true)
                       }}
                       rules={{ required: true, minLength: 4 }}
                       defaultValue={formData.FirstName}
@@ -194,8 +203,9 @@ const ProfileEdit = ({
                       name="LastName"
                       control={control}
                       onChange={args => {
-                        args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '')
-                        setFormData({...formData, LastName: args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '')})
+                        args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '');
+                        setFormData({...formData, LastName: args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '')});
+                        setFormUpdated(true);
                       }}
                       defaultValue={formData.LastName}
                     />
@@ -205,8 +215,9 @@ const ProfileEdit = ({
                       name="alternateNumber"
                       control={control}
                       onChange={args => {
-                        args[0].nativeEvent.text
-                        setFormData({...formData, alternateNumber: args[0].nativeEvent.text})
+                        args[0].nativeEvent.text;
+                        setFormData({...formData, alternateNumber: args[0].nativeEvent.text});
+                        setFormUpdated(true);
                       }}
                       defaultValue={formData.alternateNumber}
                     />
@@ -216,8 +227,9 @@ const ProfileEdit = ({
                         name="email"
                         control={control}
                         onChange={args => {
-                          args[0].nativeEvent.text
-                          setFormData({...formData, email: args[0].nativeEvent.text})
+                          args[0].nativeEvent.text;
+                          setFormData({...formData, email: args[0].nativeEvent.text});
+                          setFormUpdated(true);
                         }}
                         rules={{ pattern: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i }}
                         defaultValue={formData.email}
@@ -246,8 +258,9 @@ const ProfileEdit = ({
                         multiline
                         control={control}
                         onChange={args => {
-                          args[0].nativeEvent.text
-                          setFormData({...formData, address: args[0].nativeEvent.text})
+                          args[0].nativeEvent.text;
+                          setFormData({...formData, address: args[0].nativeEvent.text});
+                          setFormUpdated(true);
                         }}
                         rules={{ required: true }}
                         defaultValue={formData.address}
@@ -357,10 +370,16 @@ const ProfileEdit = ({
       <View style={{ marginTop: 20 }}>
           {formState.dirty || formUpdated ?
             selectedTab === 0 ?
-              <FieldButton 
-                name="Next"
-                onPress={() => setSelectedTab(1)}
-              />
+              userType === 'customer' ?
+                <FieldButton 
+                  name="Update Profile"
+                  onPress={handleSubmit(onSubmit)}
+                />
+              : 
+                <FieldButton 
+                  name="Next"
+                  onPress={() => setSelectedTab(1)}
+                />
             :
               <MultipleFieldButton 
                 name="Update Profile"
