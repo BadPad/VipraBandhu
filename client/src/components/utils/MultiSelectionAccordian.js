@@ -4,7 +4,7 @@ import Accordian from '../Reusable_Component/Acoordian';
 import SelectMultiple from 'react-native-select-multiple';
 
 const MultiSelectionAccordian = ({ data, selectedData, selectedItems }) => {
-    console.log(data)
+    // console.log(data)
 
     return (
         <View>

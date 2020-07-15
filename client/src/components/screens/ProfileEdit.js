@@ -12,7 +12,6 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useForm } from "react-hook-form";
-import TextFieldHookGroup from '../Reusable_Component/TextFieldHookGroup';
 import { getDistrictOrCity, getAreas } from '../../redux/actions/cityAreaActions';
 import { getCastes } from '../../redux/actions/casteActions';
 import { updateCook, updatePurohit, updateCustomer } from '../../redux/actions/profileActions';
@@ -27,6 +26,7 @@ import ServiceSelect from './Profile_Related/ServiceSelect';
 import TypesOfService from './Profile_Related/TypesOfService';
 import ServiceCaste from './Profile_Related/ServiceCaste';
 import MultipleFieldButton from '../Reusable_Component/MultipleFieldButton';
+import TextFieldGroup from '../Reusable_Component/TextFieldGroup';
 
 const { width } = Dimensions.get('screen');
 
@@ -62,9 +62,10 @@ const ProfileEdit = ({
     { key: 'second', title: 'Service Details' },
   ]);
 
-
   useEffect(() => {
-    
+    if(isEmpty(formData.state)) {
+      setFormData({...formData, state: "Karnataka" })
+    }
     getCastes();
     getDistrictOrCity();
     getAreas(formData.city)
@@ -81,17 +82,41 @@ const ProfileEdit = ({
     const validError = {
       validError: {}
     }
+
+    if(!isEmpty(formData.FirstName) && formData.FirstName.length < 4) {
+      isError = true;
+      validError.validError.firstName = 'First Name minimum Length should be 4';
+    }
+
+    if(isEmpty(formData.FirstName)) {
+      isError = true;
+      validError.validError.firstName = 'First Name is required!';
+    }
+
+    if(!isEmpty(formData.alternateNumber) && formData.alternateNumber.length !== 10) {
+      isError = true;
+      validError.validError.alternateNumber = 'Mobile number Should be 10 digit';
+    }
     
     const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i
-
-    if(!isEmpty(formData.email) && regex.test(formData.email)) {
+    if(!isEmpty(formData.EmailId) && !regex.test(formData.EmailId)) {
       isError = true;
-      validError.validError.email = 'Email is invalid!'
+      validError.validError.email = 'Email is invalid!';
     }
 
     if(isEmpty(formData.caste)) {
       isError = true;
       validError.validError.caste = `${auth.userType} caste is required!`;
+    }
+
+    if(!isEmpty(formData.address) && formData.address.length > 250) {
+      isError = true;
+      validError.validError.address = 'Address should be maximum 250 Characters';
+    }
+
+    if(isEmpty(formData.add)) {
+      isError = true;
+      validError.validError.address = 'Address is required!';
     }
 
     if(isEmpty(formData.state)) {
@@ -129,20 +154,34 @@ const ProfileEdit = ({
     return isError;
   }
 
-  console.log(validError)
   const onSubmit = data => {
 
     const err = validate();
 
     if(!err) {
-      console.log(data)
+      const { user } = auth;
+      // console.log(user)
       // console.log(formData)
+      const newFormData = formData;
+      if(isEmpty(user.address)) {
+        newFormData.address = [{
+          nickname: 'home',
+          address: newFormData.add
+        }];
+      } else {
+        newFormData.address[0] = {
+          nickname: 'home',
+          address: newFormData.add
+        }
+      }
+      delete newFormData.add;
+      // console.log(newFormData)
       if(auth.userType === 'cook') {
-        updateCook(formData, navigation)
+        updateCook(newFormData, navigation)
       } else if(auth.userType === 'purohit') {
-        updatePurohit(formData, navigation)
+        updatePurohit(newFormData, navigation)
       } else if(auth.userType === 'customer') {
-        updateCustomer(formData, navigation)
+        updateCustomer(newFormData, navigation)
       }
     }
   }
@@ -184,7 +223,7 @@ const ProfileEdit = ({
             <View style={styles.detailsContainer}>
                 {selectedTab === 0 ?
                   <View style={styles.selfDetailsView}>
-                    <TextFieldHookGroup 
+                    {/* <TextFieldHookGroup 
                       title="First Name"
                       name="FirstName"
                       required
@@ -194,46 +233,46 @@ const ProfileEdit = ({
                         setFormData({...formData, FirstName: args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '')});
                         setFormUpdated(true)
                       }}
-                      rules={{ required: true, minLength: 4 }}
                       defaultValue={formData.FirstName}
-                      errors={errors?.FirstName?.types?.required ? 'First Name is required!' : errors?.FirstName?.types?.minLength ? 'First Name minimum Length should be 4' : null}
-                    />
-                    <TextFieldHookGroup 
-                      title="Last Name"
-                      name="LastName"
-                      control={control}
-                      onChange={args => {
-                        args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '');
-                        setFormData({...formData, LastName: args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '')});
-                        setFormUpdated(true);
+                      errors={validError.firstName ? validError.firstName : null}
+                    /> */}
+                    <TextFieldGroup 
+                      title="First Name"
+                      required
+                      onChange={text => {
+                        setFormData({...formData, FirstName: text.replace(/[^A-Za-z]/ig, '')})
+                        setFormUpdated(true)
                       }}
-                      defaultValue={formData.LastName}
+                      value={formData.FirstName}
+                      errors={validError.firstName ? validError.firstName : null}
                     />
-                    <TextFieldHookGroup 
+                    <TextFieldGroup 
+                      title="Last Name"
+                      onChange={text => {
+                        setFormData({...formData, LastName: text.replace(/[^A-Za-z]/ig, '')})
+                        setFormUpdated(true)
+                      }}
+                      value={formData.LastName}
+                    />
+                    <TextFieldGroup 
                       type="numeric"
                       title="Alternate Number"
-                      name="alternateNumber"
-                      control={control}
-                      onChange={args => {
-                        args[0].nativeEvent.text;
-                        setFormData({...formData, alternateNumber: args[0].nativeEvent.text});
-                        setFormUpdated(true);
+                      onChange={text => {
+                        setFormData({...formData, alternateNumber: text})
+                        setFormUpdated(true)
                       }}
-                      defaultValue={formData.alternateNumber}
+                      value={formData.alternateNumber && formData.alternateNumber.replace("+91", "")}
+                      errors={validError.alternateNumber ? validError.alternateNumber : null}
                     />
-                    <TextFieldHookGroup 
-                        type="email-address"
-                        title="Email Address"
-                        name="email"
-                        control={control}
-                        onChange={args => {
-                          args[0].nativeEvent.text;
-                          setFormData({...formData, email: args[0].nativeEvent.text});
-                          setFormUpdated(true);
-                        }}
-                        rules={{ pattern: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i }}
-                        defaultValue={formData.email}
-                        errors={errors?.email?.types?.pattern ? 'Email is invalid!' : null}
+                    <TextFieldGroup 
+                      type="email-address"
+                      title="Email Address"
+                      onChange={text => {
+                        setFormData({...formData, EmailId: text})
+                        setFormUpdated(true)
+                      }}
+                      value={formData.EmailId}
+                      errors={validError.email ? validError.email : null}
                     />
                     <View style={styles.contentBlock}>
                       <View style={styles.blockContent}>
@@ -250,21 +289,17 @@ const ProfileEdit = ({
                       </View>
                     </View>
                     <View style={styles.blockContent}>
-                      <TextFieldHookGroup 
+                      <TextFieldGroup 
                         title="Address"
-                        name="address"
-                        placeholder="#Home No, Home Name, Nearest Land Mark"
                         required
+                        placeholder="#Home No, Home Name, Nearest Land Mark"
                         multiline
-                        control={control}
-                        onChange={args => {
-                          args[0].nativeEvent.text;
-                          setFormData({...formData, address: args[0].nativeEvent.text});
-                          setFormUpdated(true);
+                        onChange={text => {
+                          setFormData({...formData, add: text})
+                          setFormUpdated(true)
                         }}
-                        rules={{ required: true }}
-                        defaultValue={formData.address}
-                        errors={errors?.address?.types?.required ? 'Address is required!' : null}
+                        value={formData.add ||(formData.address && formData.address[0].address)}
+                        errors={validError.address ? validError.address : null}
                       />
                     </View>
                     <View style={styles.contentBlock}>

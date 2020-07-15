@@ -156,7 +156,7 @@ export default function(state = initialState, action) {
                 }
             })
             const newPoojaCartData = poojaCartData.filter(list => !isEmpty(list.bookings))
-            console.log(newPoojaCartData)
+            // console.log(newPoojaCartData)
 
             const cateringCartData = finalPayment.map(item => {
                 return {
@@ -171,7 +171,7 @@ export default function(state = initialState, action) {
                 }
             })
             const newCateringCartData = cateringCartData.filter(list => !isEmpty(list.bookings))
-            console.log(newCateringCartData)
+            // console.log(newCateringCartData)
             return {
                 ...state,
                 paymentDataStructured: {

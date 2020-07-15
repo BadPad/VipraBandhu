@@ -18,8 +18,6 @@ import Iconlocation from 'react-native-vector-icons/Entypo';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import isEmpty from '../Reusable_Component/is-empty';
 
-
-
 const Profile = ({ auth, navigation }) => {
 
   const currentUserType = auth.userType;
@@ -79,6 +77,7 @@ const Profile = ({ auth, navigation }) => {
           </View>
         </View>
 
+        {!isEmpty(auth.user.EmailId) &&
         <View style={styles.row}>
           <Icon name="mail" style={{ fontSize: 20 }} />
           <View>
@@ -89,7 +88,8 @@ const Profile = ({ auth, navigation }) => {
               <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.EmailId} </Text>
             </View>
           </View>
-        </View>
+        </View>}
+        {!isEmpty(auth.user.alternateNumber) &&
         <View style={styles.row}>
           <Icon name="phone" style={{ fontSize: 20 }} />
           <View>
@@ -100,7 +100,8 @@ const Profile = ({ auth, navigation }) => {
               <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.alternateNumber} </Text>
             </View>
           </View>
-        </View>
+        </View>}
+        {!isEmpty(auth.user.caste) &&
         <View style={styles.row}>
           <Icon name="user" style={{ fontSize: 20 }} />
           <View>
@@ -111,7 +112,8 @@ const Profile = ({ auth, navigation }) => {
               <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.caste} </Text>
             </View>
           </View>
-        </View>
+        </View>}
+        {!isEmpty(auth.user.address) &&
         <View style={styles.row}>
           <Iconlocation name="location" style={{ fontSize: 20 }} />
           <View>
@@ -119,10 +121,10 @@ const Profile = ({ auth, navigation }) => {
               <Text style={styles.msgTxt}>Address</Text>
             </View>
             <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{auth.user.address}, {auth.user.city}, {auth.user.state} </Text>
+              <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{auth.user.address && auth.user.address[0].address}, {auth.user.city}, {auth.user.state}</Text>
             </View>
           </View>
-        </View>
+        </View>}
         {
           (currentUserType != "customer") ?
 
@@ -138,7 +140,7 @@ const Profile = ({ auth, navigation }) => {
                         <Text style={styles.msgTxt}>Services</Text>
                       </View>
                       <View style={styles.nameContainer}>
-                        <Text style={styles.nameTxt} numberOfLines={10} ellipsizeMode="tail">{selectedServices} </Text>
+                        <Text style={styles.nameTxt} numberOfLines={10} ellipsizeMode="tail">{auth.user.selectedServices.join(', ')} </Text>
                       </View>
                     </View>
                   </View>

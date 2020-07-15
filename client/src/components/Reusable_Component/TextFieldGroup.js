@@ -1,9 +1,11 @@
 import React from 'react';
 import { StyleSheet, TextInput, View, Text } from 'react-native';
 import PropTypes from 'prop-types'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const TextFieldGroup = ({
-    name,
+    title,
+    required,
     type,
     secureTextEntry,
     placeholder,
@@ -16,10 +18,7 @@ const TextFieldGroup = ({
 }) => {
     return (
         <View style={styles.container}>
-            <View style={styles.row}>
-                <Text style={styles.title}>{name}</Text>
-                <Text style={styles.required}>{star}</Text>
-            </View>
+            {title && <Text style={styles.title}>{title}  {required && <FontAwesome5 name="star-of-life" color="rgba(214, 48, 49, 1)" size={8} />}</Text>}
             <TextInput 
                 style={styles.inputBox}
                 keyboardType={type}
@@ -30,7 +29,7 @@ const TextFieldGroup = ({
                 maxLength={maxLength}
                 multiline={multiline}
             />
-            {errors && <Text style={styles.error}>{errors}</Text>}
+            {errors && <Text style={styles.error}><FontAwesome5 name="exclamation" />  {errors}</Text>}
         </View>
     )
 }
@@ -40,12 +39,8 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         marginVertical: 5
     },
-    row: {
-        flex: 1,
-        flexDirection: "row"
-    },
     title: {
-        color: 'rgba(60, 59, 55, .9)'
+        color: '#008b8b',
     },
     required: {
         color: 'red',
@@ -60,12 +55,9 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginVertical: 2,
         borderWidth:0.5,
-        borderColor: 'rgba(68,68,68,1)',
-        color: 'rgba(60, 59, 55, .9)'
+        borderColor: 'rgba(68,68,68,1)'
     },
     error: {
-        paddingHorizontal: 16,
-        paddingBottom: 5,
         color: '#c81912'
     }
 })

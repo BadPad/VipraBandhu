@@ -32,7 +32,7 @@ const SelectStateCity = ({
         onValueChange={(itemValue) => handleChange({state: itemValue})}
       > 
         <Picker.Item key={0} label="Select State" value={0} />
-        <Picker.Item key={1} label="karnataka" value="karnataka" />
+        <Picker.Item key={1} label="Karnataka" value="Karnataka" />
       </Picker>
     </View>
     {stateError && <Text style={styles.error}><FontAwesome5 name="exclamation" />  {stateError}</Text>}
