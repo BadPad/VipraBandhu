@@ -1,27 +1,35 @@
 import React, { useEffect } from "react";
 import { StyleSheet, FlatList, ScrollView, Dimensions, AsyncStorage, Alert, Clipboard, Text } from 'react-native'
 import BookingsCardList from '../../utils/BookingsCardList';
-import staticData from "../../Reusable_Component/StaticData/BookingsStaticData";
 import isEmpty from '../../Reusable_Component/is-empty';
 import Heading from '../../Reusable_Component/Heading';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
-import { myBookingsOrders, getPurohitBookings } from '../../../redux/actions/myBookingActions';
+import { myBookingsOrders, getPurohitBookings, getCookBookings } from '../../../redux/actions/myBookingActions';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { App_Color, Font_Name_Regular, Font_Name_Bold } from '../../Reusable_Component/ConstantValues';
 
 
-const BookingsList = ({ navigation, route, auth, myBookingsOrders, myOrders, getPurohitBookings, purohitBookings }) => {
+const BookingsList = ({ navigation, route, auth, myBookingsOrders, myOrders, getPurohitBookings, purohitBookings, getCookBookings, cookBookings }) => {
 
     const onSelectBooking = (data, type) => {
         navigation.navigate('Booking', { rowData: data, userType: type })
     }
 
     useEffect(() => {
-        myBookingsOrders(),
+        if (auth.userType === 'customer') {
+            myBookingsOrders()
+        }
+        else if (auth.userType === 'purohit') {
             getPurohitBookings()
+        }
+        else if (auth.userType === 'cook') {
+            getCookBookings()
+        }
     }, [])
 
-    const FirstRoute = () => {
+    const FirstRoute = () => {        
 
         let currentUserType = auth.userType;
         let pendingData = null;
@@ -37,10 +45,9 @@ const BookingsList = ({ navigation, route, auth, myBookingsOrders, myOrders, get
             }
         }
         else if (currentUserType === 'cook') {
-
-        }
-        else {
-
+            if (cookBookings.getCookBookingsList != null) {
+                pendingData = cookBookings.getCookBookingsList.pending_bookings
+            }
         }
 
         return (
@@ -52,7 +59,7 @@ const BookingsList = ({ navigation, route, auth, myBookingsOrders, myOrders, get
                             //keyExtractor={item => item.bookingID.toString()}
                             data={pendingData}
                             renderItem={({ item, index }) => (
-                                <BookingsCardList navigation={navigation} data={item[0]} onSelectBooking={onSelectBooking} status={"pending"} userType={auth.userType} isNotification={false} />
+                                <BookingsCardList navigation={navigation} currentData={item} onSelectBooking={onSelectBooking} status={"pending"} userType={auth.userType} isNotification={false} />
                             )}
                         />
                         : null
@@ -76,7 +83,9 @@ const BookingsList = ({ navigation, route, auth, myBookingsOrders, myOrders, get
             }
         }
         else if (currentUserType === 'cook') {
-
+            if (cookBookings.getCookBookingsList != null) {
+                activeData = cookBookings.getCookBookingsList.active_bookings
+            }
         }
         else {
 
@@ -91,36 +100,37 @@ const BookingsList = ({ navigation, route, auth, myBookingsOrders, myOrders, get
                             //keyExtractor={item => item.bookingID.toString()}
                             data={activeData}
                             renderItem={({ item, index }) => (
-                                <BookingsCardList navigation={navigation} data={item[0]} onSelectBooking={onSelectBooking} status={"active"} userType={auth.userType} isNotification={false} />
+                                <BookingsCardList navigation={navigation} currentData={item} onSelectBooking={onSelectBooking} status={"active"} userType={auth.userType} isNotification={false} />
                             )}
                         />
                         : null
                 }
             </ScrollView>
+
         )
     }
 
     const ThirdRoute = () => {
         let newData;
-        if (auth.userType === "purohit") {
-            newData = staticData.filter(list => list.userType === 'purohit')
-        }
-        else if (auth.userType === "cook") {
-            newData = staticData.filter(list => list.userType === 'cook')
-        }
-        else if (auth.userType === "customer") {
-            newData = staticData.filter(list => list.userType === 'customer')
-        }
+        // if (auth.userType === "purohit") {
+        //     newData = staticData.filter(list => list.userType === 'purohit')
+        // }
+        // else if (auth.userType === "cook") {
+        //     newData = staticData.filter(list => list.userType === 'cook')
+        // }
+        // else if (auth.userType === "customer") {
+        //     newData = staticData.filter(list => list.userType === 'customer')
+        // }
 
         return (
             <ScrollView style={[styles.scene, { backgroundColor: 'lightgrey' }]}>
-                <FlatList
+                {/* <FlatList
                     keyExtractor={item => item.id.toString()}
                     data={newData.filter(list => list.status === 'completed')}
                     renderItem={({ item, index }) => (
                         <BookingsCardList data={item} onSelectBooking={onSelectBooking} status={"completed"} />
                     )}
-                />
+                /> */}
             </ScrollView>
         )
     }
@@ -129,9 +139,9 @@ const BookingsList = ({ navigation, route, auth, myBookingsOrders, myOrders, get
 
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
-        { key: 'first', title: (auth.userType === 'customer') ? 'Tracking' : 'Pending' },
-        { key: 'second', title: (auth.userType === 'customer') ? 'Confirmed' : 'Accepted' },
-        { key: 'third', title: 'Completed' },
+        { key: 'first', title: (auth.userType === 'customer') ? 'TRACKING' : 'PENDING' },
+        { key: 'second', title: (auth.userType === 'customer') ? 'CONFIRMED' : 'ACCEPTED' },
+        { key: 'third', title: 'COMPLETED' },
     ]);
 
     const renderScene = SceneMap({
@@ -140,38 +150,35 @@ const BookingsList = ({ navigation, route, auth, myBookingsOrders, myOrders, get
         third: ThirdRoute,
     });
 
-    let filteredList;
-    if (staticData.length > 0) {
-        filteredList = staticData.filter(list => list.category === 'pooja');
-    }
 
 
-    if (isEmpty(filteredList) === false) {
-        return (
-            <>
-                <TabView
-                    navigationState={{ index, routes }}
-                    renderScene={renderScene}
-                    onIndexChange={setIndex}
-                    initialLayout={initialLayout}
-                    renderTabBar={props => (
-                        <TabBar
-                            {...props}
 
-                            tabStyle={styles.tabStyle}
-                            style={styles.tab}
-                        />
-                    )}
-                />
-            </>
-        )
-    } else {
-        return (
-            <>
-                <Heading containerStyle={styles.containernoResult} style={styles.noResult} name={'There are no bookings currently to show'} />
-            </>
-        )
-    }
+
+    return (
+        <>
+            <TabView
+                labelStyle={styles.labelStyle}
+                navigationState={{ index, routes }}
+                renderScene={renderScene}
+                onIndexChange={setIndex}
+                initialLayout={initialLayout}
+                renderTabBar={props => (
+                    <TabBar
+                        {...props}
+
+                        tabStyle={styles.tabStyle}
+                        style={styles.tab}
+                        renderLabel={({ route, focused, color }) => (
+                            <Text style={{ color, fontSize: wp('3.8') }}>
+                                {route.title}
+                            </Text>
+                        )}
+                    />
+                )}
+            />
+        </>
+    )
+
 }
 
 const styles = StyleSheet.create({
@@ -212,12 +219,15 @@ const styles = StyleSheet.create({
         padding: 3
     },
     tabStyle: {
-        backgroundColor: '#D63031',
-        fontFamily: 'OpenSans-Bold',
+        backgroundColor: App_Color,
+        fontFamily: Font_Name_Bold,
     },
     tab: {
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: Font_Name_Regular,
         fontWeight: 'bold'
+    },
+    labelStyle: {
+        fontSize: 20
     }
 })
 
@@ -227,15 +237,18 @@ BookingsList.propTypes = {
     myOrders: PropTypes.object.isRequired,
     getPurohitBookings: PropTypes.object.isRequired,
     purohitBookings: PropTypes.object.isRequired,
+    getCookBookings: PropTypes.object.isRequired,
+    cookBookings: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
     auth: state.auth,
     myOrders: state.myBookingsOrders,
     purohitBookings: state.getPurohitBookings,
+    cookBookings: state.getCookBookings
 })
 
-const mapDispatchToProps = { myBookingsOrders, getPurohitBookings }
+const mapDispatchToProps = { myBookingsOrders, getPurohitBookings, getCookBookings }
 //const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookingsList)

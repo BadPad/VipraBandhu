@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, Modal, StyleSheet, TouchableHighlight } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import FieldButton from '../Reusable_Component/FieldButton';
-
+import {App_Color}  from '../Reusable_Component/ConstantValues';
 
 
 const CustomModal = ({ visibility, modalText, closeIconPress, cancelButtonPress, submitButtonPress }) => {
@@ -24,11 +24,11 @@ const CustomModal = ({ visibility, modalText, closeIconPress, cancelButtonPress,
                     <View style={styles.mdlCenteredView}>
                         <View style={styles.modalView}>
                             <TouchableHighlight
-                                style={{ ...styles.mdlCloseIconStyle, backgroundColor: "#D63031" }}
+                                style={{ ...styles.mdlCloseIconStyle, backgroundColor: App_Color }}
                                 onPress={closeIconPress}
                             >
                                 <Icon style={styles.mdlIconCircle} name="ios-close-circle" size={30}
-                                    color="#fff" backgroundColor="#D63031"
+                                    color="#fff" backgroundColor={App_Color}
                                 ></Icon>
                             </TouchableHighlight>
                             <Text style={styles.mdlText}>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         margin: 25,
-        backgroundColor: "#D63031",
+        backgroundColor: App_Color,
         borderRadius: 5,
         paddingLeft: 20,
         paddingBottom: 10,

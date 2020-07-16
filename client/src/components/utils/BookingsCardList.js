@@ -4,63 +4,88 @@ import FieldButton from '../Reusable_Component/FieldButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomModal from "../Reusable_Component/CustomModal";
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { purohitBookingAcceptance } from '../../redux/actions/myBookingActions';
+import { purohitBookingAcceptance, cookBookingAcceptance } from '../../redux/actions/myBookingActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from "moment";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { App_Color, Font_Name_Bold, Font_Name_Regular } from '../Reusable_Component/ConstantValues';
 
-const BookingsCardList = ({ navigation, data, onSelectBooking, status, userType, isNotification, purohitBookingAcceptance }) => {
+const BookingsCardList = ({ navigation, currentData, onSelectBooking, status, userType, isNotification, purohitBookingAcceptance, cookBookingAcceptance }) => {
 
     const [modalAcceptVisible, setModalAcceptVisible] = React.useState(false);
     const [modalTextAccept, setModalTextAccept] = React.useState("");
 
     //const bookingStatus = (data.bookingStatus === "pending") ? "Pending" : (data.bookingStatus === "active") ? "Active" : data.bookingStatus
+    const bookingNumber = currentData.bookingNumber;
+    const serviceCount = currentData.bookings.length;
+    let serviceName = '';
+
+    //Loop through all the bookings and get the booking name
+    for (let i = 0; i < currentData.bookings.length; i++) {
+        const newData = currentData.bookings[i];
+        serviceName = serviceName + newData.serviceName + ", ";
+    }
+
+    serviceName = serviceName.replace(/,\s*$/, "");
+
+    if(serviceName.length > 40)
+    serviceName = serviceName.substring(0,40) + " ..."
+
+    //If there are more than one bookings, get first booking
+    const data = currentData.bookings[0];
 
     let bookingStatus = "";
-    let currentBookingStatus = data.bookingStatus;
 
     if (userType === "customer") {
-        if(currentBookingStatus === "pending"){
-            bookingStatus = "Vendor acceptance pending";
+        if (status === "pending") {
+            bookingStatus = "Pending";
         }
-        else if(currentBookingStatus === "active"){
+        else if (status === "active") {
             bookingStatus = "Vendor Accepted";
         }
-        else if(currentBookingStatus === "cancelled"){
+        else if (status === "cancelled") {
             bookingStatus = "Cancelled";
         }
-        else if(currentBookingStatus === "completed"){
+        else if (status === "completed") {
             bookingStatus = "Service Completed";
         }
     }
 
     else if ((userType === "purohit") || (userType === "cook")) {
-        if(currentBookingStatus === "pending"){
+        if (status === "pending") {
             bookingStatus = "New Booking";
         }
-        else if(currentBookingStatus === "active"){
+        else if (status === "active") {
             bookingStatus = "Vendor Accepted";
         }
-        else if(currentBookingStatus === "cancelled"){
+        else if (status === "cancelled") {
             bookingStatus = "Cancelled";
         }
-        else if(currentBookingStatus === "completed"){
+        else if (status === "completed") {
             bookingStatus = "Service Completed";
         }
     }
 
 
-    const bookingId = data.bookingID;
+    
     const serviceDateTime = data.serviceDate;
+    const bookingDateTime = data.bookingDate;
 
     //Calculate Service Date and Time
     let serviceDate = "";
-    let serviceTime = "";
+    let bookingDate = "";
+    //let serviceTime = "";
 
     if (serviceDateTime != null) {
         var date = new Date(serviceDateTime);
         serviceDate = moment(date).format("DD-MMM-YYYY");
-        serviceTime = moment(date).format("hh:mm A");
+        //serviceTime = moment(date).format("hh:mm A");
+    }
+    if (bookingDateTime != null) {
+        var date = new Date(bookingDateTime);
+        bookingDate = moment(date).format("DD-MMM-YYYY");
+        //serviceTime = moment(date).format("hh:mm A");
     }
 
     //Vendor booking Acceptance (Modal View)
@@ -71,14 +96,18 @@ const BookingsCardList = ({ navigation, data, onSelectBooking, status, userType,
 
     //Vendor booking Acceptance
     const acceptBookingConfirmed = () => {
-        const bookingIdArray = []
-        bookingIdArray.push(parseInt(bookingId))
+        const bookingNumberArray = []
+        //bookingNumberArray.push(parseInt(bookingNumber))
+        bookingNumberArray.push((bookingNumber))
 
         const data = {
-            "bookingID": bookingIdArray
+            "bookingNumber": bookingNumber
         }
 
-        purohitBookingAcceptance(data, navigation)
+        if (userType === "purohit")
+            purohitBookingAcceptance(data, navigation)
+        else if (userType === "cook")
+            cookBookingAcceptance(data, navigation)
     }
 
     return (
@@ -90,11 +119,11 @@ const BookingsCardList = ({ navigation, data, onSelectBooking, status, userType,
                         <View style={styles.firstBox}>
                             <View style={styles.firstBoxView}>
                                 <View style={styles.serviceNameView}>
-                                    <Text style={styles.serviceNameText}>{data.serviceName}</Text>
+                                    <Text style={styles.serviceNameText}>{serviceName}</Text>
                                 </View>
                                 <View style={styles.serviceDateView}>
                                     <View>
-                                        <Text style={styles.serviceHeadersRegular}>Type:<Text style={styles.serviceValuesRegular}> {data.contractType}</Text></Text>
+                                        <Text style={styles.serviceHeadersRegular}>Services:<Text style={styles.serviceValuesRegular}> {serviceCount}</Text></Text>
                                     </View>
                                     <View>
                                         <Text style={styles.serviceHeadersRegular}>Status:<Text style={styles.serviceValuesRegular}> {bookingStatus}</Text></Text>
@@ -108,22 +137,22 @@ const BookingsCardList = ({ navigation, data, onSelectBooking, status, userType,
                             <View style={styles.secondBoxView}>
                                 <View style={styles.secondBox1}>
                                     <Text style={styles.serviceHeaders}>Booking ID:</Text>
-                                    <Text style={styles.serviceValues}>{data.bookingNumber}</Text>
+                                    <Text style={styles.serviceValues}>{"SS-"}{data.bookingNumber}</Text>
                                 </View>
                                 <View style={styles.secondBox2}>
                                     <Text style={styles.serviceHeaders}>Service Date:</Text>
                                     <Text style={styles.serviceValues}>{serviceDate}</Text>
                                 </View>
                                 <View style={styles.secondBox3}>
-                                    <Text style={styles.serviceHeaders}>Service Time:</Text>
-                                    <Text style={styles.serviceValues}>{serviceTime}</Text>
+                                    <Text style={styles.serviceHeaders}>Booking Date:</Text>
+                                    <Text style={styles.serviceValues}>{bookingDate}</Text>
                                 </View>
                             </View>
                         </View>
                         <View style={styles.thirdBox}>
                             <View style={styles.thirdBoxView}>
                                 <Icon name="ios-pin" size={20}
-                                    backgroundColor="transparent" color="#D63031"
+                                    backgroundColor="transparent" color={App_Color}
                                 ></Icon >
                                 <Text style={styles.serviceValuesRegular}>
                                     {""} {data.location}
@@ -132,7 +161,7 @@ const BookingsCardList = ({ navigation, data, onSelectBooking, status, userType,
                         </View>
                         <View style={styles.fourthBox}>
                             <View style={styles.fourthBoxView}>
-                                <TouchableOpacity style={((userType === "customer") || (status === "active")) ? styles.boxDetailsFullWidth : styles.boxDetails} activeOpacity={.9} onPress={() => onSelectBooking(data, userType)}>
+                                <TouchableOpacity style={((userType === "customer") || (status === "active")) ? styles.boxDetailsFullWidth : styles.boxDetails} activeOpacity={.9} onPress={() => onSelectBooking(currentData, userType)}>
                                     <Text style={styles.btnDetailsText}>Details {""}
                                         <Icon style={{ paddingRight: 5 }} name="ios-arrow-dropright" size={20}
                                             backgroundColor="transparent" color="maroon"
@@ -186,7 +215,7 @@ const BookingsCardList = ({ navigation, data, onSelectBooking, status, userType,
                                             <Row>
                                                 <Col style={{ width: 40, justifyContent: "center" }}>
                                                     <Icon name="md-alarm" size={30}
-                                                        backgroundColor="transparent" color="#D63031"
+                                                        backgroundColor="transparent" color={App_Color}
                                                     ></Icon >
                                                 </Col>
                                                 <Col >
@@ -267,8 +296,8 @@ const styles = StyleSheet.create({
         paddingBottom: 3
     },
     serviceNameText: {
-        fontSize: 16,
-        fontFamily: 'OpenSans-Bold',
+        fontSize: wp(3.6),
+        fontFamily: Font_Name_Bold,
         color: 'black'
     },
     serviceDateView: {
@@ -276,25 +305,27 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 0,
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: Font_Name_Regular,
 
     },
     serviceHeaders: {
-        fontFamily: 'OpenSans-Bold',
+        fontFamily: Font_Name_Bold,
         color: 'grey'
     },
     serviceHeadersRegular: {
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: Font_Name_Regular,
         color: 'grey'
     },
 
     serviceValues: {
-        fontFamily: 'OpenSans-Bold',
-        color: 'black'
+        fontFamily: Font_Name_Bold,
+        color: 'black',
+
     },
     serviceValuesRegular: {
-        fontFamily: 'OpenSans-Regular',
-        color: 'black'
+        fontFamily: Font_Name_Regular,
+        color: 'black',
+        fontSize: wp('3.6%')
     },
     firstBoxView: {
         padding: 5,
@@ -306,7 +337,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 0,
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: Font_Name_Regular,
 
     },
     thirdBoxView: {
@@ -314,7 +345,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         marginBottom: 0,
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: Font_Name_Regular,
         padding: 5
     },
     fourthBoxView: {
@@ -322,7 +353,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 0,
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: Font_Name_Regular,
         backgroundColor: '#f5f5f5',
 
     },
@@ -365,22 +396,22 @@ const styles = StyleSheet.create({
         padding: 5
     },
     btnDetailsText: {
-        fontFamily: 'OpenSans-Regular',
-        fontSize: 17
+        fontFamily: Font_Name_Regular,
+        fontSize: hp(2.4)
     },
     btnApproveText: {
-        fontFamily: 'OpenSans-Regular',
-        fontSize: 17
+        fontFamily: Font_Name_Regular,
+        fontSize: hp(2.4)
     },
     notificationMessage: {
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: Font_Name_Regular,
         color: 'grey',
-        fontSize: 12
+        fontSize: hp(1.5)
     },
     notificationMessageVendor: {
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: Font_Name_Regular,
         color: 'green',
-        fontSize: 12
+        fontSize: hp(1.5)
     },
 
 
@@ -396,7 +427,7 @@ const styles = StyleSheet.create({
         padding: 10,
         fontFamily: 'OpenSans-Regular',
         borderBottomWidth: 1,
-        borderBottomColor: '#D63031',
+        borderBottomColor: App_Color,
 
     },
     detailsBox: {
@@ -443,7 +474,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     buttonTouch: {
-        backgroundColor: '#D63031',
+        backgroundColor: App_Color,
         borderRadius: 5,
 
     },
@@ -470,7 +501,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         margin: 25,
-        backgroundColor: "#D63031",
+        backgroundColor: App_Color,
         borderRadius: 5,
         paddingLeft: 20,
         paddingBottom: 10,
@@ -488,7 +519,7 @@ const styles = StyleSheet.create({
     mdlCloseIconStyle: {
         width: '100%',
         alignSelf: 'flex-end',
-        backgroundColor: '#D63031',
+        backgroundColor: App_Color,
         color: '#fff',
 
     },
@@ -529,12 +560,13 @@ const styles = StyleSheet.create({
 
 BookingsCardList.propTypes = {
     purohitBookingAcceptance: PropTypes.func.isRequired,
+    cookBookingAcceptance: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
 
 })
 
-const mapDispatchToProps = { purohitBookingAcceptance }
+const mapDispatchToProps = { purohitBookingAcceptance, cookBookingAcceptance }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookingsCardList)

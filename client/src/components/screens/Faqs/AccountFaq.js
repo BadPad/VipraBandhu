@@ -18,7 +18,7 @@ const AccountFaq = () => {
                             1. What is My Profile?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: My Profile page is a space where you can see all your Sukalpa Seva account details such as your bookings,
+                            My Profile page is a space where you can see all your Sukalpa Seva account details such as your bookings,
                         </Text>
                     </View>
                     <View style={styles.faq}>                       
@@ -26,7 +26,7 @@ const AccountFaq = () => {
                             2. How do I reset my password?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: Password can be reset by clicking on "Forgot Password" option. We will send an OTP to initiate password reset. So please make sure that you provide correct phone number. 
+                            Password can be reset by clicking on "Forgot Password" option. We will send an OTP to initiate password reset. So please make sure that you provide correct phone number. 
                         </Text>
                     </View>
                     <View style={styles.faq}>                       
@@ -34,7 +34,7 @@ const AccountFaq = () => {
                             3. What is Refer and Earn? How will it work?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: "Refer and Earn" is a special feature in our app, where you can refer family & friends  to install the app and to use it. When the person you refer does the first booking, you will get 100 Points (equal to 100 Rs) in your wallet, which you can see in "My Wallet" section. You can make use of your wallet points for any of your future bookings
+                            "Refer and Earn" is a special feature in our app, where you can refer family & friends  to install the app and to use it. When the person you refer does the first booking, you will get 100 Points (equal to 100 Rs) in your wallet, which you can see in "My Wallet" section. You can make use of your wallet points for any of your future bookings
                         </Text>
                     </View>                    
                 </View>                                                                                  

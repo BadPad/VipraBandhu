@@ -1,54 +1,71 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, ScrollView, Modal, TouchableHighlight, AsyncStorage } from 'react-native';
-import Card from '../../Reusable_Component/Card/Card';
-import CardSection from '../../Reusable_Component/Card/CardSection';
-import Heading from '../../Reusable_Component/Heading';
-import FieldButton from '../../Reusable_Component/FieldButton';
+import { StyleSheet, View, Text, TextInput, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Ionicons';
-import staticData from "../../Reusable_Component/StaticData/BookingsStaticData";
+import TextFieldGroup from '../../Reusable_Component/TextFieldGroup';
+import ModalView from '../../Reusable_Component/ModalView';
 import CustomModal from "../../Reusable_Component/CustomModal";
 import moment from "moment";
 import { cancelCustomerBooking, purohitBookingAcceptance } from '../../../redux/actions/myBookingActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { App_Color, Font_Name_Regular, Font_Name_Bold } from '../../Reusable_Component/ConstantValues';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 //const { width, height } = Dimensions.get('window');
 
 const Booking = ({ navigation, route, cancelCustomerBooking, purohitBookingAcceptance }) => {
 
+    const userType = route.params.userType;
+    const selectedData = route.params.rowData;
+
+
+    //If there are more than one bookings, get first booking
+    const data = selectedData.bookings[0];
+
+    //Calculate Service Date and Time
+    let serviceDate = "";
+    let serviceDateCalc = "";
+    let serviceTime = "";
+    let bookingDate = "";
+
+    if (data.serviceDate != null) {
+        var date = new Date(data.serviceDate);
+        serviceDate = moment(date).format("DD-MMM-YYYY");
+        serviceDateCalc = moment(date).format("YYYY-MM-DD");
+        serviceTime = moment(date).format("hh:mm A");
+    }
+    if (data.bookingDate != null) {
+        var date = new Date(data.bookingDate);
+        bookingDate = moment(date).format("DD-MMM-YYYY");
+    }
+
+    const serviceAddress = data.location;
+    const bookingStatus = data.bookingStatus;
+    const bookingNumber = data.bookingNumber;
+    const serviceType = data.serviceType;
+
+    //const displayService = route.params.rowData;
+
+
     const [modalCustomerVisible, setModalCustomerVisible] = React.useState(false);
     const [modalVendorVisible, setModalVendorVisible] = React.useState(false);
+    const [modalAddressVisible, setModalAddressVisible] = React.useState(false);
 
     const [modalTextCustomer, setModalTextCustomer] = React.useState("");
     const [modalTextVendor, setModalTextVendor] = React.useState("");
 
-    const displayService = route.params.rowData;
-    const userType = route.params.userType;
+    const [txtAddress, setTxtAddress] = React.useState(serviceAddress);
 
-
-    const bookingStatus = displayService.bookingStatus;
-    const bookingId = displayService.bookingID;
-    const serviceDateTime = displayService.serviceDate.toString();
-
-    let serviceDate = "";
-    let serviceTime = "";
-
-    if (serviceDateTime != null) {
-        var date = new Date(serviceDateTime);
-        serviceDate = moment(date).format("DD-MMM-YYYY");
-        serviceTime = moment(date).format("hh:mm A");
-    }
-
-
+    //Set Navigation Options
     navigation.setOptions({ title: serviceDate })
 
 
     //Customer booking cancellation (Modal View)
     const cancelCustomerBookingBtn = () => {
 
-        const dtServiceDate = serviceDate + " " + serviceTime
+        const dtServiceDate = serviceDateCalc + " " + serviceTime
         const dtServiceDateMoment = moment(dtServiceDate, "YYYY-MM-DD HH:mm")
 
         let currentDate = new Date();
@@ -81,7 +98,7 @@ const Booking = ({ navigation, route, cancelCustomerBooking, purohitBookingAccep
     //Customer booking cancellation
     const customerCancelConfirmed = () => {
         const data = {
-            "bookingID": bookingId
+            "bookingNumber": bookingNumber
         }
         cancelCustomerBooking(data, navigation)
     }
@@ -100,191 +117,334 @@ const Booking = ({ navigation, route, cancelCustomerBooking, purohitBookingAccep
         const data = {
             "bookingID": bookingIdArray
         }
-        
+
         purohitBookingAcceptance(data, navigation)
+    }
+
+    //Vendor booking Acceptance (Modal View)
+    const changeAddressBtn = () => {
+        setModalAddressVisible(true);
+    }
+
+    const renderData = ({ item }) => {
+        let serviceDate;
+        let serviceTime;
+
+        if (item.serviceDate != null) {
+            var date = new Date(item.serviceDate);
+            serviceDate = moment(date).format("DD-MMM-YYYY");
+            serviceTime = moment(date).format("hh:mm A");
+        }
+
+        return (
+            <>
+                {
+                    (serviceType === "purohit") ?
+                        <View style={styles.innerView}>
+                            <View style={styles.vendorBox}>
+                                <View>
+                                    <View style={{ backgroundColor: '#ddd3ee' }}>
+                                        <Text style={styles.bookingDetailsServiceName}>{item.serviceName}</Text>
+                                    </View>
+                                    <Grid>
+
+                                        <Row>
+                                            <Col style={styles.colHeader}>
+                                                <Text style={styles.bookingDetailsHeader}>Time:</Text>
+                                            </Col>
+                                            <Col style={styles.colDetails}>
+                                                <Text style={styles.bookingDetails}>{serviceTime}</Text>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col style={styles.colHeader}>
+                                                <Text style={styles.bookingDetailsHeader}>Contract Type:</Text>
+                                            </Col>
+                                            <Col style={styles.colDetails}>
+                                                <Text style={styles.bookingDetails}>{item.contractType}</Text>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col style={styles.colHeader}>
+                                                <Text style={styles.bookingDetailsHeader}>Amount Paid:</Text>
+                                            </Col>
+                                            <Col style={styles.colDetails}>
+                                                <Text style={styles.bookingDetails}>{item.amountPaid}</Text>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col style={styles.colHeader}>
+                                                <Text style={styles.bookingDetailsHeader}>Balance Amount:</Text>
+                                            </Col>
+                                            <Col style={styles.colDetails}>
+                                                <Text style={styles.bookingDetails}>{item.amountPaid}</Text>
+                                            </Col>
+                                        </Row>
+                                    </Grid>
+                                </View>
+                            </View>
+                        </View>
+                        : (serviceType === "cook") ?
+
+                            <View style={styles.innerView}>
+                                <View style={styles.vendorBox}>
+                                    
+                                    <View>
+                                        <View style={{ backgroundColor: '#ddd3ee' }}>
+                                            <Text style={styles.bookingDetailsServiceName}>{item.serviceName}</Text>
+                                        </View>
+                                        <Grid>
+                                            <Row>
+                                                <Col style={styles.colHeader}>
+                                                    <Text style={styles.bookingDetailsHeader}>Time:</Text>
+                                                </Col>
+                                                <Col style={styles.colDetails}>
+                                                    <Text style={styles.bookingDetails}>{serviceTime}</Text>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col style={styles.colHeader}>
+                                                    <Text style={styles.bookingDetailsHeader}>Contract Type:</Text>
+                                                </Col>
+                                                <Col style={styles.colDetails}>
+                                                    <Text style={styles.bookingDetails}>{item.contractType}</Text>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col style={styles.colHeader}>
+                                                    <Text style={styles.bookingDetailsHeader}>Amount Paid:</Text>
+                                                </Col>
+                                                <Col style={styles.colDetails}>
+                                                    <Text style={styles.bookingDetails}>{item.amountPaid}</Text>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col style={styles.colHeader}>
+                                                    <Text style={styles.bookingDetailsHeader}>Balance Amount:</Text>
+                                                </Col>
+                                                <Col style={styles.colDetails}>
+                                                    <Text style={styles.bookingDetails}>{item.amountPaid}</Text>
+                                                </Col>
+                                            </Row>
+                                            
+                                        </Grid>
+                                    </View>
+                                </View>
+                            </View>
+                            : null}
+            </>
+        );
     }
 
 
     return (
         <View style={styles.topView}>
-            <ScrollView>
-                <View style={styles.innerView}>
-                    <View style={styles.vendorBox}>
-                        <View >
-                            <Text style={styles.vendorHeader}>Booking Details</Text>
-                        </View>
-                        <View>
-                            <Grid>
-                                <Row>
-                                    <Col style={styles.colHeader}>
-                                        <Text style={styles.bookingDetailsHeader}>Name:</Text>
-                                    </Col>
-                                    <Col style={styles.colDetails}>
-                                        <Text style={styles.bookingDetails}>{displayService.serviceName}</Text>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col style={styles.colHeader}>
-                                        <Text style={styles.bookingDetailsHeader}>Date:</Text>
-                                    </Col>
-                                    <Col style={styles.colDetails}>
-                                        <Text style={styles.bookingDetails}>{serviceDate}</Text>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col style={styles.colHeader}>
-                                        <Text style={styles.bookingDetailsHeader}>Time:</Text>
-                                    </Col>
-                                    <Col style={styles.colDetails}>
-                                        <Text style={styles.bookingDetails}>{serviceTime}</Text>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col style={styles.colHeader}>
-                                        <Text style={styles.bookingDetailsHeader}>Address:</Text>
-                                    </Col>
-                                    <Col style={styles.colDetails}>
-                                        <Text style={styles.bookingDetails}>{displayService.location}</Text>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col style={styles.colHeader}>
-                                        <Text style={styles.bookingDetailsHeader}>Type:</Text>
-                                    </Col>
-                                    <Col style={styles.colDetails}>
-                                        <Text style={styles.bookingDetails}>{displayService.contractType}</Text>
-                                    </Col>
-                                </Row>
-
-                            </Grid>
-                        </View>
+            <View style={{ flex: 0.9, margin: 5 }}>
+                <ScrollView style={{ height: '90%', flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+                    <View >
+                        <Text style={styles.vendorHeader}>Booking Details</Text>
                     </View>
+                    <Grid>
+                        <Row>
+                            <Col style={styles.colHeader}>
+                                <Text style={styles.bookingDetailsHeader}>Booking Date:</Text>
+                            </Col>
+                            <Col style={styles.colDetails}>
+                                <Text style={styles.bookingDetails}>{bookingDate}</Text>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col style={styles.colHeader}>
+                                <Text style={styles.bookingDetailsHeader}>Service Date:</Text>
+                            </Col>
+                            <Col style={styles.colDetails}>
+                                <Text style={styles.bookingDetails}>{serviceDate}</Text>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col style={styles.colHeader}>
+                                <Text style={styles.bookingDetailsHeader}>Address:</Text>
+                            </Col>
+                            <Col style={styles.colDetails}>
+                                <Text style={styles.bookingDetails}>{serviceAddress}</Text>
+                            </Col>
+                        </Row>
+                    </Grid>
+                    <FlatList
+                        //keyExtractor={item => item.bookingID.toString()}
+                        data={selectedData.bookings}
+                        renderItem={renderData}
+                    />
+                </ScrollView>
+            </View>
+            <View style={styles.bottomView}>
+                <TouchableOpacity style={styles.bottomBoxButtons} activeOpacity={.5} onPress={() => changeAddressBtn()}>
+                    <Text style={styles.btnDetailsText}>Edit Details {" "}
+                        <Icon style={{ paddingRight: 5 }} name="ios-create" size={20}
+                            backgroundColor="transparent" color="#fff"
+                        ></Icon >
+                    </Text>
 
-                    {
-                        (bookingStatus === "pending") && (userType === "customer") ?
-                            <View style={styles.accept}>
-                                <View style={styles.buttonView}>
-                                    <View style={styles.button}>
+                    <ModalView
+                        isVisible={modalAddressVisible}
+                        close={() => setModalAddressVisible(!modalAddressVisible)}
+                        animationIn="fadeInDownBig"
+                        animationOut='fadeOutDownBig'
+                        animationInTiming={0}
+                        animationOutTiming={0}
+                        children={
+                            <View>
+                                <View>
+                                    <Text>
+                                        New Address:
+                                </Text>
+                                    <TextInput
+                                        style={styles.inputBox}
+                                        maxLength={250}
+                                        value={txtAddress}
+                                        onChangeText={(text) => setTxtAddress(text)}
 
-                                        <FieldButton
-                                            buttonTouch={styles.buttonTouch}
-                                            name='Cancel Booking'
-                                            onPress={() => {
-                                                cancelCustomerBookingBtn();
-                                            }}
-                                        ></FieldButton>
-                                        <CustomModal visibility={modalCustomerVisible}
-                                            modalText={modalTextCustomer}
-                                            closeIconPress={() => {
-                                                setModalCustomerVisible(false);
-                                            }}
-                                            cancelButtonPress={() => {
-                                                setModalCustomerVisible(false);
-                                            }}
-                                            submitButtonPress={() => {
-                                                setModalCustomerVisible(false);
-                                                customerCancelConfirmed()
-                                            }}
-                                        ></CustomModal>
-
-                                    </View>
+                                        multiline={true}
+                                    />
+                                </View>
+                                <View>
+                                    <TouchableOpacity style={styles.bottomBoxButtonsRight1} activeOpacity={.5} >
+                                        <Text style={styles.btnDetailsText1}>Update Details {" "}
+                                            <Icon style={{ paddingRight: 5 }} name="md-close-circle" size={20}
+                                                backgroundColor="transparent" color="#fff"
+                                            ></Icon >
+                                        </Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
+                        }
 
-                            : (bookingStatus === "pending") && (userType === "purohit" || userType === "cook") ?
-                                <View style={styles.accept}>
-                                    <View style={styles.buttonView}>
-                                        <View style={styles.button}>
+                    />
 
-                                            <FieldButton
-                                                buttonTouch={styles.buttonTouch}
-                                                name='Accept Booking'
-                                                onPress={() => {
-                                                    acceptBookingBtn();
-                                                }}
-                                            ></FieldButton>
-                                            <CustomModal visibility={modalVendorVisible}
-                                                modalText={modalTextVendor}
-                                                closeIconPress={() => {
-                                                    setModalVendorVisible(false);
-                                                }}
-                                                cancelButtonPress={() => {
-                                                    setModalVendorVisible(false);
-                                                }}
-                                                submitButtonPress={() => {
-                                                    acceptBookingConfirmed();
-                                                }}
-                                            ></CustomModal>
+                </TouchableOpacity>
+                {
+                    (bookingStatus === "pending") && (userType === "customer") ?
+                        <>
+                            <TouchableOpacity style={styles.bottomBoxButtonsRight} activeOpacity={.5} onPress={() => cancelCustomerBookingBtn()}>
+                                <Text style={styles.btnDetailsText}>Cancel Booking {" "}
+                                    <Icon style={{ paddingRight: 5 }} name="md-close-circle" size={20}
+                                        backgroundColor="transparent" color="#fff"
+                                    ></Icon >
+                                </Text>
+                                <CustomModal visibility={modalCustomerVisible}
+                                    modalText={modalTextCustomer}
+                                    closeIconPress={() => {
+                                        setModalCustomerVisible(false);
+                                    }}
+                                    cancelButtonPress={() => {
+                                        setModalCustomerVisible(false);
+                                    }}
+                                    submitButtonPress={() => {
+                                        setModalCustomerVisible(false);
+                                        customerCancelConfirmed()
+                                    }}
+                                ></CustomModal>
+                            </TouchableOpacity>
 
-                                        </View>
-                                    </View>
-                                </View>
-
-                                : bookingStatus === "accepted" ?
-                                    <View style={styles.accept}>
-                                        <View style={styles.buttonView}>
-                                            <View style={styles.button}>
-                                                <FieldButton
-                                                    buttonTouch={styles.buttonTouch}
-                                                    name='Cancel Booking'
-                                                    onPress={() => {
-                                                        cancelBookingBtn();
-                                                    }}
-                                                ></FieldButton>
-                                                <CustomModal visibility={modalVendorVisible}
-                                                    modalText={"Are you sure want to cancel this booking"}
-                                                    closeIconPress={() => {
-                                                        setModalVendorVisible(false);
-                                                    }}
-                                                    cancelButtonPress={() => {
-                                                        setModalVendorVisible(false);
-                                                    }}
-                                                    submitButtonPress={() => {
-                                                        setModalVendorVisible(false);
-                                                    }}
-                                                >
-                                                </CustomModal>
-                                            </View>
-                                        </View>
-                                    </View>
-                                    : null
-                    }
+                        </>
 
 
-                </View>
-            </ScrollView>
+                        : (bookingStatus === "pending") && (userType === "purohit" || userType === "cook") ?
+
+                            <TouchableOpacity style={styles.bottomBoxButtonsRight} activeOpacity={.5} onPress={() => acceptBookingBtn()}>
+                                <Text style={styles.btnDetailsText}>Accept Booking {" "}
+                                    <Icon style={{ paddingRight: 5 }} name="md-checkmark-circle" size={20}
+                                        backgroundColor="transparent" color="#fff"
+                                    ></Icon >
+                                </Text>
+                                <CustomModal visibility={modalVendorVisible}
+                                    modalText={modalTextVendor}
+                                    closeIconPress={() => {
+                                        setModalVendorVisible(false);
+                                    }}
+                                    cancelButtonPress={() => {
+                                        setModalVendorVisible(false);
+                                    }}
+                                    submitButtonPress={() => {
+                                        acceptBookingConfirmed();
+                                    }}
+                                ></CustomModal>
+                            </TouchableOpacity>
+
+
+                            : bookingStatus === "accepted" ?
+                                <TouchableOpacity style={styles.bottomBoxButtonsRight} activeOpacity={.5} onPress={() => cancelBookingBtn()}>
+                                    <Text style={styles.btnDetailsText}>Cancel Booking {" "}
+                                        <Icon style={{ paddingRight: 5 }} name="md-checkmark-circle" size={20}
+                                            backgroundColor="transparent" color="#fff"
+                                        ></Icon >
+                                    </Text>
+                                    <CustomModal visibility={modalVendorVisible}
+                                        modalText={"Are you sure want to cancel this booking"}
+                                        closeIconPress={() => {
+                                            setModalVendorVisible(false);
+                                        }}
+                                        cancelButtonPress={() => {
+                                            setModalVendorVisible(false);
+                                        }}
+                                        submitButtonPress={() => {
+                                            setModalVendorVisible(false);
+                                        }}
+                                    >
+                                    </CustomModal>
+                                </TouchableOpacity>
+
+                                : null
+                }
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    innerView: {
+        margin: 5
+    },
     vendorBox: {
-        margin: 5,
-        padding: 10,
         borderWidth: 1,
         borderColor: "lightgrey",
     },
     vendorHeader: {
         fontSize: 20,
         textAlign: 'center',
-        fontFamily: 'OpenSans-Bold',
+        fontFamily: Font_Name_Bold,
         paddingBottom: 10
     },
     colHeader: {
-        width: '30%',
+        width: '40%',
     },
     colDetails: {
-        width: '70%',
+        width: '60%',
+    },
+    colDetailsAddress: {
+        width: '55%',
+    },
+    ColDetailsIcon: {
+        width: '15%',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     bookingDetailsHeader: {
-        fontFamily: 'OpenSans-Bold',
-        fontSize: 16,
+        fontFamily: Font_Name_Bold,
+        fontSize: hp(2.1),
         padding: 5,
     },
     bookingDetails: {
-        fontFamily: 'OpenSans-Regular',
-        fontSize: 16,
+        fontFamily: Font_Name_Regular,
+        fontSize: hp(2.1),
         padding: 5,
+    },
+    bookingDetailsServiceName: {
+        fontFamily: Font_Name_Bold,
+        fontSize: hp(2.3),
+        padding: 5,
+        textAlign: 'center'
     },
     accept: {
         marginTop: 0
@@ -308,7 +468,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         margin: 25,
-        backgroundColor: "#D63031",
+        backgroundColor: App_Color,
         borderRadius: 5,
         paddingLeft: 20,
         paddingBottom: 10,
@@ -326,7 +486,7 @@ const styles = StyleSheet.create({
     mdlCloseIconStyle: {
         width: '100%',
         alignSelf: 'flex-end',
-        backgroundColor: '#D63031',
+        backgroundColor: App_Color,
         color: '#fff',
 
     },
@@ -334,14 +494,14 @@ const styles = StyleSheet.create({
         paddingRight: 10
     },
     mdlText: {
-        fontFamily: 'OpenSans-Bold',
+        fontFamily: Font_Name_Bold,
         fontSize: 16,
         paddingLeft: 5,
         marginBottom: 15,
         color: '#fff'
     },
     mdlbtnText: {
-        fontFamily: 'OpenSans-Bold',
+        fontFamily: Font_Name_Bold,
         fontSize: 16,
         color: 'red'
     },
@@ -361,130 +521,59 @@ const styles = StyleSheet.create({
         padding: 5
     },
     button: {
-        width: '50%',
-        padding: 5
+        width: '100%',
+        padding: 0
     },
     buttonView: {
-        marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'space-around',
     },
     topView: {
-        backgroundColor: "white"
-    },
-    innerView: {
-        borderWidth: 0.5,
-        borderColor: "lightgrey",
         backgroundColor: "white",
-        margin: 5,
+        flex: 1,
     },
-    header: {
-        marginLeft: 100,
-        fontSize: 18,
-        color: "#696969",
-        fontWeight: "600"
-    },
-    date: {
-        marginLeft: 100,
-        fontSize: 15,
-        color: "#696969",
-        fontWeight: "400"
-    },
-    sathya: {
-        width: 100,
-        height: 90,
-
-        borderWidth: 4,
-        borderColor: "white",
-        marginBottom: 10,
-        alignSelf: 'stretch',
+    bottomView: {
         position: 'absolute',
-        marginTop: 30
+        bottom: 0,
+        flex: 0.1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 0,
+        fontFamily: Font_Name_Regular,
+        backgroundColor: App_Color,
+
     },
-    back: {
-        marginLeft: 10,
-        marginTop: 10,
-        fontSize: 20
+    bottomBoxButtons: {
+        width: '50%',
+        alignItems: 'center',
+        padding: 5
     },
-    orderPage: {
-        marginTop: 10,
-        borderBottomWidth: 0.4,
-        borderBottomColor: 'black',
-        width: 400
-    },
-    pooja: {
-        margin: 10,
-        width: 340,
-        height: 200
-    },
-    head: {
-        marginTop: 12,
-        marginLeft: 10,
-        fontSize: 18,
-        color: "#000",
-        fontWeight: "600"
-    },
-    dates: {
-        marginLeft: 10,
-        fontSize: 15,
-        color: "#696969",
-        fontWeight: "400"
-    },
-    priest: {
-        marginLeft: 10,
-        color: "#696969",
-        fontSize: 15
-    },
-    billDetails: {
-        marginTop: 10
-    },
-    name: {
-        marginLeft: 10,
-        color: "#696969",
-        fontSize: 20,
-        fontWeight: "600"
-    },
-    teju: {
-        width: 60,
-        height: 60,
-        borderRadius: 63,
-        borderWidth: 1,
-        borderColor: "white",
-        marginBottom: 10,
-        alignSelf: 'center',
-        position: 'absolute'
-    },
-    fare: {
-        marginTop: 15,
-        marginLeft: 10,
-        fontSize: 15,
-        color: "#696969",
-        fontWeight: "400"
-    },
-    fares: {
-        marginTop: 15,
-        marginLeft: 10,
-        fontSize: 15,
-        color: "#000",
-        fontWeight: "400"
-    },
-    tax: {
-        fontSize: 10,
-        marginLeft: 10,
-        color: "#696969"
-    },
-    line: {
-        margin: 10,
-        borderBottomWidth: 0.4,
-        borderBottomColor: 'black'
-    },
-    dots: {
-        marginTop: 20,
-        borderStyle: 'dotted',
-        borderBottomWidth: 0.4,
-        borderBottomColor: 'black'
+    bottomBoxButtonsRight: {
+        width: '50%',
+        alignItems: 'center',
+        borderLeftWidth: 0.7,
+        borderLeftColor: '#fff',
+        padding: 5
     },
 
+    btnDetailsText: {
+        fontFamily: Font_Name_Bold,
+        fontSize: 16,
+        color: '#fff'
+    },
+    inputBox: {
+        width: "100%",
+        borderRadius: 2,
+        padding: 5,
+        paddingLeft: 10,
+        fontSize: 16,
+        marginVertical: 2,
+        borderWidth: 0.5,
+        borderColor: 'rgba(68,68,68,1)',
+        color: 'rgba(60, 59, 55, .9)',
+        height: 80,
+        textAlignVertical: 'top'
+    },
 })
 
 //export default Booking;

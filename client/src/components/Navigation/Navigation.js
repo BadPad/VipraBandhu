@@ -31,10 +31,11 @@ import AddNewAddress from '../screens/Delivery_Options/AddNewAddress';
 import Payment from '../screens/Payment';
 import TransactionInfo from '../screens/TransactionInfo';
 import DrawnContent from './DrawnContent';
-import NotificationIcon from '../Reusable_Component/NotificationIcon'
+import NotificationIcon from '../Reusable_Component/NotificationIcon';
 import BookingCartIcon from './BookingCartIcon';
 import FaqIcon from './FaqIcon';
 import Faq from '../screens/Faq';
+import { App_Color, Font_Name_Regular, Font_Name_Bold } from '../Reusable_Component/ConstantValues';
 
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator();
@@ -71,19 +72,17 @@ function getHeaderTitle(route) {
     case 'Offers':
       return 'Offers'
     case 'MyProfile':
-      return 'My Profile'
-    case 'ProfileEdit':
-      return 'Edit Profile'
+      return 'My Profile '
     case 'BookingsList':
-      return 'My Bookings'
+      return 'My Bookings '
     case 'MyWallet':
-      return 'My Wallet'
+      return 'My Wallet '
     case 'CustomerService':
       return 'Customer Service'
     case 'Notifications':
       return 'Notifications'
     case 'Faq':
-      return 'Faq' 
+      return 'FAQs' 
     default:
       return true
   }
@@ -111,7 +110,7 @@ const StackNavigation = ({ navigation }) => (
     initialRouteName="Welcome"
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#D63031',
+        backgroundColor: App_Color,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -122,9 +121,13 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="Welcome" component={Welcome}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
+        
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -143,9 +146,12 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="ServicesList" component={ServicesList}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -154,7 +160,7 @@ const StackNavigation = ({ navigation }) => (
           <View style={styles.headerRightIcons}>
             <BookingCartIcon navigation={navigation} />
             <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
-              backgroundColor="#D63031" color="#fff"
+              backgroundColor={App_Color} color="#fff"
               onPress={() => navigation.navigate('Notifications')}
             >
             </Icon >
@@ -166,9 +172,12 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="Service" component={Service}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -177,7 +186,7 @@ const StackNavigation = ({ navigation }) => (
           <View style={styles.headerRightIcons}>
             <BookingCartIcon navigation={navigation} />
             <Icon style={styles.iconNotifications} name="ios-notifications" size={25}
-              backgroundColor="#D63031" color="#fff"
+              backgroundColor={App_Color} color="#fff"
               onPress={() => navigation.navigate('Notifications')}
             >
             </Icon >
@@ -189,9 +198,12 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="BookingCart" component={BookingCart} 
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.goBack()
             }>
           </Icon.Button >
@@ -201,9 +213,12 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="DeliveryOptions" component={DeliveryOptions}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.goBack()
             }>
           </Icon.Button >
@@ -213,9 +228,12 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="ChooseAddress" component={ChooseAddress} 
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
-          backgroundColor="#D63031" color="#fff"
+          backgroundColor={App_Color} color="#fff"
           onPress={() => navigation.goBack()
           }>
           </Icon.Button >
@@ -225,9 +243,12 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="AddNewAddress" component={AddNewAddress} 
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
-          backgroundColor="#D63031" color="#fff"
+          backgroundColor={App_Color} color="#fff"
           onPress={() => navigation.goBack()
           }>
           </Icon.Button >
@@ -237,9 +258,12 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="Payment" component={Payment}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.goBack()
             }>
           </Icon.Button >
@@ -249,9 +273,12 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="TransactionInfo" component={TransactionInfo}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.goBack()
             }>
           </Icon.Button >
@@ -261,9 +288,12 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="AboutUs" component={About}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -274,9 +304,12 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         headerShown: false,
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -287,9 +320,12 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         headerShown: false,
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -300,9 +336,12 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         headerShown: false,
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -312,9 +351,12 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="Offers" component={Offers}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -324,9 +366,12 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="MyProfile" component={Profile}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -336,10 +381,13 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="ProfileEdit" component={ProfileEdit}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
-          <Icon.Button name="md-arrow-round-back" size={25}
-            backgroundColor="#D63031" color="#fff"
-            onPress={() => navigation.goBack()
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor={App_Color} color="#fff"
+            onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
         )
@@ -348,9 +396,12 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="BookingsList" component={BookingsList}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -360,9 +411,12 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="Booking" component={Booking}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -372,16 +426,19 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="MyWallet" component={Wallet}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
         ),
         headerRight: () => (
           <Icon.Button name="ios-notifications" size={25}
-            backgroundColor="#D63031" color="#fff" >
+            backgroundColor={App_Color} color="#fff" >
           </Icon.Button >
         )
       })}
@@ -389,9 +446,12 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="CustomerService" component={CustomerService}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -401,9 +461,13 @@ const StackNavigation = ({ navigation }) => (
     <Stack.Screen name="Notifications" component={Notifications}
       options={({route}) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+        },
+        
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >
@@ -415,7 +479,7 @@ const StackNavigation = ({ navigation }) => (
         title: getHeaderTitle(route),
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
-            backgroundColor="#D63031" color="#fff"
+            backgroundColor={App_Color} color="#fff"
             onPress={() => navigation.openDrawer()
             }>
           </Icon.Button >

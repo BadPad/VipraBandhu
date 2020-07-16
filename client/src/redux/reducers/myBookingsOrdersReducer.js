@@ -1,8 +1,9 @@
-import { MY_BOOKINGS_ORDERS, GET_PUROHIT_BOOKINGS } from '../actions/types';
+import { MY_BOOKINGS_ORDERS, GET_PUROHIT_BOOKINGS, GET_COOK_BOOKINGS } from '../actions/types';
 
 const initialState = {
     myBookingsOrdersList: null,
-    getPurohitBookingsList: null
+    getPurohitBookingsList: null,
+    getCookBookingsList: null
 }
 
 export default function (state = initialState, action) {
@@ -16,6 +17,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 getPurohitBookingsList: action.payload,
+            }
+        case GET_COOK_BOOKINGS:
+            return {
+                ...state,
+                getCookBookingsList: action.payload,
             }
         default:
             return state;

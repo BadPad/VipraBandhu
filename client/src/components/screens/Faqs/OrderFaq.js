@@ -18,7 +18,7 @@ const OrderFaq = () => {
                             1. If I wish to modify my current booking, how do I do it?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: As of now, we don't have an option to modify the booking . We will show you a preview page before you complete the payment. We request you to be extra cautious about your selections  before making final payment.
+                            As of now, we don't have an option to modify the booking . We will show you a preview page before you complete the payment. We request you to be extra cautious about your selections  before making final payment.
                         </Text>
                     </View>
                     <View style={styles.faq}>                       
@@ -26,7 +26,7 @@ const OrderFaq = () => {
                             2. Is there a way that I can reschedule my booking instead of cancelling it?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans:  Currently  we are not offering reschedule option. We will come up with this feature in upcoming releases. Please co-operate with us for now.
+                             Currently  we are not offering reschedule option. We will come up with this feature in upcoming releases. Please co-operate with us for now.
                         </Text>
                     </View>
                     <View style={styles.faq}>                       
@@ -54,7 +54,7 @@ const OrderFaq = () => {
                             5. When and how can I cancel an order?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: You have an option to cancel the existing order in My Bookings Section. We recommend not to cancel the order 
+                            You have an option to cancel the existing order in My Bookings Section. We recommend not to cancel the order 
                             {'\n'}{'\n'}You can cancel an order before the cut off time of 24 hours prior to booking start time. Cancellation will be processed based on the time difference between the cancellation time and booking start time.
                         </Text>
                     </View>  
@@ -63,7 +63,7 @@ const OrderFaq = () => {
                             6. How do I contact customer service?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: You have a field called Contact Us filed in your My Profile page. You should be able to see it after logging in to app.
+                            You have a field called Contact Us filed in your My Profile page. You should be able to see it after logging in to app.
                         </Text>
                     </View>                  
                 </View>                                                                  

@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SearchServices from "../Reusable_Component/SearchServices";
 import Carousel from "../Reusable_Component/CarouselList";
-
 import { serviceList, poojaServices, homaServices, functionServices, searchServices, cateringServices } from '../../redux/actions/serviceListActions';
 import { upcomingFestivals } from '../../redux/actions/upcomingFestActions';
 import Indicator from "../Reusable_Component/SpinnerIndicator/Indicator";
+import { App_Color, Font_Name_Regular, Font_Name_Bold } from '../Reusable_Component/ConstantValues';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const Welcome = ({
     navigation,
@@ -41,10 +42,10 @@ const Welcome = ({
     }
 
     const catering = (type) => {
-        if(type === 'catering') {
+        if (type === 'catering') {
             cateringServices(type)
         }
-        
+
         navigation.navigate('ServicesList', { category: 'catering' })
     }
 
@@ -74,17 +75,7 @@ const Welcome = ({
             <ScrollView>
                 <View style={styles.innerView}>
                     <View style={styles.AdsContent}>
-                        {/* <Carousel
-                            ref={(c) => { this._carousel = c; }}
-                            data={this.state.Ads}
-                            renderItem={this._renderAds}
-                            sliderWidth={ITEM_WIDTH_Ad}
-                            itemWidth={ITEM_WIDTH_Ad}
-                            autoplay={true}
-                            enableMomentum={false}
-                            lockScrollWhileSnapping={true}
-                            loop={true}
-                        /> */}
+
                         <Carousel
                             type="Ads"
                         />
@@ -92,10 +83,13 @@ const Welcome = ({
 
                     <View style={styles.upcomingFestivals}>
                         <View style={styles.upFestHeader}>
-                            <Image resizeMode='contain'
+                            {/* <Image resizeMode='contain'
                                 style={styles.upFestImage}
                                 source={require('../images/Fest-Banner.png')}
-                            />
+                            /> */}
+                            <Text style={styles.upFestHeaderTitle}>
+                                UPCOMING FESTIVALS
+                            </Text>
                         </View>
                         <View style={styles.upFestContent}>
                             <Carousel
@@ -184,8 +178,10 @@ const Welcome = ({
                                         </TouchableOpacity>
                                     </View>
                                 </View>
+
+                                
                             </>
-                        :null
+                            : null
                     }
                 </View>
             </ScrollView>
@@ -314,20 +310,6 @@ const styles = StyleSheet.create({
     },
     AdsContent: {
         marginTop: 10,
-        marginLeft:10,
-        marginRight:10,
-        
-        backgroundColor: 'transparent',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        borderRadius: 10,
-        borderWidth:1
 
     },
     upcomingFestivals: {
@@ -336,7 +318,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
 
         marginTop: 10,
-        padding: 10,
+        padding: 5,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -349,12 +331,19 @@ const styles = StyleSheet.create({
     },
     upFestHeader: {
         width: '30%',
-        height: 60,
+        
+        justifyContent: 'center',
 
+    },
+    upFestHeaderTitle: {
+        fontFamily: Font_Name_Regular,
+        fontSize: wp(4.3),
+        lineHeight: wp(4.8),
+        textAlign:'center'
     },
     upFestImage: {
         width: '100%',
-        height: 60
+        
     },
     upFestSlideView: {
         width: '100%',
@@ -368,8 +357,7 @@ const styles = StyleSheet.create({
     },
     upFestContent: {
         width: '70%',
-        height: 60,
-
+        paddingRight: 5,
         alignContent: 'center'
     },
     upFestName: {

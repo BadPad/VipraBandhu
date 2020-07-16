@@ -18,7 +18,7 @@ const RegisterFaq = () => {
                             1. How do I register?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: You can register by clicking on the "Register" button on the homepage. Please provide all the required information in the form that appears and submit the registration information.
+                            You can register by clicking on the "Register" button on the homepage. Please provide all the required information in the form that appears and submit the registration information.
                         </Text>
                     </View>
                     <View style={styles.faq}>                       
@@ -26,7 +26,7 @@ const RegisterFaq = () => {
                             2. Are there any charges for registration?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: No. Registration on Sukalpa Seva is absolutely free. 
+                            No. Registration on Sukalpa Seva is absolutely free. 
                         </Text>
                     </View>
                     <View style={styles.faq}>                       
@@ -34,7 +34,7 @@ const RegisterFaq = () => {
                             3. Do I have to necessarily register to book service on Sukalpa Seva?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: Yes, Registration is compulsory to book the services on Sukalpa Seva. Without registration you will be able to browse through the app and services but only registered users will be able to checkout and book services. Registered members have to be logged in at the time of checking out the cart, they will be prompted to do so if they are not logged in.
+                            Yes, Registration is compulsory to book the services on Sukalpa Seva. Without registration you will be able to browse through the app and services but only registered users will be able to checkout and book services. Registered members have to be logged in at the time of checking out the cart, they will be prompted to do so if they are not logged in.
                         </Text>
                     </View>
                     <View style={styles.faq}>                       
@@ -42,7 +42,7 @@ const RegisterFaq = () => {
                             4. Can I have multiple registrations?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: Each email address and contact phone number can only be associated with one Sukalpa Seva account.
+                            Each email address and contact phone number can only be associated with one Sukalpa Seva account.
                         </Text>
                     </View>
                     <View style={styles.faq}>                       
@@ -50,7 +50,7 @@ const RegisterFaq = () => {
                             5.Can I add more than one address in an account to book services?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: Yes, you can add multiple  addresses in your  account. However, remember booking can be done to render service at only one address at a  time.  If you want different services to be booked at  different address you need to make a separate booking.
+                            Yes, you can add multiple  addresses in your  account. However, remember booking can be done to render service at only one address at a  time.  If you want different services to be booked at  different address you need to make a separate booking.
                         </Text>
                     </View>
                     <View style={styles.faq}>                       
@@ -58,7 +58,7 @@ const RegisterFaq = () => {
                             6. Can I have different city addresses under one account and still place orders for multiple cities?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: Currently we have planned to serve only in Bangalore and Mysore. Soon we will be expanding our services to other parts of the state. 
+                            Currently we have planned to serve only in Bangalore and Mysore. Soon we will be expanding our services to other parts of the state. 
                         </Text>
                     </View>
                 </View>                                                                   

@@ -7,6 +7,7 @@ import { Avatar } from 'react-native-elements';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { App_Color, Font_Name_Regular, Font_Name_Bold } from '../Reusable_Component/ConstantValues';
 
 import { logoutUser } from '../../redux/actions/authActions';
 
@@ -41,6 +42,7 @@ const DrawnContent = (props) => {
                         />
                     )}
                     label="Home"
+                    labelStyle={{fontFamily: Font_Name_Regular}}
                     onPress={() => props.navigation.navigate('Welcome')}
                 />
                 <DrawerItem 
@@ -52,6 +54,7 @@ const DrawnContent = (props) => {
                         />
                     )}
                     label="About Us"
+                    labelStyle={{fontFamily: Font_Name_Regular}}
                     onPress={() => props.navigation.navigate('AboutUs')}
                 />
                 <DrawerItem 
@@ -63,6 +66,7 @@ const DrawnContent = (props) => {
                         />
                     )}
                     label="Offers"
+                    labelStyle={{fontFamily: Font_Name_Regular}}
                     onPress={() => props.navigation.navigate('Offers')}
                 />
                 {isAuthenticated &&
@@ -76,6 +80,7 @@ const DrawnContent = (props) => {
                             />
                         )}
                         label="My Profile"
+                        labelStyle={{fontFamily: Font_Name_Regular}}
                         onPress={() => props.navigation.navigate('MyProfile')}
                     />
                     <DrawerItem 
@@ -87,6 +92,7 @@ const DrawnContent = (props) => {
                             />
                         )}
                         label="MyOrders/Bookings"
+                        labelStyle={{fontFamily: Font_Name_Regular}}
                         onPress={() => props.navigation.navigate('BookingsList')}
                     />
                     <DrawerItem 
@@ -98,6 +104,7 @@ const DrawnContent = (props) => {
                             />
                         )}
                         label="MyWallet"
+                        labelStyle={{fontFamily: Font_Name_Regular}}
                         onPress={() => props.navigation.navigate('MyWallet')}
                     />
                 </>}
@@ -110,6 +117,7 @@ const DrawnContent = (props) => {
                         />
                     )}
                     label="CustomerService"
+                    labelStyle={{fontFamily: Font_Name_Regular}}
                     onPress={() => props.navigation.navigate('CustomerService')}
                 />
                 <DrawerItem 
@@ -135,6 +143,7 @@ const DrawnContent = (props) => {
                             />
                         )}
                         label="Sign Out"
+                        labelStyle={{fontFamily: Font_Name_Regular}}
                         onPress={() => {
                             props.logoutUser(props.navigation)
                             props.navigation.closeDrawer()
@@ -150,6 +159,7 @@ const DrawnContent = (props) => {
                             />
                         )}
                         label="Login / Register"
+                        labelStyle={{fontFamily: Font_Name_Regular}}
                         onPress={() => props.navigation.navigate('Login')}
                     />
             }
@@ -162,7 +172,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     touchUser: {
-        backgroundColor: '#D63031'
+        backgroundColor: App_Color
     },
     pImageContainer: {
         flexDirection: 'row',

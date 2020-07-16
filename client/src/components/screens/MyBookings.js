@@ -81,7 +81,7 @@ const MyBookings = ({ navigation }) => {
             <View style={styles.orderPage}>
                 <Text style={styles.priest}>Priest:</Text>
                 <Text style={styles.name}>Manyutej Achar</Text>
-                <Image style={styles.teju} source={require('../images/teju.jpg')} />
+                
                 <Text></Text>
                 
             </View>

@@ -18,7 +18,7 @@ const PaymentFaq = () => {
                             1. What all Payment options  does your app consists of?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: We have two modes of payment f in Sukalpa Seva
+                            We have two modes of payment f in Sukalpa Seva
                             {'\n'}i) Full Payment while booking : You can do full payment while booking the service. Detailed price will be shown to you after summation of all cart items and your specifications. You need not to give any amount after completion of Service . For more details , refer T&Cs
                             {'\n'}{'\n'}ii)Partial Payment : You can opt for pay the partial / minimum booking amount for the service at the booking phase and remaining payment can be made after the completion of the service either directly to the servicemen or through the app
 
@@ -29,7 +29,7 @@ const PaymentFaq = () => {
                             2. What are the modes of payment?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: You can pay for your order on book using the following modes of payment:
+                            You can pay for your order on book using the following modes of payment:
                             {'\n'}a. UPI Apps
                             {'\n'}b. Credit and debit cards (VISA / Mastercard / Rupay etc)
                             {'\n'}c. Cash payment after service gets over
@@ -57,7 +57,7 @@ const PaymentFaq = () => {
                             5. If I pay by credit card how do I get the amount back if i cancel the order?
                         </Text>
                         <Text style={styles.textStyles}>
-                            Ans: Cancellation is entertained only at inevitable conditions. If in case you have to cancel the order , payment done through Credit Card will be added back to your wallet. You can avail amount in wallet for our future bookings.
+                            Cancellation is entertained only at inevitable conditions. If in case you have to cancel the order , payment done through Credit Card will be added back to your wallet. You can avail amount in wallet for our future bookings.
                         </Text>
                     </View>                   
                 </View>                                                                                 

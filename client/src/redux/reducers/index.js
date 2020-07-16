@@ -26,7 +26,8 @@ const rootReducer = combineReducers({
     casteList: casteListReducer,
     bookingCartServices: bookingCartReducer,
     myBookingsOrders: myBookingsOrdersReducer,
-    getPurohitBookings: myBookingsOrdersReducer
+    getPurohitBookings: myBookingsOrdersReducer,
+    getCookBookings: myBookingsOrdersReducer
 })
 
 export default persistReducer(persistConfig, rootReducer);

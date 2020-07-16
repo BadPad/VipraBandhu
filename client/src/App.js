@@ -3,7 +3,7 @@ import { AsyncStorage, StatusBar } from 'react-native';
 import FlashMessage from "react-native-flash-message";
 import Navigation from './components/Navigation/Navigation';
 import setAuthToken from './components/Reusable_Component/setAuthToken';
-
+import {App_Top_Color} from './components/Reusable_Component/ConstantValues';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store';
@@ -34,7 +34,7 @@ AsyncStorage.getItem('SukalpaSeva')
 function App() {
   return (
     <Provider store={ store }>
-      <StatusBar barStyle = "light-content" backgroundColor="#d42425"/>
+      <StatusBar barStyle = "light-content" backgroundColor={App_Top_Color}/>
       <PersistGate loading={null} persistor={persistor} >
         <Navigation />
       </PersistGate>

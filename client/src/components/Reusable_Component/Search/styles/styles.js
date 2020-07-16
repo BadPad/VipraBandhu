@@ -1,6 +1,6 @@
 import { Platform, Dimensions } from "react-native";
 import { ScreenWidth } from "@freakycoder/react-native-helpers";
-
+import {App_Color}  from '../../../Reusable_Component/ConstantValues';
 const { height } = Dimensions.get('window')
 
 export const centerSubtitleStyle = item => ({
@@ -52,7 +52,7 @@ export default {
     }),
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#D63031",
+    backgroundColor: App_Color,
     paddingTop: 5
   },
   welcome: {
