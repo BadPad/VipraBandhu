@@ -36,7 +36,6 @@ const ServiceCaste = ({ caste, selectedCaste, selectedItems }) => {
       <View>
         <FieldButton 
           butonContainer={styles.butonContainer}
-          buttonTouch={styles.buttonTouch}
           name="Confirm"
           onPress={() => setIsModal(!isModal)}
         />
@@ -56,6 +55,8 @@ const ServiceCaste = ({ caste, selectedCaste, selectedItems }) => {
               isVisible={isModal}
               modalContainer={styles.modalContainer}
               close={() => setIsModal(!isModal)}
+              animationIn="fadeInDownBig"
+              animationOut="fadeOutDownBig"
               children={modalContent}
             />
             <Text style={styles.textStyles}>{!isEmpty(selectedItems) ? ` Selected (${selectedItems.length})` : ' Preferred Caste'}</Text>
@@ -108,9 +109,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%'
-  },
-  buttonTouch: {
-    backgroundColor: '#D63031'
   }
 })
 

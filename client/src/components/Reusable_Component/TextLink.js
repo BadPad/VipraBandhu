@@ -23,9 +23,9 @@ const styles = StyleSheet.create({
         color: '#3c3b37'
     },
     linkButton: {
-        color: '#D63031',
-        fontSize: 16,
-        fontWeight: '500'
+        color: '#3c3b37',
+        fontSize: 17,
+        fontWeight: 'bold'
     }
 })
 

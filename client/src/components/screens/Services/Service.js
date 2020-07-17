@@ -183,7 +183,7 @@ const Service = ({
                     onPress={() => contractType === '' ? 
                             Alert.alert(
                                 '',
-                                'Please select the Server Date and contract Type you want to offer'
+                                'Please select the Date and contract Type to proceed further'
                             )
                         : 
                             addAndCheckout(service)
@@ -228,7 +228,7 @@ const Service = ({
                             contractType === '' ? 
                                 Alert.alert(
                                     '',
-                                    'Please select the Server Date and Service Type you want to offer'
+                                    'Please select the Date and contract Type to proceed further'
                                 )
                             :
                                 addAndCheckout(service)
@@ -471,7 +471,7 @@ const Service = ({
                             buttoncheckTouch={!addCookToCart ? styles.buttoncheckTouch : styles.TouchButton}
                             buttoncheckTouchText={!addCookToCart ? null : styles.buttoncheckTouchText}
                             name={!addCookToCart ? 'Book' : 'Checkout'}
-                            onPressBck={() => navigation.navigate('Welcome')}
+                            onPressBck={() => !addCookToCart ? navigation.goBack()  : navigation.navigate('Welcome')}
                             onPressCheck={() => isAuthenticated?
                                     !addCookToCart ? 
                                         catAddCheckout()

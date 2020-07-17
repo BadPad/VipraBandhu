@@ -129,6 +129,7 @@ const DrawnContent = (props) => {
                         />
                     )}
                     label="FAQs"
+                    labelStyle={{fontFamily: Font_Name_Regular}}
                     onPress={() => props.navigation.navigate('Faq')}
                 />
             </DrawerContentScrollView>

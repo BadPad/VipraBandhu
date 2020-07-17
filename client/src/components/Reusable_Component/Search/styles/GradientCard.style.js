@@ -1,4 +1,5 @@
 import { Dimensions, Platform } from "react-native";
+import { App_Color } from "../../ConstantValues";
 
 const { width } = Dimensions.get("window");
 const deviceWidth = width;
@@ -33,7 +34,7 @@ export function _outerContainer(height, width, borderRadius) {
     height: height || 40,
     borderRadius: borderRadius || 0,
     width: width || deviceWidth * 0.95,
-    borderBottomColor: '#D63031',
+    borderBottomColor: App_Color,
     borderBottomWidth: 0.8,
   };
 }

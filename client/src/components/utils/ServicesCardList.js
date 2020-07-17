@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import Card from '../Reusable_Component/Card/Card'
 import CardSection from '../Reusable_Component/Card/CardSection'
 import Icon from 'react-native-vector-icons/Ionicons';
+import { App_Color } from '../Reusable_Component/ConstantValues';
 
 const ServicesCardList = ({ data, onSelectService }) => {
     return (
@@ -10,7 +11,7 @@ const ServicesCardList = ({ data, onSelectService }) => {
             <Card style={styles.cardContainer}>
                 <CardSection>
                     <Icon name="ios-arrow-dropright-circle" size={20} 
-                        backgroundColor="transparent" color="#D63031" 
+                        backgroundColor="transparent" color={App_Color} 
                     ></Icon >
                     <Text style={styles.headerTextStyle}>{data.serviceName}</Text>
                 </CardSection>

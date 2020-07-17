@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Iconlocation from 'react-native-vector-icons/Entypo';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import isEmpty from '../Reusable_Component/is-empty';
+import { App_Color } from '../Reusable_Component/ConstantValues';
 
 const Profile = ({ auth, navigation }) => {
 
@@ -51,19 +52,6 @@ const Profile = ({ auth, navigation }) => {
           <TouchableOpacity style={styles.editProfile} onPress={() => navigation.navigate('ProfileEdit')}>
             <Text style={{ color: '#fff', fontSize: 20, paddingTop: 15, paddingRight: 10, alignSelf: "flex-end" }}><Iconback name="form" style={{ color: '#fff', fontSize: 20 }} /> Edit</Text>
           </TouchableOpacity>
-          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', }}>
-            <View>
-              <TouchableOpacity onPress={() => navigation.navigate('Faq')}>      
-                <Text style={{ color: '#fff', fontSize: 19, paddingLeft: 10 , paddingTop: 16, textDecorationLine: 'underline' }}>FAQs</Text>
-              </TouchableOpacity>
-            </View>
-            <View>
-              <TouchableOpacity onPress={() => navigation.navigate('ProfileEdit')}>      
-                <Text style={{ color: '#fff', fontSize: 20, paddingTop: 15, paddingRight: 10, alignSelf: "flex-end" }}><Iconback name="form" style={{ color: '#fff', fontSize: 20 }} />Edit</Text>
-              </TouchableOpacity>
-            </View>
-            
-          </View>
           <View style={styles.headerContent}>
             <Image style={styles.avatar}
               source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar1.png' }} />
@@ -129,7 +117,7 @@ const Profile = ({ auth, navigation }) => {
           (currentUserType != "customer") ?
 
             <View>
-              <Text style={{ textAlign: 'center', color: 'green', fontSize: 20 }}>Offered Services</Text>
+              {!isEmpty(selectedServices) || !isEmpty(auth.user.typeOfService) ? <Text style={{ textAlign: 'center', color: 'green', fontSize: 20 }}>Offered Services</Text> : null}
               {
                 (currentUserType === 'purohit') ?
                   !isEmpty(selectedServices) &&
@@ -181,7 +169,7 @@ const Profile = ({ auth, navigation }) => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: "#D63031",
+    backgroundColor: App_Color,
   },
   editProfile: {
     position: 'absolute',

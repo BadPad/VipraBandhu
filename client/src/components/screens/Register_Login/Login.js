@@ -12,6 +12,8 @@ import { regLogCook, regLogPurohit, regLogCustomer } from '../../../redux/action
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Indicator from '../../Reusable_Component/SpinnerIndicator/Indicator';
+import { App_Color } from '../../Reusable_Component/ConstantValues';
+import { FlatList } from 'react-native-gesture-handler';
 
 const { height } = Dimensions.get('window');
 
@@ -161,8 +163,7 @@ const styles = StyleSheet.create({
     images: {
         width: '40%',
         height:120,
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        marginHorizontal: 'auto',
         marginBottom: 10,
         shadowRadius:10,
         shadowColor:'blue',
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
         
     },
     logTypeCont: {
-        marginVertical: 5
+        margin: 5
     },
     logTypeText: {
         textAlign: 'center',
@@ -195,20 +196,20 @@ const styles = StyleSheet.create({
         elevation: 3
     },
     selectedLogBlock: {
-        borderColor: '#D63031'
+        borderColor: App_Color
     },
     blogText: {
         color: '#3c3b37',
-        width: 100,
+        width: 105,
         textAlign: 'center',
         fontWeight: 'bold',
-        padding: 15
+        padding: 10
     },
     selectedIcon: {
         position: 'absolute',
         top: -6,
         right: -6,
-        color: '#D63031',
+        color: App_Color,
         backgroundColor: '#fff'
     },
     error: {

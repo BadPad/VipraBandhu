@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native'
+import { Font_Name_Regular, App_Color } from './ConstantValues'
 
 const FieldButton = ({butonContainer, buttonTouch, buttonTouchText, children, name, onPress}) => {
     return (
@@ -15,7 +16,7 @@ const FieldButton = ({butonContainer, buttonTouch, buttonTouchText, children, na
 const styles = StyleSheet.create({
     button: {
         width: "100%",
-        backgroundColor: '#D63031',
+        backgroundColor: App_Color,
         paddingVertical: 13
     },
     buttonText: {
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#fff',
         textAlign: 'center',
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: Font_Name_Regular,
     }
 })
 

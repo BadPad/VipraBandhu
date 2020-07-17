@@ -50,7 +50,6 @@ const ServiceSelect = ({ services, selectedServices, selectedItems }) => {
       <View>
         <FieldButton 
           butonContainer={styles.butonContainer}
-          buttonTouch={styles.buttonTouch}
           name="Confirm"
           onPress={() => setIsModal(!isModal)}
         />
@@ -72,7 +71,7 @@ const ServiceSelect = ({ services, selectedServices, selectedItems }) => {
               close={() => setIsModal(!isModal)}
               children={modalContent}
             />
-            <Text style={styles.textStyles}> Select Services</Text>
+            <Text style={styles.textStyles}>{selectedItems ? ` Selected (${selectedItems.length})` : ' Select Services'}</Text>
           </View>
         </TouchableHighlight>
       </View>
@@ -122,9 +121,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%'
-  },
-  buttonTouch: {
-    backgroundColor: '#D63031'
   }
 })
 

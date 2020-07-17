@@ -4,6 +4,7 @@ import Carousel from "react-native-snap-carousel";
 import LinearGradient from "react-native-linear-gradient";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { scrollInterpolator, animatedStyles } from '../utils/CarouselAnimation';
+import { getMonthDate } from '../utils/GetUniqueDates';
 
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
@@ -70,36 +71,10 @@ class CarouselList extends Component {
             style={{ flex: 1, width:'80%' }}>
                 <View style={styles.upFestSlideView}>
                     <Text style={styles.upFestName}>{item.festivalName}</Text>
-                    <Text style={styles.upFestDate}>{this.getParsedDate(item.festivalDate)}</Text>
+                    <Text style={styles.upFestDate}>{`(${getMonthDate(item.festivalDate)})`}</Text>
                 </View>
             </LinearGradient>
         );
-    }
-
-    getParsedDate(date) {
-        date = String(date).split('T')[0];
-        var date1 = new Date(date);
-        var dd = date1.getDate();
-        var mm = date1.getMonth() + 1;
-        var yyyy = date1.getFullYear();
-
-        if (mm === 4) {
-            mm = "Apr"
-        }
-        else if (mm === 5) {
-            mm = "May"
-        }
-        else if (mm === 6) {
-            mm = "Jun"
-        }
-        else if (mm === 7) {
-            mm = "Jul"
-        }
-        else if (mm === 8) {
-            mm = "Aug"
-        }
-
-        return "(" + dd + "-" + mm + "-" + yyyy + ")";
     }
 
     _renderAds = ({ item, index }) => {

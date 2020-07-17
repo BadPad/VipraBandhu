@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: 'black',
         padding: 5,
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: Font_Name_Bold
     },
     serviceBody: {
         flexDirection: 'row',
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
     },
     serviceBodyBoxTitle: {
         textAlign: 'center',
-        fontFamily: 'OpenSans-Regular'
+        fontFamily: Font_Name_Regular
     },
     serviceIcons: {
         width: 60,
@@ -338,6 +338,7 @@ const styles = StyleSheet.create({
     upFestHeaderTitle: {
         fontFamily: Font_Name_Regular,
         fontSize: wp(4.3),
+        fontWeight: 'bold',
         lineHeight: wp(4.8),
         textAlign:'center'
     },

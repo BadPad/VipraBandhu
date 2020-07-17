@@ -9,6 +9,7 @@ import styles, {
 } from "./styles/GradientCard.style";
 import LinearGradient from "react-native-linear-gradient";
 import FastImage from "react-native-fast-image";
+import { App_Color } from "../ConstantValues";
 
 //const defaultImageSource = require("../../../assets/Bitcoin.png");
 
@@ -57,7 +58,7 @@ const GradientCard = props => {
           
           <View style={styles.row}>
           <Icon name="ios-arrow-dropright-circle" size={20} 
-              backgroundColor="transparent" color="#D63031" 
+              backgroundColor="transparent" color={App_Color} 
               >
               </Icon >
             <Text style={titleStyle || styles.titleStyle}>

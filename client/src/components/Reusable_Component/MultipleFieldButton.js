@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native'
 
 import Entypo from 'react-native-vector-icons/Entypo'
+import { App_Color } from './ConstantValues'
 
 const MultipleFieldButton = ({ butonContainer, onPressBck, buttonBckTouch, onPressCheck, buttoncheckTouch, buttoncheckTouchText, name,  }) => {
     return (
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     },
     buttonBck: {
         width: '50%',
-        backgroundColor: '#ffdfda',
+        backgroundColor: '#f2e9f9',
         paddingVertical: 13
     },
     btnBckArrow: {
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     },
     buttoncheck: {
         width: '50%',
-        backgroundColor: '#D63031',
+        backgroundColor: App_Color,
         paddingVertical: 13
     },
     buttoncheckText: {

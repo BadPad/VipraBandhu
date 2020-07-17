@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { getShortDay, getShortMonth, getDate } from './GetUniqueDates'
+import { App_Color } from '../Reusable_Component/ConstantValues'
 
 const DeliveryDatesServiceList = ({ data, selectDate, selectedDate }) => {
     return (
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
         borderWidth: .7,
     },
     containerSelected: {
-        backgroundColor: '#D63031'
+        backgroundColor: App_Color
     },
     deliveryDates: {
         flexDirection: 'column',

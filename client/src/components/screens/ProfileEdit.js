@@ -27,6 +27,7 @@ import TypesOfService from './Profile_Related/TypesOfService';
 import ServiceCaste from './Profile_Related/ServiceCaste';
 import MultipleFieldButton from '../Reusable_Component/MultipleFieldButton';
 import TextFieldGroup from '../Reusable_Component/TextFieldGroup';
+import { App_Color } from '../Reusable_Component/ConstantValues';
 
 const { width } = Dimensions.get('screen');
 
@@ -68,8 +69,11 @@ const ProfileEdit = ({
     }
     getCastes();
     getDistrictOrCity();
-    getAreas(formData.city)
   }, [])
+
+  useEffect(() => {
+    getAreas(cityAreaList && cityAreaList.getDistricrOrCity && cityAreaList.getDistricrOrCity[formData.city])
+  },[formData.city])
 
   const profileEditView = [
     { id: 0, name: 'Self Details' },
@@ -129,7 +133,7 @@ const ProfileEdit = ({
       validError.validError.city = 'Select your City';
     }
 
-    if(isEmpty(formData.area)) {
+    if(isEmpty(formData.area) && formData.city === 'Bengaluru') {
       isError = true;
       validError.validError.area = 'Select you address area';
     }
@@ -315,7 +319,7 @@ const ProfileEdit = ({
                         }}
                         selectCity={city => {
                           setFormData({... formData, city: cityAreaList.getDistricrOrCity.indexOf(city)});
-                          getAreas(city);
+                          // getAreas(city);
                           ListView_Ref.scrollToEnd({ animated: true });
                           setFormUpdated(true)
                         }}
@@ -389,7 +393,7 @@ const ProfileEdit = ({
                             {formData.serviceCastes.map(list => {
                               const getSelectesCastes = casteList && casteList.getCasteList[list];
                               return (
-                                <Text  style={styles.selectedText} key={list}>{getSelectesCastes}</Text>
+                                <Text style={styles.selectedText} key={list}>{getSelectesCastes}</Text>
                               )
                             })}
                           </View>}
@@ -433,7 +437,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f9f9f9'
   },
   header:{
-    backgroundColor: "#D63031",
+    backgroundColor: App_Color,
   },
   headerContent:{
     padding:10,
@@ -470,14 +474,15 @@ const styles = StyleSheet.create({
     borderColor: '#ddd'
   },
   tabText: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontWeight: 'bold'
   },
   tabContentSelected: {
     // borderColor: '#D63031',
   },
   tabTextSelected: {
     fontWeight: 'bold',
-    color: '#D63031'
+    color: App_Color
   },
   detailsContainer: {
     paddingHorizontal: 10

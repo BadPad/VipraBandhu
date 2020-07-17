@@ -5,6 +5,7 @@ import CardSection from '../Reusable_Component/Card/CardSection'
 import InputCheckbox from '../Reusable_Component/InputCheckbox';
 import TextFieldGroup from '../Reusable_Component/TextFieldGroup';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { App_Color } from '../Reusable_Component/ConstantValues';
 
 const ServicesCardCookList = ({ data, onSelectCookService, selectedCookService }) => {
 
@@ -41,13 +42,13 @@ const ServicesCardCookList = ({ data, onSelectCookService, selectedCookService }
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
                                 <TouchableHighlight
-                                    style={{ ...styles.closeIconStyle, backgroundColor: "#D63031" }}
+                                    style={{ ...styles.closeIconStyle, backgroundColor: App_Color }}
                                     onPress={() => {
                                         setModalVisible(!modalVisible);
                                     }}
                                 >
                                     <Icon style={styles.iconCircle} name="ios-close-circle" size={30}
-                                        color="#fff" backgroundColor="#D63031"
+                                        color="#fff" backgroundColor={App_Color}
                                     ></Icon>
                                 </TouchableHighlight>
                                 <Text style={styles.serviceDesc}>
@@ -66,7 +67,7 @@ const ServicesCardCookList = ({ data, onSelectCookService, selectedCookService }
                             underlayColor="#fff">
 
                             <Icon style={styles.iconInfo} name="ios-information-circle" size={20}
-                                color="#D63031"
+                                color={App_Color}
                             ></Icon>
                         </TouchableHighlight>
                     :null}
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         margin: 25,
-        backgroundColor: "#D63031",
+        backgroundColor: App_Color,
         borderRadius: 5,
         paddingLeft: 20,
         paddingBottom: 10,

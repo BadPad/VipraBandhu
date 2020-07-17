@@ -12,6 +12,7 @@ import { registerNewUser } from '../../../redux/actions/registerActions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Indicator from '../../Reusable_Component/SpinnerIndicator/Indicator';
+import { App_Color } from '../../Reusable_Component/ConstantValues';
 
 const { height } = Dimensions.get('window');
 
@@ -100,7 +101,7 @@ const Register = ({ navigation, registerNewUser }) => {
                         name="firstName"
                         placeholder="First Name *"
                         control={control}
-                        onChange={args => args[0].nativeEvent.text}
+                        onChange={args => args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '')}
                         rules={{ required: true }}
                         defaultValue=""
                         errors={errors.firstName && 'First Name is required! *'}
@@ -198,12 +199,13 @@ const styles = StyleSheet.create({
         fontSize: 25
     },
     regTypeCont: {
-        marginVertical: 15
+        margin: 5,
+        marginBottom: 10
     },
     regTypeText: {
         textAlign: 'center',
         padding: 5,
-        marginBottom: 10,
+        marginBottom: 5,
         fontSize: 18,
         color: '#3c3b37'
     },
@@ -223,20 +225,20 @@ const styles = StyleSheet.create({
         elevation: 3
     },
     selectedRegBlock: {
-        borderColor: '#D63031'
+        borderColor: App_Color
     },
     blogText: {
         color: '#3c3b37',
-        width: 100,
+        width: 105,
         textAlign: 'center',
         fontWeight: 'bold',
-        padding: 15
+        padding: 10
     },
     selectedIcon: {
         position: 'absolute',
         top: -6,
         right: -6,
-        color: '#D63031',
+        color: App_Color,
         backgroundColor: '#fff'
     },
     error: {

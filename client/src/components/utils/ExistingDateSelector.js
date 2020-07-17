@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import DateTimeField from '../Reusable_Component/DateTimeSelector/DateTimeField';
 import moment from "moment";
+import { App_Color } from '../Reusable_Component/ConstantValues';
 
 const ExistingDateSelector = ({
     mode,
@@ -20,7 +21,7 @@ const ExistingDateSelector = ({
         >
             <CheckBox 
                 containerStyle={styles.dateCheck}
-                checkedColor="#D63031"
+                checkedColor={App_Color}
                 uncheckedIcon='circle-o'
                 checked={getDate(selectedDate) === getDate(value) ? true : false}
             />
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5
     },
     existingDateChecked: {
-        borderColor: '#D63031'
+        borderColor: App_Color
     },
     dateTimeContainer: {
         flexDirection: 'row', 

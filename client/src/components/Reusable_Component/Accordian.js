@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, LayoutAnimation } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { App_Color } from './ConstantValues';
 
 export default class Accordian extends Component {
     constructor(props) {
@@ -40,7 +41,7 @@ export default class Accordian extends Component {
                             <Text style={styles.headerTitle}>{this.state.title}</Text>
 
                             <Icon style={styles.iconCart} name={icon} size={20}
-                                color="#D63031"
+                                color={App_Color}
                             ></Icon>
                         </View>
                     </TouchableHighlight>

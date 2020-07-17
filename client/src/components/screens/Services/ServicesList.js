@@ -16,6 +16,7 @@ import BottomScrollSheet from '../../Reusable_Component/BottomScrollSheet';
 import FieldButton from '../../Reusable_Component/FieldButton';
 import FilterCategory from '../../utils/FilterCategory';
 import Accordian from '../../Reusable_Component/Accordian';
+import { App_Color } from '../../Reusable_Component/ConstantValues';
 
 const { height } = Dimensions.get('window');
 
@@ -256,7 +257,6 @@ const ServicesList = ({ navigation, route, serviceList, searchServices, selected
                         < FieldButton
                             name={`Next ( ${selectedCookItems.length} Selected )`}
                             butonContainer={styles.buttonContainer}
-                            buttonTouch={styles.buttonTouch}
                             onPress={ShowSelectedItems}
                         />
                     </View>
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         fontWeight:'bold',
-        backgroundColor:'#595959',
+        backgroundColor: App_Color,
         color:'#fff',
         padding:3
     },
@@ -335,10 +335,6 @@ const styles = StyleSheet.create({
     },
     submitCategory: {
         marginVertical: 20
-    },
-    buttonTouch: {
-        backgroundColor: '#D63031',
-        fontFamily: 'OpenSans-Regular',
     },
     buttonContainer: {
         position: 'absolute',

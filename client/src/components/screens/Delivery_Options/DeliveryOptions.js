@@ -20,6 +20,7 @@ import isEmpty from '../../Reusable_Component/is-empty';
 import CateringBookingCartServiceList from '../../utils/CateringBookingCartServiceList';
 import Indicator from '../../Reusable_Component/SpinnerIndicator/Indicator';
 import MultipleSelectionDropdown from '../../Reusable_Component/MultipleSelectionDropdown';
+import { App_Color, Font_Name_Regular } from '../../Reusable_Component/ConstantValues';
 
 const customerpaymentType = [
     {label: "Select Payment Type", value: 0},
@@ -57,7 +58,7 @@ const DeliveryOptions = ({
 
     const { user } = auth;
 
-    let address = auth.user.area + ', ' + auth.user.city + ', ' + auth.user.state;
+    let address = auth.user.address[0].address + ', ' + auth.user.area + ', ' + auth.user.city + ', ' + auth.user.state;
 
     const renderServiceDatesList = ({ item }) => {
         return (
@@ -118,7 +119,7 @@ const DeliveryOptions = ({
                 <Card>
                     <CardSection style={styles.addressHeading}>
                         <View style={styles.headLogText}>
-                            <Icon name="location-pin" size={20} color="#D63031" />
+                            <Icon name="location-pin" size={20} color={App_Color} />
                             <Heading containerStyle={styles.contAddHeading} style={styles.addHeading} name="Home" />
                         </View>
                         <TouchableOpacity style={styles.changeAddButton} onPress={() => console.log('change')}>
@@ -126,7 +127,7 @@ const DeliveryOptions = ({
                         </TouchableOpacity>
                     </CardSection>
                     <CardSection style={styles.selectedAddress}>
-                        <Text>{user.firstName}</Text>
+                        <Text>{user.FirstName}</Text>
                         <Text>{address}</Text>
                     </CardSection>
                     <Card style={styles.servicePayContainer}>
@@ -140,7 +141,7 @@ const DeliveryOptions = ({
                                 selectedItem={bookingCartServices && bookingCartServices.paymentType}
                             />
                         </CardSection>
-                        <CardSection style={styles.servicePay}>
+                        <CardSection style={{...styles.servicePay,...styles.servicePaySelected}}>
                             <Text style={styles.servicePref}>Service Caste Prefer</Text>
                             <View style={styles.servicePayCaste}>
                                 <MultipleSelectionDropdown 
@@ -150,6 +151,17 @@ const DeliveryOptions = ({
                                 />
                             </View>
                         </CardSection>
+                        {!isEmpty(bookingCartServices && bookingCartServices.preferCaste) &&
+                        <CardSection style={{...styles.servicePay, ...styles.servicePayCasteSelected}}>
+                            <View style={styles.selectedItems}>
+                                {bookingCartServices && bookingCartServices.preferCaste.map(list => {
+                                    const getSelectesPreferCaste = customerPreferCaste && customerPreferCaste[list];
+                                    return (
+                                        <Text style={styles.selectedText} key={list}>{getSelectesPreferCaste.label}</Text>
+                                    )
+                                })}
+                            </View>
+                        </CardSection>}
                     </Card>
                     <CardSection style={styles.serviceSlots}>
                         {/* <Text style={styles.serviceSlotsText}>Choose service timings for you services</Text> */}
@@ -243,14 +255,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     changeAddButton: {
-        borderColor: '#D63031',
+        borderColor: App_Color,
         borderWidth: 1,
         borderRadius: 5
     },
     changeAddText: {
         paddingVertical: 4,
         paddingHorizontal: 8,
-        color: '#D63031'
+        color: App_Color,
+        fontFamily: Font_Name_Regular
     },
     selectedAddress: {
         paddingHorizontal: 5,
@@ -271,18 +284,38 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         borderColor: '#EEE8E7',
-        borderWidth: 0.7
+        borderWidth: 0.7,
     },
     servicePref: {
         paddingHorizontal: 4,
         fontSize: 17,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     payType: {
         marginLeft: 70
     },
     castePref: {
         marginLeft: 50
+    },
+    servicePaySelected: {
+        borderBottomColor: 0
+    },
+    servicePayCasteSelected: {
+        borderTopWidth: 0,
+        justifyContent: 'flex-end'
+    },
+    selectedItems: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'stretch'
+    },
+    selectedText: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 7,
+        margin: 2
     },
     serviceSlots : {
         backgroundColor: '#EEE8E7',

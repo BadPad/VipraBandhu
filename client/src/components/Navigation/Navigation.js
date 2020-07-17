@@ -73,6 +73,8 @@ function getHeaderTitle(route) {
       return 'Offers'
     case 'MyProfile':
       return 'My Profile '
+    case 'ProfileEdit':
+      return 'Edit Profile'
     case 'BookingsList':
       return 'My Bookings '
     case 'MyWallet':
@@ -122,7 +124,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         
         headerLeft: () => (
@@ -134,7 +136,7 @@ const StackNavigation = ({ navigation }) => (
         ),
         headerRight: () => (
           <View style={styles.headerRightIcons}>
-            <FaqIcon navigation={navigation} />
+            {/* <FaqIcon navigation={navigation} /> */}
             <BookingCartIcon navigation={navigation} />
             <NotificationIcon onPress={() => navigation.navigate('Notifications')}
             ></NotificationIcon>
@@ -147,7 +149,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -173,7 +175,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -199,7 +201,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
@@ -214,7 +216,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
@@ -229,7 +231,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
@@ -244,7 +246,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
@@ -259,7 +261,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
@@ -274,7 +276,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
@@ -289,7 +291,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -305,7 +307,7 @@ const StackNavigation = ({ navigation }) => (
         headerShown: false,
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -321,7 +323,7 @@ const StackNavigation = ({ navigation }) => (
         headerShown: false,
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -337,7 +339,7 @@ const StackNavigation = ({ navigation }) => (
         headerShown: false,
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -352,7 +354,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -367,7 +369,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -382,7 +384,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -397,7 +399,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -412,7 +414,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -427,7 +429,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -447,7 +449,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -462,7 +464,7 @@ const StackNavigation = ({ navigation }) => (
       options={({route}) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Regular,
+          fontFamily: Font_Name_Bold
         },
         
         headerLeft: () => (
@@ -526,7 +528,6 @@ const styles = StyleSheet.create({
     height: 20,
     fontSize: 10,
     fontWeight: 'bold'
-    
   }
 })
 
