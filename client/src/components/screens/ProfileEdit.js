@@ -4,11 +4,13 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
   ScrollView,
   FlatList,
   Dimensions,
 } from 'react-native';
+import Image from 'react-native-image-progress';
+import ProgressBar from 'react-native-progress/Bar';
+import ImagePicker from 'react-native-image-crop-picker';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useForm } from "react-hook-form";
@@ -20,6 +22,7 @@ import PurohitCaste from './Profile_Related/PurohitCaste';
 import SelectStateCity from './Profile_Related/SelectStateCity';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Foundation from 'react-native-vector-icons/Foundation'
 import SearchArea from './Profile_Related/SearchArea';
 import isEmpty from '../Reusable_Component/is-empty';
 import ServiceSelect from './Profile_Related/ServiceSelect';
@@ -57,6 +60,7 @@ const ProfileEdit = ({
   const [formUpdated, setFormUpdated] = useState(false)
   const [validError, setValidError] = useState({})
   const [selectedTab, setSelectedTab] = useState(0);
+  const [avatarSrc, setAvatarSrc] = useState({});
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: 'first', title: 'Self Details' },
@@ -190,18 +194,48 @@ const ProfileEdit = ({
     }
   }
 
+  const openGallery = () => {
+    ImagePicker.openPicker({
+      width: 100,
+      height: 100,
+      cropping: true
+    }).then(image => {
+      console.log(image);
+      setAvatarSrc({...image})
+    });
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      console.log(image);
+      setAvatarSrc({...image})
+    }); 
+  }
+
   const { userType } = auth;
+
+  const sourceUri = avatarSrc.path ? { uri: avatarSrc.path }
+    : {uri: 'http://www.sumadhwaseva.com/wp-content/uploads/2020/06/diwalii.png'};
 
   return (
     <View style={styles.fullContainer}>
       <ScrollView
         ref={ref => ListView_Ref = ref}
       > 
-        <View style={styles.header}>      
+        <View style={styles.header}>              
           <View style={styles.headerContent}>
-              <Image style={styles.avatar}
-                source={{uri: 'https://bootdey.com/img/Content/avatar/avatar1.png'}}
+            <TouchableOpacity onPress={openGallery}>
+              <Image
+                source={sourceUri}
+                indicator={ProgressBar}
+                style={styles.avatar}
+                imageStyle={styles.avatarImage}
               />
+              <View style={styles.imageEdit}>
+                  <Foundation name="camera" size={20} />
+              </View>
+            </TouchableOpacity>
               <Text style={styles.name}>
                 {auth.user['phone number']}
               </Text>
@@ -442,14 +476,25 @@ const styles = StyleSheet.create({
   headerContent:{
     padding:10,
     alignItems: 'center',
+  },  
+  avatarImage: {
+      borderRadius: 100,
+      borderColor: '#fff',
+      borderWidth: 3
   },
   avatar: {
-    width: 115,
-    height: 115,
-    borderRadius: 63,
-    borderWidth: 4,
-    borderColor: "white",
-    marginBottom:10,
+      width: 160,
+      height: 160
+  },
+  mageEdit: {
+    position: 'absolute',
+    right: 25,
+    bottom: -5,
+    padding: 10,
+    backgroundColor: '#ddd',
+    borderRadius: 20,
+    borderColor: '#fff',
+    borderWidth: 2
   },
   name:{
     fontSize:18,
