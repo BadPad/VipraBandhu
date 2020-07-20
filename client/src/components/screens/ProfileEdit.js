@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import { useForm } from "react-hook-form";
 import { getDistrictOrCity, getAreas } from '../../redux/actions/cityAreaActions';
 import { getCastes } from '../../redux/actions/casteActions';
-import { updateCook, updatePurohit, updateCustomer } from '../../redux/actions/profileActions';
+import { updateCook, updatePurohit, updateCustomer, customerUpdateImage } from '../../redux/actions/profileActions';
 import FieldButton from '../Reusable_Component/FieldButton';
 import PurohitCaste from './Profile_Related/PurohitCaste';
 import SelectStateCity from './Profile_Related/SelectStateCity';
@@ -31,6 +31,7 @@ import ServiceCaste from './Profile_Related/ServiceCaste';
 import MultipleFieldButton from '../Reusable_Component/MultipleFieldButton';
 import TextFieldGroup from '../Reusable_Component/TextFieldGroup';
 import { App_Color } from '../Reusable_Component/ConstantValues';
+import Indicator from '../Reusable_Component/SpinnerIndicator/Indicator';
 
 const { width } = Dimensions.get('screen');
 
@@ -45,7 +46,8 @@ const ProfileEdit = ({
   ListView_Ref,
   updateCook, 
   updatePurohit, 
-  updateCustomer,  
+  updateCustomer,
+  customerUpdateImage,
   navigation
 }) => {
 
@@ -70,6 +72,9 @@ const ProfileEdit = ({
   useEffect(() => {
     if(isEmpty(formData.state)) {
       setFormData({...formData, state: "Karnataka" })
+    }
+    if(!isEmpty(formData.address)) {
+      setFormData({...formData, add: formData.address[0].address})
     }
     getCastes();
     getDistrictOrCity();
@@ -117,7 +122,7 @@ const ProfileEdit = ({
       validError.validError.caste = `${auth.userType} caste is required!`;
     }
 
-    if(!isEmpty(formData.address) && formData.address.length > 250) {
+    if(!isEmpty(formData.add) && formData.add.length > 250) {
       isError = true;
       validError.validError.address = 'Address should be maximum 250 Characters';
     }
@@ -169,7 +174,6 @@ const ProfileEdit = ({
     if(!err) {
       const { user } = auth;
       // console.log(user)
-      // console.log(formData)
       const newFormData = formData;
       if(isEmpty(user.address)) {
         newFormData.address = [{
@@ -194,32 +198,39 @@ const ProfileEdit = ({
     }
   }
 
+  const updateImage = image => {
+    customerUpdateImage(image)
+  }
+
   const openGallery = () => {
     ImagePicker.openPicker({
+      mediaType: 'photo',
       width: 100,
       height: 100,
       cropping: true
     }).then(image => {
       console.log(image);
+      updateImage(image)
       setAvatarSrc({...image})
     });
-    ImagePicker.openCamera({
-      width: 300,
-      height: 400,
-      cropping: true,
-    }).then(image => {
-      console.log(image);
-      setAvatarSrc({...image})
-    }); 
+    // ImagePicker.openCamera({
+    //   width: 300,
+    //   height: 400,
+    //   cropping: true,
+    // }).then(image => {
+    //   console.log(image);
+    //   setAvatarSrc({...image})
+    // }); 
   }
 
-  const { userType } = auth;
+  const { userType, loading } = auth;
 
   const sourceUri = avatarSrc.path ? { uri: avatarSrc.path }
     : {uri: 'http://www.sumadhwaseva.com/wp-content/uploads/2020/06/diwalii.png'};
 
   return (
     <View style={styles.fullContainer}>
+      {loading && <Indicator />}
       <ScrollView
         ref={ref => ListView_Ref = ref}
       > 
@@ -336,7 +347,7 @@ const ProfileEdit = ({
                           setFormData({...formData, add: text})
                           setFormUpdated(true)
                         }}
-                        value={formData.add ||(formData.address && formData.address[0].address)}
+                        value={formData.add}
                         errors={validError.address ? validError.address : null}
                       />
                     </View>
@@ -474,29 +485,30 @@ const styles = StyleSheet.create({
     backgroundColor: App_Color,
   },
   headerContent:{
-    padding:10,
     alignItems: 'center',
+    padding:10,
   },  
   avatarImage: {
-      borderRadius: 100,
-      borderColor: '#fff',
-      borderWidth: 3
+    borderRadius: 100,
+    borderColor: '#fff',
+    borderWidth: 3
   },
   avatar: {
-      width: 160,
-      height: 160
+    width: 150,
+    height: 150
   },
-  mageEdit: {
+  imageEdit: {
     position: 'absolute',
-    right: 25,
-    bottom: -5,
-    padding: 10,
+    right: 30,
+    bottom: -10,
+    padding: 5,
     backgroundColor: '#ddd',
     borderRadius: 20,
     borderColor: '#fff',
     borderWidth: 2
   },
   name:{
+    marginTop: 10,
     fontSize:18,
     color:"#FFFFFF",
     fontWeight:'600',
@@ -572,6 +584,7 @@ ProfileEdit.propTypes = {
   updateCook: PropTypes.func.isRequired, 
   updatePurohit: PropTypes.func.isRequired, 
   updateCustomer: PropTypes.func.isRequired,
+  customerUpdateImage: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   services: PropTypes.object.isRequired,
   cityAreaList: PropTypes.object.isRequired,
@@ -591,7 +604,8 @@ const mapDispatchToProps = {
   getCastes, 
   updateCook, 
   updatePurohit, 
-  updateCustomer 
+  updateCustomer,
+  customerUpdateImage
 }
 
  
