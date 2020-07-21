@@ -71,13 +71,14 @@ const Service = ({
     bookingCartServices 
 }) => {
 
-    const [date, setDate] = useState(new Date().setSeconds(0,0));
+    const [date, setDate] = useState(new Date(new Date().setDate(new Date().getDate() + 1)).setSeconds(0,0));
     const [showDate, setShowDate] = useState(false);
     const [addNewDate, setAddNewDate] = useState(false);
     const [exDate, setExDate] = useState(false);
     const [isModal, setIsModel] = useState(false);
+    const [purohithError, setPurohithError] = useState({});
     const [contractType, setContractType] = useState('');
-    const [catDate, setCatDate] = useState('');
+    const [catDate, setCatDate] = useState();
     const [showCatDate, setShowCatDate] = useState(false)
     const [catBf, setCatBf] = useState([]);
     const [catBfCount, setCatBfCount] = useState('');
@@ -154,8 +155,27 @@ const Service = ({
         setCatDate(currentDate);
     }
 
+    const purohitValidation = () => {
+        let isError = false;
+
+        const purohithError = {
+            purohithError: {}
+        }
+
+        if(isEmpty(contractType)) {
+            isError = true;
+            purohithError.purohithError.error = 'Please select the Date and Contract Type to proceed further'
+        }
+
+        setPurohithError({...purohithError.purohithError})
+
+        return isError;
+    }
+
     let modalContent;
     if(isEmpty(bookingCartServices.bookingCartList) || addNewDate) {
+        const fromDate = new Date().setDate(new Date().getDate() + 1);
+        const toDate = new Date().setMonth(new Date().getMonth() + 6);
         modalContent = (
             <>
                 <Text style={styles.existingHeading}>Date <FontAwesome5 name="star-of-life" color="rgba(214, 48, 49, 0.5)" size={7} /></Text>
@@ -164,6 +184,8 @@ const Service = ({
                     timeZoneOffsetInMinutes={0}
                     show={showDate}
                     value={newDate}
+                    minimumDate={fromDate}
+                    maximumDate={toDate}
                     mode="date"
                     is24Hour={true}
                     display="default"
@@ -178,16 +200,16 @@ const Service = ({
                         selectedItem={contractType}
                     />
                 </View>
+                {purohithError.error && <Text style={styles.error}><FontAwesome5 name="exclamation" />  {purohithError.error}</Text>}
                 <FieldButton 
                     name="Continue"
-                    onPress={() => contractType === '' ? 
-                            Alert.alert(
-                                '',
-                                'Please select the Date and contract Type to proceed further'
-                            )
+                    onPress={() => {
+                        const purohitErr = purohitValidation();
+                        purohitErr ? 
+                            null
                         : 
                             addAndCheckout(service)
-                    }
+                    }}
                 />
             </>
         )
@@ -221,20 +243,19 @@ const Service = ({
                         selectedItem={contractType}
                     />
                 </View>
+                {purohithError.error && <Text style={styles.error}><FontAwesome5 name="exclamation" />  {purohithError.error}</Text>}
                 <FieldButton 
                     name={exDate ? "Continue" : "Add New Date"}
-                    onPress={() => 
+                    onPress={() => {
+                        const purohitErr = purohitValidation();
                         exDate ?
-                            contractType === '' ? 
-                                Alert.alert(
-                                    '',
-                                    'Please select the Date and contract Type to proceed further'
-                                )
+                            purohitErr ? 
+                                null
                             :
                                 addAndCheckout(service)
                         :
                             setAddNewDate(!addNewDate)
-                    }
+                    }}
                 />
             </>
         )
@@ -242,7 +263,8 @@ const Service = ({
 
     const { isAuthenticated } = auth;
     const { loading } = bookingCartServices;
-
+    const fromDate = new Date().setDate(new Date().getDate() + 1);
+    const toDate = new Date().setMonth(new Date().getMonth() + 6);
     return (
         <View style={styles.container}>
             {loading && <Indicator />}
@@ -309,7 +331,7 @@ const Service = ({
                             <View style={styles.cateringContainer}>
                                 <Text style={styles.cateringHeading}>Selected Catering Services</Text>
                                 {
-                                    catDate === '' && !showCatDate ?
+                                    (catDate === undefined || typeof(catDate) === 'number') && !showCatDate ?
                                         <FieldButton 
                                             name="Select Service Date"
                                             onPress={() => setShowCatDate(!showCatDate)}
@@ -319,7 +341,9 @@ const Service = ({
                                             name="Catering Date"
                                             timeZoneOffsetInMinutes={0}
                                             show={showCatDate}
-                                            value={catDate === '' ? new Date().setDate(new Date().getDate() + 1) : new Date(catDate)}
+                                            value={catDate === undefined ? fromDate : new Date(catDate)}
+                                            minimumDate={fromDate}
+                                            maximumDate={toDate}
                                             mode="date"
                                             is24Hour={true}
                                             display="default"
@@ -611,6 +635,9 @@ const styles = StyleSheet.create({
     },
     newServiceType: {
         marginTop: 15
+    },
+    error: {
+        color: '#c81912'
     }
 })
 

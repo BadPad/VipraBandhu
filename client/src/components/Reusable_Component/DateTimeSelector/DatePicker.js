@@ -14,6 +14,8 @@ const DatePicker = ({
     value,
     mode,
     is24Hour,
+    minimumDate,
+    maximumDate,
     display,
     onChange
 }) => {
@@ -34,6 +36,8 @@ const DatePicker = ({
                     value={value}
                     mode={mode}
                     is24Hour={is24Hour}
+                    minimumDate={minimumDate}
+                    maximumDate={maximumDate}
                     display={display}
                     onChange={onChange}
                     textColor="blue"

@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { Avatar } from 'react-native-elements';
+import Image from 'react-native-image-progress';
+import ProgressBar from 'react-native-progress/Bar';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -13,22 +14,29 @@ import { logoutUser } from '../../redux/actions/authActions';
 
 const DrawnContent = (props) => {
     const { isAuthenticated, user } = props.auth;
+    
+    const defaultProfile = 'https://bootdey.com/img/Content/avatar/avatar1.png';
     return (
         <View style={styles.container}>
             <TouchableHighlight style={styles.touchUser} onPress={() => isAuthenticated ? props.navigation.navigate('MyProfile') : props.navigation.navigate('Login')}>
                 <View style={styles.pImageContainer}>
                     <View style={styles.imageBox}>
-                        <Avatar
-                            rounded
+                        <Image
                             source={{
-                                uri: 'https://p7.hiclipart.com/preview/636/702/321/computer-icons-user-profile-avatar-black-man.jpg',
+                                uri: isAuthenticated ? 
+                                    user.profileImage !== 'not found'? 
+                                        user.profileImage 
+                                    : defaultProfile
+                                :defaultProfile
                             }}
-                            size="medium"
+                            indicator={ProgressBar}
+                            style={styles.avatar}
+                            imageStyle={styles.avatarImage}
                         />
                         <Text style={styles.userName}>{isAuthenticated ? user.FirstName: 'Login / Register'}</Text>
                     </View>
                     <View>
-                        <MaterialCommunityIcons name="chevron-right" color="rgba(249,249,249,0.5)" size={20} />
+                        <MaterialCommunityIcons name="chevron-right" color="rgba(249,249,249,0.7)" size={20} />
                     </View>
                 </View>
             </TouchableHighlight>
@@ -184,6 +192,15 @@ const styles = StyleSheet.create({
     imageBox: {
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    avatarImage: {
+        borderRadius: 100,
+        borderColor: '#f9f9f9',
+        borderWidth: 2
+    },
+    avatar: {
+        width: 50,
+        height: 50,
     },
     userName: {
         fontSize: 19,

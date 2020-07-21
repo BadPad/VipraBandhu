@@ -76,7 +76,7 @@ export const regLogPurohit = (userData, from, navigation) => dispatch => {
     dispatch(regLogLoading());
     axios.post('https://mb5u8yz9e7.execute-api.ap-south-1.amazonaws.com/prod/purohit-register', userData)
     .then(res => {
-        console.log(res)
+        // console.log(res)
         const { id_token, status } = res && res.data;
         const sukalpaSevaToken = {
             ss_auth : id_token,
@@ -142,7 +142,7 @@ export const regLogCook = (userData, from, navigation) => dispatch => {
     dispatch(regLogLoading());
     axios.post('https://azcbpg0u4m.execute-api.ap-south-1.amazonaws.com/prod/cook-register', userData)
     .then(res => {
-        console.log(res)
+        // console.log(res)
         const { id_token, status } = res && res.data;
         const sukalpaSevaToken = {
             ss_auth : id_token,
@@ -203,57 +203,77 @@ export const regLogCook = (userData, from, navigation) => dispatch => {
 }
 
 /*--- Set logged in Customer user ---*/
+function getCustomerUser () {
+    return axios.get('https://bfmlogqcg3.execute-api.ap-south-1.amazonaws.com/prod/user-info')
+}
+
+function getCustomerImageUser() {
+    return axios.get('https://yd5lw8j6q8.execute-api.ap-south-1.amazonaws.com/Api/customer_profile_image')
+}
+
 export const setCustomerUser = (from, navigation) => dispatch => {
-    // console.log(from)
-    axios.get('https://bfmlogqcg3.execute-api.ap-south-1.amazonaws.com/prod/user-info')
-    .then(res => {
-        // console.log(res)
+    axios.all([getCustomerUser(), getCustomerImageUser()])
+    .then(axios.spread((user, image) => {
+        const newCustomerProfile = {...user.data.body[0], profileImage: image.data.body};
         dispatch({
             type: SET_CURRENT_USER,
-            payload: res && res.data && res.data.body[0]
+            payload: newCustomerProfile
         })
         if(from === 'register' || from === 'login') {
             navigation.navigate('Welcome')
         }
-    })
+    }))
     .catch(err => {
         console.log(err && err.response)
     })
 }
 
 /*--- Set logged in Purohit user ---*/
+function getPurohitUser() {
+    return axios.get('https://2k7weprcb7.execute-api.ap-south-1.amazonaws.com/prod/purohit-info')
+}
+
+function getPurohitImageUser() {
+    return axios.get('https://yd5lw8j6q8.execute-api.ap-south-1.amazonaws.com/Api/purohit_profile_image')
+}
+
 export const setPurohitUser = (from, navigation) => dispatch => {
-    // console.log(from)
-    axios.get('https://2k7weprcb7.execute-api.ap-south-1.amazonaws.com/prod/purohit-info')
-    .then(res => {
-        // console.log(res)
+    axios.all([getPurohitUser(), getPurohitImageUser()])
+    .then(axios.spread((user, image) => {
+        const newPurohitProfile = {...user.data.body[0], profileImage: image.data.body};
         dispatch({
             type: SET_CURRENT_USER,
-            payload: res && res.data && res.data.body[0]
+            payload: newPurohitProfile
         })
         if(from === 'register' || from === 'login') {
             navigation.navigate('Welcome')
         }
-    })
+    }))
     .catch(err => {
         console.log(err && err.response)
     })
 }
 
-/*--- Set logges in Cook user ---*/
+/*--- Set logged in Cook user ---*/
+function getCookUser() {
+    return axios.get('https://3wsdjr44tl.execute-api.ap-south-1.amazonaws.com/prod/cook-info')
+}
+
+function getCookImageUser() {
+    return axios.get('https://yd5lw8j6q8.execute-api.ap-south-1.amazonaws.com/Api/cook_profile_image')
+}
 export const setCookUser = (from, navigation) => dispatch => {
-    // console.log(from)
-    axios.get('https://3wsdjr44tl.execute-api.ap-south-1.amazonaws.com/prod/cook-info')
-    .then(res => {
-        // console.log(res)
+    axios.all([getCookUser(), getCookImageUser()])
+    .then(axios.spread((user, image) => {
+        const newCookProfile = {...user.data.body[0], profileImage: image.data.body};
         dispatch({
             type: SET_CURRENT_USER,
-            payload: res && res.data && res.data.body[0]
+            payload: newCookProfile
         })
         if(from === 'register' || from === 'login') {
             navigation.navigate('Welcome')
         }
-    })
+    }))
     .catch(err => {
         console.log(err && err.response)
     })

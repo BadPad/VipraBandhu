@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import { useForm } from "react-hook-form";
 import { getDistrictOrCity, getAreas } from '../../redux/actions/cityAreaActions';
 import { getCastes } from '../../redux/actions/casteActions';
-import { updateCook, updatePurohit, updateCustomer, customerUpdateImage } from '../../redux/actions/profileActions';
+import { updateCook, updatePurohit, updateCustomer, customerUpdateImage, purohitUpdateImage, cookUpdateImage } from '../../redux/actions/profileActions';
 import FieldButton from '../Reusable_Component/FieldButton';
 import PurohitCaste from './Profile_Related/PurohitCaste';
 import SelectStateCity from './Profile_Related/SelectStateCity';
@@ -48,6 +48,8 @@ const ProfileEdit = ({
   updatePurohit, 
   updateCustomer,
   customerUpdateImage,
+  purohitUpdateImage, 
+  cookUpdateImage, 
   navigation
 }) => {
 
@@ -199,17 +201,28 @@ const ProfileEdit = ({
   }
 
   const updateImage = image => {
-    customerUpdateImage(image)
+    console.log(image)
+    console.log(/[^.]+$/.exec(image.path)[0])
+    let reader = new FormData();
+    reader.append('profile_image', { uri: image.path, name:`${auth.user.FirstName}.${/[^.]+$/.exec(image.path)[0]}`, type: image.mime });
+
+    if(auth.userType === 'cook') {
+      cookUpdateImage(reader)
+    } else if(auth.userType === 'purohit') {
+      purohitUpdateImage(reader)
+    } else if(auth.userType === 'customer') {
+      customerUpdateImage(reader)
+    }
   }
 
   const openGallery = () => {
     ImagePicker.openPicker({
       mediaType: 'photo',
-      width: 100,
-      height: 100,
+      width: 150,
+      height: 150,
       cropping: true
     }).then(image => {
-      console.log(image);
+      // console.log(image);
       updateImage(image)
       setAvatarSrc({...image})
     });
@@ -223,10 +236,7 @@ const ProfileEdit = ({
     // }); 
   }
 
-  const { userType, loading } = auth;
-
-  const sourceUri = avatarSrc.path ? { uri: avatarSrc.path }
-    : {uri: 'http://www.sumadhwaseva.com/wp-content/uploads/2020/06/diwalii.png'};
+  const { userType, loading, user } = auth;
 
   return (
     <View style={styles.fullContainer}>
@@ -238,7 +248,9 @@ const ProfileEdit = ({
           <View style={styles.headerContent}>
             <TouchableOpacity onPress={openGallery}>
               <Image
-                source={sourceUri}
+                source={{
+                  uri: user.profileImage !== 'not found'? user.profileImage : 'https://bootdey.com/img/Content/avatar/avatar1.png'
+                }}
                 indicator={ProgressBar}
                 style={styles.avatar}
                 imageStyle={styles.avatarImage}
@@ -251,6 +263,8 @@ const ProfileEdit = ({
                 {auth.user['phone number']}
               </Text>
           </View>
+        </View>
+        <View>
         </View>
         <View style={styles.container}>
           <View style={styles.container}>
@@ -272,19 +286,6 @@ const ProfileEdit = ({
             <View style={styles.detailsContainer}>
                 {selectedTab === 0 ?
                   <View style={styles.selfDetailsView}>
-                    {/* <TextFieldHookGroup 
-                      title="First Name"
-                      name="FirstName"
-                      required
-                      control={control}
-                      onChange={args => {
-                        args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '');
-                        setFormData({...formData, FirstName: args[0].nativeEvent.text.replace(/[^A-Za-z]/ig, '')});
-                        setFormUpdated(true)
-                      }}
-                      defaultValue={formData.FirstName}
-                      errors={validError.firstName ? validError.firstName : null}
-                    /> */}
                     <TextFieldGroup 
                       title="First Name"
                       required
@@ -490,16 +491,16 @@ const styles = StyleSheet.create({
   },  
   avatarImage: {
     borderRadius: 100,
-    borderColor: '#fff',
-    borderWidth: 3
+    borderColor: '#f9f9f9',
+    borderWidth: 2
   },
   avatar: {
-    width: 150,
-    height: 150
+    width: 115,
+    height: 115,
   },
   imageEdit: {
     position: 'absolute',
-    right: 30,
+    right: 10,
     bottom: -10,
     padding: 5,
     backgroundColor: '#ddd',
@@ -585,6 +586,8 @@ ProfileEdit.propTypes = {
   updatePurohit: PropTypes.func.isRequired, 
   updateCustomer: PropTypes.func.isRequired,
   customerUpdateImage: PropTypes.func.isRequired,
+  purohitUpdateImage: PropTypes.func.isRequired,
+  cookUpdateImage: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   services: PropTypes.object.isRequired,
   cityAreaList: PropTypes.object.isRequired,
@@ -605,7 +608,9 @@ const mapDispatchToProps = {
   updateCook, 
   updatePurohit, 
   updateCustomer,
-  customerUpdateImage
+  customerUpdateImage,
+  purohitUpdateImage, 
+  cookUpdateImage 
 }
 
  

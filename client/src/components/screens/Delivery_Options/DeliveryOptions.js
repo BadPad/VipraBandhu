@@ -46,6 +46,7 @@ const DeliveryOptions = ({
     const [selectedDate, setSelectedDate] = useState(`${bookingCartServices && bookingCartServices.bookingServiceDates && bookingCartServices.bookingServiceDates[0]}`);
     const [dateTime, setDateTime] = useState(`${bookingCartServices && bookingCartServices.bookingCartStructureSelected && bookingCartServices.bookingCartStructureSelected.date}`);
     const [showDateTime, setShowDateTime] = useState(false);
+    const [errors, setErrors] = useState({})
 
     useEffect(() => {
         getCastes()
@@ -107,6 +108,18 @@ const DeliveryOptions = ({
         return pV;
     }, [])
 
+    const validation = () => {
+        let isError = false;
+
+        const errors = {
+            errors: {}
+        }
+
+        setErrors({...errors.errors})
+
+        return isError;
+    }
+
     const { loading } = bookingCartServices;
 
     return (
@@ -151,17 +164,18 @@ const DeliveryOptions = ({
                                 />
                             </View>
                         </CardSection>
-                        {!isEmpty(bookingCartServices && bookingCartServices.preferCaste) &&
-                        <CardSection style={{...styles.servicePay, ...styles.servicePayCasteSelected}}>
-                            <View style={styles.selectedItems}>
-                                {bookingCartServices && bookingCartServices.preferCaste.map(list => {
-                                    const getSelectesPreferCaste = customerPreferCaste && customerPreferCaste[list];
-                                    return (
-                                        <Text style={styles.selectedText} key={list}>{getSelectesPreferCaste.label}</Text>
-                                    )
-                                })}
-                            </View>
-                        </CardSection>}
+                        {!isEmpty(bookingCartServices && bookingCartServices.preferCaste) && customerPreferCaste && customerPreferCaste ?
+                            <CardSection style={{...styles.servicePay, ...styles.servicePayCasteSelected}}>
+                                <View style={styles.selectedItems}>
+                                    {bookingCartServices && bookingCartServices.preferCaste.map(list => {
+                                        const getSelectesPreferCaste = customerPreferCaste && customerPreferCaste[list];
+                                        return (
+                                            <Text style={styles.selectedText} key={list}>{getSelectesPreferCaste && getSelectesPreferCaste.label}</Text>
+                                        )
+                                    })}
+                                </View>
+                            </CardSection>
+                        :null}
                     </Card>
                     <CardSection style={styles.serviceSlots}>
                         {/* <Text style={styles.serviceSlotsText}>Choose service timings for you services</Text> */}
@@ -217,9 +231,16 @@ const DeliveryOptions = ({
             <FieldCartButton 
                 name="Process to pay"
                 onPress={() => {
-                    addServiceLocation(address);
-                    paymentDataStructured()
-                    navigation.navigate('Payment')
+                    const err = validation();
+                    
+                    if(!err) {
+                        addServiceLocation(address);
+                        paymentDataStructured()
+                        navigation.navigate('Payment')
+                    } else {
+                        console.log(err)
+                        console.log(errors)
+                    }
                 }}
             >
                 <View>

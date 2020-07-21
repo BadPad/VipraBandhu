@@ -4,9 +4,10 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
   ScrollView,
 } from 'react-native';
+import Image from 'react-native-image-progress';
+import ProgressBar from 'react-native-progress/Bar';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getDistrictOrCity, getAreas } from '../../redux/actions/cityAreaActions';
@@ -45,6 +46,8 @@ const Profile = ({ auth, navigation }) => {
     sc = selectedCaste.filter(list => list)
   }
 
+  const { user } = auth;
+
   return (
     <>
       <ScrollView>
@@ -53,19 +56,24 @@ const Profile = ({ auth, navigation }) => {
             <Text style={{ color: '#fff', fontSize: 20, paddingTop: 15, paddingRight: 10, alignSelf: "flex-end" }}><Iconback name="form" style={{ color: '#fff', fontSize: 20 }} /> Edit</Text>
           </TouchableOpacity>
           <View style={styles.headerContent}>
-            <Image style={styles.avatar}
-              source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar1.png' }} />
-
+            <Image
+              source={{
+                uri: user.profileImage !== 'not found'? user.profileImage : 'https://bootdey.com/img/Content/avatar/avatar1.png'
+              }}
+              indicator={ProgressBar}
+              style={styles.avatar}
+              imageStyle={styles.avatarImage}
+            />
             <Text style={styles.name}>
-              {auth.user.FirstName} {auth.user.LastName}
+              {user.FirstName} {user.LastName}
             </Text>
             <Text style={styles.name}>
-              {auth.user['phone number']}
+              {user['phone number']}
             </Text>
           </View>
         </View>
 
-        {!isEmpty(auth.user.EmailId) &&
+        {!isEmpty(user.EmailId) &&
         <View style={styles.row}>
           <Icon name="mail" style={{ fontSize: 20 }} />
           <View>
@@ -73,11 +81,11 @@ const Profile = ({ auth, navigation }) => {
               <Text style={styles.msgTxt}>Email</Text>
             </View>
             <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.EmailId} </Text>
+              <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{user.EmailId} </Text>
             </View>
           </View>
         </View>}
-        {!isEmpty(auth.user.alternateNumber) &&
+        {!isEmpty(user.alternateNumber) &&
         <View style={styles.row}>
           <Icon name="phone" style={{ fontSize: 20 }} />
           <View>
@@ -85,11 +93,11 @@ const Profile = ({ auth, navigation }) => {
               <Text style={styles.msgTxt}>Alternate Mobile No</Text>
             </View>
             <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.alternateNumber} </Text>
+              <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{user.alternateNumber} </Text>
             </View>
           </View>
         </View>}
-        {!isEmpty(auth.user.caste) &&
+        {!isEmpty(user.caste) &&
         <View style={styles.row}>
           <Icon name="user" style={{ fontSize: 20 }} />
           <View>
@@ -97,11 +105,11 @@ const Profile = ({ auth, navigation }) => {
               <Text style={styles.msgTxt}>Caste</Text>
             </View>
             <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{auth.user.caste} </Text>
+              <Text style={styles.nameTxt} numberOfLines={2} ellipsizeMode="tail">{user.caste} </Text>
             </View>
           </View>
         </View>}
-        {!isEmpty(auth.user.address) &&
+        {!isEmpty(user.address) &&
         <View style={styles.row}>
           <Iconlocation name="location" style={{ fontSize: 20 }} />
           <View>
@@ -109,7 +117,7 @@ const Profile = ({ auth, navigation }) => {
               <Text style={styles.msgTxt}>Address</Text>
             </View>
             <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{auth.user.address && auth.user.address[0].address}, {auth.user.city}, {auth.user.state}</Text>
+              <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{user.address && user.address[0].address}, {user.city}, {user.state}</Text>
             </View>
           </View>
         </View>}
@@ -117,7 +125,7 @@ const Profile = ({ auth, navigation }) => {
           (currentUserType != "customer") ?
 
             <View>
-              {!isEmpty(selectedServices) || !isEmpty(auth.user.typeOfService) ? <Text style={{ textAlign: 'center', color: 'green', fontSize: 20 }}>Offered Services</Text> : null}
+              {!isEmpty(selectedServices) || !isEmpty(user.typeOfService) ? <Text style={{ textAlign: 'center', color: 'green', fontSize: 20 }}>Offered Services</Text> : null}
               {
                 (currentUserType === 'purohit') ?
                   !isEmpty(selectedServices) &&
@@ -128,13 +136,13 @@ const Profile = ({ auth, navigation }) => {
                         <Text style={styles.msgTxt}>Services</Text>
                       </View>
                       <View style={styles.nameContainer}>
-                        <Text style={styles.nameTxt} numberOfLines={10} ellipsizeMode="tail">{auth.user.selectedServices.join(', ')} </Text>
+                        <Text style={styles.nameTxt} numberOfLines={10} ellipsizeMode="tail">{user.selectedServices.join(', ')} </Text>
                       </View>
                     </View>
                   </View>
                   : null
               }
-              {!isEmpty(auth.user.typeOfService) &&
+              {!isEmpty(user.typeOfService) &&
               <View style={styles.row}>
                 <Icons name="room-service-outline" style={{ fontSize: 20 }} />
                 <View>
@@ -142,7 +150,7 @@ const Profile = ({ auth, navigation }) => {
                     <Text style={styles.msgTxt}>Service Type</Text>
                   </View>
                   <View style={styles.nameContainer}>
-                    <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{auth.user.typeOfService} </Text>
+                    <Text style={styles.nameTxt} numberOfLines={4} ellipsizeMode="tail">{user.typeOfService} </Text>
                   </View>
                 </View>
               </View>}
@@ -180,13 +188,14 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'center',
   },
+  avatarImage: {
+    borderRadius: 100,
+    borderColor: '#f9f9f9',
+    borderWidth: 2
+  },
   avatar: {
     width: 115,
     height: 115,
-    borderRadius: 63,
-    borderWidth: 4,
-    borderColor: "white",
-    marginBottom: 10,
   },
   name: {
     fontSize: 18,
