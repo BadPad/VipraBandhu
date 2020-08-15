@@ -11,6 +11,7 @@ import moment from "moment";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { App_Color, Font_Name_Bold, Font_Name_Regular } from '../Reusable_Component/ConstantValues';
 
+let bookingStatusColor = "black";
 const BookingsCardList = ({ navigation, currentData, onSelectBooking, status, userType, isNotification, purohitBookingAcceptance, cookBookingAcceptance }) => {
 
     const [modalAcceptVisible, setModalAcceptVisible] = React.useState(false);
@@ -36,34 +37,43 @@ const BookingsCardList = ({ navigation, currentData, onSelectBooking, status, us
     const data = currentData.bookings[0];
 
     let bookingStatus = "";
+    
 
     if (userType === "customer") {
         if (status === "pending") {
             bookingStatus = "Pending";
+            bookingStatusColor = "#FF6200" //Orange
         }
         else if (status === "active") {
             bookingStatus = "Vendor Accepted";
+            bookingStatusColor = "#3300CC" //Blue
         }
         else if (status === "cancelled") {
             bookingStatus = "Cancelled";
+            bookingStatusColor = "red" //Red
         }
         else if (status === "completed") {
             bookingStatus = "Service Completed";
+            bookingStatusColor = "green" //Green
         }
     }
 
     else if ((userType === "purohit") || (userType === "cook")) {
         if (status === "pending") {
             bookingStatus = "New Booking";
+            bookingStatusColor = "#FF6200" //Orange
         }
         else if (status === "active") {
             bookingStatus = "Vendor Accepted";
+            bookingStatusColor = "#3300CC" //Blue
         }
         else if (status === "cancelled") {
             bookingStatus = "Cancelled";
+            bookingStatusColor = "red" //Red
         }
         else if (status === "completed") {
             bookingStatus = "Service Completed";
+            bookingStatusColor = "green" //Green
         }
     }
 
@@ -115,7 +125,7 @@ const BookingsCardList = ({ navigation, currentData, onSelectBooking, status, us
 
             {
                 (data != null && isNotification === false) ?
-                    <View style={styles.outerBoxVendor}>
+                    <View style={styles.outerBox}>
                         <View style={styles.firstBox}>
                             <View style={styles.firstBoxView}>
                                 <View style={styles.serviceNameView}>
@@ -126,7 +136,7 @@ const BookingsCardList = ({ navigation, currentData, onSelectBooking, status, us
                                         <Text style={styles.serviceHeadersRegular}>Services:<Text style={styles.serviceValuesRegular}> {serviceCount}</Text></Text>
                                     </View>
                                     <View>
-                                        <Text style={styles.serviceHeadersRegular}>Status:<Text style={styles.serviceValuesRegular}> {bookingStatus}</Text></Text>
+                                        <Text style={styles.serviceHeadersRegular}>Status:<Text style={[styles.serviceValuesStatus, {color: bookingStatusColor}]}> {bookingStatus}</Text></Text>
                                     </View>
 
                                 </View>
@@ -154,7 +164,7 @@ const BookingsCardList = ({ navigation, currentData, onSelectBooking, status, us
                                 <Icon name="ios-pin" size={20}
                                     backgroundColor="transparent" color={App_Color}
                                 ></Icon >
-                                <Text style={styles.serviceValuesRegular}>
+                                <Text style={styles.serviceValuesAddress}>
                                     {""} {data.location}
                                 </Text>
                             </View>
@@ -163,8 +173,8 @@ const BookingsCardList = ({ navigation, currentData, onSelectBooking, status, us
                             <View style={styles.fourthBoxView}>
                                 <TouchableOpacity style={((userType === "customer") || (status === "active")) ? styles.boxDetailsFullWidth : styles.boxDetails} activeOpacity={.9} onPress={() => onSelectBooking(currentData, userType)}>
                                     <Text style={styles.btnDetailsText}>Details {""}
-                                        <Icon style={{ paddingRight: 5 }} name="ios-arrow-dropright" size={20}
-                                            backgroundColor="transparent" color="maroon"
+                                        <Icon style={{ paddingRight: 5 }} name="ios-redo" size={18}
+                                            backgroundColor="transparent" color="purple"
                                         ></Icon >
                                     </Text>
                                 </TouchableOpacity>
@@ -207,7 +217,7 @@ const BookingsCardList = ({ navigation, currentData, onSelectBooking, status, us
             {
                 (data != null && isNotification === true) ?
                     <View>
-                        <View style={styles.outerBoxVendor2}>
+                        <View style={styles.outerBox2}>
                             <TouchableOpacity activeOpacity={.9} onPress={() => onSelectBooking(data, userType)}>
                                 <View style={styles.firstBox}>
                                     <View style={styles.firstBoxView}>
@@ -254,7 +264,7 @@ const BookingsCardList = ({ navigation, currentData, onSelectBooking, status, us
 }
 
 const styles = StyleSheet.create({
-    outerBoxVendor: {
+    outerBox: {
         backgroundColor: 'white',
         margin: 10,
         marginBottom: 0,
@@ -270,10 +280,9 @@ const styles = StyleSheet.create({
         shadowRadius: 25.84,
         elevation: 15
     },
-    outerBoxVendor2: {
+    outerBox2: {
         backgroundColor: 'white',
         margin: 0,
-
     },
     firstBox: {
         borderBottomWidth: 1,
@@ -296,7 +305,7 @@ const styles = StyleSheet.create({
         paddingBottom: 3
     },
     serviceNameText: {
-        fontSize: wp(3.6),
+        fontSize: wp(3.8),
         fontFamily: Font_Name_Bold,
         color: 'black'
     },
@@ -310,23 +319,38 @@ const styles = StyleSheet.create({
     },
     serviceHeaders: {
         fontFamily: Font_Name_Bold,
-        color: 'grey'
+        color: 'grey',
+        fontSize: wp(3.2)
     },
     serviceHeadersRegular: {
-        fontFamily: Font_Name_Regular,
-        color: 'grey'
+        fontFamily: Font_Name_Bold,
+        color: 'grey',
+        fontSize: wp(3.2)
     },
 
     serviceValues: {
         fontFamily: Font_Name_Bold,
         color: 'black',
-
+        fontSize: wp(3.2)
     },
     serviceValuesRegular: {
         fontFamily: Font_Name_Regular,
         color: 'black',
-        fontSize: wp('3.6%')
+        fontSize: wp(3.4)
     },
+
+    serviceValuesAddress: {
+        fontFamily: Font_Name_Regular,
+        color: 'black',
+        fontSize: wp(3.4),
+        width:'95%'
+    },
+    serviceValuesStatus: {
+        fontFamily: Font_Name_Bold,
+        fontSize: wp(3.4)
+    },
+
+    
     firstBoxView: {
         padding: 5,
         paddingLeft: 10,
@@ -346,7 +370,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         marginBottom: 0,
         fontFamily: Font_Name_Regular,
-        padding: 5
+        padding: 5,
+        
     },
     fourthBoxView: {
         flex: 1,
@@ -386,7 +411,7 @@ const styles = StyleSheet.create({
     boxDetailsFullWidth: {
         width: '100%',
         alignItems: 'center',
-        padding: 5
+        padding: 4
     },
     boxApprove: {
         width: '50%',
@@ -397,11 +422,11 @@ const styles = StyleSheet.create({
     },
     btnDetailsText: {
         fontFamily: Font_Name_Regular,
-        fontSize: hp(2.4)
+        fontSize: hp(2.2)
     },
     btnApproveText: {
         fontFamily: Font_Name_Regular,
-        fontSize: hp(2.4)
+        fontSize: hp(2.2)
     },
     notificationMessage: {
         fontFamily: Font_Name_Regular,

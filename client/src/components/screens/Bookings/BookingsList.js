@@ -29,14 +29,30 @@ const BookingsList = ({ navigation, route, auth, myBookingsOrders, myOrders, get
         }
     }, [])
 
-    const FirstRoute = () => {        
+    const FirstRoute = () => {
 
         let currentUserType = auth.userType;
         let pendingData = null;
+        let cancelledData = null;
+
+
+        AsyncStorage.getItem('SukalpaSeva')
+            .then(res => {
+                if (res) {
+                    // console.log(res)
+                    const sukalpaSevaToken = JSON.parse(res);
+                    const { ss_auth, ss_user } = sukalpaSevaToken;
+                    
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
 
         if (currentUserType === 'customer') {
             if (myOrders.myBookingsOrdersList != null) {
                 pendingData = myOrders.myBookingsOrdersList.pending_bookings
+                //cancelledData = myOrders.myBookingsOrdersList.pending_bookings
             }
         }
         else if (currentUserType === 'purohit') {

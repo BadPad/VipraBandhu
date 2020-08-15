@@ -33,38 +33,22 @@ export const getPurohitBookings = () => dispatch => {
         })
 }
 
-// Cancel Customer Booking
-export const cancelCustomerBooking = (data, navigation) => dispatch => {
-    console.warn(data)
-    dispatch(regLogLoading());
-    
-    axios.post('https://yd5lw8j6q8.execute-api.ap-south-1.amazonaws.com/Api/customer_booking_cancel/pending', data)
-        .then(res => {
-            const status = res.data;
-            //console.warn(status.statusCode)
-            if (status.statusCode === 200) {
-                showMessage({
-                    message: 'Booking has been cancelled successfully',
-                    type: 'success'
-                })
-                navigation.navigate('Welcome')
-            }
-            else {
-                // console.log('user already registered')
-                showMessage({
-                    message: 'There was an issue while processing the request. Please try again after sometime',
-                    type: 'danger'
-                })
-                navigation.navigate('Welcome')
-            }
-        }
+//Get all bookings for Cook
+export const getCookBookings = () => dispatch => {
+
+    axios.get('https://yd5lw8j6q8.execute-api.ap-south-1.amazonaws.com/Api/cook_booking_get')
+        .then(res =>
+            dispatch({
+                type: GET_COOK_BOOKINGS,
+                payload: res.data.body
+            })
         )
         .catch(err => {
             console.log(err)
         })
 }
 
-// Accept Customer Booking
+// Purohit Accept Customer Booking
 export const purohitBookingAcceptance = (data, navigation) => dispatch => {
     //dispatch(regLogLoading());    
     
@@ -93,21 +77,9 @@ export const purohitBookingAcceptance = (data, navigation) => dispatch => {
         })
 }
 
-export const getCookBookings = () => dispatch => {
 
-    axios.get('https://yd5lw8j6q8.execute-api.ap-south-1.amazonaws.com/Api/cook_booking_get')
-        .then(res =>
-            dispatch({
-                type: GET_COOK_BOOKINGS,
-                payload: res.data.body
-            })
-        )
-        .catch(err => {
-            console.log(err)
-        })
-}
 
-// Accept Customer Booking
+// Cook Accept Customer Booking
 export const cookBookingAcceptance = (data, navigation) => dispatch => {
     //dispatch(regLogLoading());    
     
@@ -135,3 +107,99 @@ export const cookBookingAcceptance = (data, navigation) => dispatch => {
             console.log(err)
         })
 }
+
+
+// Cancel Customer Booking
+export const cancelCustomerBooking = (data, navigation) => dispatch => {
+    
+    dispatch(regLogLoading());
+    
+    axios.post('https://yd5lw8j6q8.execute-api.ap-south-1.amazonaws.com/Api/customer_booking_cancel/pending', data)
+        .then(res => {
+            const status = res.data;
+            //console.warn(status.statusCode)
+            if (status.statusCode === 200) {
+                showMessage({
+                    message: 'Booking has been cancelled successfully',
+                    type: 'success'
+                })
+                navigation.navigate('Welcome')
+            }
+            else {
+                // console.log('user already registered')
+                showMessage({
+                    message: 'There was an issue while processing the request. Please try again after sometime',
+                    type: 'danger'
+                })
+                navigation.navigate('Welcome')
+            }
+        }
+        )
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+// Cancel Purohit Booking
+export const cancelPurohitBooking = (data, navigation) => dispatch => {
+    
+    dispatch(regLogLoading());
+    
+    axios.post('https://yd5lw8j6q8.execute-api.ap-south-1.amazonaws.com/Api/purohit_booking_cancel', data)
+        .then(res => {
+            const status = res.data;
+            //console.warn(status.statusCode)
+            if (status.statusCode === 200) {
+                showMessage({
+                    message: 'Booking has been cancelled successfully',
+                    type: 'success'
+                })
+                navigation.navigate('Welcome')
+            }
+            else {
+                // console.log('user already registered')
+                showMessage({
+                    message: 'There was an issue while processing the request. Please try again after sometime',
+                    type: 'danger'
+                })
+                navigation.navigate('Welcome')
+            }
+        }
+        )
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+// Cancel Purohit Booking
+export const cancelCookBooking = (data, navigation) => dispatch => {
+    
+    dispatch(regLogLoading());
+    
+    axios.post('https://yd5lw8j6q8.execute-api.ap-south-1.amazonaws.com/Api/cook_booking_cancel', data)
+        .then(res => {
+            const status = res.data;
+            //console.warn(status.statusCode)
+            if (status.statusCode === 200) {
+                showMessage({
+                    message: 'Booking has been cancelled successfully',
+                    type: 'success'
+                })
+                navigation.navigate('Welcome')
+            }
+            else {
+                // console.log('user already registered')
+                showMessage({
+                    message: 'There was an issue while processing the request. Please try again after sometime',
+                    type: 'danger'
+                })
+                navigation.navigate('Welcome')
+            }
+        }
+        )
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+

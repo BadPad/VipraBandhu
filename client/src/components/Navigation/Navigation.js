@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet,Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { store } from '../../store';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -35,13 +35,18 @@ import NotificationIcon from '../Reusable_Component/NotificationIcon';
 import BookingCartIcon from './BookingCartIcon';
 import FaqIcon from './FaqIcon';
 import Faq from '../screens/Faq';
-import { App_Color, Font_Name_Regular, Font_Name_Bold } from '../Reusable_Component/ConstantValues';
+import eSeva from '../screens/eSeva/eSeva';
+import eSevaBooking from '../screens/eSeva/eSevaBooking';
+import eSevaBookingList from '../screens/eSeva/eSevaBookingList';
+import PurohitOnline from '../screens/PurohitOnline';
+import { App_Color, Font_Name_Regular, Font_Name_Bold, App_Header_Font_Size } from '../Reusable_Component/ConstantValues';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator();
 
 function getHeaderTitle(route) {
-  const routeName = route.name? route.name : 'Welcome';
+  const routeName = route.name ? route.name : 'Welcome';
   // console.log(route)
   const routeParams = route.params
   switch (routeName) {
@@ -84,7 +89,15 @@ function getHeaderTitle(route) {
     case 'Notifications':
       return 'Notifications'
     case 'Faq':
-      return 'FAQs' 
+      return 'FAQs'
+    case 'eSeva':
+      return 'E-Seva'
+    case 'eSevaBooking':
+      return 'E-Seva Booking'
+    case 'eSevaBookingList':
+      return 'E-Seva'
+    case 'PurohitOnline':
+      return 'Purohit Online'
     default:
       return true
   }
@@ -121,12 +134,13 @@ const StackNavigation = ({ navigation }) => (
     }}
   >
     <Stack.Screen name="Welcome" component={Welcome}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
-        
+
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
             backgroundColor={App_Color} color="#fff"
@@ -146,10 +160,11 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="ServicesList" component={ServicesList}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -172,10 +187,11 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="Service" component={Service}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -197,11 +213,12 @@ const StackNavigation = ({ navigation }) => (
         )
       })}
     />
-    <Stack.Screen name="BookingCart" component={BookingCart} 
-      options={({route}) => ({
+    <Stack.Screen name="BookingCart" component={BookingCart}
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
@@ -213,10 +230,11 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="DeliveryOptions" component={DeliveryOptions}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
@@ -227,41 +245,44 @@ const StackNavigation = ({ navigation }) => (
         )
       })}
     />
-    <Stack.Screen name="ChooseAddress" component={ChooseAddress} 
-      options={({route}) => ({
+    <Stack.Screen name="ChooseAddress" component={ChooseAddress}
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
-          backgroundColor={App_Color} color="#fff"
-          onPress={() => navigation.goBack()
-          }>
+            backgroundColor={App_Color} color="#fff"
+            onPress={() => navigation.goBack()
+            }>
           </Icon.Button >
         )
       })}
     />
-    <Stack.Screen name="AddNewAddress" component={AddNewAddress} 
-      options={({route}) => ({
+    <Stack.Screen name="AddNewAddress" component={AddNewAddress}
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
-          backgroundColor={App_Color} color="#fff"
-          onPress={() => navigation.goBack()
-          }>
+            backgroundColor={App_Color} color="#fff"
+            onPress={() => navigation.goBack()
+            }>
           </Icon.Button >
         )
       })}
     />
     <Stack.Screen name="Payment" component={Payment}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
@@ -273,10 +294,11 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="TransactionInfo" component={TransactionInfo}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="md-arrow-round-back" size={25}
@@ -288,10 +310,11 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="AboutUs" component={About}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -303,11 +326,12 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="Login" component={Login}
-      options={({route}) => ({
+      options={({ route }) => ({
         headerShown: false,
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -319,11 +343,12 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="Register" component={Register}
-      options={({route}) => ({
+      options={({ route }) => ({
         headerShown: false,
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -335,11 +360,12 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="OTPConfirmation" component={OTPConfirmation}
-      options={({route}) => ({
+      options={({ route }) => ({
         headerShown: false,
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -351,10 +377,11 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="Offers" component={Offers}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -366,10 +393,11 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="MyProfile" component={Profile}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -381,10 +409,11 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="ProfileEdit" component={ProfileEdit}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -396,10 +425,11 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="BookingsList" component={BookingsList}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -411,25 +441,20 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="Booking" component={Booking}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
-        },
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size={25}
-            backgroundColor={App_Color} color="#fff"
-            onPress={() => navigation.openDrawer()
-            }>
-          </Icon.Button >
-        )
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
+        }
       })}
     />
     <Stack.Screen name="MyWallet" component={Wallet}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -446,10 +471,11 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="CustomerService" component={CustomerService}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
@@ -461,12 +487,13 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="Notifications" component={Notifications}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
         headerTitleStyle: {
-          fontFamily: Font_Name_Bold
+          fontFamily: Font_Name_Bold,
+          fontSize: wp(App_Header_Font_Size)
         },
-        
+
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
             backgroundColor={App_Color} color="#fff"
@@ -477,8 +504,62 @@ const StackNavigation = ({ navigation }) => (
       })}
     />
     <Stack.Screen name="Faq" component={Faq}
-      options={({route}) => ({
+      options={({ route }) => ({
         title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+          fontSize: wp(App_Header_Font_Size)
+        },
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor={App_Color} color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="eSeva" component={eSeva}
+      options={({ route }) => ({
+        title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+          fontSize: wp(App_Header_Font_Size)
+        },
+        headerLeft: () => (
+          <Icon.Button name="ios-menu" size={25}
+            backgroundColor={App_Color} color="#fff"
+            onPress={() => navigation.openDrawer()
+            }>
+          </Icon.Button >
+        )
+      })}
+    />
+    <Stack.Screen name="eSevaBooking" component={eSevaBooking}
+      options={({ route }) => ({
+        title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+          fontSize: wp(App_Header_Font_Size)
+        }
+      })}
+    />
+    <Stack.Screen name="eSevaBookingList" component={eSevaBookingList}
+      options={({ route }) => ({
+        title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+          fontSize: wp(App_Header_Font_Size)
+        }
+      })}
+    />
+    <Stack.Screen name="PurohitOnline" component={PurohitOnline}
+      options={({ route }) => ({
+        title: getHeaderTitle(route),
+        headerTitleStyle: {
+          fontFamily: Font_Name_Regular,
+          fontSize: wp(App_Header_Font_Size)
+        },
         headerLeft: () => (
           <Icon.Button name="ios-menu" size={25}
             backgroundColor={App_Color} color="#fff"
@@ -494,8 +575,8 @@ const StackNavigation = ({ navigation }) => (
 function Navigation() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator 
-        initialRouteName="Home" 
+      <Drawer.Navigator
+        initialRouteName="Home"
         drawerContent={props => <DrawnContent {...props} />}
       >
         <Drawer.Screen name="Screens" component={StackNavigation} />
@@ -508,9 +589,9 @@ const styles = StyleSheet.create({
   headerRightIcons: {
     flexDirection: "row"
   },
-  iconNotifications:{
-    paddingLeft:20,
-    paddingRight:15
+  iconNotifications: {
+    paddingLeft: 20,
+    paddingRight: 15
   },
   iconCart: {
 

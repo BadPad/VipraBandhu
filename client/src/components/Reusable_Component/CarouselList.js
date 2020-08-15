@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, Dimensions, ImageBackground, Image, LayoutAnimation, StyleSheet, TouchableOpacity } from 'react-native';
-import Carousel from "react-native-snap-carousel";
+import Carousel, { Pagination } from "react-native-snap-carousel";
 import LinearGradient from "react-native-linear-gradient";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { scrollInterpolator, animatedStyles } from '../utils/CarouselAnimation';
@@ -8,7 +8,8 @@ import { getMonthDate } from '../utils/GetUniqueDates';
 
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
-const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.85);
+const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 1);
+//const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.85);
 //const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 3 / 6);
 
 class CarouselList extends Component {
@@ -20,10 +21,10 @@ class CarouselList extends Component {
             Ads: [
                 {
                     AdName: "Sumadhwa Seva",
-                    Ad1: "For details on Festivals, Pooja",
+                    Ad1: "For details on Festivals, Pooja etc",
                     Ad2: "www.sumadhwaseva.com",
                     Ad3: "Narahari Sumadhwa @ 9042719165",
-                    AdImage: "http://www.sumadhwaseva.com/wp-content/uploads/2009/01/Madhwarayaru-190x300.jpg",
+                    AdImage: "https://s3-ap-south-1.amazonaws.com/sukalpa-images/1.jpeg",
                     Color1: "#051937",
                     Color2: "#008793",
                 },
@@ -32,7 +33,7 @@ class CarouselList extends Component {
                     Ad1: "Karoake's : All languages",
                     Ad2: "Orchestra: Marriage Functions",
                     Ad3: "Contact: Sridhar Dixit @ 9845040962",
-                    AdImage: "http://www.sumadhwaseva.com/wp-content/uploads/2009/08/udupi-krishnaa.jpg",
+                    AdImage: "https://s3-ap-south-1.amazonaws.com/sukalpa-images/2.jpeg",
                     Color1: "#aa076b",
                     Color2: "#61045f",
                 },
@@ -41,7 +42,7 @@ class CarouselList extends Component {
                     Ad1: "",
                     Ad3: "",
                     Ad2: "Contact: Guru Prasad @ 9945226465",
-                    AdImage: "http://www.sumadhwaseva.com/wp-content/uploads/2009/02/sri-vishnu-teertharu-madanooru1.jpg",
+                    AdImage: "https://s3-ap-south-1.amazonaws.com/sukalpa-images/3.jpeg",
                     Color1: "#434343",
                     Color2: "#000000",
                 },
@@ -49,6 +50,29 @@ class CarouselList extends Component {
         };
     }
 
+    get pagination() { 
+        const { Ads, activeSlide } = this.state;
+        return (
+            <Pagination
+                dotsLength={Ads.length}
+                activeDotIndex={activeSlide}
+                containerStyle={{ paddingVertical:0, paddingTop:10, paddingBottom:0}}
+                dotStyle={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: 5,
+                    marginHorizontal: 0,                    
+                    backgroundColor:'#fff'
+                }}
+                inactiveDotStyle={{
+                    color:'lightgrey'
+                }}
+                
+                inactiveDotOpacity={0.4}
+                inactiveDotScale={0.6}
+            />
+        );
+    }
 
     componentWillReceiveProps(nextProps) {
         const { festivals } = nextProps;
@@ -65,10 +89,10 @@ class CarouselList extends Component {
         return (
 
             <LinearGradient
-            colors={["#09203f", "#537895"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={{ flex: 1, width:'80%' }}>
+                colors={["#09203f", "#537895"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={{ flex: 1, width: '68%' }}>
                 <View style={styles.upFestSlideView}>
                     <Text style={styles.upFestName}>{item.festivalName}</Text>
                     <Text style={styles.upFestDate}>{`(${getMonthDate(item.festivalDate)})`}</Text>
@@ -86,7 +110,6 @@ class CarouselList extends Component {
                 <ImageBackground source={require('../images/red_bg.png')}
                     style={styles.imgBackground}>
                     <LinearGradient
-                        //colors={["#09203f", "#537895"]}
                         colors={[item.Color1, item.Color2]}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 1 }}
@@ -95,10 +118,10 @@ class CarouselList extends Component {
                         <View style={styles.Ad_Outer}>
                             <View style={styles.Ad_Image_View}>
                                 <Image
-                                    style={{width:'100%', height:'100%', marginLeft:'auto', marginRight:'auto', borderRadius:5, borderWidth:0.5, borderColor:'#fff'}}
+                                    style={{ width: '100%', height: '100%', marginLeft: 'auto', marginRight: 'auto',  borderRadius: 5, borderWidth: 0.5, borderColor: '#fff' }}
                                     //source={require('../images/Snacks.png')}
-                                    source={{ uri: item.AdImage}}
-                                    //source={item.AdImage}
+                                    source={{ uri: item.AdImage }}
+                                //source={item.AdImage}
                                 />
                             </View>
 
@@ -107,12 +130,14 @@ class CarouselList extends Component {
                                 <Text style={styles.Ad}>{item.Ad1}</Text>
                                 <Text style={styles.Ad}>{item.Ad2}</Text>
                                 <Text style={styles.Ad}>{item.Ad3}</Text>
+                                {this.pagination}
                             </View>
                         </View>
-
+                        
 
                     </LinearGradient>
                 </ImageBackground>
+                
             </View>
         );
     }
@@ -150,35 +175,27 @@ class CarouselList extends Component {
         }
         else if (this.state.type === 'Ads') {
             return (
-                // <Carousel
-                //     ref={(c) => { this._carousel = c; }}
-                //     data={this.state.Ads}
-                //     renderItem={this._renderAds}
-                //     sliderWidth={ITEM_WIDTH_Ad}
-                //     itemWidth={ITEM_WIDTH_Ad}
-                //     autoplay={true}
-                //     enableMomentum={false}
-                //     lockScrollWhileSnapping={true}
-                //     loop={true}
-                //     containerCustomStyle={styles.CarouselStyle}
-                // />
-                <Carousel
-                    ref={(c) => { this._carousel = c; }}
-                    data={this.state.Ads}
-                    renderItem={this._renderAds}
-                    sliderWidth={SLIDER_WIDTH}
-                    itemWidth={ITEM_WIDTH}
-                    autoplay={true}
-                    enableMomentum={false}
-                    lockScrollWhileSnapping={true}
-                    loop={true}
-                    containerCustomStyle={styles.CarouselStyle}
-                    inactiveSlideShift={0}
-                    scrollInterpolator={scrollInterpolator}
-                    slideInterpolatedStyle={animatedStyles}
-                    useScrollView={true}
+                <>
+                    <Carousel
+                        ref={(c) => { this._carousel = c; }}
+                        data={this.state.Ads}
+                        renderItem={this._renderAds}
+                        sliderWidth={SLIDER_WIDTH}
+                        itemWidth={ITEM_WIDTH}
+                        autoplay={true}
+                        enableMomentum={false}
+                        lockScrollWhileSnapping={true}
+                        loop={true}
+                        containerCustomStyle={styles.CarouselStyle}
+                        inactiveSlideShift={0}
+                        scrollInterpolator={scrollInterpolator}
+                        slideInterpolatedStyle={animatedStyles}
+                        useScrollView={true}
+                        onSnapToItem={(index) => this.setState({ activeSlide: index })}
 
-                />
+                    />
+                    
+                </>
             )
         }
 
@@ -194,11 +211,12 @@ const styles = StyleSheet.create({
     },
     Ad_Image_View: {
         width: '20%',
-        padding:10
+        padding:5
+        
     },
     Ad_Content_View: {
         width: '80%',
-        padding:10
+        padding: 10
     },
     Ad_Image1: {
         width: 50,
@@ -209,7 +227,7 @@ const styles = StyleSheet.create({
     upFestSlideView: {
         width: '100%',
         justifyContent: 'center',
-        padding:5
+        padding: 5
     },
     CarouselStyle: {
         borderColor: 'transparent',
@@ -231,31 +249,31 @@ const styles = StyleSheet.create({
 
         alignItems: 'center',
         justifyContent: 'center',
-        padding:5,
+        padding: 5,
         backgroundColor: '#fff'
     },
     Ad: {
         textAlign: 'center',
         color: '#fff',
         fontFamily: 'OpenSans-Regular',
-        fontSize: hp('1.8%')
+        fontSize: wp('3.3%')
     },
     AdName: {
-        fontSize: hp('2.3%'),
+        fontSize: wp('4.2%'),
         textAlign: 'center',
         color: '#fff',
         fontFamily: 'OpenSans-Bold',
-        textDecorationLine:'underline'
+        textDecorationLine: 'underline'
     },
     upFestName: {
         width: '100%',
-        fontSize: hp(2.5),
+        fontSize: wp(4),
         color: '#fff',
         textAlign: 'center',
         fontFamily: 'OpenSans-Regular'
     },
     upFestDate: {
-        fontSize: hp(2),
+        fontSize: wp(3.2),
         color: '#fff',
         textAlign: 'center',
         fontFamily: 'OpenSans-Regular'
