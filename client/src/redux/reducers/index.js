@@ -8,6 +8,7 @@ import cityAreaReducer from './cityAreaReducer';
 import upcomingFestReducer from './upcomingFestReducer';
 import casteListReducer from './casteReducer';
 import serviceListReducer from './serviceListReducer';
+import walletReducer from './walletReducer';
 import bookingCartReducer from './bookingCartReducer';
 import myBookingsOrdersReducer from './myBookingsOrdersReducer';
 
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
     upcomingFestivals: upcomingFestReducer,
     serviceList: serviceListReducer,
     casteList: casteListReducer,
+    wallet: walletReducer,
     bookingCartServices: bookingCartReducer,
     myBookingsOrders: myBookingsOrdersReducer,
     getPurohitBookings: myBookingsOrdersReducer,
